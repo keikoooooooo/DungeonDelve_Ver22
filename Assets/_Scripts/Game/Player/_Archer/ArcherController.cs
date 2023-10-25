@@ -115,7 +115,7 @@ public class ArcherController : PlayerController
         crosshair.SetAnimation("Center_IN", false);
         crosshair.AddAnimation("Center_Wait", false, 1);
         
-        _effects.TurnOnFxHold();
+        //_effects.TurnOnFxHold();
         while (IsAttackPressed)
         {
             BlendAnimationValue();
@@ -125,7 +125,7 @@ public class ArcherController : PlayerController
             animator.SetBool(ID4Direction, IsAttackPressed);
             yield return null;
         }
-        _effects.TurnOffFxHold();
+        //_effects.TurnOffFxHold();
         
         freeLookCam.m_XAxis.Value = xAxis.Value;
         animator.SetBool(ID4Direction, false);
@@ -208,7 +208,6 @@ public class ArcherController : PlayerController
     protected override void AttackEnd()
     {
         base.AttackEnd();
-        
         _lockCrosshair = false;
         aimCam.gameObject.SetActive(false);
         crosshair.gameObject.SetActive(false);

@@ -1,34 +1,41 @@
+using System;
 using UnityEngine;
 
-public class EffectBase : MonoBehaviour
+public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
 {    
     [Header("Effect Prefab")]
     public ParticleSystem flash;
     public ParticleSystem projectile;
     public ParticleSystem hit;
 
-    public enum ActiveType
+    
+    protected enum ActiveType
     {
         Enable,
         Disable
     }
+    
 
     /// <summary>
     /// Set Active của Effect Flash theo Parameter
     /// </summary>
-    public void Flash(ActiveType _type)
+    protected void Flash(ActiveType _type)
     {
         if(flash == null) 
             return;
         
+        flash.transform.position = transform.position;
         switch (_type)
         {
             case ActiveType.Enable:
+                flash.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+                flash.transform.SetParent(null);
                 flash.gameObject.SetActive(true);
                 flash.Play();
                 break;
             
             case ActiveType.Disable:
+                flash.transform.SetParent(transform);
                 flash.gameObject.SetActive(false);
                 flash.Stop();
                 break;
@@ -41,7 +48,7 @@ public class EffectBase : MonoBehaviour
     /// <summary>
     /// Set Active của Effect Projectile theo Parameter
     /// </summary>
-    public void Projectile(ActiveType _type)
+    protected void Projectile(ActiveType _type)
     {
         if(projectile == null) 
             return;
@@ -66,20 +73,22 @@ public class EffectBase : MonoBehaviour
     /// <summary>
     /// Set Active của Effect Hit theo Parameter tại vị trí Pos
     /// </summary>
-    public void Hit(ActiveType _type, Vector3 _pos)
+    protected void Hit(ActiveType _type, Vector3 _pos)
     {
         if(hit == null) 
             return;
         
+        hit.transform.position = _pos;
         switch (_type)
         {
             case ActiveType.Enable:
-                hit.transform.position = _pos;
+                hit.transform.SetParent(null);
                 hit.gameObject.SetActive(true);
                 hit.Play();
                 break;
             
             case ActiveType.Disable:
+                hit.transform.SetParent(transform);
                 hit.gameObject.SetActive(false);
                 hit.Stop();
                 break;
@@ -87,5 +96,22 @@ public class EffectBase : MonoBehaviour
             default: Debug.Log("There is no activity type"); break;
         }
     }
+
+
+    public abstract void FIRE();
+
+
     
+
+
+    public void Release()
+    {
+        Flash(ActiveType.Disable);
+        Hit(ActiveType.Disable, Vector3.zero);
+        
+        ReleaseCallback?.Invoke(this);
+        
+        Debug.Log("Release");
+    }
+    public Action<EffectBase> ReleaseCallback { get; set; }
 }

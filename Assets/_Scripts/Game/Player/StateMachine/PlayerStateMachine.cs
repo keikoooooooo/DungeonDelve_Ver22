@@ -37,9 +37,9 @@ public abstract class PlayerStateMachine : MonoBehaviour
     public Vector3 AppliedMovement { get; set; }
     public Vector3 InputMovement { get; set; }
     
-    protected bool CanMove { get; set; }
-    protected bool CanRotation { get; set; }
     protected bool IsGrounded => groundCheck.IsGrounded;
+    public bool CanMove { get; set; }
+    public bool CanRotation { get; set; }
     public bool IsIdle => inputs.move.magnitude == 0;
     public bool IsJump => inputs.space;
     public bool IsWalk => !IsIdle && _movementState == MovementState.StateWalk;

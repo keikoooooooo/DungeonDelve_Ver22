@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,31 +15,16 @@ public class ArcherEffects : MonoBehaviour
     public Transform attackPoint;
     
     [Header("Prefab projectile")] 
-    [SerializeField] private ParticleCollision arrowComboPrefab;
-    [SerializeField] private ParticleCollision arrowHoldingPrefab;
-    [Space]
-    [SerializeField] private Reference flashPrefab;
-    [SerializeField] private Reference hitPrefab;
-    [Space]
-    [SerializeField] private ParticleSystem arrowSpecial_Flash;
-    [SerializeField] private ParticleSystem arrowSpecial_IN;
-    [SerializeField] private ParticleSystem arrowSpecial_OUT;
-
+    [SerializeField] private EffectBase arrowComboPrefab;
+    [SerializeField] private EffectBase holdingPrefab;
     
-    [Header("Effect holding attack")]
-    [Tooltip("Tại vị trí bắn"), SerializeField]
-    private ParticleSystem fxHoldAttack1;
-    [Tooltip("Tại vị trí nhân vật"), SerializeField]
-    private ParticleSystem fxHoldAttack2;
-
+    [Space, Header("Visual Effect")]
+    [SerializeField] private ParticleSystem effectHolding;
+    [SerializeField] private ParticleSystem effectSpecial;
     
     private GameObject slotsProjectile;
-    private ObjectPooler<ParticleCollision> _poolArrowCombo;
-    private ObjectPooler<ParticleCollision> _poolArrowHold;
-    
-    private ObjectPooler<Reference> _poolFlash;
-    private ObjectPooler<Reference> _poolHit;
-
+    private ObjectPooler<EffectBase> _poolArrowCombo;
+    private ObjectPooler<EffectBase> _poolArrowHold;
     
 
     private float angleYAttack => _archerController.model.eulerAngles.y;
@@ -54,86 +38,45 @@ public class ArcherEffects : MonoBehaviour
     private void Start()
     {
         Initialized();
-        
-        RegisterEvent();
     }
-
-    private void OnDestroy()
-    {
-        UnRegisterEvent();
-    }
-
     private void Initialized()
     {
         slotsProjectile = new GameObject();
-        _poolArrowCombo = new ObjectPooler<ParticleCollision>(arrowComboPrefab, slotsProjectile.transform, 10);
-        _poolArrowHold = new ObjectPooler<ParticleCollision>(arrowHoldingPrefab, slotsProjectile.transform, 5);
-        _poolFlash = new ObjectPooler<Reference>(flashPrefab, slotsProjectile.transform, 7);
-        _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsProjectile.transform, 7);
+        _poolArrowCombo = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsProjectile.transform, 10);
+        _poolArrowHold = new ObjectPooler<EffectBase>(holdingPrefab, slotsProjectile.transform, 10);
 
-        arrowSpecial_IN.transform.SetParent(slotsProjectile.transform);
-        arrowSpecial_OUT.transform.SetParent(slotsProjectile.transform);
-    }
-
-    private void RegisterEvent()
-    {
-        foreach (var particle in _poolArrowCombo.Pool)
-        {
-            particle.OnCollisionEvent += EffectHit;
-        }
-        foreach (var particle in _poolArrowHold.Pool)
-        {
-            particle.OnCollisionEvent += EffectHit;
-        }
-
-    }
-    private void UnRegisterEvent()
-    {
-        foreach (var particle in _poolArrowCombo.Pool)
-        {
-            particle.OnCollisionEvent -= EffectHit;
-        }
-        foreach (var particle in _poolArrowHold.Pool)
-        {
-            particle.OnCollisionEvent -= EffectHit;
-        }
+        effectSpecial.transform.SetParent(slotsProjectile.transform);
     }
     
 
 
     private void EffectArrowCombo(AnimationEvent eEvent)
     {
-        var arrow = _poolArrowCombo.Get(attackPoint.position);
-        //arrow.transform.rotation = attackPoint.rotation;
-        arrow.transform.rotation = isEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
-        //arrow.transform.rotation = Quaternion.Euler(angleXAttack , angleYAttack, 0f);
-
-        _poolFlash.Get(attackPoint.position, arrow.transform.rotation);
+        var _quaternion = isEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
+        var arrow = _poolArrowCombo.Get(attackPoint.position, _quaternion);
+        arrow.FIRE();
     }
     private void EffectArrowHold(AnimationEvent eEvent)
     {
-        //TurnOffFxHold();
+        TurnOffFxHold();
+        var arrow = _poolArrowHold.Get(attackPoint.position, attackPoint.rotation);
+        arrow.FIRE();
         
-        var arrow = _poolArrowHold.Get(attackPoint.position);
-        arrow.transform.rotation = attackPoint.rotation;
-   
+        _archerController.CanMove = false;
+        _archerController.CanRotation = false;
     }
     public void TurnOnFxHold()
     {
-        fxHoldAttack1.gameObject.SetActive(true);
-        fxHoldAttack1.Play();
-        fxHoldAttack2.gameObject.SetActive(true);
-        fxHoldAttack2.Play();
+        effectHolding.gameObject.SetActive(true);
+        effectHolding.Play();
     }
     public void TurnOffFxHold()
     {
-        fxHoldAttack1.Stop();
-        fxHoldAttack1.gameObject.SetActive(false);
-        fxHoldAttack2.Stop();
-        fxHoldAttack2.gameObject.SetActive(false);
+        effectHolding.Stop();
+        effectHolding.gameObject.SetActive(false);
     }
 
-    private void VisualEffect_Skill(AnimationEvent eEvent)
+    private void Effect_Skill(AnimationEvent eEvent)
     {
         var arrow = _poolArrowCombo.Get(attackPoint.position);
         if (isEnemy)
@@ -146,10 +89,9 @@ public class ArcherEffects : MonoBehaviour
             var rotY = eulerAngles.y + eEvent.floatParameter;
             arrow.transform.rotation  = Quaternion.Euler(angleXAttack, rotY, eulerAngles.z);
         }
-        
+        arrow.FIRE();
     }
-    
-    private void Special(AnimationEvent eEvent)
+    private void EffectSpecial(AnimationEvent eEvent)
     {
         if (_specialCoroutine != null) 
             StopCoroutine(_specialCoroutine);
@@ -157,45 +99,36 @@ public class ArcherEffects : MonoBehaviour
     }
     private IEnumerator ActiveFXSpecial()
     {
-        // Flash
-        arrowSpecial_Flash.gameObject.SetActive(true);
-        arrowSpecial_Flash.Play();
-        yield return new WaitForSeconds(.15f);
-        
         // In
-        arrowSpecial_IN.gameObject.SetActive(true);
-        arrowSpecial_IN.Play();
+        effectSpecial.Play();
         yield return new WaitForSeconds(.3f);
-        arrowSpecial_IN.transform.position = attackPoint.position;
-        arrowSpecial_IN.transform.rotation = Quaternion.Euler(-75f, angleYAttack, 0);
-        yield return new WaitForSeconds(.7f);
+        effectSpecial.transform.position = attackPoint.position;
+        effectSpecial.transform.rotation = Quaternion.Euler(-50f, angleYAttack, 0);
+        effectSpecial.gameObject.SetActive(true);
+        yield return new WaitForSeconds(.85f);
         
         // Out
-        arrowSpecial_OUT.gameObject.SetActive(true);
-        // var newPos = new Vector3(_archerController.targetMarkerQ.transform.position.x, _archerController.transform.position.y, _archerController.targetMarkerQ.transform.position.z);
-        // arrowSpecial_OUT.gameObject.transform.position = newPos;
-        arrowSpecial_OUT.gameObject.transform.position = _archerController.targetMarkerQ.transform.position;
-        arrowSpecial_OUT.Play();
-        yield return new WaitForSeconds(3f);
+        var maxRadius = 4f;
+        for (var i = 0; i < 20; i++)
+        {
+            // lấy 1 vị tri ngẫu nhiên trong bán kính maxRadius
+            var randomPoint = Random.insideUnitCircle * maxRadius;
+            
+            // Từ vị trí xuất hiện và vị trí mục tiêu tìm ngẫu nhiên 1 vị trí mới trong bk vừa tìm đc
+            var currentPos = transform.position + new Vector3(randomPoint.x, 5f, randomPoint.y);
+            var targetPos = _archerController.targetMarkerQ.transform.position + new Vector3(randomPoint.x, Random.Range(-.5f, .5f), randomPoint.y);
+   
+            var arrow = _poolArrowHold.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
+            arrow.FIRE();
+            yield return new WaitForSeconds(0.1f);
+        }
         
-        // Release
-        arrowSpecial_Flash.gameObject.SetActive(false);
-        arrowSpecial_IN.gameObject.SetActive(false);
-        arrowSpecial_OUT.gameObject.SetActive(false);
+        effectSpecial.gameObject.SetActive(false);
+        effectSpecial.Stop();
     }
     
     
-
-    private void EffectHit(Vector3 _pos)
-    {
-        _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
-    }
-    private static Vector3 RandomPosition(Vector3 _posCurrent, float minVal, float maxVal)
-    {
-        return _posCurrent + new Vector3(Random.Range(minVal, maxVal), 
-                                         Random.Range(minVal, maxVal), 
-                                         Random.Range(minVal, maxVal));
-    }
+    
     
     
     private Quaternion RandomDirection()
@@ -204,8 +137,7 @@ public class ArcherEffects : MonoBehaviour
         posTarget.y += 1.5f;
         var randRotX = Random.Range(-2f, 2f);
         var randRotY = Random.Range(-1.5f, 1.5f);
-        //return Quaternion.LookRotation(posTarget - attackPoint.transform.position) * Quaternion.Euler(randRotX, randRotY, 0);
-        return Quaternion.LookRotation(posTarget - attackPoint.transform.position);
+        return Quaternion.LookRotation(posTarget - attackPoint.transform.position) * Quaternion.Euler(randRotX, randRotY, 0);
     }
 
 }

@@ -16,16 +16,17 @@ public class WarriorEffects : MonoBehaviour
     [Tooltip("Góc xoay của từng Effect chém")] 
     public List<Vector3> effectAngle;
     
-    [Header("Prefab Visual Effects")] 
+    [Header("Prefab projectile")] 
     [SerializeField] private Reference swordSlashPrefab;
     [SerializeField] private Reference swordPrickPrefab;
     [SerializeField] private Reference swordHoldingPrefab;
 
+    [Space]
     [SerializeField] private Reference hitPrefab;
-     
+
+    [Header("Visual Effects")] 
     [SerializeField] private ParticleSystem skill;
     [SerializeField] private ParticleSystem special;
-
 
     
     private GameObject slotsProjectile;
@@ -47,24 +48,17 @@ public class WarriorEffects : MonoBehaviour
     private void Start()
     {
         Initialized();
-
-        warriorController.physicsCollision.OnCollisionEvent += EffectHit;
-    }
-    private void OnDestroy()
-    {
-        warriorController.physicsCollision.OnCollisionEvent -= EffectHit;
     }
 
     
     private void Initialized()
     {
         slotsProjectile = new GameObject();
+        
         _poolSwordSlash = new ObjectPooler<Reference>(swordSlashPrefab, slotsProjectile.transform, 10);
         _poolSwordPrick = new ObjectPooler<Reference>(swordPrickPrefab, slotsProjectile.transform, 5);
         _poolSwordHolding = new ObjectPooler<Reference>(swordHoldingPrefab, slotsProjectile.transform, 5);
         _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsProjectile.transform, 20);
-        
-        special.gameObject.transform.SetParent(null);
     }
     
     
@@ -80,7 +74,7 @@ public class WarriorEffects : MonoBehaviour
     private void EffectHolding(AnimationEvent eEvent)
     {
         _posEffect = effectPoint.position;
-        _rotEffect = Quaternion.Euler(-110f, 35f + effectPoint.eulerAngles.y, 106f);
+        _rotEffect = Quaternion.Euler(-66f, -105f + effectPoint.eulerAngles.y, -122f);
         
        _poolSwordHolding.Get(_posEffect, _rotEffect);
     }
@@ -112,21 +106,14 @@ public class WarriorEffects : MonoBehaviour
 
     private void EffectSpecial(AnimationEvent eEvent)
     {
-        special.transform.position = new Vector3(effectPoint.position.x, transform.position.y, effectPoint.position.z);
-        special.transform.rotation = effectPoint.rotation;
-        
         special.gameObject.SetActive(true);
         special.Play();
     }
 
 
-    private void EffectHit(Vector3 _pos)
-    {
-        _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
-    }
-
-
-
+    public void EffectHit(Vector3 _pos) =>  _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
+    
+    
     private static Vector3 RandomPosition(Vector3 _posCurrent, float minVal, float maxVal)
     {
         return _posCurrent + new Vector3(Random.Range(minVal, maxVal), 

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class SingleDamage : PhysicsCollision
+public class SingleDamage : PhysicsDetection
 {
 
 }

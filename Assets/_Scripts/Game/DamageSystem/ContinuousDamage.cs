@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContinuousDamage : PhysicsCollision
+public class ContinuousDamage : PhysicsDetection
 {
     
     [Space, Tooltip("Sát thương mỗi giây")]

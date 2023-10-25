@@ -1,8 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
-
 
 /// <summary>
 /// Mỗi lần GameObject này được bật, thì sau ?(timer) giây sẽ gọi sự kiện 1 lần duy nhất

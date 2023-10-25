@@ -5,7 +5,7 @@ public class WarriorController : PlayerController
 {
     [Header("SubClass -------")] 
     [Tooltip("Script kiểm tra va chạm"), SerializeField]
-    public PhysicsCollision physicsCollision;
+    public PhysicsDetection physicsDetection;
     
     [Tooltip("Thời gian chuyển đổi dạng anim: từ cầm vũ khí sang không cầm vũ khí"), SerializeField]
     private float conversionTime;
@@ -31,21 +31,6 @@ public class WarriorController : PlayerController
         HandleAttack();
     }
 
-
-    protected override void SetVariables()
-    {
-        base.SetVariables();
-
-        conversionTimeTemp = conversionTime;
-        
-        sword.SetActive(false);
-        swordOnShoulder.SetActive(true);
-        animator.SetBool(IDWeaponEquip, false);
-        
-        if(_weaponUnEquippedCoroutine !=null)
-            StopCoroutine(_weaponUnEquippedCoroutine);
-        _weaponUnEquippedCoroutine = StartCoroutine(WeaponUnEquippedCoroutine());
-    }
     
 
     private void BuffSkill()
@@ -99,12 +84,26 @@ public class WarriorController : PlayerController
     #endregion
 
     
-    private void CheckCollision() // gọi trên event Animation
-    {
-        physicsCollision.CheckCollision();
-    }
+    public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
+    
+    
     
     // OverridingMethods
+    protected override void SetVariables()
+    {
+        base.SetVariables();
+ 
+        conversionTimeTemp = conversionTime;
+         
+        sword.SetActive(false);
+        swordOnShoulder.SetActive(true);
+        animator.SetBool(IDWeaponEquip, false);
+         
+        if(_weaponUnEquippedCoroutine !=null)
+            StopCoroutine(_weaponUnEquippedCoroutine);
+        _weaponUnEquippedCoroutine = StartCoroutine(WeaponUnEquippedCoroutine());
+    }
+    
     protected override void AttackCombo()
     {
         WeaponEquipped();
