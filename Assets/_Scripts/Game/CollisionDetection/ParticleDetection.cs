@@ -22,6 +22,7 @@ public class ParticleDetection : MonoBehaviour
         for (var i = 0; i < nums; i++)
         {
             var point = _particleEvent[i].intersection;
+            Debug.Log("collision");
             OnParticleEnterEvent?.Invoke(point);
         }
         

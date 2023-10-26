@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Wait a specified amount of time. The task will return running until the task is done waiting. It will return success after the wait time has elapsed.")]
+    [TaskDescription("Chờ một khoảng thời gian bằng thời gian của animation trong animator hiện tại. Sau khoảng thời gian chờ này node sẽ trả về thành công.")]
     [TaskIcon("{SkinColor}WaitIcon.png")]
     [TaskCategory("Unity/Animator")]
     public class WaitClip : Action
@@ -16,6 +16,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         {
             // Remember the start time.
             waitDuration = clip.length;
+            Debug.Log(waitDuration);
         }
         
         public override TaskStatus OnUpdate()

@@ -14,7 +14,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("Bán kính hình tròn tối đa của điểm đích ngẫu nhiên.")]
         public SharedFloat radius;
         
-        private readonly List<Vector3> _directions = new List<Vector3>();
+        private readonly List<Vector3> _directions = new();
 
         
         public override void OnStart()
@@ -54,7 +54,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             var randomPosition = currentPosition + randomDirection;
 
             targetBlend.Value = valueTemp;
-            if (location.Value.eulerAngles.y >= 90 && location.Value.eulerAngles.y <= 225)  targetBlend.Value *= -1;
+            if (location.Value.eulerAngles.y >= 90 && location.Value.eulerAngles.y <= 225) 
+                targetBlend.Value *= -1;
             
             return !NavMesh.SamplePosition(randomPosition, out var hit, radius.Value, NavMesh.AllAreas) ? currentPosition : hit.position;
         }

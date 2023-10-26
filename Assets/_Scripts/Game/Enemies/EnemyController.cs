@@ -121,15 +121,15 @@ public class EnemyController : MonoBehaviour, IDamageable
 
 
 
-    // Gọi bằng Invoke trên BehaviorTree
+    // Gọi bằng InvokeMethod trên BehaviorTree
     public void Attack()
     {
         animator.SetTrigger(_animIDAttack);
-        animator.SetFloat(_animIDHorizontal, 0);
         var data = (SharedFloat)_behaviorTree.GetVariable("AttackCooldown");
         _attackCooldown = data.Value;
         _canAttack = false;
     }
+    
     public void TakeDamage(int damage)
     {
         Debug.Log("take damage");
