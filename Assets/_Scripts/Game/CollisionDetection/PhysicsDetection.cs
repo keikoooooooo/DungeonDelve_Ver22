@@ -10,6 +10,8 @@ public class PhysicsDetection : MonoBehaviour
     
     [Tooltip("Layer cần kiểm tra va chạm")]
     public LayerMask layerToCheck;
+
+    public Color color;
     
     
     [Space]
@@ -41,7 +43,7 @@ public class PhysicsDetection : MonoBehaviour
     private bool isDetec;
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.cyan;
+        Gizmos.color = color;
         Gizmos.DrawWireSphere(transform.position, radiusCheck);
 
         if (!isDetec) 

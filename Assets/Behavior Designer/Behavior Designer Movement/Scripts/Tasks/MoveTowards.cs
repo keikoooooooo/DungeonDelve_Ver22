@@ -9,20 +9,20 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
     [TaskIcon("Assets/Behavior Designer/Behavior Designer Movement/Editor/Icons/{SkinColor}MoveTowardsIcon.png")]
     public class MoveTowards : Action
     {
-        [Tooltip("The speed of the agent")]
+        [Tooltip("Tốc độ di chuyển")]
         public SharedFloat speed;
-        [Tooltip("The agent has arrived when the magnitude is less than this value")]
+        [Tooltip("Node sẽ hoàn thành khi khoảng cách từ transform để target < giá trị này")]
         public SharedFloat arriveDistance = 0.1f;
-        [Tooltip("Should the agent be looking at the target position?")]
+        [Tooltip("Có luôn xoay về phía mục tiêu khi lùi lại không?")]
         public SharedBool lookAtTarget = true;
-        [Tooltip("Max rotation delta if lookAtTarget is enabled")]
+        [Tooltip("Delta xoay tối đa nếu LookAtTarget được bật")]
         public SharedFloat maxLookAtRotationDelta;
-        [Tooltip("The GameObject that the agent is moving towards")]
+        [Tooltip("Object mục tiêu")]
         public SharedGameObject target;
-        [Tooltip("If target is null then use the target position")]
+        [Tooltip("Nếu target == null thì sẽ áp dụng Vector này làm mục tiêu")]
         public SharedVector3 targetPosition;
-
-
+        
+        
         private Vector3 position;
         
         public override void OnStart()
@@ -44,8 +44,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             return TaskStatus.Running;
         }
 
-        // Return targetPosition if targetTransform is null
-        private Vector3 Target()
+        
+        private Vector3 Target() // Return targetPosition if targetTransform is null 
         {
             if (target == null || target.Value == null) {
                 return targetPosition.Value;
@@ -53,8 +53,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             return target.Value.transform.position;
         }
 
-        // Reset the public variables
-        public override void OnReset()
+       
+        public override void OnReset() // Reset the public variables 
         {
             arriveDistance = 0.1f;
             lookAtTarget = true;

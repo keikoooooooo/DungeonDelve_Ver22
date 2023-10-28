@@ -9,30 +9,37 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
     [TaskIcon("Assets/Behavior Designer/Behavior Designer Movement/Editor/Icons/{SkinColor}WithinDistanceIcon.png")]
     public class WithinDistance : Conditional
     {
-        [Tooltip("Should the 2D version be used?")]
-        public bool usePhysics2D;
-        [Tooltip("The object that we are searching for")]
+        [Tooltip("Đối tượng cụ thể muốn kiểm tra khoảng cách đến")]
         public SharedGameObject targetObject;
-        [Tooltip("The tag of the object that we are searching for")]
+        
+        [Tooltip("Tag của đối tượng muốn kiểm tra khoảng cách đến")]
         public SharedString targetTag;
-        [Tooltip("The LayerMask of the objects that we are searching for")]
+        
+        [Tooltip("LayerMask cho các đối tượng bạn muốn kiểm tra khoảng cách đến")]
         public LayerMask objectLayerMask;
-        [Tooltip("If using the object layer mask, specifies the maximum number of colliders that the physics cast can collide with")]
+        
+        [Tooltip("Nếu sử dụng mặt nạ lớp đối tượng, hãy chỉ định số lượng máy va chạm tối đa mà vật lý có thể va chạm với")]
         public int maxCollisionCount = 200;
-        [Tooltip("The distance that the object needs to be within")]
+        
+        [Tooltip("Khoảng cách tối đa mà đối tượng cần phải nằm trong để trả về thành công")]
         public SharedFloat magnitude = 5;
-        [Tooltip("If true, the object must be within line of sight to be within distance. For example, if this option is enabled then an object behind a wall will not be within distance even though it may " +
-                 "be physically close to the other object")]
+        
+        [Tooltip("Nếu true, đối tượng cần phải có đường nhìn trực tiếp đến đối tượng hiện tại mới trả về thành công.")]
         public SharedBool lineOfSight;
-        [Tooltip("The LayerMask of the objects to ignore when performing the line of sight check")]
+        
+        [Tooltip("LayerMask cho các đối tượng bạn muốn bỏ qua khi kiểm tra đường nhìn (nếu lineOfSight là true)")]
         public LayerMask ignoreLayerMask = 1 << LayerMask.NameToLayer("Ignore Raycast");
-        [Tooltip("The raycast offset relative to the pivot position")]
+        
+        [Tooltip("Vị trí Offset của đối tượng hiện tại")]
         public SharedVector3 offset;
-        [Tooltip("The target raycast offset relative to the pivot position")]
+        
+        [Tooltip("Vị trí Offset của đối tượng mục tiêu")]
         public SharedVector3 targetOffset;
-        [Tooltip("Should a debug look ray be drawn to the scene view?")]
+        
+        [Tooltip("Có vẽ ra trong Scene View để kiểm tra đường nhìn?")]
         public SharedBool drawDebugRay;
-        [Tooltip("The object variable that will be set when a object is found what the object is")]
+        
+        [Tooltip("Sẽ chứa đối tượng đã được kiểm tra thành công nếu có.")]
         public SharedGameObject returnedObject;
 
         private List<GameObject> objects;
@@ -66,7 +73,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
         }
 
-        // returns success if any object is within distance of the current object. Otherwise it will return failure
+        // Trả về thành công nếu bất kỳ đối tượng nào nằm trong khoảng cách của đối tượng hiện tại. Nếu không nó sẽ trả về thất bại
         public override TaskStatus OnUpdate()
         {
             if (transform == null || objects == null)
@@ -74,22 +81,12 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
             if (overlapCast) {
                 objects.Clear();
-                if (usePhysics2D) {
-                    if (overlap2DColliders == null) {
-                        overlap2DColliders = new Collider2D[maxCollisionCount];
-                    }
-                    var count = Physics2D.OverlapCircleNonAlloc(transform.position, magnitude.Value, overlap2DColliders, objectLayerMask.value);
-                    for (int i = 0; i < count; ++i) {
-                        objects.Add(overlap2DColliders[i].gameObject);
-                    }
-                } else {
-                    if (overlapColliders == null) {
-                        overlapColliders = new Collider[maxCollisionCount];
-                    }
-                    var count = Physics.OverlapSphereNonAlloc(transform.position, magnitude.Value, overlapColliders, objectLayerMask.value);
-                    for (int i = 0; i < count; ++i) {
-                        objects.Add(overlapColliders[i].gameObject);
-                    }
+                if (overlapColliders == null) {
+                    overlapColliders = new Collider[maxCollisionCount];
+                }
+                var count = Physics.OverlapSphereNonAlloc(transform.position, magnitude.Value, overlapColliders, objectLayerMask.value);
+                for (int i = 0; i < count; ++i) {
+                    objects.Add(overlapColliders[i].gameObject);
                 }
             }
 
@@ -104,7 +101,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 if (Vector3.SqrMagnitude(direction) < sqrMagnitude) {
                     // the magnitude is less. If lineOfSight is true do one more check
                     if (lineOfSight.Value) {
-                        var hitTransform = MovementUtility.LineOfSight(transform, offset.Value, objects[i], targetOffset.Value, usePhysics2D, ignoreLayerMask.value, drawDebugRay.Value);
+                        var hitTransform = MovementUtility.LineOfSight(transform, offset.Value, objects[i], targetOffset.Value, false, ignoreLayerMask.value, drawDebugRay.Value);
                         if (hitTransform != null && MovementUtility.IsAncestor(hitTransform, objects[i].transform)) {
                             // the object has a magnitude less than the specified magnitude and is within sight. Set the object and return success
                             returnedObject.Value = objects[i];
@@ -123,7 +120,6 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
         public override void OnReset()
         {
-            usePhysics2D = false;
             targetObject = null;
             targetTag = string.Empty;
             objectLayerMask = 0;
@@ -143,7 +139,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
             var oldColor = UnityEditor.Handles.color;
             UnityEditor.Handles.color = Color.yellow;
-            UnityEditor.Handles.DrawWireDisc(Owner.transform.position, usePhysics2D ? Owner.transform.forward : Owner.transform.up, magnitude.Value);
+            UnityEditor.Handles.DrawWireDisc(Owner.transform.position, Owner.transform.up, magnitude.Value);
             UnityEditor.Handles.color = oldColor;
 #endif
         }

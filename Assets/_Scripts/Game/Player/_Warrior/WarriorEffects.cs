@@ -10,6 +10,9 @@ public class WarriorEffects : MonoBehaviour
     [Tooltip("Script điều khiển chính"), SerializeField] 
     private WarriorController warriorController;
 
+    [Tooltip("Script kiểm tra va chạm"), SerializeField]
+    private PhysicsDetection physicsDetection;
+    
     [Space, Tooltip("Vị trí sẽ xuất hiện effects")] 
     public Transform effectPoint;
     
@@ -43,14 +46,22 @@ public class WarriorEffects : MonoBehaviour
     
     // Coroutine
     private Coroutine _skillCoroutine;
-    
 
+
+    private void OnEnable()
+    {
+        RegisterEvent();
+    }
     private void Start()
     {
         Initialized();
     }
+    private void OnDisable()
+    {
+        UnRegisterEvent();
+    }
 
-    
+
     private void Initialized()
     {
         slotsProjectile = new GameObject();
@@ -60,8 +71,17 @@ public class WarriorEffects : MonoBehaviour
         _poolSwordHolding = new ObjectPooler<Reference>(swordHoldingPrefab, slotsProjectile.transform, 5);
         _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsProjectile.transform, 20);
     }
+    private void RegisterEvent()
+    {
+        physicsDetection.OnPhysicEnterEvent.AddListener(EffectHit);
+    }
+    private void UnRegisterEvent()
+    {
+        physicsDetection.OnPhysicEnterEvent.RemoveListener(EffectHit);
+    }
     
     
+
     private void EffectSlash(AnimationEvent eEvent)
     {
         _posEffect = effectPoint.position;
@@ -111,8 +131,8 @@ public class WarriorEffects : MonoBehaviour
     }
 
 
+    public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
     public void EffectHit(Vector3 _pos) =>  _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
-    
     
     private static Vector3 RandomPosition(Vector3 _posCurrent, float minVal, float maxVal)
     {

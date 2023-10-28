@@ -7,26 +7,18 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityRigidbody
     [TaskDescription("Applies a force to the rigidbody. Returns Success.")]
     public class AddForce : Action
     {
-        [Tooltip("The GameObject that the task operates on. If null the task GameObject is used.")]
+        [Tooltip("Rigibody của đối tượng")]
+        public Rigidbody rigidbody;
+        
+        [Tooltip("Object mà Rigibody cần tác động")]
         public SharedGameObject targetGameObject;
-        [Tooltip("The amount of force to apply")]
+        
+        [Tooltip("Lực áp dụng vào")]
         public SharedVector3 force;
-        [Tooltip("The type of force")]
+        
+        [Tooltip("Loại lực")]
         public ForceMode forceMode = ForceMode.Force;
-
-        // cache the rigidbody component
-        private Rigidbody rigidbody;
-        private GameObject prevGameObject;
-
-        public override void OnStart()
-        {
-            var currentGameObject = GetDefaultGameObject(targetGameObject.Value);
-            if (currentGameObject != prevGameObject) {
-                rigidbody = currentGameObject.GetComponent<Rigidbody>();
-                prevGameObject = currentGameObject;
-            }
-        }
-
+        
         public override TaskStatus OnUpdate()
         {
             if (rigidbody == null) {

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -25,8 +24,11 @@ public class ArcherEffects : MonoBehaviour
     private GameObject slotsProjectile;
     private ObjectPooler<EffectBase> _poolArrowCombo;
     private ObjectPooler<EffectBase> _poolArrowHold;
-    
 
+    private Coroutine _mouseHoldTimeCoroutine;
+    private float _holdingTime;
+    
+    
     private float angleYAttack => _archerController.model.eulerAngles.y;
     private bool isEnemy => _archerController.playerSensor.target != null;
     
@@ -61,9 +63,6 @@ public class ArcherEffects : MonoBehaviour
         TurnOffFxHold();
         var arrow = _poolArrowHold.Get(attackPoint.position, attackPoint.rotation);
         arrow.FIRE();
-        
-        _archerController.CanMove = false;
-        _archerController.CanRotation = false;
     }
     public void TurnOnFxHold()
     {
@@ -108,14 +107,14 @@ public class ArcherEffects : MonoBehaviour
         yield return new WaitForSeconds(.85f);
         
         // Out
-        var maxRadius = 4f;
+        var maxRadius = 3f;
         for (var i = 0; i < 20; i++)
         {
             // lấy 1 vị tri ngẫu nhiên trong bán kính maxRadius
             var randomPoint = Random.insideUnitCircle * maxRadius;
             
             // Từ vị trí xuất hiện và vị trí mục tiêu tìm ngẫu nhiên 1 vị trí mới trong bk vừa tìm đc
-            var currentPos = transform.position + new Vector3(randomPoint.x, 5f, randomPoint.y);
+            var currentPos = transform.position + new Vector3(randomPoint.x, 7f, randomPoint.y);
             var targetPos = _archerController.targetMarkerQ.transform.position + new Vector3(randomPoint.x, Random.Range(-.5f, .5f), randomPoint.y);
    
             var arrow = _poolArrowHold.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
@@ -126,8 +125,8 @@ public class ArcherEffects : MonoBehaviour
         effectSpecial.gameObject.SetActive(false);
         effectSpecial.Stop();
     }
-    
-    
+
+
     
     
     

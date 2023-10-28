@@ -18,7 +18,6 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator
         [Tooltip("Giá trị hòa trộn tối đa trong 1fr")]
         public float maxDelta;
         
-        
         private float animationBlend;
         
         public override void OnStart()

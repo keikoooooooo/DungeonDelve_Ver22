@@ -20,7 +20,9 @@ MonoBehaviour:
       trong AnimatorOverrideController","StringmValue":"02. Idle"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"05.
       Attack","IsShared":true,"IsGlobal":true,"Tooltip":"Slot trong AnimatorOverrideController","StringmValue":"05.
       Attack"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"06. Damage","IsShared":true,"IsGlobal":true,"Tooltip":"Slot
-      trong AnimatorOverrideController","StringmValue":"06. Damage"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+      trong AnimatorOverrideController","StringmValue":"06. Damage"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"08.
+      4D_Wait","IsShared":true,"IsGlobal":true,"Tooltip":"Slot trong AnimatorOverrideController","StringmValue":"08.
+      4D_Wait"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
       set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Horizontal","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
       set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Horizontal"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
       set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Attack","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters

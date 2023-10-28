@@ -19,10 +19,13 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedBool onlyY;
         [Tooltip("Đối tượng cần xoay")]
         public SharedGameObject thisRoration;
+        
         [Tooltip("Mục tiêu xoay tới")]
         public SharedGameObject target;
         [Tooltip("Vector hướng xoay, nếu mục tiêu là null")]
         public SharedVector3 targetRotation;
+
+        private Quaternion _rotation;
 
         public override TaskStatus OnUpdate()
         {
@@ -36,13 +39,15 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             return TaskStatus.Running;
         }
 
+     
+
         // Return targetPosition if targetTransform is null
         private Quaternion Target()
         {
             if (target == null || target.Value == null) {
                 return Quaternion.Euler(targetRotation.Value);
             }
-            var position = target.Value.transform.position - thisRoration.Value.transform.position;
+            var position = target.Value.transform.position - transform.position;
             if (onlyY.Value) {
                 position.y = 0;
             }

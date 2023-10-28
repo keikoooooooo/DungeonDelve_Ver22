@@ -35,6 +35,8 @@ public abstract class PlayerController : PlayerStateMachine
     protected bool IsAttackPressed => inputs.leftMouse;
     protected bool IsSkillPressed => inputs.e && _skillCooldown <= 0;
     protected bool IsSpecialPressed => inputs.q && _specialCooldown <= 0;
+    public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding,
+    
     
     
     // Player
@@ -42,8 +44,6 @@ public abstract class PlayerController : PlayerStateMachine
     [HideInInspector] private Vector3 _pushVelocity;       // hướng đẩy
     [HideInInspector] protected int _attackCounter;        // số lần attackCombo
     [HideInInspector] protected bool _isAttackPressed;     // có nhấn attack k ?
-    [HideInInspector] protected float _lastClickedAttack;  // thời gian nhấn -> nếu giữ hơn .3s -> attackHolding,
-
     private int _directionPushVelocity; // hướng đẩy 
     
     // Coroutine
@@ -88,18 +88,17 @@ public abstract class PlayerController : PlayerStateMachine
         if (IsAttackPressed)
         {
             _isAttackPressed = true;
-            _lastClickedAttack += Time.deltaTime;
+            MouseHoldTime += Time.deltaTime;
         }
         
         switch (_isAttackPressed)
         {
-            case true when !IsAttackPressed && _lastClickedAttack <= .25f:
+            case true when !IsAttackPressed && MouseHoldTime <= .25f:
                 AttackCombo();
                 break;
             
-            case true when IsAttackPressed && _lastClickedAttack >= .3f:
+            case true when IsAttackPressed && MouseHoldTime >= .3f:
                 _isAttackPressed = false;
-                _lastClickedAttack = 0;
                 CanAttack = false;
                 AttackHolding();
                 break;
@@ -107,12 +106,11 @@ public abstract class PlayerController : PlayerStateMachine
     }
     protected virtual void AttackCombo()
     {
-        _lastClickedAttack = 0;
-        
         CanMove = false;
         CanRotation = false;
         _isAttackPressed = false;
         
+        MouseHoldTime = 0;
         animator.SetTrigger(IDAttackCombo);
         //playerSensor.RotateToTarget();
     }
@@ -154,6 +152,7 @@ public abstract class PlayerController : PlayerStateMachine
     
     protected virtual void AttackEnd()
     {
+        MouseHoldTime = 0;
         CanAttack = true;
         CanMove = true;
         CanRotation = true;
@@ -173,6 +172,7 @@ public abstract class PlayerController : PlayerStateMachine
     
     public override void ReleaseAction()
     {
+        inputs.leftMouse = false;
         inputs.e = false;
         inputs.q = false;
         AttackEnd();

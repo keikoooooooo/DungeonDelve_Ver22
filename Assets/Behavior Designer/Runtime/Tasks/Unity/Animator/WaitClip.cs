@@ -16,19 +16,15 @@ namespace BehaviorDesigner.Runtime.Tasks
         {
             // Remember the start time.
             waitDuration = clip.length;
-            Debug.Log(waitDuration);
         }
         
         public override TaskStatus OnUpdate()
         {
-            if (waitDuration >= 0)
-            {
-                // Nếu chưa hoàn thành, node này sẽ luôn chạy
-                waitDuration -= Time.deltaTime;
-                return TaskStatus.Running;
-            }
-            // Tác vụ hoàn thành
-            return TaskStatus.Success;
+            if (waitDuration <= 0) 
+                return TaskStatus.Success;  // Tác vụ hoàn thành
+            
+            waitDuration -= Time.deltaTime; // Nếu chưa hoàn thành, node này sẽ luôn chạy
+            return TaskStatus.Running;
         }
         
         public override void OnReset()

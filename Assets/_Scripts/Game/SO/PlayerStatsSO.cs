@@ -24,9 +24,6 @@ public class PlayerStatsSO : ScriptableObject
     [Tooltip("Thời gian nhảy cho lần tiếp theo")]
     public float jumpTimeOut = .35f;
     
-    [Tooltip("Thời gian rơi sau khi nhảy")]
-    public float fallTimeOut = .35f;
-    
     [Tooltip("Thời gian hồi kỹ năng (giây)")]
     public float skillCooldown;
     

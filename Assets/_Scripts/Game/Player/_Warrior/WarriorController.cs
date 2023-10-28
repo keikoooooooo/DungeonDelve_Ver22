@@ -4,9 +4,6 @@ using UnityEngine;
 public class WarriorController : PlayerController
 {
     [Header("SubClass -------")] 
-    [Tooltip("Script kiểm tra va chạm"), SerializeField]
-    public PhysicsDetection physicsDetection;
-    
     [Tooltip("Thời gian chuyển đổi dạng anim: từ cầm vũ khí sang không cầm vũ khí"), SerializeField]
     private float conversionTime;
 
@@ -30,9 +27,7 @@ public class WarriorController : PlayerController
         
         HandleAttack();
     }
-
     
-
     private void BuffSkill()
     {
         moveSpeedTemp = Stats.runSpeed;
@@ -82,10 +77,6 @@ public class WarriorController : PlayerController
         sword.SetActive(false);
     }
     #endregion
-
-    
-    public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
-    
     
     
     // OverridingMethods

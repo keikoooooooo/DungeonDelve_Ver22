@@ -18,7 +18,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // [Tooltip("Có cập nhật vòng xoay NavMeshAgent khi tác vụ kết thúc không?")]
         // public SharedBool updateRotation = true;
         [Tooltip("Sẽ áp dụng Rotation lên Object này.")] 
-        public SharedTransform location;
+        public SharedGameObject objectRotation;
         [Tooltip("Object của mục tiêu cần thao tác")]
         public SharedGameObject target;
         
@@ -172,7 +172,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
             var normalized = NormalizedRotation(_target.eulerAngles.y);
             var quaternion = Quaternion.Euler(0, normalized, 0);
-            location.Value.rotation = Quaternion.RotateTowards(location.Value.rotation, quaternion, angularSpeed.Value * Time.deltaTime);
+            objectRotation.Value.transform.rotation = Quaternion.RotateTowards(objectRotation.Value.transform.rotation, quaternion, angularSpeed.Value);
         }
         private float NormalizedRotation(float rotation)
         {
@@ -188,7 +188,6 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         protected void BlendAnimation()
         {
             if(animator.Value == null || animIDBlend.Value == null) return;
-            
             _animationBlend = Mathf.MoveTowards(_animationBlend, targetBlend.Value, maxDeltaBlend * Time.deltaTime);
             animator.Value.SetFloat(animIDBlend.Value, _animationBlend);
         }

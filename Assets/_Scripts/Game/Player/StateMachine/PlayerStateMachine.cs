@@ -92,10 +92,11 @@ public abstract class PlayerStateMachine : MonoBehaviour
     [HideInInspector] protected float _specialCooldown;
     [HideInInspector] private float _jumpVelocity;
     [HideInInspector] private float _jumpTimeOut;
-    [HideInInspector] private float _fallTimeOut;
+    [HideInInspector] private bool _pressedJump;
     [HideInInspector] private float _gravity;
     
     // Coroutine
+    
     private Coroutine _handleSTCoroutine;
     #endregion
 
@@ -127,7 +128,6 @@ public abstract class PlayerStateMachine : MonoBehaviour
     /// </summary>
     protected virtual void SetVariables()
     {
-        _fallTimeOut = Stats.fallTimeOut;
         _gravity = -30f;
         CurrentST = 100;
         CanMove = true;
@@ -184,34 +184,32 @@ public abstract class PlayerStateMachine : MonoBehaviour
     private void HandleJumping()
     {
         if (IsGrounded && _jumpVelocity < 0)
-            _jumpVelocity = -9f;
+            _jumpVelocity = -1f;
         
-        if (IsGrounded)
+        switch (IsGrounded)
         {
-            animator.SetBool(IDJump, false);
-            animator.SetBool(IDFall, false);
+            case true when _pressedJump && IsIdle:
+                _pressedJump = false;
+                animator.SetBool(IDFall, true);
+                break;
             
-            _fallTimeOut = Stats.fallTimeOut;
-            _jumpTimeOut = _jumpTimeOut > 0 ? _jumpTimeOut - Time.deltaTime : 0;
-            if (_jumpTimeOut <= 0 && IsJump)
-            {
-                animator.SetBool(IDJump, true);
-                _jumpVelocity = Mathf.Sqrt(Stats.jumpHeight * -2f * _gravity);
-                inputs.space = false;
+            case true when _jumpTimeOut > 0:
+                _jumpTimeOut -= Time.deltaTime;
+                animator.SetBool(IDJump, false);
+                break;
+            
+            case true when _jumpTimeOut <= 0 && IsJump:
                 ReleaseAction();
-            }
+                animator.SetBool(IDJump, true);
+                animator.SetBool(IDFall, false);
+                _jumpVelocity = Mathf.Sqrt(Stats.jumpHeight * -2f * _gravity);
+                break;
         }
-        else
+        if (!IsGrounded)
         {
-            inputs.space = false;
-            
             _jumpTimeOut = Stats.jumpTimeOut;
-            _fallTimeOut = _fallTimeOut > 0 ? _fallTimeOut - Time.deltaTime : 0;
-            if (_fallTimeOut <= 0)
-            {
-                if(IsIdle)
-                    animator.SetBool(IDFall, true);
-            }
+            inputs.space = false;
+            _pressedJump = true;
         }
         
         _jumpVelocity += _gravity * Time.deltaTime;
@@ -255,4 +253,12 @@ public abstract class PlayerStateMachine : MonoBehaviour
     public abstract void ReleaseAction();
 
 
+}
+
+
+[Serializable]
+public struct EffectOffset
+{
+    public Vector3 position;
+    public Vector3 rotation;
 }

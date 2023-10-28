@@ -9,26 +9,26 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour, IDamageable
 {
     [Header("Reference")]
+    [Tooltip("Cây hành vi của Enemy"), SerializeField]
+    private BehaviorTree behaviorTree;
+        
     [Tooltip("Bộ phát animation"), SerializeField]
     private Animator animator;
     
-    [Tooltip("Phạm vi phát hiện và đuổi theo Player"), SerializeField]
+    [Tooltip("Phạm vi phát hiện Player"), SerializeField]
     private EnemySensor chaseSensor;
 
     [Tooltip("Phạm vi attack Player"), SerializeField]
     private EnemySensor attackSensor;
-
+    
 
     // Variables
     private bool _isChaseRange;
     private bool _isAttackRange;
     private bool _canAttack;
-
     private float _attackCooldown;
-
-    private NavMeshAgent _navMeshAgent;
+    
     private GameObject _player;
-    private BehaviorTree _behaviorTree;
     private Vector3 _rootPosition;
     
     private readonly int _animIDSpeed = Animator.StringToHash("AI_Speed");
@@ -61,13 +61,11 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     private void GetReference()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-        _behaviorTree = GetComponent<BehaviorTree>();
         _player = GameObject.FindGameObjectWithTag("Player");
         
-        _behaviorTree.SetVariableValue("RootPosition", transform.position);
+        behaviorTree.SetVariableValue("RootPosition", transform.position);
         if (_player)
-            _behaviorTree.SetVariableValue("Player", _player);
+            behaviorTree.SetVariableValue("Player", _player);
     }
 
     private void RegisterEvent()
@@ -96,17 +94,14 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         while (true)
         {
-            transform.rotation = Quaternion.Euler(Vector3.zero);
             CheckAttack();
+            transform.rotation = Quaternion.Euler(Vector3.zero);
 
-            if (_behaviorTree)
-            {
-                _behaviorTree.SetVariableValue("IsChaseRange", _isChaseRange);
-                _behaviorTree.SetVariableValue("IsAttackRange", _isAttackRange);
-                _behaviorTree.SetVariableValue("CanAttack", _canAttack);
-            }
+            behaviorTree.SetVariableValue("IsChaseRange", _isChaseRange);
+            behaviorTree.SetVariableValue("IsAttackRange", _isAttackRange);
+            behaviorTree.SetVariableValue("CanAttack", _canAttack);
             yield return null;
-        }
+        } 
     }
     private void CheckAttack()
     {
@@ -125,7 +120,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     public void Attack()
     {
         animator.SetTrigger(_animIDAttack);
-        var data = (SharedFloat)_behaviorTree.GetVariable("AttackCooldown");
+        var data = (SharedFloat)behaviorTree.GetVariable("AttackCooldown");
         _attackCooldown = data.Value;
         _canAttack = false;
     }
@@ -141,13 +136,13 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("PositionSpawn")) return;      
-        _behaviorTree.SetVariableValue("IsRoot", true); // nếu Enemy đi vào vị trí Root 
+        behaviorTree.SetVariableValue("IsRoot", true); // nếu Enemy đi vào vị trí Root 
 
     }
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("PositionSpawn")) return;    
-        _behaviorTree.SetVariableValue("IsRoot", false); // nếu Enemy đi ra khỏi vị trí Root 
+        behaviorTree.SetVariableValue("IsRoot", false); // nếu Enemy đi ra khỏi vị trí Root 
     }
 
 

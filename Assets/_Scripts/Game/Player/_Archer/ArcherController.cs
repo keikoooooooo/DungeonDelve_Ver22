@@ -115,7 +115,6 @@ public class ArcherController : PlayerController
         crosshair.SetAnimation("Center_IN", false);
         crosshair.AddAnimation("Center_Wait", false, 1);
         
-        //_effects.TurnOnFxHold();
         while (IsAttackPressed)
         {
             BlendAnimationValue();
@@ -125,7 +124,6 @@ public class ArcherController : PlayerController
             animator.SetBool(ID4Direction, IsAttackPressed);
             yield return null;
         }
-        //_effects.TurnOffFxHold();
         
         freeLookCam.m_XAxis.Value = xAxis.Value;
         animator.SetBool(ID4Direction, false);
@@ -144,8 +142,7 @@ public class ArcherController : PlayerController
         yAxis.Update(Time.fixedDeltaTime);
         targetCameraFocus.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
 
-        model.rotation = Quaternion.Slerp(model.rotation, Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0),
-            50f * Time.deltaTime);
+        model.rotation = Quaternion.Slerp(model.rotation, Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0), 50f * Time.deltaTime);
     }
     
     protected override void Special()

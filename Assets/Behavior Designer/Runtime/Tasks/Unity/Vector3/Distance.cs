@@ -10,8 +10,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityVector3
         public SharedVector3 firstVector3;
         [Tooltip("The second Vector3")]
         public SharedVector3 secondVector3;
-        [Tooltip("The distance")]
-        [RequiredField]
+        [Tooltip("The distance"), RequiredField]
         public SharedFloat storeResult;
 
         public override TaskStatus OnUpdate()

@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955968112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toFollow: {fileID: 7101714960535657653}
-  offset: {x: 1, y: 1, z: 1}
+  offset: {x: 0, y: 1, z: 1}
   canRotation: 1
 --- !u!114 &955968114
 MonoBehaviour:
@@ -64,6 +64,7 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 4096
+  color: {r: 0, g: 0, b: 0, a: 0}
   OnPhysicEnterEvent:
     m_PersistentCalls:
       m_Calls:
@@ -158,6 +159,7 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 4096
+  color: {r: 0, g: 0, b: 0, a: 0}
   OnPhysicEnterEvent:
     m_PersistentCalls:
       m_Calls:
@@ -657,7 +659,6 @@ MonoBehaviour:
     - 0
     pushTime: 0.19
     pushDirectionEnum: 0
-  physicsDetection: {fileID: 3977098039116055081}
   conversionTime: 20
   swordOnShoulder: {fileID: 1802613745006003178}
   sword: {fileID: 668992469876404971}
@@ -674,6 +675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   warriorController: {fileID: 1787091444842432454}
+  physicsDetection: {fileID: 955968114}
   effectPoint: {fileID: 1741749529}
   effectAngle:
   - {x: -71, y: -116, z: -51}
@@ -734,6 +736,7 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 4096
+  color: {r: 0, g: 0, b: 0, a: 0}
   OnPhysicEnterEvent:
     m_PersistentCalls:
       m_Calls:
@@ -907,11 +910,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1861811642122463954, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017169207
+      value: -0.000000017169208
       objectReference: {fileID: 0}
     - target: {fileID: 1861811642122463954, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000011304365
+      value: 0.0000000011304366
       objectReference: {fileID: 0}
     - target: {fileID: 4258665712214486848, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_Name
@@ -939,15 +942,15 @@ PrefabInstance:
       objectReference: {fileID: 1802613746254349211}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.10052927
+      value: 0.10052924
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 2.081654e-15
+      value: -0.000000033151213
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.2923352e-16
+      value: 0.0000000033496352
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_RootOrder

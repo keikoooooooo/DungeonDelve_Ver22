@@ -39,8 +39,6 @@ public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
                 flash.gameObject.SetActive(false);
                 flash.Stop();
                 break;
-            
-            default: Debug.Log("There is no activity type"); break;
         }
     }
 
@@ -64,8 +62,6 @@ public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
                 projectile.gameObject.SetActive(false);
                 projectile.Stop();
                 break;
-            
-            default: Debug.Log("There is no activity type"); break;
         }
     }
 
@@ -110,8 +106,6 @@ public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
         Hit(ActiveType.Disable, Vector3.zero);
         
         ReleaseCallback?.Invoke(this);
-        
-        Debug.Log("Release");
     }
     public Action<EffectBase> ReleaseCallback { get; set; }
 }

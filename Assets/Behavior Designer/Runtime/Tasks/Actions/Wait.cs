@@ -6,13 +6,13 @@ namespace BehaviorDesigner.Runtime.Tasks
     [TaskIcon("{SkinColor}WaitIcon.png")]
     public class Wait : Action
     {
-        [Tooltip("The amount of time to wait")]
+        [Tooltip("Thời gian chờ")]
         public SharedFloat waitTime = 1;
-        [Tooltip("Should the wait be randomized?")]
+        [Tooltip("Có muốn chờ thời gian ngẫu nhiên")]
         public SharedBool randomWait = false;
-        [Tooltip("The minimum wait time if random wait is enabled")]
+        [Tooltip("Thời gian chờ ngẫu nhiên nhỏ nhất")]
         public SharedFloat randomWaitMin = 1;
-        [Tooltip("The maximum wait time if random wait is enabled")]
+        [Tooltip("Thời gian chờ ngẫu nhiên lớn nhất")]
         public SharedFloat randomWaitMax = 1;
 
         // The time to wait

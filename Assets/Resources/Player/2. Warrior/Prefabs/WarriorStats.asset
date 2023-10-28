@@ -16,8 +16,7 @@ MonoBehaviour:
   runSpeed: 4.5
   runFastSpeed: 8
   dashEnergy: 25
-  jumpHeight: 2
-  jumpTimeOut: 0.33
-  fallTimeOut: 0.4
+  jumpHeight: 1.5
+  jumpTimeOut: 0.4
   skillCooldown: 2
   specialCooldown: 3
