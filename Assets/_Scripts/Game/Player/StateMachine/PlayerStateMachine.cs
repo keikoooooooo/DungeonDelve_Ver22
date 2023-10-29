@@ -175,7 +175,7 @@ public abstract class PlayerStateMachine : MonoBehaviour
     }
     private void HandleMovement()
     {
-        if (!CanMove) 
+        if (!CanMove || !CharacterController.enabled) 
             return;
         
         CharacterController.Move(AppliedMovement * Time.deltaTime 

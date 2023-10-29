@@ -9,6 +9,7 @@ public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
     public ParticleSystem hit;
 
     
+
     protected enum ActiveType
     {
         Enable,
@@ -88,8 +89,6 @@ public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
                 hit.gameObject.SetActive(false);
                 hit.Stop();
                 break;
-            
-            default: Debug.Log("There is no activity type"); break;
         }
     }
 

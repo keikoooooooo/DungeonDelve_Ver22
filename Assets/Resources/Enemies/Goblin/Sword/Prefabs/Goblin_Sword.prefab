@@ -111,7 +111,6 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 128
-  color: {r: 0, g: 0, b: 0, a: 0.57254905}
   OnPhysicEnterEvent:
     m_PersistentCalls:
       m_Calls:
@@ -4100,7 +4099,7 @@ MonoBehaviour:
             mesh: {fileID: 0}
     objectMeshPairs:
       _Buckets: ffffffff00000000ffffffff
-      _HashCodes: bc7100000000000000000000
+      _HashCodes: 1c50ff7f0000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -4552,7 +4551,7 @@ MonoBehaviour:
       redoOperations: []
     objectMeshPairs:
       _Buckets: 00000000ffffffffffffffff
-      _HashCodes: b87100000000000000000000
+      _HashCodes: 2450ff7f0000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -5429,13 +5428,13 @@ MonoBehaviour:
         Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
         ph\u00e1t animation c\u1ee7a models","AnimatormValue":21},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
         set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":4},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(129.882813,118.250076)"},"ID":38,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.Patrol","NodeData":{"Offset":"(393.333374,-17.766058)","Comment":"Tu\u1ea7n
-        tra theo c\u00e1c\nWaypoints \u0111\u01b0\u1ee3c \ncho tr\u01b0\u1edbc"},"ID":39,"Name":"Patrol","Instant":true,"SharedBoolrandomPatrol":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatwaypointPauseDuration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedTransformwaypoints":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Waypoints","IsShared":true,"TransformmValue":22},"SharedNavMeshAgentnavMeshAgent":{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
-        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":23},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatangularSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10},"SharedFloatarriveDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolstopOnTaskEnd":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"GameObjectmValue":24},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
+        tra theo c\u00e1c\nWaypoints \u0111\u01b0\u1ee3c \ncho tr\u01b0\u1edbc"},"ID":39,"Name":"Patrol","Instant":true,"SharedBoolrandomPatrol":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatwaypointPauseDuration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedTransformwaypoints":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Waypoints","IsShared":true},"SharedNavMeshAgentnavMeshAgent":{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
+        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":22},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatangularSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10},"SharedFloatarriveDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolstopOnTaskEnd":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"GameObjectmValue":23},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
         c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":25},"SharedStringanimIDBlend":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":24},"SharedStringanimIDBlend":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
         set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloattargetBlend":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"SinglemaxDeltaBlend":3}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
-        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":26},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"GameObjectmValue":27},{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":28},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
+        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":25},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"GameObjectmValue":26},{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":27},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
         c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Speed","IsShared":true,"Tooltip":"T\u1ed1c
         \u0111\u1ed9 di chuy\u1ec3n","SinglemValue":4.5},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AttackCooldown","IsShared":true,"Tooltip":"Th\u1eddi
         gian ch\u1edd m\u1ee1i l\u1ea7n t\u1ea5n c\u00f4ng","SinglemValue":4.5},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsChaseRange","IsShared":true,"Tooltip":"Player
@@ -5444,7 +5443,7 @@ MonoBehaviour:
         \u0111\u01b0\u1ee3c ph\u00e9p t\u1ea5n c\u00f4ng kh\u00f4ng ?","BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsRoot","IsShared":true,"Tooltip":"Enemy
         c\u00f3 di chuy\u1ec3n ra kh\u1ecfi v\u1ecb tr\u00ed Root ch\u01b0a ?","BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"RootPosition","IsShared":true,"Tooltip":"u
         v\u1ef1c Root th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0ykh\u1ecfi
-        khu v\u1ef1c Root n\u00e0y th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0y","Vector3mValue":"(0,0,0)"},{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Waypoints","IsShared":true,"TransformmValue":29},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceToPlayer","IsShared":true,"Tooltip":"Kho\u1ea3ng
+        khu v\u1ef1c Root n\u00e0y th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0y","Vector3mValue":"(0,0,0)"},{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Waypoints","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceToPlayer","IsShared":true,"Tooltip":"Kho\u1ea3ng
         c\u00e1ch t\u1edbi Player","SinglemValue":0}]}'
       fieldSerializationData:
         typeName: []
@@ -5474,14 +5473,12 @@ MonoBehaviour:
         - {fileID: 1433687991357251470}
         - {fileID: 1433687991357251470}
         - {fileID: 1433687991357251470}
-        - {fileID: 0}
         - {fileID: 621617714}
         - {fileID: 722547127229608329}
         - {fileID: 1433687991357251470}
         - {fileID: 621617714}
         - {fileID: 722547127229608329}
         - {fileID: 1433687991357251470}
-        - {fileID: 0}
         byteData: 
         byteDataArray: 
       Version: 1.7.3

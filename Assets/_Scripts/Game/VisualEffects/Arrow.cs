@@ -22,7 +22,6 @@ public class Arrow : EffectBase
     {
         Flash(ActiveType.Enable);
         Projectile(ActiveType.Enable);
-
         ResetRigidbody();
     }
 

@@ -24,6 +24,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 414968764651228119, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: lengthInSec
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 414968764651228119, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 20
       objectReference: {fileID: 0}
@@ -127,9 +131,13 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5862403451102149462, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 6130567110401474471, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_Name
-      value: PS_Hit_1 Variant 1
+      value: PS_Hit Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8463691503878869828, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
@@ -149,7 +157,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8463691503878869830, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
-      value: 10
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691503878869830, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691503878869830, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691503878869830, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691503878869830, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8463691503993214954, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
@@ -171,6 +195,10 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8463691503993214964, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 8463691504402978264, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -190,6 +218,10 @@ PrefabInstance:
     - target: {fileID: 8463691504402978266, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691504402978266, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 8463691504704056500, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
@@ -211,9 +243,17 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8463691504704056502, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8463691505142963012, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505142963012, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8463691505142963066, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
@@ -248,8 +288,32 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSizeZ.minScalar
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8463691505611291441, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
@@ -277,7 +341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621472650977618303, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
@@ -301,19 +365,7 @@ MonoBehaviour:
   timer: 0.6
   OnEndTimerEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8060338248066776081}
-        m_TargetAssemblyTypeName: Reference, Assembly-CSharp
-        m_MethodName: Release
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &8060338248066776081
 MonoBehaviour:
   m_ObjectHideFlags: 0

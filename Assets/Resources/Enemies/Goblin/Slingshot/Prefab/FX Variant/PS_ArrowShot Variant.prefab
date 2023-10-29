@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 713857164547537394, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 713857164547537394, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -59,13 +59,21 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1666480905900468479, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1666480905900468479, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 3561645032959701266, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3900479300194859924, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: CollisionModule.type
@@ -108,6 +116,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: RotationModule.curve.minMaxState
       value: 3
       objectReference: {fileID: 0}
@@ -125,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 4096
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: RotationBySpeedModule.x.minMaxState
@@ -134,6 +146,10 @@ PrefabInstance:
     - target: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: RotationBySpeedModule.y.minMaxState
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: RotationBySpeedModule.curve.minScalar
@@ -146,6 +162,14 @@ PrefabInstance:
     - target: {fileID: 4866998049803906987, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866998049803906987, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866998049803906987, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4939626660716641432, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_Pivot.x
@@ -165,14 +189,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6130567110401474471, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6130567110401474471, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6855706214591029898, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_Pivot.y
       value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 8030918794451633835, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: particle
+      value: 
+      objectReference: {fileID: 7576389217755142509}
+    - target: {fileID: 8030918794451633835, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: OnCollisionEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030918794451633835, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8030918794451633835, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
@@ -187,5 +223,26 @@ PrefabInstance:
       propertyPath: OnCollisionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8030918794451633835, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030918794451633835, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCollision
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030918794451633835, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Arrow, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030918794451633835, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+--- !u!198 &7576389217755142509 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+  m_PrefabInstance: {fileID: 6828911993698152633}
+  m_PrefabAsset: {fileID: 0}

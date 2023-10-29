@@ -127,6 +127,10 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5862403451102149462, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.88
+      objectReference: {fileID: 0}
     - target: {fileID: 6130567110401474471, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_Name
       value: PS_Hit_1 Variant
@@ -150,6 +154,10 @@ PrefabInstance:
     - target: {fileID: 8463691503878869830, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691503878869830, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8463691503993214954, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
@@ -191,6 +199,10 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8463691504402978266, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8463691504704056500, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -211,9 +223,17 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8463691504704056502, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 8463691505142963012, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505142963012, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8463691505142963066, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
@@ -251,6 +271,14 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463691505589832486, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      propertyPath: InitialModule.startSizeZ.minScalar
+      value: 0.44
+      objectReference: {fileID: 0}
     - target: {fileID: 8463691505611291441, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
@@ -277,7 +305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621472650977618303, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
@@ -314,6 +342,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7182304823289367173}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1654510265178733698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,3 +366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8a2bd8d10eafa4184b59cca8a25686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &7182304823289367173 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4026665142206687700, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+  m_PrefabInstance: {fileID: 6074576009545491281}
+  m_PrefabAsset: {fileID: 0}

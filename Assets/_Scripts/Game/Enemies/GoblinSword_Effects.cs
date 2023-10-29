@@ -22,15 +22,15 @@ public class GoblinSword_Effects : MonoBehaviour
     private ObjectPooler<Reference> _poolSword1Slash;
     private ObjectPooler<Reference> _poolSword2Slash;
     private ObjectPooler<Reference> _poolHit;
-    private Transform slotVFX;
+    private Transform slotsVFX;
 
     
     private void Start()
     {
-        slotVFX = new GameObject().transform;
-        _poolSword1Slash = new ObjectPooler<Reference>(sword1SlashPrefab, slotVFX, 5);
-        _poolSword2Slash = new ObjectPooler<Reference>(sword2SlashPrefab, slotVFX, 5);
-        _poolHit = new ObjectPooler<Reference>(hitPrefab, slotVFX, 5);
+        slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
+        _poolSword1Slash = new ObjectPooler<Reference>(sword1SlashPrefab, slotsVFX, 5);
+        _poolSword2Slash = new ObjectPooler<Reference>(sword2SlashPrefab, slotsVFX, 5);
+        _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsVFX, 5);
     }
 
 

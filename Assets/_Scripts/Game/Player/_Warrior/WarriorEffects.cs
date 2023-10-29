@@ -32,7 +32,7 @@ public class WarriorEffects : MonoBehaviour
     [SerializeField] private ParticleSystem special;
 
     
-    private GameObject slotsProjectile;
+    private Transform slotsVFX;
     private ObjectPooler<Reference> _poolSwordSlash;
     private ObjectPooler<Reference> _poolSwordPrick;
     private ObjectPooler<Reference> _poolSwordHolding;
@@ -47,40 +47,20 @@ public class WarriorEffects : MonoBehaviour
     // Coroutine
     private Coroutine _skillCoroutine;
 
-
-    private void OnEnable()
-    {
-        RegisterEvent();
-    }
+    
     private void Start()
     {
         Initialized();
     }
-    private void OnDisable()
-    {
-        UnRegisterEvent();
-    }
-
-
+    
     private void Initialized()
     {
-        slotsProjectile = new GameObject();
-        
-        _poolSwordSlash = new ObjectPooler<Reference>(swordSlashPrefab, slotsProjectile.transform, 10);
-        _poolSwordPrick = new ObjectPooler<Reference>(swordPrickPrefab, slotsProjectile.transform, 5);
-        _poolSwordHolding = new ObjectPooler<Reference>(swordHoldingPrefab, slotsProjectile.transform, 5);
-        _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsProjectile.transform, 20);
+        slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
+        _poolSwordSlash = new ObjectPooler<Reference>(swordSlashPrefab, slotsVFX, 5);
+        _poolSwordPrick = new ObjectPooler<Reference>(swordPrickPrefab, slotsVFX, 5);
+        _poolSwordHolding = new ObjectPooler<Reference>(swordHoldingPrefab, slotsVFX, 5);
+        _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsVFX, 5);
     }
-    private void RegisterEvent()
-    {
-        physicsDetection.OnPhysicEnterEvent.AddListener(EffectHit);
-    }
-    private void UnRegisterEvent()
-    {
-        physicsDetection.OnPhysicEnterEvent.RemoveListener(EffectHit);
-    }
-    
-    
 
     private void EffectSlash(AnimationEvent eEvent)
     {
@@ -132,8 +112,8 @@ public class WarriorEffects : MonoBehaviour
 
 
     public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
-    public void EffectHit(Vector3 _pos) =>  _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
-    
+
+    public void EffectHit(Vector3 _pos) => _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
     private static Vector3 RandomPosition(Vector3 _posCurrent, float minVal, float maxVal)
     {
         return _posCurrent + new Vector3(Random.Range(minVal, maxVal), 

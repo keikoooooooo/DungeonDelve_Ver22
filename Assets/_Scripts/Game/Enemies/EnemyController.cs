@@ -23,10 +23,11 @@ public class EnemyController : MonoBehaviour, IDamageable
     
 
     // Variables
-    private bool _isChaseRange;
-    private bool _isAttackRange;
-    private bool _canAttack;
+    public bool IsChaseRange { get; private set; }
+    public bool IsAttackRange { get; private set; }
+    public bool CanAttack { get; private set; }
     private float _attackCooldown;
+    
     
     private GameObject _player;
     private Vector3 _rootPosition;
@@ -42,8 +43,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     private void OnEnable()
     {
-        _isChaseRange = false;
-        _isAttackRange = false;
+        IsChaseRange = false;
+        IsAttackRange = false;
         if (_updateCoroutine != null)
             StopCoroutine(_updateCoroutine);
         _updateCoroutine = StartCoroutine(UpdateCoroutine());
@@ -85,10 +86,10 @@ public class EnemyController : MonoBehaviour, IDamageable
         attackSensor.E_PlayerExit -= OnAttackSensorExit;
     }
 
-    private void OnChaseSensorEnter() => _isChaseRange = true;
-    private void OnChaseSensorExit() => _isChaseRange = false;
-    private void OnAttackSensorEnter() => _isAttackRange = true;
-    private void OnAttackSensorExit() => _isAttackRange = false;
+    private void OnChaseSensorEnter() => IsChaseRange = true;
+    private void OnChaseSensorExit() => IsChaseRange = false;
+    private void OnAttackSensorEnter() => IsAttackRange = true;
+    private void OnAttackSensorExit() => IsAttackRange = false;
 
     private IEnumerator UpdateCoroutine()
     {
@@ -97,9 +98,9 @@ public class EnemyController : MonoBehaviour, IDamageable
             CheckAttack();
             transform.rotation = Quaternion.Euler(Vector3.zero);
 
-            behaviorTree.SetVariableValue("IsChaseRange", _isChaseRange);
-            behaviorTree.SetVariableValue("IsAttackRange", _isAttackRange);
-            behaviorTree.SetVariableValue("CanAttack", _canAttack);
+            behaviorTree.SetVariableValue("IsChaseRange", IsChaseRange);
+            behaviorTree.SetVariableValue("IsAttackRange", IsAttackRange);
+            behaviorTree.SetVariableValue("CanAttack", CanAttack);
             yield return null;
         } 
     }
@@ -107,7 +108,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (_attackCooldown <= 0)
         {
-            _canAttack = true;
+            CanAttack = true;
             return;
         }
         _attackCooldown -= Time.deltaTime;
@@ -122,7 +123,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         animator.SetTrigger(_animIDAttack);
         var data = (SharedFloat)behaviorTree.GetVariable("AttackCooldown");
         _attackCooldown = data.Value;
-        _canAttack = false;
+        CanAttack = false;
     }
     
     public void TakeDamage(int damage)

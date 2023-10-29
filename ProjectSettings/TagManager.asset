@@ -6,10 +6,10 @@ TagManager:
   tags:
   - Ground
   - Enemy
-  - SlotVFX
   - PositionSpawn
   - EnemyWeapon
   - PlayerWeapon
+  - SlotsVFX
   layers:
   - Default
   - TransparentFX
@@ -20,7 +20,7 @@ TagManager:
   - PostProcessing
   - Player
   - Player Weapon
-  - 
+  - IgnorePlayer
   - 
   - SpawnEnemy
   - Enemy

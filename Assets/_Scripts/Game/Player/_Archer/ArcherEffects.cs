@@ -21,7 +21,7 @@ public class ArcherEffects : MonoBehaviour
     [SerializeField] private ParticleSystem effectHolding;
     [SerializeField] private ParticleSystem effectSpecial;
     
-    private GameObject slotsProjectile;
+    private Transform slotsVFX;
     private ObjectPooler<EffectBase> _poolArrowCombo;
     private ObjectPooler<EffectBase> _poolArrowHold;
 
@@ -43,15 +43,14 @@ public class ArcherEffects : MonoBehaviour
     }
     private void Initialized()
     {
-        slotsProjectile = new GameObject();
-        _poolArrowCombo = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsProjectile.transform, 10);
-        _poolArrowHold = new ObjectPooler<EffectBase>(holdingPrefab, slotsProjectile.transform, 10);
+        slotsVFX = GameObject.FindWithTag("SlotsVFX").transform; 
+        _poolArrowCombo = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsVFX, 10);
+        _poolArrowHold = new ObjectPooler<EffectBase>(holdingPrefab, slotsVFX, 10);
 
-        effectSpecial.transform.SetParent(slotsProjectile.transform);
+        effectSpecial.transform.SetParent(slotsVFX);
     }
     
-
-
+    
     private void EffectArrowCombo(AnimationEvent eEvent)
     {
         var _quaternion = isEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
@@ -77,17 +76,9 @@ public class ArcherEffects : MonoBehaviour
 
     private void Effect_Skill(AnimationEvent eEvent)
     {
-        var arrow = _poolArrowCombo.Get(attackPoint.position);
-        if (isEnemy)
-        {
-            arrow.transform.rotation = RandomDirection();
-        }
-        else
-        {
-            var eulerAngles = attackPoint.eulerAngles;
-            var rotY = eulerAngles.y + eEvent.floatParameter;
-            arrow.transform.rotation  = Quaternion.Euler(angleXAttack, rotY, eulerAngles.z);
-        }
+        var position = attackPoint.position;
+        var rotation = Quaternion.Euler(isEnemy ? -6f : angleXAttack, attackPoint.eulerAngles.y + eEvent.intParameter, attackPoint.eulerAngles.z);
+        var arrow = _poolArrowCombo.Get(position, rotation);
         arrow.FIRE();
     }
     private void EffectSpecial(AnimationEvent eEvent)
@@ -125,17 +116,14 @@ public class ArcherEffects : MonoBehaviour
         effectSpecial.gameObject.SetActive(false);
         effectSpecial.Stop();
     }
-
-
-    
     
     
     private Quaternion RandomDirection()
     {
         var posTarget = _archerController.playerSensor.target.transform.position;
-        posTarget.y += 1.5f;
+        posTarget.y += 1.2f;
         var randRotX = Random.Range(-2f, 2f);
-        var randRotY = Random.Range(-1.5f, 1.5f);
+        var randRotY = Random.Range(-2f, 2f);
         return Quaternion.LookRotation(posTarget - attackPoint.transform.position) * Quaternion.Euler(randRotX, randRotY, 0);
     }
 

@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2143785699950347, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: lengthInSec
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143785699950347, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143785699950347, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143785699950347, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143785699950347, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2220993301917640032, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 30
@@ -15,49 +35,97 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2220993301917640039, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2220993302190369021, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220993302190369022, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2220993302190369022, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220993302190369022, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220993302190369023, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2220993302543574963, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2220993302543574963, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220993302543574963, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2220993302543574966, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220993302548870493, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220993302548870494, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2220993302548870494, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220993302548870494, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2220993302693525963, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220993302693526004, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2220993302693526004, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220993302693526004, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2220993303232518605, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220993303232518606, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2220993303232518606, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220993303232518606, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2220993303761809346, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220993303761809359, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: InitialModule.maxNumParticles
@@ -69,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2642749838293771946, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5069186395637674201, guid: ac21801f770b3d249a8f51f84ef31abf, type: 3}
       propertyPath: InitialModule.maxNumParticles

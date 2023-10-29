@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 298092480803631804}
   - component: {fileID: 7093725782271389711}
-  m_Layer: 0
+  - component: {fileID: 1910557621}
+  m_Layer: 13
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 1522844529908605188}
   - {fileID: 1453989523901468455}
-  - {fileID: 5234043978584254605}
+  - {fileID: 7136712035488501041}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49,11 +50,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flash: {fileID: 3036600528078184193}
   projectile: {fileID: 3110734843526066466}
-  hit: {fileID: 8550849804381272235}
+  hit: {fileID: 6702207383560019223}
   rb: {fileID: 0}
   sphereCollider: {fileID: 0}
   force: 0
   delayGravity: 0
+--- !u!114 &1910557621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861900723457355824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42a765dc2da0354fb65f72690ec3325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 25
+  OnEndTimerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7093725782271389711}
+        m_TargetAssemblyTypeName: EffectBase, Assembly-CSharp
+        m_MethodName: Release
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &4760077215791065167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65,6 +94,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_ArrowShot Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 851476135612272414, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7093725782271389711}
     - target: {fileID: 6281688092981152075, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -132,6 +169,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_Flash Variant Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 774083044537808264, guid: 3c9cccabf9f658f4eb853ea3a1daa133, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6215564988170449885, guid: 3c9cccabf9f658f4eb853ea3a1daa133, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -188,7 +229,7 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7515285941789221883, guid: 3c9cccabf9f658f4eb853ea3a1daa133, type: 3}
   m_PrefabInstance: {fileID: 4787190787769662714}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &5959616784773513130
+--- !u!1001 &8727256375880849942
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -243,15 +284,47 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_Hit Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5110397721210851698, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704671198751472538, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+      propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704671198751472538, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+      propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704671198751472538, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+      propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7093725782271389711}
+    - target: {fileID: 7704671198751472538, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+      propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704671198751472538, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+      propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Release
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704671198751472538, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+      propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EffectBase, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704671198751472538, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+      propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
---- !u!4 &5234043978584254605 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1880183195621136167, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
-  m_PrefabInstance: {fileID: 5959616784773513130}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &8550849804381272235 stripped
+--- !u!198 &6702207383560019223 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2602648976112764673, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
-  m_PrefabInstance: {fileID: 5959616784773513130}
+  m_PrefabInstance: {fileID: 8727256375880849942}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7136712035488501041 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1880183195621136167, guid: 4123f1503353f0c4f88f784ecafdf246, type: 3}
+  m_PrefabInstance: {fileID: 8727256375880849942}
   m_PrefabAsset: {fileID: 0}
