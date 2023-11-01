@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4441598674782106977}
   - component: {fileID: -6772596267206937375}
   - component: {fileID: 1032131979903804117}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Cliff04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2784145988302148788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.3, y: 1.575707, z: 2.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -96,7 +96,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ce48267027544be4abf282b72a79d004, type: 2}
 --- !u!114 &1032131979903804117
@@ -137,8 +137,8 @@ MonoBehaviour:
           - attachedToMeshFilter: 0
             mesh: {fileID: 0}
     objectMeshPairs:
-      _Buckets: ffffffff00000000ffffffff
-      _HashCodes: 7c9702000000000000000000
+      _Buckets: ffffffffffffffff00000000
+      _HashCodes: b4faff7f0000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -382,8 +382,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: 376.45337, y: -97.2, z: 225.68126}
-    objScalePrevFrame: {x: 10, y: 9.999999, z: 10.000001}
+    objPositionPrevFrame: {x: -29.96, y: -24.8, z: 48.88}
+    objScalePrevFrame: {x: 2.3000004, y: 1.575707, z: 2.3000004}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0

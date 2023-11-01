@@ -96,9 +96,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -6212622483565536109, guid: 02f94cebd4cfcfd429bcdb1324a91db3, type: 3}
+  m_Mesh: {fileID: 4300000, guid: aa3f76ccf8e2eba4fbf8858be79e269e, type: 2}
 --- !u!114 &314019502406977547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,8 +137,8 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: ffffffffffffffff00000000
-      _HashCodes: 06a400000000000000000000
+      _Buckets: 00000000ffffffffffffffff
+      _HashCodes: 782202000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -382,8 +382,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -2.4, y: -29.5, z: 349.2}
-    objScalePrevFrame: {x: 10.757251, y: 10.75725, z: 10.757251}
+    objPositionPrevFrame: {x: 16.68, y: -3.81, z: 35.49}
+    objScalePrevFrame: {x: 1.0000001, y: 1, z: 0.99999994}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0

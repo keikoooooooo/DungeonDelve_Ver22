@@ -29,16 +29,20 @@ public sealed class GroundCheck : MonoBehaviour
         while (true)
         {
             IsGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundMask);
+            //IsGrounded = Physics.CheckBox(groundCheck.position, size);
             yield return null;
         }
     }
 
+    public Vector3 size;
     private void OnDrawGizmos()
     {
         if(groundCheck == null) return;
         
         Gizmos.color = IsGrounded ? Color.green : Color.red;
         Gizmos.DrawSphere(groundCheck.position, groundRadius);
+        
+        //Gizmos.DrawWireCube(groundCheck.position, size);
     }
     
 }
