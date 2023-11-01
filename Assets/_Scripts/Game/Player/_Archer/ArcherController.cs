@@ -73,14 +73,8 @@ public class ArcherController : PlayerController
             worldPosition = _ray.GetPoint(400f);
 
             if (Physics.Raycast(_ray, out var raycastHit, 400f, crosshairMask))
-            {
                 worldPosition = raycastHit.point;
-                Debug.DrawLine(_effects.attackPoint.position, worldPosition, Color.green);
-            }
-            else
-            {
-                Debug.DrawLine(_effects.attackPoint.position, worldPosition, Color.red);
-            }
+            
             _effects.attackPoint.rotation = Quaternion.LookRotation(worldPosition - _effects.attackPoint.position);
         }
         else

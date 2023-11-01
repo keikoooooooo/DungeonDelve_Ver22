@@ -184,7 +184,7 @@ public abstract class PlayerStateMachine : MonoBehaviour
     private void HandleJumping()
     {
         if (IsGrounded && _jumpVelocity < 0)
-            _jumpVelocity = -1f;
+            _jumpVelocity = -9.81f;
         
         switch (IsGrounded)
         {

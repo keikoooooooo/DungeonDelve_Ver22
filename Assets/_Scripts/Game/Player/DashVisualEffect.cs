@@ -21,8 +21,10 @@ public class DashVisualEffect : MonoBehaviour
     private Tween _volumeTween;
     private Tween _metarialTween;
     
-    private static readonly int Dissolve = Shader.PropertyToID("_Dissolve");
+    private static readonly int Dissolve = Shader.PropertyToID("_EmissionColor");
 
+    private readonly string _Emission = "_Emission";
+    
     
     private void Start()
     {
@@ -49,9 +51,9 @@ public class DashVisualEffect : MonoBehaviour
         });
         
         _metarialTween?.Kill();
-        _metarialTween = DOVirtual.Float(0f, 0.5f, .3f, SetValueMetarial).OnComplete(() =>
+        _metarialTween = DOVirtual.Float(-10f, 2.5f, .3f, SetValueMetarial).OnComplete(() =>
         {
-            DOVirtual.Float(0.5f, 0f, .25f, SetValueMetarial);
+            DOVirtual.Float(2.5f, -10f, .25f, SetValueMetarial);
         });
 
     }
@@ -63,7 +65,17 @@ public class DashVisualEffect : MonoBehaviour
 
     private void SetValueMetarial(float value)
     {
-        metarialsList.ForEach(x => x.SetFloat(Dissolve, value));
+        //metarialsList.ForEach(x => x.SetFloat(Dissolve, value));
+
+        foreach (var material in metarialsList)
+        {
+            var color = material.GetColor(_Emission);
+            // color = new Color(color.r * Mathf.Pow(2, value),
+            //                   color.r * Mathf.Pow(2, value),
+            //                   color.r * Mathf.Pow(2, value),
+            //                   color.a);
+            material.SetColor(_Emission, color);
+        }
     }
     
     

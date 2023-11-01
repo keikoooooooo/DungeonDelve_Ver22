@@ -547,6 +547,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3834213586654520725, guid: 1e4a7160d9d435b458b32b9b02ca82dd, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834213586654520725, guid: 1e4a7160d9d435b458b32b9b02ca82dd, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834213586654520725, guid: 1e4a7160d9d435b458b32b9b02ca82dd, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 5069186395637674201, guid: 1e4a7160d9d435b458b32b9b02ca82dd, type: 3}
       propertyPath: looping
       value: 0

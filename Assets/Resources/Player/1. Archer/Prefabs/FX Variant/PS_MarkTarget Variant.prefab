@@ -15,6 +15,18 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8514851217782128540, guid: 6974d652ce3eab449ba29d3f2ee1e44e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8514851217782128540, guid: 6974d652ce3eab449ba29d3f2ee1e44e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8514851217782128540, guid: 6974d652ce3eab449ba29d3f2ee1e44e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 8514851218697116673, guid: 6974d652ce3eab449ba29d3f2ee1e44e, type: 3}
       propertyPath: m_RootOrder
       value: 0

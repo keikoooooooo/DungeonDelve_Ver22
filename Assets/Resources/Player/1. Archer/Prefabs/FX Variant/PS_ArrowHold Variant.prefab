@@ -67,6 +67,18 @@ PrefabInstance:
       propertyPath: InitialModule.startSizeY.scalar
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2452755948500435389, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452755948500435389, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452755948500435389, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 2513509512116943162, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -127,6 +139,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4118160375777962079, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118160375777962079, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118160375777962079, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 4856425470843854423, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.9
@@ -138,6 +162,18 @@ PrefabInstance:
     - target: {fileID: 4856425470843854423, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524448593505894579, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524448593505894579, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524448593505894579, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
       objectReference: {fileID: 0}
     - target: {fileID: 5851278937520957826, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
       propertyPath: m_LocalPosition.x
@@ -219,6 +255,18 @@ PrefabInstance:
       propertyPath: InitialModule.startSize.scalar
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7343938926088421195, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7343938926088421195, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7343938926088421195, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 7376259557926564016, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -254,6 +302,14 @@ PrefabInstance:
     - target: {fileID: 8794978795818885614, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8958611762869510506, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8958611762869510506, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}

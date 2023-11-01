@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 90502197071295512, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 90502197071295512, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 90502197071295512, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 2357266298684419205, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -155,9 +167,41 @@ PrefabInstance:
       propertyPath: InitialModule.maxNumParticles
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 3678223718979823103, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678223718979823103, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678223718979823103, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994100991123031574, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994100991123031574, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994100991123031574, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 4582776411086377293, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758743925021996186, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758743925021996186, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
       objectReference: {fileID: 0}
     - target: {fileID: 4771572299577060760, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
       propertyPath: m_LocalScale.x
@@ -255,6 +299,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5639648073190623397, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639648073190623397, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 6253156721638724012, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
       propertyPath: m_Name
       value: PS_Prick Variant
@@ -262,6 +314,14 @@ PrefabInstance:
     - target: {fileID: 6253156721638724012, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611940464196648310, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611940464196648310, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
       objectReference: {fileID: 0}
     - target: {fileID: 6821988178394118890, guid: 9e07adc56281ad242b1da61c68d77437, type: 3}
       propertyPath: InitialModule.maxNumParticles

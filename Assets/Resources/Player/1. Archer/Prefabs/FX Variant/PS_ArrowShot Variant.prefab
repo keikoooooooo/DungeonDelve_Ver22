@@ -55,6 +55,18 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.65
       objectReference: {fileID: 0}
+    - target: {fileID: 1568875383771253210, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568875383771253210, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568875383771253210, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 1666480905900468479, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
@@ -171,6 +183,18 @@ PrefabInstance:
       propertyPath: m_Pivot.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4939626660716641432, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4939626660716641432, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4939626660716641432, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
+      objectReference: {fileID: 0}
     - target: {fileID: 6130567110401474471, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_Name
       value: PS_ArrowShot Variant
@@ -182,6 +206,18 @@ PrefabInstance:
     - target: {fileID: 6855706214591029898, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_Pivot.y
       value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855706214591029898, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855706214591029898, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855706214591029898, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -25431899
       objectReference: {fileID: 0}
     - target: {fileID: 6980095837417042849, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       propertyPath: m_Layer

@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
 --- !u!114 &-992165262564652218
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -32,7 +29,6 @@ MonoBehaviour:
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   mode:
     m_OverrideState: 0
     m_Value: 0
@@ -42,13 +38,9 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
   clamp:
     m_OverrideState: 1
     m_Value: 0.06
-    min: 0
-    max: 0.2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,31 +71,21 @@ MonoBehaviour:
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
     m_Value: 0
   contrast:
     m_OverrideState: 1
     m_Value: 0
-    min: -100
-    max: 100
   colorFilter:
     m_OverrideState: 1
     m_Value: {r: 0.8467845, g: 1.0919615, b: 1.2731794, a: 1}
-    hdr: 1
-    showAlpha: 0
-    showEyeDropper: 1
   hueShift:
     m_OverrideState: 1
     m_Value: 0
-    min: -180
-    max: 180
   saturation:
     m_OverrideState: 1
     m_Value: 0
-    min: -100
-    max: 100
 --- !u!114 &7938643357367842225
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -117,27 +99,18 @@ MonoBehaviour:
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
     m_Value: -0.48
-    min: -1
-    max: 1
   xMultiplier:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
   yMultiplier:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
   center:
     m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
   scale:
     m_OverrideState: 1
     m_Value: 1
-    min: 0.01
-    max: 5
