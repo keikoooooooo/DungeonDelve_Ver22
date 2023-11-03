@@ -2,16 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Coal
   m_Shader: {fileID: 4800000, guid: 8f5d24681d92ea5488ac88aebb6035ac, type: 3}
-  m_ShaderKeywords: LOD_FADE_PERCENTAGE _EMISSION _EMISSIVEPARALLAX_ON _METALLICGLOSSMAP
-    _NORMALMAP _USEEMISSIVE_ON _USEMETALMASKASEMISSIVEPARALLAX_ON _USEMETALMASKASPARALLAX_ON
-    _USEMETALRIM_ON
+  m_ValidKeywords:
+  - _USEEMISSIVE_ON
+  m_InvalidKeywords:
+  - LOD_FADE_PERCENTAGE
+  - _EMISSION
+  - _EMISSIVEPARALLAX_ON
+  - _METALLICGLOSSMAP
+  - _NORMALMAP
+  - _USEMETALMASKASEMISSIVEPARALLAX_ON
+  - _USEMETALMASKASPARALLAX_ON
+  - _USEMETALRIM_ON
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -125,8 +133,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _ASEOutlineWidth: 0
+    - _AlphaCutoff: 0.5
     - _AnisoBrush: 1.14
     - _BaseCellOffset: -2
     - _BaseCellSharpness: 5
@@ -241,7 +251,7 @@ Material:
     - _EmissionColor: {r: 0, g: 1.118, b: 0.7479035, a: 0}
     - _Emissivecolor: {r: 0.052643288, g: 0.06576795, b: 0.122641504, a: 1}
     - _HColor: {r: 0.8661256, g: 0.5588235, b: 1, a: 1}
-    - _MainColor: {r: 0.084905684, g: 0.07296354, b: 0.068485245, a: 1}
+    - _MainColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _Metalcolor: {r: 1, g: 1, b: 1, a: 0}
     - _Metalcolormultiplier: {r: 1, g: 1, b: 1, a: 0}
@@ -253,7 +263,7 @@ Material:
     - _SColor: {r: 0.36289823, g: 0.33493727, b: 0.43382353, a: 1}
     - _SSAmbColor: {r: 0.61764705, g: 0.7626775, b: 1, a: 1}
     - _SSColor: {r: 0.53676474, g: 1, b: 0.84665316, a: 1}
-    - _Shadowcolor: {r: 0.044455335, g: 0.049511626, b: 0.084905684, a: 1}
+    - _Shadowcolor: {r: 0.21711464, g: 0.24796517, b: 0.38679248, a: 1}
     - _SketchColor: {r: 0.6544118, g: 0.85699797, b: 1, a: 1}
     - _SnowAccumulation: {r: 0, g: 1, b: 0, a: 0}
     - _SnowDetailTiling: {r: 4, g: 4, b: 0, a: 0}
@@ -265,3 +275,4 @@ Material:
     - _WaterAccumulationCracksPuddles2: {r: 0, g: 1, b: 0, a: 1}
     - _WaterColor: {r: 0, g: 0, b: 0, a: 0}
     - _WaterColor2: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

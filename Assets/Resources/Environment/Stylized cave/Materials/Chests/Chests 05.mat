@@ -2,15 +2,23 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Chests 05
   m_Shader: {fileID: 4800000, guid: 8f5d24681d92ea5488ac88aebb6035ac, type: 3}
-  m_ShaderKeywords: TCP2_BUMP TCP2_DISABLE_WRAPPED_LIGHT TCP2_SPEC_TOON TCP2_STYLIZED_FRESNEL
-    _METALLICGLOSSMAP _NORMALMAP _USEMASKASMETALRIM_ON _USEMASKASMETAL_ON
+  m_ValidKeywords:
+  - _USEMASKASMETALRIM_ON
+  - _USEMASKASMETAL_ON
+  m_InvalidKeywords:
+  - TCP2_BUMP
+  - TCP2_DISABLE_WRAPPED_LIGHT
+  - TCP2_SPEC_TOON
+  - TCP2_STYLIZED_FRESNEL
+  - _METALLICGLOSSMAP
+  - _NORMALMAP
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -88,6 +96,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
     - _BaseCellOffset: 0
@@ -110,7 +119,7 @@ Material:
     - _Metalcolorhighrange: 10
     - _Metalcolorlowrange: -3
     - _Metallic: 0.34
-    - _MetallicHighlightrange: 0.01
+    - _MetallicHighlightrange: 0.09
     - _Mode: 0
     - _Normalmapscale: 1
     - _OcclusionStrength: 1
@@ -169,3 +178,4 @@ Material:
     - _Shadowcolor: {r: 0.3309007, g: 0.3917255, b: 0.490566, a: 1}
     - _SketchColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  m_BuildTextureStacks: []

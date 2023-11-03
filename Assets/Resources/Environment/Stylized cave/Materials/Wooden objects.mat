@@ -2,15 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wooden objects
   m_Shader: {fileID: 4800000, guid: 8f5d24681d92ea5488ac88aebb6035ac, type: 3}
-  m_ShaderKeywords: TCP2_DISABLE_WRAPPED_LIGHT _KEYWORD0_KEY0 _NORMALMAP _OUTLINEDIFFUSECOLOR_ON
-    _OUTLINE_ON _USEMASKASMETALRIM_ON _USEMASKASMETAL_ON _USEMETALRIM_ON _USEMETAL_ON
+  m_ValidKeywords:
+  - _USEMASKASMETALRIM_ON
+  - _USEMASKASMETAL_ON
+  m_InvalidKeywords:
+  - TCP2_DISABLE_WRAPPED_LIGHT
+  - _KEYWORD0_KEY0
+  - _NORMALMAP
+  - _OUTLINEDIFFUSECOLOR_ON
+  - _OUTLINE_ON
+  - _USEMETALRIM_ON
+  - _USEMETAL_ON
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -100,6 +109,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _ASEOutlineWidth: 0
     - _AlphaCutoff: 0.5
@@ -129,7 +139,7 @@ Material:
     - _Metalcolorhighrange: 14
     - _Metalcolorlowrange: -10
     - _Metallic: 0
-    - _MetallicHighlightrange: 0.01
+    - _MetallicHighlightrange: 0.17
     - _MetallicHighlightrange1: 0.985
     - _Mode: 0
     - _Normalmapscale: 1
@@ -201,3 +211,4 @@ Material:
     - _SnowAngle: {r: 0, g: 1, b: 0, a: 0}
     - _SnowColor: {r: 0.94, g: 0.96, b: 1, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  m_BuildTextureStacks: []
