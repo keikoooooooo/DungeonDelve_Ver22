@@ -53,7 +53,7 @@ public static class CustomHandle
             float size = UnityEditor.HandleUtility.GetHandleSize(basePos) * 0.1f;
 
             UnityEditor.EditorGUI.BeginChangeCheck();
-            Vector3 hPos3 = UnityEditor.Handles.FreeMoveHandle(basePos, Quaternion.identity, size, snap, UnityEditor.Handles.DotHandleCap);
+            var fmh_56_73_638346440854153555 = Quaternion.identity; Vector3 hPos3 = UnityEditor.Handles.FreeMoveHandle(basePos, size, snap, UnityEditor.Handles.DotHandleCap);
         
             if (UnityEditor.EditorGUI.EndChangeCheck())
             {
