@@ -9,15 +9,18 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Warrior_WeaponSword_New
   m_Shader: {fileID: 4800000, guid: 7e6ba1a56f9df544cb80508cde78b8ff, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - TCP2_UV_NORMALS_FULL
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -94,12 +97,12 @@ Material:
     - _NormalsUVType: 0
     - _OcclusionStrength: 1
     - _Offset: 0
-    - _OutlineWidth: 0.34
+    - _OutlineWidth: 0.25
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RampSmoothing: 0.5
-    - _RampThreshold: 0.5
+    - _RampThreshold: 0.65
     - _ReadMask: 255
     - _ReceiveShadowsOff: 1
     - _RimMax: 1.1
@@ -128,7 +131,7 @@ Material:
     - _Offest: {r: 0, g: 0, b: 0, a: 0}
     - _OutlineColorVertex: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.4, g: 0.4, b: 0.4, a: 0.5}
-    - _SColor: {r: 1, g: 0.6745283, b: 0.6745283, a: 1}
+    - _SColor: {r: 1, g: 1, b: 1, a: 1}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2561628631317424060

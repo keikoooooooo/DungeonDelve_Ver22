@@ -22,6 +22,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Archer_WeaponBow_New
   m_Shader: {fileID: 4800000, guid: 7e6ba1a56f9df544cb80508cde78b8ff, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - TCP2_UV_NORMALS_FULL
   m_InvalidKeywords:
@@ -32,6 +34,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -136,7 +139,7 @@ Material:
     - _NormalsUVType: 0
     - _OcclusionStrength: 1
     - _Offset: 0
-    - _OutlineWidth: 0.34
+    - _OutlineWidth: 0.25
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0

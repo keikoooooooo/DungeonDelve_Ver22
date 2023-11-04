@@ -22,15 +22,18 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Warrior_Face_New
   m_Shader: {fileID: 4800000, guid: 7e6ba1a56f9df544cb80508cde78b8ff, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - TCP2_UV_NORMALS_FULL
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -99,11 +102,11 @@ Material:
     - _NormalsUVType: 0
     - _OcclusionStrength: 1
     - _Opacity: 1
-    - _OutlineWidth: 0.1
+    - _OutlineWidth: 0.2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RampSmoothing: 0.5
-    - _RampThreshold: 0.5
+    - _RampThreshold: 0.65
     - _ReceiveShadowsOff: 1
     - _RimMax: 1.1
     - _RimMin: 0.85
@@ -121,15 +124,15 @@ Material:
     - _DissolvespeedXY: {r: 0, g: 0, b: 0, a: 0}
     - _EdgeColor: {r: 0, g: 3.890196, b: 4, a: 0}
     - _Emission: {r: 0, g: 0.0007123162, b: 0.0007314645, a: 1}
-    - _HColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+    - _HColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
     - _Maincolor: {r: 0.7609469, g: 0.8547776, b: 0.9433962, a: 1}
     - _NoiseUVSpeed: {r: 0, g: 0, b: 0, a: 0}
     - _Noisecolor: {r: 0.2470588, g: 0.3012382, b: 0.3607843, a: 1}
     - _NoisespeedXYEmissonZPowerW: {r: 0.5, g: 0, b: 2, a: 1}
     - _Offest: {r: 0, g: 0, b: 0, a: 0}
-    - _OutlineColorVertex: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColorVertex: {r: 0.35686275, g: 0.21568628, b: 0.14901961, a: 1}
     - _RimColor: {r: 0.4, g: 0.4, b: 0.4, a: 0.5}
-    - _SColor: {r: 1, g: 0.740566, b: 0.740566, a: 1}
+    - _SColor: {r: 1, g: 0.95686275, b: 0.99607843, a: 1}
     - _SpecularColor: {r: 0, g: 0, b: 0, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
