@@ -139,7 +139,7 @@ Material:
     - _NormalsUVType: 0
     - _OcclusionStrength: 1
     - _Offset: 0
-    - _OutlineWidth: 0.37
+    - _OutlineWidth: 0.4
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
