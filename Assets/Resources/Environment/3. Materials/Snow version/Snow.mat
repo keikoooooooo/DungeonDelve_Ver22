@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Snow
   m_Shader: {fileID: 4800000, guid: 3d80c5cb42aeedb47a18206488d0138e, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _NORMALMAP
@@ -20,6 +22,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -134,15 +137,15 @@ Material:
     - _NoiseRimBlend: 0.93
     - _NoiseRimStr: -28.75
     - _Noiserimblend: 2
-    - _Normalmapscale: 1
+    - _Normalmapscale: 4.59
     - _OcclusionStrength: 1
     - _Parallax: 0.0415
     - _ParallaxTiling: 1
     - _PuddleMask: 0
     - _PuddleMaskTiling: 1
-    - _RimStr: 0.7
+    - _RimStr: 4.48
     - _Rimlightingmultiply: 1
-    - _Rimoffset: 0.8
+    - _Rimoffset: -2.1
     - _SandnoiseTile: 2.65
     - _ScatteringPower: 4
     - _ShadowMultiplier: 1
@@ -172,10 +175,10 @@ Material:
     - _DiffuseScatteringCol2: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 0.785, g: 0.785, b: 0.785, a: 1}
-    - _MainColor: {r: 0.9386792, g: 0.9848204, b: 1, a: 1}
-    - _RimColor: {r: 0.5330188, g: 0.79452825, b: 1, a: 1}
+    - _MainColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SColor: {r: 0.195, g: 0.195, b: 0.195, a: 1}
-    - _Shadowcolor: {r: 0.09019607, g: 0.18558683, b: 0.36862746, a: 1}
+    - _Shadowcolor: {r: 0.252314, g: 0.39025104, b: 0.6603774, a: 1}
     - _SnowAccumulation: {r: 0, g: 1, b: 0, a: 0}
     - _SnowDetailTiling: {r: 4, g: 4, b: 0, a: 0}
     - _SnowMaskTiling: {r: 0.3, g: 0.3, b: 0, a: 0}
