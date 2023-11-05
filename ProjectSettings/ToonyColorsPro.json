@@ -3,13 +3,15 @@
     "SubFolders": true,
     "OverwriteConfig": false,
     "LoadAllShaders": false,
-    "CustomOutputPath": "Resources\\Shaders",
+    "CustomOutputPath": "Resources",
     "LastImplementationExportImportPath": "C:/Users/Admin/Desktop/Unity Training/Fantasy3D/Assets",
     "OpenedFoldouts": [
+        "SURFACE",
         "STYLIZATION",
+        "THIRD PARTY PLUGINS",
+        "TRANSPARENCY/BLENDING",
         "LIGHTING",
-        "SPECIAL EFFECTS",
-        "TERRAIN"
+        "SHADER STATES"
     ],
     "UseCustomFont": true,
     "CustomFont": {

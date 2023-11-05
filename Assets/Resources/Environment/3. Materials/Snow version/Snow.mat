@@ -86,11 +86,27 @@ Material:
         m_Texture: {fileID: 2800000, guid: 948e1b7327c293a4081ba3c18eaab19f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SandSnow:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SandSnowNormalmap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Sandnoise:
         m_Texture: {fileID: 2800000, guid: 5144f9ccb3e9d3442acc7e1f0b2e9db6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WSDiffuse:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WSNormalmap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -113,12 +129,18 @@ Material:
     - _DiffuseScatteringContraction: 8
     - _DiffuseScatteringContraction2: 8
     - _DiffuseScatteringEnabled: 0
+    - _Distancecolorblending: 2
     - _DoubleSided: 0
     - _DstBlend: 0
+    - _Falloffcolor: 0
     - _GlossMapScale: 0
     - _Glossiness: 0.028
     - _Glossiness2: 0.5
     - _GlossyReflections: 1
+    - _Grasshardness: 1
+    - _Grassheight: -2.54
+    - _Grassmaskdetail: 0.5
+    - _Grasssharpen: 0.1
     - _HighlightMultiplier: 1
     - _IndirectDiffuseContribution: 1
     - _Lighting: 0
@@ -143,9 +165,15 @@ Material:
     - _ParallaxTiling: 1
     - _PuddleMask: 0
     - _PuddleMaskTiling: 1
+    - _RampSmooth: 0.1
+    - _RampThreshold: 0.5
+    - _RimMax: 1
+    - _RimMin: 0.5
     - _RimStr: 4.48
     - _Rimlightingmultiply: 1
     - _Rimoffset: -2.1
+    - _SandSnowTiling: 1
+    - _SandSnownoiseTile: 3
     - _SandnoiseTile: 2.65
     - _ScatteringPower: 4
     - _ShadowMultiplier: 1
@@ -155,14 +183,20 @@ Material:
     - _SnowNormalStrength: 1
     - _SnowOpacity: 0.5
     - _SnowSlopeDamp: 0.75
+    - _SnowThickness: 0.02
+    - _SnowThr: 0.5
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SyncWaterOfMaterials: 0
     - _TranslucencyStrength: 0.5
+    - _TriplanarFalloff: 4
     - _UVSec: 0
     - _UseCombinedMap: 0
     - _UseMixMapping: 0
     - _UsePOM: 0
+    - _WSTiling: 1
+    - _WS_Normalmapscale: 1
+    - _WS_blend: 0
     - _WaterSlopeDamp: 0.5
     - _Wetness: 0
     - _ZWrite: 1
@@ -171,6 +205,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color2: {r: 1, g: 1, b: 1, a: 1}
+    - _Color_D: {r: 1, g: 1, b: 1, a: 0}
     - _DiffuseScatteringCol: {r: 0, g: 0, b: 0, a: 0}
     - _DiffuseScatteringCol2: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -180,8 +215,12 @@ Material:
     - _SColor: {r: 0.195, g: 0.195, b: 0.195, a: 1}
     - _Shadowcolor: {r: 0.252314, g: 0.39025104, b: 0.6603774, a: 1}
     - _SnowAccumulation: {r: 0, g: 1, b: 0, a: 0}
+    - _SnowAngle: {r: 0, g: 1, b: 0, a: 0}
+    - _SnowColor: {r: 0.94, g: 0.96, b: 1, a: 1}
     - _SnowDetailTiling: {r: 4, g: 4, b: 0, a: 0}
     - _SnowMaskTiling: {r: 0.3, g: 0.3, b: 0, a: 0}
+    - _SnowRimColor: {r: 1, g: 1, b: 1, a: 0.7}
+    - _SnowShadowColor: {r: 0.19999996, g: 0.19999996, b: 0.29999998, a: 1}
     - _SnowTiling: {r: 2, g: 2, b: 0, a: 0}
     - _SpecColor: {r: 0.11764705, g: 0.11764705, b: 0.11764705, a: 1}
     - _WaterAccumulationCracksPuddles: {r: 0, g: 1, b: 0, a: 1}
