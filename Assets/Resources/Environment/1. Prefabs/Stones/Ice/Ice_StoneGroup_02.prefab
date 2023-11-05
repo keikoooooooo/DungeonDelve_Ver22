@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 3560385052899103941, guid: 97ae16c679d7b0a43b90ac32c8ca79fd, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 5468202284356825001, guid: 7813dbbeed0416742b008824e6c7bdc4, type: 3}
+      objectReference: {fileID: 4300000, guid: a5643f46a6b89e444b396c862ae8ebfc, type: 2}
     - target: {fileID: 3604229113959472477, guid: 97ae16c679d7b0a43b90ac32c8ca79fd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -127,8 +127,8 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: 00000000ffffffffffffffff
-      _HashCodes: e2dd03000000000000000000
+      _Buckets: ffffffff00000000ffffffff
+      _HashCodes: 162202000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -367,13 +367,13 @@ MonoBehaviour:
     reductionPending: 0
     prevFeasibleTarget: {fileID: 933189188210989247}
     runOnThreads: 0
-    triangleCount: 2018
+    triangleCount: 1291
     lastDrawer: {fileID: 0}
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -137.5058, y: -15.14, z: 26.79}
-    objScalePrevFrame: {x: 1.2491297, y: 1.2491297, z: 1.2491297}
+    objPositionPrevFrame: {x: -138.79, y: -6.03, z: 15.61}
+    objScalePrevFrame: {x: 1.5575771, y: 1.557577, z: 1.5575765}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0
