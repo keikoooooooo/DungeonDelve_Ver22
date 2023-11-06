@@ -10,6 +10,7 @@ TagManager:
   - EnemyWeapon
   - PlayerWeapon
   - SlotsVFX
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -27,8 +28,8 @@ TagManager:
   - Enemy Weapon
   - 
   - 
-  - ChaseRange
-  - AttackRange
+  - Detection Range
+  - 
   - 
   - 
   - Obstacle

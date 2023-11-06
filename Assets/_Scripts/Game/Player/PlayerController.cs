@@ -36,6 +36,10 @@ public abstract class PlayerController : PlayerStateMachine
     protected bool IsSkillPressed => inputs.e && _skillCooldown <= 0;
     protected bool IsSpecialPressed => inputs.q && _specialCooldown <= 0;
     public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding,
+
+    public bool DetectionEnemy => _enemies.Count > 0;
+    
+    private List<GameObject> _enemies = new();
     
     
     
@@ -44,12 +48,12 @@ public abstract class PlayerController : PlayerStateMachine
     [HideInInspector] private Vector3 _pushVelocity;       // hướng đẩy
     [HideInInspector] protected int _attackCounter;        // số lần attackCombo
     [HideInInspector] protected bool _isAttackPressed;     // có nhấn attack k ?
-    private int _directionPushVelocity; // hướng đẩy 
     
-    // Coroutine
+    private int _directionPushVelocity; // hướng đẩy 
+    private Tween _pushVelocityTween;
+    
     private Coroutine _pushVelocityCoroutine;
-    private Tween pushVelocityTween;
-
+    private Coroutine _rotateToTargetCoroutine;
 
     protected override void SetVariables()
     {
@@ -93,13 +97,13 @@ public abstract class PlayerController : PlayerStateMachine
         
         switch (_isAttackPressed)
         {
-            case true when !IsAttackPressed && MouseHoldTime <= .25f:
+            case true when !IsAttackPressed && MouseHoldTime < .3f:
                 AttackCombo();
                 break;
             
             case true when IsAttackPressed && MouseHoldTime >= .3f:
-                _isAttackPressed = false;
                 CanAttack = false;
+                _isAttackPressed = false;
                 AttackHolding();
                 break;
         }
@@ -112,7 +116,8 @@ public abstract class PlayerController : PlayerStateMachine
         
         MouseHoldTime = 0;
         animator.SetTrigger(IDAttackCombo);
-        //playerSensor.RotateToTarget();
+
+        RotateToEnemy();
     }
     protected abstract void AttackHolding();// Định nghĩa lại đòn tấn công của nhân vật.
     protected virtual void Skill()
@@ -124,7 +129,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanMove = false;
         CanRotation = false;
         
-        _skillCooldown = Stats.skillCooldown;
+        _skillCooldown = PlayerConfig.skillCooldown;
         OnSkillCooldownEvent();
     }
     protected virtual void Special()
@@ -136,7 +141,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanMove = false;
         CanRotation = false;
         
-        _specialCooldown = Stats.specialCooldown;
+        _specialCooldown = PlayerConfig.specialCooldown;
         OnSpecialCooldownEvent();
     }
 
@@ -144,11 +149,58 @@ public abstract class PlayerController : PlayerStateMachine
     {
         _pushVelocity = model.forward * (attackCustom.pushForce[_attackCounter] * _directionPushVelocity);
         
-        pushVelocityTween?.Kill();
-        pushVelocityTween = transform.DOMove(transform.position + _pushVelocity, attackCustom.pushTime);
+        _pushVelocityTween?.Kill();
+        _pushVelocityTween = transform.DOMove(transform.position + _pushVelocity, attackCustom.pushTime);
     }
+    
+    
 
+    #region Handle rotation when attacking
+    public void AddEnemy(Collider _collider)
+    {
+        if(_enemies.Contains(_collider.gameObject)) 
+            return;
+        _enemies.Add(_collider.gameObject);
+    }
+    public void RemoveEnemy(Collider _collider)
+    {
+        if(!_enemies.Contains(_collider.gameObject)) 
+            return;
+        _enemies.Remove(_collider.gameObject);
+    }
+    public Transform FindClosestEnemy()
+    {
+        _enemies.Sort((a, b)
+            => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+        return _enemies[0].transform;
+    }
+    private void RotateToEnemy()
+    {
+        if(!DetectionEnemy) 
+            return;
+        
+        if (_rotateToTargetCoroutine != null) StopCoroutine(RotateToTargetCoroutine());
+        _rotateToTargetCoroutine = StartCoroutine(RotateToTargetCoroutine());
+    }
+    private IEnumerator RotateToTargetCoroutine()
+    {
+        var target = FindClosestEnemy();
+        var direction = Quaternion.LookRotation(target.position - transform.position);
 
+        var directionLocal = Mathf.Floor(transform.eulerAngles.y);
+        var directionTaget = Mathf.Floor(direction.eulerAngles.y);
+
+        var rotation = Quaternion.Euler(0, direction.eulerAngles.y, 0);
+        while (Mathf.Abs(directionTaget - directionLocal) > .2f)
+        {
+            model.rotation = Quaternion.RotateTowards(model.rotation, rotation, 20f);
+            directionLocal = Mathf.Floor(model.eulerAngles.y);
+            yield return null;
+        }
+    }
+    #endregion
+
+    
     
     protected virtual void AttackEnd()
     {

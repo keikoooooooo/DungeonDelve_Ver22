@@ -57,8 +57,28 @@ PrefabInstance:
       value: BigRoom_01 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 833187232577172415, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
-      propertyPath: dataContainer.objectMeshPairs._Buckets.Array.data[1]
+      propertyPath: dataContainer.objScalePrevFrame.z
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 833187232577172415, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
+      propertyPath: dataContainer.objPositionPrevFrame.x
+      value: -207.68002
+      objectReference: {fileID: 0}
+    - target: {fileID: 833187232577172415, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
+      propertyPath: dataContainer.objPositionPrevFrame.y
+      value: 19.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 833187232577172415, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
+      propertyPath: dataContainer.objPositionPrevFrame.z
+      value: -39.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 833187232577172415, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
+      propertyPath: dataContainer.objectMeshPairs._Buckets.Array.data[0]
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 833187232577172415, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
+      propertyPath: dataContainer.objectMeshPairs._Buckets.Array.data[1]
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 833187232577172415, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
       propertyPath: dataContainer.objectMeshPairs._Buckets.Array.data[2]
@@ -66,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 833187232577172415, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
       propertyPath: dataContainer.objectMeshPairs._HashCodes.Array.data[0]
-      value: 2147270188
+      value: 2147113776
       objectReference: {fileID: 0}
     - target: {fileID: 965860345381013473, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -111,6 +131,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1055814176748312725, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
     - {fileID: 2582479908838064360, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
+    - {fileID: 3637536730912152069, guid: ca98b583a3ad3084b9101eb3329fffe6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -184,10 +205,30 @@ MonoBehaviour:
             mesh: {fileID: 0}
           - attachedToMeshFilter: 0
             mesh: {fileID: 0}
+      - isReduceDeep: 0
+        objectMeshPairs:
+          _Buckets: ffffffff00000000ffffffff
+          _HashCodes: 4a920c000000000000000000
+          _Next: ffffffff0000000000000000
+          _Count: 1
+          _Version: 1
+          _FreeList: -1
+          _FreeCount: 0
+          _Keys:
+          - {fileID: 1671092675516415689}
+          - {fileID: 0}
+          - {fileID: 0}
+          _Values:
+          - attachedToMeshFilter: 1
+            mesh: {fileID: 0}
+          - attachedToMeshFilter: 0
+            mesh: {fileID: 0}
+          - attachedToMeshFilter: 0
+            mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: ffffffffffffffff00000000
-      _HashCodes: 36befc7f0000000000000000
+      _Buckets: ffffffff00000000ffffffff
+      _HashCodes: 4a920c000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -413,7 +454,7 @@ MonoBehaviour:
     preserveBorders: 1
     preserveUVSeams: 1
     preserveUVFoldover: 1
-    useEdgeSort: 0
+    useEdgeSort: 1
     recalculateNormals: 0
     maxIterations: 100
     aggressiveness: 7
@@ -426,7 +467,7 @@ MonoBehaviour:
     reductionPending: 0
     prevFeasibleTarget: {fileID: 1671092675516415689}
     runOnThreads: 0
-    triangleCount: 26582
+    triangleCount: 15949
     lastDrawer: {fileID: 0}
     foldoutAutoLOD: 0
     foldoutBatchFew: 0

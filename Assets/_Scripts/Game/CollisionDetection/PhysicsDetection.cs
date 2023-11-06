@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,6 +27,11 @@ public class PhysicsDetection : MonoBehaviour
             OnPhysicEnterEvent?.Invoke(point);
         }
     }
-    
- 
+
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radiusCheck);
+    }
 }

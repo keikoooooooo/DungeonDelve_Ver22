@@ -187,7 +187,7 @@ public class ArcherController : PlayerController
                 model.rotation = Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0);
                 animator.SetTrigger(IDSpecial);
                 
-                _specialCooldown = Stats.specialCooldown;
+                _specialCooldown = PlayerConfig.specialCooldown;
                 OnSpecialCooldownEvent();
                 yield break;
             }

@@ -8,15 +8,19 @@ public sealed class GroundCheck : MonoBehaviour
     [Tooltip("Vị trí kiểm tra va chạm với mặt đất"), SerializeField]
     private Transform groundCheck;
 
-    [Tooltip("Bán kính kiểm tra va chạm với mặt đất"), SerializeField, Range(0, 1)]
-    private float groundRadius;
+    [Tooltip("Khoảng cách va chạm với mặt đất từ vị trí groundCheck"), SerializeField, Range(0, 1)]
+    private float distance;
     
     [Tooltip("Kiểm tra va chạm với Layer nào?"), SerializeField]
     private LayerMask groundMask;
 
+    
     public bool IsGrounded { get; private set; } // có đang trên mặt đất ?
     
+    
+    
     private Coroutine _groundCheckCoroutine;
+    
     
     private void Start()
     {
@@ -28,21 +32,18 @@ public sealed class GroundCheck : MonoBehaviour
     {
         while (true)
         {
-            IsGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundMask);
-            //IsGrounded = Physics.CheckBox(groundCheck.position, size);
+            IsGrounded = Physics.Raycast(groundCheck.position, Vector3.down, distance, groundMask);
             yield return null;
         }
     }
 
-    public Vector3 size;
     private void OnDrawGizmos()
     {
-        if(groundCheck == null) return;
+        if(groundCheck == null) 
+            return;
         
         Gizmos.color = IsGrounded ? Color.green : Color.red;
-        Gizmos.DrawSphere(groundCheck.position, groundRadius);
-        
-        //Gizmos.DrawWireCube(groundCheck.position, size);
+        Gizmos.DrawRay(groundCheck.position, Vector3.down * distance);
     }
     
 }

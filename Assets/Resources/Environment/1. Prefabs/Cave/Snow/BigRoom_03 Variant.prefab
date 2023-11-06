@@ -96,7 +96,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 545407b54680a8546a260329e22b5edc, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3360147212597374094, guid: 7f10c873d4b5b4341930e391329b0014, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -150,8 +151,8 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: ffffffff00000000ffffffff
-      _HashCodes: 0e46fc7f0000000000000000
+      _Buckets: 00000000ffffffffffffffff
+      _HashCodes: 12f40b000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -395,8 +396,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -149.66505, y: 6.62, z: 80.084694}
-    objScalePrevFrame: {x: 1.0000002, y: 1, z: 1.0000002}
+    objPositionPrevFrame: {x: 0, y: 0, z: 0}
+    objScalePrevFrame: {x: 1, y: 1, z: 1}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0
@@ -455,8 +456,8 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: ffffffffffffffff00000000
-      _HashCodes: 1846fc7f0000000000000000
+      _Buckets: 00000000ffffffffffffffff
+      _HashCodes: 18f40b000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -700,8 +701,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -149.66505, y: 6.62, z: 80.084694}
-    objScalePrevFrame: {x: 1.0000002, y: 1, z: 1.0000002}
+    objPositionPrevFrame: {x: 0, y: 0, z: 0}
+    objScalePrevFrame: {x: 1, y: 1, z: 1}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0

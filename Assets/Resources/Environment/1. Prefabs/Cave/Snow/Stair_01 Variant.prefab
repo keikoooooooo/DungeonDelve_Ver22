@@ -92,7 +92,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stair_01 Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7827501410716465754, guid: b3496238e9409554ab43d0ef22e5d789, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -451,8 +452,8 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: 00000000ffffffffffffffff
-      _HashCodes: 2a66fb7f0000000000000000
+      _Buckets: ffffffffffffffff00000000
+      _HashCodes: 7ef60b000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -696,8 +697,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -175.69, y: 14.045, z: 29.808}
-    objScalePrevFrame: {x: 0.47708935, y: 0.32828003, z: 0.29757267}
+    objPositionPrevFrame: {x: 0, y: 0, z: 0}
+    objScalePrevFrame: {x: 1, y: 1, z: 1}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0

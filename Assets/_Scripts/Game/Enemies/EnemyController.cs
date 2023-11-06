@@ -15,11 +15,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     [Tooltip("Bộ phát animation"), SerializeField]
     private Animator animator;
     
-    [Tooltip("Phạm vi phát hiện Player"), SerializeField]
-    private EnemySensor chaseSensor;
-
-    [Tooltip("Phạm vi attack Player"), SerializeField]
-    private EnemySensor attackSensor;
     
 
     // Variables
@@ -52,13 +47,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void Start()
     {
         GetReference();
-        RegisterEvent();
     }
-    private void OnDestroy()
-    {
-        UnRegisterEvent();
-    }
-
+  
 
     private void GetReference()
     {
@@ -68,29 +58,14 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (_player)
             behaviorTree.SetVariableValue("Player", _player);
     }
+    
 
-    private void RegisterEvent()
-    {
-        chaseSensor.E_PlayerEnter += OnChaseSensorEnter;
-        chaseSensor.E_PlayerExit += OnChaseSensorExit;
-
-        attackSensor.E_PlayerEnter += OnAttackSensorEnter;
-        attackSensor.E_PlayerExit += OnAttackSensorExit;
-    }
-    private void UnRegisterEvent()
-    {
-        chaseSensor.E_PlayerEnter -= OnChaseSensorEnter;
-        chaseSensor.E_PlayerExit -= OnChaseSensorExit;
-
-        attackSensor.E_PlayerEnter -= OnAttackSensorEnter;
-        attackSensor.E_PlayerExit -= OnAttackSensorExit;
-    }
-
-    private void OnChaseSensorEnter() => IsChaseRange = true;
-    private void OnChaseSensorExit() => IsChaseRange = false;
-    private void OnAttackSensorEnter() => IsAttackRange = true;
-    private void OnAttackSensorExit() => IsAttackRange = false;
-
+    // Gọi bằng Events
+    public void SetChaseSensor(bool isType) => IsChaseRange = isType;
+    public void SetAttackSensor(bool isType) => IsAttackRange = isType;
+    
+    
+    
     private IEnumerator UpdateCoroutine()
     {
         while (true)
@@ -133,7 +108,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
 
     
-    // Event Methods
+    
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("PositionSpawn")) return;      

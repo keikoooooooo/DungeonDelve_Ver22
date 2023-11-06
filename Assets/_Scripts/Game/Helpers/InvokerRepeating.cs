@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class InvokerRepeating : MonoBehaviour
 {
     [Tooltip("Thời gian chờ trước khi bắt đầu")]
-    public float timeStart;
+    public float startTime;
     [Tooltip("Thời gian chờ cho mỗi lần gọi tiếp theo")] 
     public float timeRepeat;
     
@@ -38,7 +38,7 @@ public class InvokerRepeating : MonoBehaviour
     
     private IEnumerator InvokeCoroutine()
     {
-        yield return new WaitForSeconds(timeStart);
+        yield return new WaitForSeconds(startTime);
         while (true)
         {
             OnCallEvent?.Invoke();

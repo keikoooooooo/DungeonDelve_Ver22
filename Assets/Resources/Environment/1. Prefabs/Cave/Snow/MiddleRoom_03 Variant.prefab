@@ -96,7 +96,8 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: fbb8fa4cc78f9b94e9fc3c47842c901d, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 710379818646605167, guid: 41f180b93f460b74683250e4341381e7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -151,7 +152,7 @@ MonoBehaviour:
       redoOperations: []
     objectMeshPairs:
       _Buckets: ffffffff00000000ffffffff
-      _HashCodes: 729dfb7f0000000000000000
+      _HashCodes: f0f50b000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -395,8 +396,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -133.18, y: -2.78, z: -60.03}
-    objScalePrevFrame: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+    objPositionPrevFrame: {x: 0, y: 0, z: 0}
+    objScalePrevFrame: {x: 1, y: 1, z: 1}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0

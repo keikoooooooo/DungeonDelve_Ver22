@@ -24,11 +24,11 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         {
             if (HasArrived())
             {
-                return TaskStatus.Success;
+                SetDestination(Target());
             }
             
             BlendAnimation();
-            SetDestination(Target());
+            
             RotationToTarget(Target());
             
             return TaskStatus.Running;

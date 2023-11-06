@@ -9,6 +9,7 @@ public class TriggerDetection : MonoBehaviour
     
     [Space]
     public UnityEvent<Collider> OnTriggerEnterEvent;
+    public UnityEvent<Collider> OnTriggerExitEvent;
 
 
     private void OnTriggerEnter(Collider other)
@@ -16,5 +17,12 @@ public class TriggerDetection : MonoBehaviour
         if(!layerToCheck.Contains(other.gameObject)) return;
         
         OnTriggerEnterEvent?.Invoke(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(!layerToCheck.Contains(other.gameObject)) return;
+        
+        OnTriggerExitEvent?.Invoke(other);
     }
 }

@@ -15,8 +15,8 @@ public class WarriorController : PlayerController
     
 
     [HideInInspector] private float moveSpeedTemp;
-    private float conversionTimeTemp;
-    
+    private float _conversionTimeTemp;
+    private bool _characterControllerNull;
     private Coroutine _weaponUnEquippedCoroutine;
 
     
@@ -30,13 +30,13 @@ public class WarriorController : PlayerController
     
     private void BuffSkill()
     {
-        moveSpeedTemp = Stats.runSpeed;
-        Stats.runSpeed += Stats.runSpeed * .4f;
+        moveSpeedTemp = PlayerConfig.runSpeed;
+        PlayerConfig.runSpeed += PlayerConfig.runSpeed * .4f;
         
     }
     private void UnBuffSkill()
     {
-        Stats.runSpeed = moveSpeedTemp;
+        PlayerConfig.runSpeed = moveSpeedTemp;
     }
 
     
@@ -45,18 +45,18 @@ public class WarriorController : PlayerController
     {
         while (true)
         {
-            conversionTimeTemp = conversionTimeTemp > 0 ? conversionTimeTemp - Time.deltaTime : 0;
+            _conversionTimeTemp = _conversionTimeTemp > 0 ? _conversionTimeTemp - Time.deltaTime : 0;
 
-            if (conversionTimeTemp <= 0 && IsIdle && !swordOnShoulder.activeInHierarchy)
+            if (_conversionTimeTemp <= 0 && IsIdle && !swordOnShoulder.activeInHierarchy)
             {
                 animator.SetBool(IDWeaponEquip, false);
                 CanMove = false;
                 CanRotation = false;
             }
             
-            else if (!IsIdle || !IsGrounded)
+            else if (!_characterControllerNull || !IsIdle || !IsGrounded)
             {
-                conversionTimeTemp = conversionTime;
+                _conversionTimeTemp = conversionTime;
             }
             
             yield return null;
@@ -64,7 +64,7 @@ public class WarriorController : PlayerController
     }
     private void WeaponEquipped() // Cầm vũ khí
     {
-        conversionTimeTemp = conversionTime;
+        _conversionTimeTemp = conversionTime;
         animator.SetBool(IDWeaponEquip, true);
         sword.SetActive(true);
         swordOnShoulder.SetActive(false);
@@ -84,7 +84,7 @@ public class WarriorController : PlayerController
     {
         base.SetVariables();
  
-        conversionTimeTemp = conversionTime;
+        _conversionTimeTemp = conversionTime;
          
         sword.SetActive(false);
         swordOnShoulder.SetActive(true);
@@ -94,7 +94,15 @@ public class WarriorController : PlayerController
             StopCoroutine(_weaponUnEquippedCoroutine);
         _weaponUnEquippedCoroutine = StartCoroutine(WeaponUnEquippedCoroutine());
     }
-    
+
+    protected override void SetReference()
+    {
+        base.SetReference();
+
+        _characterControllerNull = CharacterController != null;
+    }
+
+
     protected override void AttackCombo()
     {
         WeaponEquipped();

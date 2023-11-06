@@ -117,7 +117,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _BaseCellOffset: -1
+    - _BaseCellOffset: -1.5
     - _BaseCellSharpness: 2
     - _BumpScale: 0.37
     - _Cull: 2
@@ -210,10 +210,10 @@ Material:
     - _DiffuseScatteringCol2: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 0.785, g: 0.785, b: 0.785, a: 1}
-    - _MainColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
+    - _MainColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SColor: {r: 0.195, g: 0.195, b: 0.195, a: 1}
-    - _Shadowcolor: {r: 0.252314, g: 0.39025104, b: 0.6603774, a: 1}
+    - _Shadowcolor: {r: 0.10012461, g: 0.16269372, b: 0.2830189, a: 1}
     - _SnowAccumulation: {r: 0, g: 1, b: 0, a: 0}
     - _SnowAngle: {r: 0, g: 1, b: 0, a: 0}
     - _SnowColor: {r: 0.94, g: 0.96, b: 1, a: 1}

@@ -17,7 +17,7 @@ public class PlayerWalkState : PlayerBaseState
     }
     public override void UpdateState()
     {
-        _machine.AppliedMovement = _machine.InputMovement.normalized * _machine.Stats.walkSpeed;
+        _machine.AppliedMovement = _machine.InputMovement.normalized * _machine.PlayerConfig.walkSpeed;
         
         currentBlend = Mathf.MoveTowards(currentBlend, .5f, 5f * Time.deltaTime);
         _machine.animator.SetFloat(_machine.IDSpeed, currentBlend);

@@ -9,11 +9,19 @@ public class CollisionDetection : MonoBehaviour
     
     [Space]
     public UnityEvent<Collision> OnCollisionEnterEvent;
+    public UnityEvent<Collision> OnCollisionExitEvent;
 
     private void OnCollisionEnter(Collision other)
     {
         if(!layerToCheck.Contains(other.gameObject)) return;
         
         OnCollisionEnterEvent?.Invoke(other);
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if(!layerToCheck.Contains(other.gameObject)) return;
+        
+        OnCollisionExitEvent?.Invoke(other);
     }
 }

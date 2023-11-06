@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Quản lí tất cả state của player
@@ -16,19 +15,13 @@ public abstract class PlayerStateMachine : MonoBehaviour
     
     [Tooltip("Mô hình 3D")]
     public Transform model;
-    
-    [FormerlySerializedAs("playerChecker")] [Tooltip("Khu vực check enemy")]
-    public PlayerSensor playerSensor;
-
-    [Tooltip("Kiểm tra mặt đất"), SerializeField]
-    protected GroundCheck groundCheck;
 
     [Tooltip("Điều khiển animation"), SerializeField]
     public Animator animator;
     
     
     #region Get & Set Property 
-    [field: SerializeField] public PlayerStatsSO Stats { get; private set; }
+    [field: SerializeField] public PlayerConfiguration PlayerConfig { get; private set; }
     public CharacterController CharacterController { get; set; }
 
     public PlayerBaseState CurrentState { get; set; }
@@ -37,14 +30,14 @@ public abstract class PlayerStateMachine : MonoBehaviour
     public Vector3 AppliedMovement { get; set; }
     public Vector3 InputMovement { get; set; }
     
-    protected bool IsGrounded => groundCheck.IsGrounded;
+    protected bool IsGrounded => CharacterController.isGrounded;
     public bool CanMove { get; set; }
     public bool CanRotation { get; set; }
     public bool IsIdle => inputs.move.magnitude == 0;
-    public bool IsJump => inputs.space;
+    public bool IsJump => inputs.space && !inputs.leftShift;
     public bool IsWalk => !IsIdle && _movementState == MovementState.StateWalk;
     public bool IsRun => !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
-    public bool IsDash => inputs.leftShift && IsGrounded && CurrentST >= Stats.dashEnergy;
+    public bool IsDash => inputs.leftShift && IsGrounded && CurrentST >= PlayerConfig.dashEnergy;
     
     public int CurrentHP { get; set; }  // máu hiện tại
     public int CurrentST { get; set; }  // năng lượng hiện tại
@@ -202,12 +195,12 @@ public abstract class PlayerStateMachine : MonoBehaviour
                 ReleaseAction();
                 animator.SetBool(IDJump, true);
                 animator.SetBool(IDFall, false);
-                _jumpVelocity = Mathf.Sqrt(Stats.jumpHeight * -2f * _gravity);
+                _jumpVelocity = Mathf.Sqrt(PlayerConfig.jumpHeight * -2f * _gravity);
                 break;
         }
         if (!IsGrounded)
         {
-            _jumpTimeOut = Stats.jumpTimeOut;
+            _jumpTimeOut = PlayerConfig.jumpTimeOut;
             inputs.space = false;
             _pressedJump = true;
         }
@@ -242,8 +235,8 @@ public abstract class PlayerStateMachine : MonoBehaviour
     public void OnDashEvent() => E_Dash?.Invoke();
     // public void OnCurrentHPEvent() => E_CurrentHP?.Invoke();
     public void OnCurrentSTEvent () => E_CurrentST?.Invoke(CurrentST);
-    protected void OnSkillCooldownEvent () => E_SkillCooldown?.Invoke(Stats.skillCooldown);
-    protected void OnSpecialCooldownEvent () => E_SpecialCooldown?.Invoke(Stats.specialCooldown);
+    protected void OnSkillCooldownEvent () => E_SkillCooldown?.Invoke(PlayerConfig.skillCooldown);
+    protected void OnSpecialCooldownEvent () => E_SpecialCooldown?.Invoke(PlayerConfig.specialCooldown);
     #endregion
 
     

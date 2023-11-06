@@ -30,7 +30,7 @@ public class ArcherEffects : MonoBehaviour
     
     
     private float angleYAttack => _archerController.model.eulerAngles.y;
-    private bool isEnemy => _archerController.playerSensor.target != null;
+    private bool isEnemy => _archerController.DetectionEnemy;
     
     
     // Coroutine
@@ -120,8 +120,9 @@ public class ArcherEffects : MonoBehaviour
     
     private Quaternion RandomDirection()
     {
-        var posTarget = _archerController.playerSensor.target.transform.position;
-        posTarget.y += 1.2f;
+        var posTarget = _archerController.FindClosestEnemy().position;
+        posTarget.y += 1.3f;
+        
         var randRotX = Random.Range(-2f, 2f);
         var randRotY = Random.Range(-2f, 2f);
         return Quaternion.LookRotation(posTarget - attackPoint.transform.position) * Quaternion.Euler(randRotX, randRotY, 0);

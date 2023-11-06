@@ -16,7 +16,7 @@ public class PlayerRunState : PlayerBaseState
     }
     public override void UpdateState()
     {
-        _machine.AppliedMovement = _machine.InputMovement.normalized * _machine.Stats.runSpeed;
+        _machine.AppliedMovement = _machine.InputMovement.normalized * _machine.PlayerConfig.runSpeed;
         
         currentBlend = Mathf.MoveTowards(currentBlend, 1, 5f * Time.deltaTime);
         _machine.animator.SetFloat(_machine.IDSpeed, currentBlend);
@@ -47,7 +47,7 @@ public class PlayerRunState : PlayerBaseState
         switch (isLeftShiftPressed)
         {
             case true when !_machine.inputs.leftShift && lastInputLeftShift <= .2f:
-                if(_machine.CurrentST >= _machine.Stats.dashEnergy) 
+                if(_machine.CurrentST >= _machine.PlayerConfig.dashEnergy) 
                     SwitchState(_factory.Dash());
                 
                 lastInputLeftShift = 0;

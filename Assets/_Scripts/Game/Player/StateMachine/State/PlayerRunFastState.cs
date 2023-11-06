@@ -25,7 +25,7 @@ public class PlayerRunFastState : PlayerBaseState
     }
     public override void UpdateState()
     {
-        _machine.AppliedMovement = _machine.InputMovement.normalized * _machine.Stats.runFastSpeed;
+        _machine.AppliedMovement = _machine.InputMovement.normalized * _machine.PlayerConfig.runFastSpeed;
 
         currentBlend = Mathf.MoveTowards(currentBlend, 1, 5f * Time.deltaTime);
         _machine.animator.SetFloat(_machine.IDSpeed, currentBlend);

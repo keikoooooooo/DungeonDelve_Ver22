@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 12608159211627385, guid: e1adf879d14d19e45b49d34b68c7ed43, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1721813634001737881, guid: e1adf879d14d19e45b49d34b68c7ed43, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -96,7 +100,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corridor_02 Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1795480433382385558, guid: e1adf879d14d19e45b49d34b68c7ed43, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -150,8 +155,8 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: 00000000ffffffffffffffff
-      _HashCodes: 9608fc7f0000000000000000
+      _Buckets: ffffffffffffffff00000000
+      _HashCodes: 5cf40b000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -395,8 +400,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -150.22243, y: 19.84, z: -73.30315}
-    objScalePrevFrame: {x: 1.0000001, y: 1, z: 0.7220606}
+    objPositionPrevFrame: {x: 0, y: 0, z: 0}
+    objScalePrevFrame: {x: 1, y: 1, z: 1}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0
@@ -455,8 +460,8 @@ MonoBehaviour:
             mesh: {fileID: 0}
       redoOperations: []
     objectMeshPairs:
-      _Buckets: ffffffff00000000ffffffff
-      _HashCodes: a008fc7f0000000000000000
+      _Buckets: 00000000ffffffffffffffff
+      _HashCodes: 60f40b000000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -700,8 +705,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -150.22243, y: 19.84, z: -73.30315}
-    objScalePrevFrame: {x: 1.0000001, y: 1, z: 0.7220606}
+    objPositionPrevFrame: {x: 0, y: 0, z: 0}
+    objScalePrevFrame: {x: 1, y: 1, z: 1}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0
