@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33cde19aa2b36964e8b508bd621411fe, type: 3}
   m_Name: ArcherConfig
   m_EditorClassIdentifier: 
-  walkSpeed: 2.5
-  runSpeed: 4
-  runFastSpeed: 8
+  walkSpeed: 2
+  runSpeed: 5
+  runFastSpeed: 7.5
   dashEnergy: 25
   jumpHeight: 1.5
   jumpTimeOut: 0.4
-  fallTimeOut: 0.4
   skillCooldown: 2
   specialCooldown: 3
