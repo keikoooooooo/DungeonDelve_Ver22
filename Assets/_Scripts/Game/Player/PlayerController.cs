@@ -15,7 +15,7 @@ public enum PushDirectionEnum
 public class AttackCustom
 {
     
-    [Tooltip("Các lực đẩy mỗi khi attack, số lực tương ứng với số animation attackCombo")]
+    [Tooltip("Các lực đẩy mỗi khi attack, lực áp dụng tương ứng thứ n của animationClip Attack, vd: Attack2 -> lấy giá trị thứ 2 áp dụng vào")]
     public List<float> pushForce;
     
     [Tooltip("Đẩy đi trong bao lâu"), Range(0f, 1f)]
@@ -39,20 +39,20 @@ public abstract class PlayerController : PlayerStateMachine
 
     public bool DetectionEnemy => _enemies.Count > 0;
     
-    private List<GameObject> _enemies = new();
+    private readonly List<GameObject> _enemies = new();
     
     
     
     // Player
     protected bool CanAttack = true;                       // được phép attack ? 
     [HideInInspector] private Vector3 _pushVelocity;       // hướng đẩy
-    [HideInInspector] protected int _attackCounter;        // số lần attackCombo
+     protected int _attackCounter;        // số lần attackCombo
     [HideInInspector] protected bool _isAttackPressed;     // có nhấn attack k ?
     
     private int _directionPushVelocity; // hướng đẩy 
-    private Tween _pushVelocityTween;
     
     private Coroutine _pushVelocityCoroutine;
+    private Coroutine _pushMoveCoroutine;
     private Coroutine _rotateToTargetCoroutine;
 
     protected override void SetVariables()
@@ -145,28 +145,25 @@ public abstract class PlayerController : PlayerStateMachine
         OnSpecialCooldownEvent();
     }
 
+    
+    #region Handle rotation when attacking
+    public void SetAttackCounter(int count) => _attackCounter = count; // gọi trên event animaiton
     public void AddForceAttack()
     {
-        _pushVelocity = model.forward * (attackCustom.pushForce[_attackCounter] * _directionPushVelocity);
-        
-        _pushVelocityTween?.Kill();
-        _pushVelocityTween = transform.DOMove(transform.position + _pushVelocity, attackCustom.pushTime);
+        if(_pushMoveCoroutine != null) StopCoroutine(PushMoveCoroutine());
+        _pushMoveCoroutine = StartCoroutine(PushMoveCoroutine());
     }
-    
-    
 
-    #region Handle rotation when attacking
-    public void AddEnemy(Collider _collider)
+    private IEnumerator PushMoveCoroutine()
     {
-        if(_enemies.Contains(_collider.gameObject)) 
-            return;
-        _enemies.Add(_collider.gameObject);
-    }
-    public void RemoveEnemy(Collider _collider)
-    {
-        if(!_enemies.Contains(_collider.gameObject)) 
-            return;
-        _enemies.Remove(_collider.gameObject);
+        var timePush = attackCustom.pushTime;
+        while (timePush > 0)
+        {
+            _pushVelocity = model.forward * (attackCustom.pushForce[_attackCounter] * _directionPushVelocity);
+            CharacterController.Move(_pushVelocity * Time.deltaTime + new Vector3(0f, -9.81f, 0f) * Time.deltaTime);
+            timePush -= Time.deltaTime;
+            yield return null;
+        }
     }
     public Transform FindClosestEnemy()
     {
@@ -197,6 +194,18 @@ public abstract class PlayerController : PlayerStateMachine
             directionLocal = Mathf.Floor(model.eulerAngles.y);
             yield return null;
         }
+    }
+    public void AddEnemy(Collider _collider)
+    {
+        if(_enemies.Contains(_collider.gameObject)) 
+            return;
+        _enemies.Add(_collider.gameObject);
+    }
+    public void RemoveEnemy(Collider _collider)
+    {
+        if(!_enemies.Contains(_collider.gameObject)) 
+            return;
+        _enemies.Remove(_collider.gameObject);
     }
     #endregion
 
@@ -229,7 +238,6 @@ public abstract class PlayerController : PlayerStateMachine
         inputs.q = false;
         AttackEnd();
     }
-    
     
     
 }

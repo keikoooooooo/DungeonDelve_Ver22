@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 public class ArcherEffects : MonoBehaviour
 {
     [Tooltip("Script điều khiển chính"), SerializeField]
-    private ArcherController _archerController;
+    private ArcherController archerController;
     
     [Space(10), Tooltip("Góc độ bắn mũi tên lên"), SerializeField, Range(-40, 0)] 
     private float angleXAttack;  
@@ -29,8 +29,8 @@ public class ArcherEffects : MonoBehaviour
     private float _holdingTime;
     
     
-    private float angleYAttack => _archerController.model.eulerAngles.y;
-    private bool isEnemy => _archerController.DetectionEnemy;
+    private float angleYAttack => archerController.model.eulerAngles.y;
+    private bool isEnemy => archerController.DetectionEnemy;
     
     
     // Coroutine
@@ -56,6 +56,8 @@ public class ArcherEffects : MonoBehaviour
         var _quaternion = isEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
         var arrow = _poolArrowCombo.Get(attackPoint.position, _quaternion);
         arrow.FIRE();
+        
+        archerController.AddForceAttack();
     }
     private void EffectArrowHold(AnimationEvent eEvent)
     {
@@ -106,7 +108,7 @@ public class ArcherEffects : MonoBehaviour
             
             // Từ vị trí xuất hiện và vị trí mục tiêu tìm ngẫu nhiên 1 vị trí mới trong bk vừa tìm đc
             var currentPos = transform.position + new Vector3(randomPoint.x, 7f, randomPoint.y);
-            var targetPos = _archerController.targetMarkerQ.transform.position + new Vector3(randomPoint.x, Random.Range(-.5f, .5f), randomPoint.y);
+            var targetPos = archerController.targetMarkerQ.transform.position + new Vector3(randomPoint.x, Random.Range(-.5f, .5f), randomPoint.y);
    
             var arrow = _poolArrowHold.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
             arrow.FIRE();
@@ -120,7 +122,7 @@ public class ArcherEffects : MonoBehaviour
     
     private Quaternion RandomDirection()
     {
-        var posTarget = _archerController.FindClosestEnemy().position;
+        var posTarget = archerController.FindClosestEnemy().position;
         posTarget.y += 1.3f;
         
         var randRotX = Random.Range(-2f, 2f);

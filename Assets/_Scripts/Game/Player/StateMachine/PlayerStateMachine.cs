@@ -221,7 +221,7 @@ public abstract class PlayerStateMachine : MonoBehaviour
     {
         while (true)
         {
-            if (CurrentST < 100 && CanIncreaseST)
+            if (CurrentST <= 100 && CanIncreaseST)
             {
                 CurrentST = Mathf.Clamp(CurrentST + 2, 0, 100);
                 OnCurrentSTEvent();

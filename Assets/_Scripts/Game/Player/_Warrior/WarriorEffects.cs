@@ -70,6 +70,7 @@ public class WarriorEffects : MonoBehaviour
                                       effectAngle[eEvent.intParameter].z);
         
         _poolSwordSlash.Get(_posEffect, _rotEffect);
+        warriorController.AddForceAttack();
     }
     private void EffectHolding(AnimationEvent eEvent)
     {
