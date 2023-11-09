@@ -17,8 +17,8 @@ MonoBehaviour:
     JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"01.
       AnyState","IsShared":true,"IsGlobal":true,"Tooltip":"Slot trong AnimatorOverrideController","StringmValue":"01.
       AnyState"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"02. Idle","IsShared":true,"IsGlobal":true,"Tooltip":"Slot
-      trong AnimatorOverrideController","StringmValue":"02. Idle"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"05.
-      Attack","IsShared":true,"IsGlobal":true,"Tooltip":"Slot trong AnimatorOverrideController","StringmValue":"05.
+      trong AnimatorOverrideController","StringmValue":"02. Idle"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"Slot
+      Animator Attack","IsShared":true,"IsGlobal":true,"Tooltip":"Slot trong AnimatorOverrideController","StringmValue":"05.
       Attack"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"06. Damage","IsShared":true,"IsGlobal":true,"Tooltip":"Slot
       trong AnimatorOverrideController","StringmValue":"06. Damage"},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"08.
       4D_Wait","IsShared":true,"IsGlobal":true,"Tooltip":"Slot trong AnimatorOverrideController","StringmValue":"08.

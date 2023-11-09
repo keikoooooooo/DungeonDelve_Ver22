@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class ContinuousDamage : PhysicsDetection
@@ -13,11 +14,10 @@ public class ContinuousDamage : PhysicsDetection
     
     [Space, Tooltip("Có gây sát thương ở lần đầu tiên va chạm?"), SerializeField]
     private bool isFirstCollisionDamage;
-    [Tooltip("Sat thương ở lần va chạm đầu?")]
+    [Tooltip("Sat thương ở lần va chạm đầu?"), ShowIf("isFirstCollisionDamage")]
     public int firstDamage;
 
 
-    private readonly List<Collider> _targetHitList = new List<Collider>();
     private Coroutine _repeatedDamageCoroutine;
 
     
@@ -31,7 +31,7 @@ public class ContinuousDamage : PhysicsDetection
     {
         while (true)
         {
-            // _targetHitList.ForEach(target => CheckCollision(target, damagePerSecond));
+            
             yield return new WaitForSeconds(damageCooldown);
         }
     }

@@ -225,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 367470516}
   m_Layer: 7
-  m_Name: Level
+  m_Name: User
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -252,8 +252,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 200.37915, y: 24.731857}
-  m_SizeDelta: {x: 400.7583, y: 49.4635}
+  m_AnchoredPosition: {x: 197.08, y: 24.731857}
+  m_SizeDelta: {x: 394.16, y: 49.4635}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &403225775
 GameObject:
@@ -347,12 +347,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
+  m_fontSize: 17
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 15
+  m_fontSizeMax: 17
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
@@ -538,7 +538,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  m_Spacing: 13
+  m_Spacing: 13.79
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -1212,7 +1212,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.015029907, z: -4.2961426, w: -1.2498074}
+  m_margin: {x: 0, y: 0.015029907, z: -2.8895264, w: -1.2498074}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1328,8 +1328,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 220.17784, y: -12.5878}
-  m_SizeDelta: {x: 315.3785, y: 13.9099}
+  m_AnchoredPosition: {x: 220.17784, y: -14.2}
+  m_SizeDelta: {x: 315.3785, y: 7.1355}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1102367300
 MonoBehaviour:
@@ -1569,8 +1569,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -279.62, y: 24.732}
-  m_SizeDelta: {x: -1360.8, y: 49.464}
+  m_AnchoredPosition: {x: -282.92828, y: 24.731995}
+  m_SizeDelta: {x: -1354.1835, y: 49.464}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1362097864
 MonoBehaviour:
@@ -2013,12 +2013,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
+  m_fontSize: 17
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 3
-  m_fontSizeMax: 14
+  m_fontSizeMax: 17
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
@@ -2278,7 +2278,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1.536, y: 38.0076}
+  m_SizeDelta: {x: 1.3059, y: 38.0076}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1888950064
 CanvasRenderer:
@@ -3225,7 +3225,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 15, y: -24.732}
+  m_AnchoredPosition: {x: 17.099976, y: -24.732}
   m_SizeDelta: {x: 37.6, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2189956582981715988
@@ -3320,7 +3320,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1.8, y: 6.9}
+  m_AnchoredPosition: {x: 0.5, y: 6.9}
   m_SizeDelta: {x: 8.5047, y: 8.7478}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &172358985095542841
@@ -3353,8 +3353,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: B
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: afd8939aa3fbb3f449e5f2d3511223c7, type: 2}
+  m_sharedMaterial: {fileID: -1568640133749912215, guid: afd8939aa3fbb3f449e5f2d3511223c7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3378,8 +3378,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 11
+  m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3571,7 +3571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903f26c6c41f439498ea5f466118b0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthAndStamina: {fileID: 0}
   healthBar: {fileID: 0}
   staminaBar: {fileID: 0}
   skillCooldownTime: {fileID: 1650299049}

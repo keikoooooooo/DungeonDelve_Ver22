@@ -66,7 +66,7 @@ public class Arrow : EffectBase
         
         if(rb) rb.constraints = RigidbodyConstraints.FreezeAll;
     }
-    public void HandleCollision(Vector3 _collisionPosition)
+    public void HandleCollision(Vector3 _collisionPosition, GameObject _collisionObject)
     {
         Projectile(ActiveType.Disable);
         Hit(ActiveType.Enable, _collisionPosition);
