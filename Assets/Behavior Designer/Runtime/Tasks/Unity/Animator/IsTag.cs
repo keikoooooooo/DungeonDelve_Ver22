@@ -10,7 +10,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator
     {
         public SharedAnimator animator;
         [Tooltip("The name of the parameter")]
-        public SharedString parameterName;
+        public SharedString tagCheck;
         [Tooltip("Giá trị muốn trả về")]
         public SharedBool boolValue;
 
@@ -19,7 +19,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator
 
         public override void OnStart()
         {
-            _boolCheck = animator.Value.IsTag(parameterName.Value);
+            _boolCheck = animator.Value.IsTag(tagCheck.Value);
         }
 
         public override TaskStatus OnUpdate()
@@ -29,7 +29,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator
         
         public override void OnReset()
         {
-            parameterName = "";
+            tagCheck = "";
         }
         
     }

@@ -10,9 +10,8 @@ public class PlayerStateFactory
         RunFast,
         Dash
     }
-
-    private PlayerState _playerState;
-    private readonly Dictionary<PlayerState, PlayerBaseState> _states = new Dictionary<PlayerState, PlayerBaseState>();
+    
+    private readonly Dictionary<PlayerState, PlayerBaseState> _states = new ();
 
     public PlayerStateFactory(PlayerStateMachine currentContext)
     {

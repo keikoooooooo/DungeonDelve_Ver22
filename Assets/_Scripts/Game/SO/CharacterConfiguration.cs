@@ -11,7 +11,7 @@ public class FloatMultiplier
 
 public class CharacterConfiguration : ScriptableObject
 {
-    [Header("INFORMATION")]
+    // INFORMATION
     [Tooltip("Tên nhân vật")]
     public string Name;
 
@@ -22,7 +22,7 @@ public class CharacterConfiguration : ScriptableObject
     public string Infor;
     
     
-    [Header("STATS")]
+    // STATS
     [Tooltip("Máu tối đa")] 
     public int MaxHealth;
     

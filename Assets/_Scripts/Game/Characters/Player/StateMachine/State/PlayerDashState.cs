@@ -32,7 +32,7 @@ public class PlayerDashState : PlayerBaseState
             return;
         }
 
-        direction = _machine.Forward.normalized * dashSpeed;
+        direction = _machine.model.forward.normalized * dashSpeed;
         _machine.CharacterController.Move(direction * Time.deltaTime);
     }
 

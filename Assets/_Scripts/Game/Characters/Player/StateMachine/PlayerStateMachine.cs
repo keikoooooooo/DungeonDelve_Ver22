@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using NaughtyAttributes;
 using UnityEngine;
 
 /// <summary>
@@ -10,7 +9,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 {
     #region Variables
     [Header("BaseClass -------")]
-    
     [Tooltip("Nhận các giá trị đầu vào của player")]
     public PlayerInputs inputs;
     
@@ -23,12 +21,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     
     #region Get & Set Property 
     [field: SerializeField] public PlayerConfiguration PlayerConfig { get; private set; }
-    [field: SerializeField] public CharacterHealth CharacterHealth { get; private set; }
+    [field: SerializeField] public HealthHandle HealthHandle { get; private set; }
     public CharacterController CharacterController { get; set; }
-
     public PlayerBaseState CurrentState { get; set; }
-    
-    public Vector3 Forward => model.forward;
     public Vector3 AppliedMovement { get; set; }
     public Vector3 InputMovement { get; set; }
     
@@ -41,11 +36,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public bool IsRun => !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
     public bool IsDash => inputs.leftShift && IsGrounded && CurrentST >= PlayerConfig.DashEnergy;
     
-    public int CurrentHP => CharacterHealth.currentHealth; // máu hiện tại
+    public int CurrentHP => HealthHandle.currentHealth; // máu hiện tại
     public int CurrentST { get; set; }                     // sức bền hiện tại
     public bool CanIncreaseST { get; set; }                // có thể tăng ST không ?
     #endregion
-    
     
     #region Animation IDs Paramater
     // FLOAT
@@ -70,8 +64,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     
     // Events
     public event Action E_Dash;
-    public event Action<int> E_CurrentST; 
     public event Action<int> E_CurrentHP;
+    public event Action<int> E_CurrentST; 
     public event Action<float> E_SkillCooldown; 
     public event Action<float> E_SpecialCooldown;
     
@@ -84,7 +78,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     private PlayerStateFactory _state;
     private MovementState _movementState;
     [HideInInspector] protected Camera _mainCamera;
-    
     [HideInInspector] protected float _skillCooldown;
     [HideInInspector] protected float _specialCooldown;
     [HideInInspector] private float _jumpVelocity;
@@ -93,7 +86,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] private float _gravity;
     
     // Coroutine
-    
     private Coroutine _handleSTCoroutine;
     #endregion
 
@@ -131,7 +123,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         CanRotation = true;
         CanIncreaseST = true;
         _movementState = MovementState.StateRun;
-        CharacterHealth.InitValue(PlayerConfig.MaxHealth);
+        HealthHandle.InitValue(PlayerConfig.MaxHealth);
     }
     
     /// <summary>
@@ -160,16 +152,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         InputMovement = trans.right * inputs.move.x + trans.forward * inputs.move.y;
         InputMovement = Quaternion.AngleAxis(_mainCamera.transform.rotation.eulerAngles.y, Vector3.up) * InputMovement;
         
-        // Thời gian để tấn công
+        // Thời gian hồi chiêu
         _skillCooldown = _skillCooldown > 0 ? _skillCooldown - Time.deltaTime : 0;
         _specialCooldown = _specialCooldown > 0 ? _specialCooldown - Time.deltaTime : 0;
         
-        // Chuyển đổi mode: Walk <=> Run
-        if (inputs.changeState)
-        {
-            inputs.changeState = false;
-            _movementState = _movementState == MovementState.StateRun ? MovementState.StateWalk : MovementState.StateRun;
-        }
+        if (!inputs.changeState) return; // Chuyển mode: Walk <=> Run
+        inputs.changeState = false;
+        _movementState = _movementState == MovementState.StateRun ? MovementState.StateWalk : MovementState.StateRun;
     }
     private void HandleMovement()
     {

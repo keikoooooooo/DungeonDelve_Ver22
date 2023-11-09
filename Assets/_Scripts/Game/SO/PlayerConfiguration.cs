@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerConfiguration", menuName = "Characters Configuration/Player")]
+[CreateAssetMenu(fileName = "Player Config", menuName = "Characters Configuration/Player")]
 public class PlayerConfiguration : CharacterConfiguration
 {
-    
+    // STATS
     [Tooltip("Tốc độ chạy nhanh")] 
     public float RunFastSpeed = 8f;
     [Tooltip("Sức bền tối đa")] 
@@ -14,7 +14,7 @@ public class PlayerConfiguration : CharacterConfiguration
     [Tooltip("Độ cao khi nhảy")] 
     public float JumpHeight = 1.2f;
 
-    [Header("COOLDOWN")]
+    // COOLDOWN
     [Tooltip("Thời gian nhảy cho lần tiếp theo")] 
     public float JumpCD;
     [Tooltip("Thời gian hồi kỹ năng (s)")] 
@@ -23,7 +23,7 @@ public class PlayerConfiguration : CharacterConfiguration
     public float SpecialCD;
     
     
-    [Header("ATTACK MULTIPLIER")] 
+    // ATTACK MULTIPLIER
     public List<FloatMultiplier> NormalAttackMultiplier;
     public List<FloatMultiplier> ChargedAttackMultiplier;
     public List<FloatMultiplier> SkillMultiplier;

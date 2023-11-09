@@ -7,12 +7,13 @@ using UnityEngine.AI;
 [RequireComponent(typeof(BehaviorTree))]
 public class EnemyController : MonoBehaviour, IDamageable
 {
-    [field: SerializeField, Required, Tooltip("Cây hành vi của Enemy")]
-    public BehaviorTree BehaviorTree { get; private set; }
+    // Ref
+    [field: SerializeField, Required] public BehaviorTree BehaviorTree { get; private set; }
+    [field: SerializeField] public EnemyConfiguration EnemyConfig { get; private set; }
     
     
     // Get & Set Property 
-    [field: SerializeField] public CharacterHealth CharacterHealth { get; private set; }
+    public HealthHandle HealthHandle { get; private set; }
     public bool CanAttack => _attackCooldown <= 0;
     public Vector3 PlayerPosition => _player.transform.position;
     
@@ -56,10 +57,9 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         
     // Gọi bằng Events
-    public void SetRootSensor(bool isType) => BehaviorTree.SetVariableValue("IsRoot", isType);
+    public void SetRootSensor(bool isType) => BehaviorTree.SetVariableValue("IsRootRange", isType);
     public void SetChaseSensor(bool isType) => BehaviorTree.SetVariableValue("IsChaseRange", isType);
     public void SetAttackSensor(bool isType) => BehaviorTree.SetVariableValue("IsAttackRange", isType);
-    
     
     
     
