@@ -32,8 +32,8 @@ public abstract class PlayerController : PlayerStateMachine
     [Space, Tooltip("Thêm lực đẩy vào character khi tấn công"), SerializeField] 
     private AttackCustom attackCustom;
     protected bool IsAttackPressed => inputs.leftMouse;
-    protected bool IsSkillPressed => inputs.e && _skillCooldown <= 0;
-    protected bool IsSpecialPressed => inputs.q && _specialCooldown <= 0;
+    protected bool IsSkillPressed => inputs.e && _skillCD_Temp <= 0;
+    protected bool IsSpecialPressed => inputs.q && _specialCD_Temp <= 0;
     public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding,
 
     public bool DetectionEnemy => _enemies.Count > 0;
@@ -128,7 +128,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanMove = false;
         CanRotation = false;
         
-        _skillCooldown = PlayerConfig.SkillCD;
+        _skillCD_Temp = PlayerConfig.SkillCD;
         OnSkillCooldownEvent();
     }
     protected virtual void Special()
@@ -140,7 +140,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanMove = false;
         CanRotation = false;
         
-        _specialCooldown = PlayerConfig.SpecialCD;
+        _specialCD_Temp = PlayerConfig.SpecialCD;
         OnSpecialCooldownEvent();
     }
 

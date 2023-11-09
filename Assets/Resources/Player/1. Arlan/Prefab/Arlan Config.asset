@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cde19aa2b36964e8b508bd621411fe, type: 3}
+  m_Name: Arlan Config
+  m_EditorClassIdentifier: 
+  Name: Arlan
+  Level: 1
+  Infor: 
+  MaxHealth: 200
+  ATK: 6
+  DEF: 9
+  WalkSpeed: 2
+  RunSpeed: 5.2
+  RunFastSpeed: 8
+  MaxStamina: 100
+  DashEnergy: 25
+  JumpHeight: 1.4
+  JumpCD: 0.37
+  SkillCD: 20
+  SpecialCD: 15
+  NormalAttackMultiplier:
+  - MultiplierTypeName: 1 - Hit DMG (%)
+    Multiplier:
+    - 33.18
+    - 36.02
+    - 39.84
+    - 42.94
+    - 46.37
+    - 49.99
+    - 53.15
+    - 56.93
+    - 60.63
+    - 64.12
+  - MultiplierTypeName: 2 - Hit DMG (%)
+    Multiplier:
+    - 33.18
+    - 36.02
+    - 39.84
+    - 42.94
+    - 46.37
+    - 49.99
+    - 53.15
+    - 56.93
+    - 60.63
+    - 64.12
+  - MultiplierTypeName: 3 - Hit DMG (%)
+    Multiplier:
+    - 40.9
+    - 44.18
+    - 49.75
+    - 54.18
+    - 59.54
+    - 63.01
+    - 68.45
+    - 72.62
+    - 77.38
+    - 84.02
+  - MultiplierTypeName: 4 - Hit DMG (%)
+    Multiplier:
+    - 45.17
+    - 48.95
+    - 53.53
+    - 58.19
+    - 63.71
+    - 68.93
+    - 72.4
+    - 76.19
+    - 83.52
+    - 89.65
+  - MultiplierTypeName: 5 - Hit DMG (%)
+    Multiplier:
+    - 50.07
+    - 54.82
+    - 58.38
+    - 64.63
+    - 69.99
+    - 75.83
+    - 81.05
+    - 87.39
+    - 95.91
+    - 102.04
+  ChargedAttackMultiplier:
+  - MultiplierTypeName: Charged Attack DMG (%)
+    Multiplier:
+    - 128.14
+    - 138.57
+    - 149.01
+    - 163.19
+    - 174.33
+    - 186.25
+    - 202.64
+    - 219.03
+    - 235.42
+    - 253.3
+  SkillMultiplier:
+  - MultiplierTypeName: Reduces DMG (%)
+    Multiplier:
+    - 70
+    - 90
+    - 110
+    - 130
+    - 150
+    - 170
+    - 190
+    - 210
+    - 230
+    - 250
+  SpecialMultiplier:
+  - MultiplierTypeName: Skill DMG (%/0.3s)
+    Multiplier:
+    - 38.19
+    - 42.17
+    - 47.92
+    - 52.47
+    - 57.03
+    - 62.38
+    - 65.36
+    - 69.01
+    - 75.78
+    - 80.63

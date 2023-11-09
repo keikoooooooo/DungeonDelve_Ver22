@@ -31,8 +31,7 @@ public class GameplayEditorWindow : EditorWindow
                 break;
         }
     }
-
-
+    
     #region PLAYERS
     private readonly string[] _playerNames = { "Arlan", "Lynx" };
     private int _selectedPlayer = -1;
@@ -44,23 +43,19 @@ public class GameplayEditorWindow : EditorWindow
         switch (_selectedPlayer)
         {
             case 0:
-                arlanConfig = (PlayerConfiguration)EditorGUILayout.ObjectField("Character Configuration", arlanConfig, typeof(CharacterConfiguration), false, Width(700));
-                dataPlayerConfig = arlanConfig;
-                ShowPlayerConfig();
+                arlanConfig = EditorGUIUtility.Load("Assets/Resources/Player/1. Arlan/Prefab/Arlan Config.asset") as PlayerConfiguration;
+                ShowPlayerConfig(arlanConfig);
                 break;
             case 1:
-                lynxConfig = (PlayerConfiguration)EditorGUILayout.ObjectField("Character Configuration", lynxConfig, typeof(CharacterConfiguration), false, Width(700));
-                dataPlayerConfig = lynxConfig;
-                ShowPlayerConfig();
+                lynxConfig = EditorGUIUtility.Load("Assets/Resources/Player/2. Lynx/Prefab/Lynx Config.asset") as PlayerConfiguration;
+                ShowPlayerConfig(lynxConfig);
                 break;
         }
     }
     
     private PlayerConfiguration arlanConfig;
     private PlayerConfiguration lynxConfig;
-    private PlayerConfiguration dataPlayerConfig;
-
-    private void ShowPlayerConfig()
+    private void ShowPlayerConfig(PlayerConfiguration dataPlayerConfig)
     {
         if (dataPlayerConfig == null)
         {

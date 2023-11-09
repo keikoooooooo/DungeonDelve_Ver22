@@ -8,8 +8,6 @@ public class PlayerRunFastState : PlayerBaseState
 
 
     private float currentBlend;
-    private int currentStTemp;
-
     private Coroutine _subtractSTCoroutine;
     
    
@@ -48,7 +46,7 @@ public class PlayerRunFastState : PlayerBaseState
         {  
             SwitchState(_factory.Idle());
         }
-        else if (_machine.IsRun || _machine.CurrentST <= 0)
+        else if (_machine.IsRun || _machine.StatusHandle.CurrentStamina <= 0)
         {
             SwitchState(_factory.Run());
         }
@@ -56,13 +54,9 @@ public class PlayerRunFastState : PlayerBaseState
     
     private IEnumerator SubtractSTCoroutine() // giảm ST
     {
-        currentStTemp = _machine.CurrentST;
-        while (currentStTemp > 0)
+        while (_machine.StatusHandle.CurrentStamina > 0)
         {
-            currentStTemp -= 1;
-            
-            _machine.CurrentST = Mathf.Clamp(currentStTemp, 0, 100);
-            _machine.OnCurrentSTEvent();
+            _machine.StatusHandle.Subtract(1, StatusHandle.StatusType.Stamina);
             yield return new WaitForSeconds(.07f);
         }
     }

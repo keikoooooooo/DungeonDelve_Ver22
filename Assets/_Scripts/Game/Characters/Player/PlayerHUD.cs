@@ -1,8 +1,9 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class PlayerHUD : MonoBehaviour
 {
-    private PlayerStateMachine _player;
+    [SerializeField, Required] PlayerStateMachine _player;
 
     [SerializeField] private ProgressBar healthBar;
     [SerializeField] private ProgressBar staminaBar;
@@ -20,25 +21,25 @@ public class PlayerHUD : MonoBehaviour
     private void Start()
     {
         if (_player == null) return;
+
+        _player.StatusHandle.E_HealthChanged += healthBar.ChangeValue;
+        _player.StatusHandle.E_StaminaChaged += staminaBar.ChangeValue;
         
-        _player.E_CurrentHP += healthBar.ChangeValue;
-        _player.E_CurrentST += staminaBar.ChangeValue;
+        _player.E_SkillCD += skillCooldownTime.StartCd;
+        _player.E_SpecialCD += specialCooldownTime.StartCd;
         
-        _player.E_SkillCooldown += skillCooldownTime.StartCooldown;
-        _player.E_SpecialCooldown += specialCooldownTime.StartCooldown;
-        
+        healthBar.Init(_player.PlayerConfig.MaxHealth);
         staminaBar.Init(_player.PlayerConfig.MaxStamina);
     }
     private void OnDestroy()
     {
         if (_player == null) return;
         
-        _player.E_CurrentHP -= healthBar.ChangeValue;
-        _player.E_CurrentST -= staminaBar.ChangeValue;
+        _player.StatusHandle.E_HealthChanged -= healthBar.ChangeValue;
+        _player.StatusHandle.E_StaminaChaged -= staminaBar.ChangeValue;
         
-        _player.E_SkillCooldown -= skillCooldownTime.StartCooldown;
-        _player.E_SpecialCooldown -= specialCooldownTime.StartCooldown;
+        _player.E_SkillCD -= skillCooldownTime.StartCd;
+        _player.E_SpecialCD -= specialCooldownTime.StartCd;
     }
-    
-    
+
 }

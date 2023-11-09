@@ -103,7 +103,7 @@ public class WarriorEffects : MonoBehaviour
     {
         warriorController.BuffSkill();
         var shieldTime = 15f;
-        shieldCooldownTime.StartCooldown(shieldTime);
+        shieldCooldownTime.StartCd(shieldTime);
         yield return new WaitForSeconds(shieldTime);
         skill.Stop();
         skill.gameObject.SetActive(false);

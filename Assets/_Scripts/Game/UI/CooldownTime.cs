@@ -19,7 +19,7 @@ public class CooldownTime : MonoBehaviour
         ActiveFill(false);
     }
 
-    public void StartCooldown(float duration)
+    public void StartCd(float duration)
     {
         if(_cooldownCoroutine != null)
             StopCoroutine(_cooldownCoroutine);

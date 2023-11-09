@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     
     // Get & Set Property 
-    public HealthHandle HealthHandle { get; private set; }
+    public StatusHandle StatusHandle { get; private set; }
     public bool CanAttack => _attackCooldown <= 0;
     public Vector3 PlayerPosition => _player.transform.position;
     
@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void Start()
     {
         GetReference();
+        SetVariables();
     }
     private void Update()
     {
@@ -34,7 +35,10 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
 
 
-
+    private void SetVariables()
+    {
+        StatusHandle = new StatusHandle(EnemyConfig.MaxHealth);
+    }
     private void GetReference()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -67,7 +71,10 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         Debug.Log("take damage");
     }
-    
+    public void Die()
+    {
+        
+    }
  
 
 }

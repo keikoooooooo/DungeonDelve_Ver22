@@ -4,9 +4,9 @@ using UnityEngine.Events;
 public class Damageable : MonoBehaviour
 {
     
-    public UnityEvent OnTakeDamage;
+    public UnityEvent<int> OnTakeDamageEvent;
 
-    public UnityEvent OnDie;
+    public UnityEvent OnDieEvent;
 
     
     

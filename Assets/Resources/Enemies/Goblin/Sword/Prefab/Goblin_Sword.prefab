@@ -465,8 +465,9 @@ GameObject:
   - component: {fileID: 3950966551695069862}
   - component: {fileID: 8837626401118924111}
   - component: {fileID: 5454075670440199710}
+  - component: {fileID: 4595341836515394702}
   m_Layer: 12
-  m_Name: Canvas
+  m_Name: EnemyHUD Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -569,6 +570,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
+--- !u!114 &4595341836515394702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417071296562513540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c54c5e33f35064787caa78d58e4e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 7299801677303182709}
+  healthBar: {fileID: 3129631120025515624}
 --- !u!1 &576534862811881108
 GameObject:
   m_ObjectHideFlags: 0
@@ -6022,7 +6037,7 @@ GameObject:
   - component: {fileID: 59233121648820731}
   - component: {fileID: 2024222083997816091}
   m_Layer: 12
-  m_Name: TextLv
+  m_Name: Text LV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

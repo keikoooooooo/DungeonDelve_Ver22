@@ -19,9 +19,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public Animator animator;
     
     
-    #region Get & Set Property 
+    #region Get & Set Property
     [field: SerializeField] public PlayerConfiguration PlayerConfig { get; private set; }
-    [field: SerializeField] public HealthHandle HealthHandle { get; private set; }
+    public StatusHandle StatusHandle { get; private set; }
     public CharacterController CharacterController { get; set; }
     public PlayerBaseState CurrentState { get; set; }
     public Vector3 AppliedMovement { get; set; }
@@ -34,11 +34,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public bool IsJump => inputs.space && !inputs.leftShift;
     public bool IsWalk => !IsIdle && _movementState == MovementState.StateWalk;
     public bool IsRun => !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
-    public bool IsDash => inputs.leftShift && IsGrounded && CurrentST >= PlayerConfig.DashEnergy;
-    
-    public int CurrentHP => HealthHandle.currentHealth; // máu hiện tại
-    public int CurrentST { get; set; }                     // sức bền hiện tại
-    public bool CanIncreaseST { get; set; }                // có thể tăng ST không ?
+    public bool IsDash => inputs.leftShift && IsGrounded && StatusHandle.CurrentStamina >= PlayerConfig.DashEnergy;
+    public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
     
     #region Animation IDs Paramater
@@ -64,10 +61,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     
     // Events
     public event Action E_Dash;
-    public event Action<int> E_CurrentHP;
-    public event Action<int> E_CurrentST; 
-    public event Action<float> E_SkillCooldown; 
-    public event Action<float> E_SpecialCooldown;
+    public event Action<float> E_SkillCD; 
+    public event Action<float> E_SpecialCD;
     
     // player
     public enum MovementState
@@ -78,12 +73,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     private PlayerStateFactory _state;
     private MovementState _movementState;
     [HideInInspector] protected Camera _mainCamera;
-    [HideInInspector] protected float _skillCooldown;
-    [HideInInspector] protected float _specialCooldown;
-    [HideInInspector] private float _jumpVelocity;
-    [HideInInspector] private float _jumpTimeOut;
-    [HideInInspector] private bool _pressedJump;
     [HideInInspector] private float _gravity;
+    [HideInInspector] private bool _pressedJump;
+    [HideInInspector] private float _jumpVelocity;
+    [HideInInspector] private float _jumpCD_Temp;
+    [HideInInspector] protected float _skillCD_Temp;
+    [HideInInspector] protected float _specialCD_Temp;
     
     // Coroutine
     private Coroutine _handleSTCoroutine;
@@ -93,6 +88,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         SetVariables();
+        RegisterEvent();
     }
     private void Start()
     {
@@ -101,7 +97,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         HandleInput();
-
+        
         CurrentState.UpdateState();
         
         HandleJumping();
@@ -109,6 +105,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleMovement();
         
         HandleRotation();
+    }
+    private void OnDisable()
+    {
+        UnRegisterEvent();
     }
 
 
@@ -118,12 +118,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     protected virtual void SetVariables()
     {
         _gravity = -30f;
-        CurrentST = 100;
         CanMove = true;
         CanRotation = true;
         CanIncreaseST = true;
         _movementState = MovementState.StateRun;
-        HealthHandle.InitValue(PlayerConfig.MaxHealth);
+
+        StatusHandle = new StatusHandle(PlayerConfig.MaxHealth, PlayerConfig.MaxStamina);
     }
     
     /// <summary>
@@ -143,7 +143,16 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
             StopCoroutine(_handleSTCoroutine);
         _handleSTCoroutine = StartCoroutine(IncreaseSTCoroutine());
     }
-
+    
+    private void RegisterEvent()
+    {
+        StatusHandle.E_Die += Die;
+    }
+    private void UnRegisterEvent()
+    {
+        StatusHandle.E_Die -= Die;
+    }
+    
 
     public void HandleInput()
     {
@@ -153,8 +162,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         InputMovement = Quaternion.AngleAxis(_mainCamera.transform.rotation.eulerAngles.y, Vector3.up) * InputMovement;
         
         // Thời gian hồi chiêu
-        _skillCooldown = _skillCooldown > 0 ? _skillCooldown - Time.deltaTime : 0;
-        _specialCooldown = _specialCooldown > 0 ? _specialCooldown - Time.deltaTime : 0;
+        _skillCD_Temp = _skillCD_Temp > 0 ? _skillCD_Temp - Time.deltaTime : 0;
+        _specialCD_Temp = _specialCD_Temp > 0 ? _specialCD_Temp - Time.deltaTime : 0;
         
         if (!inputs.changeState) return; // Chuyển mode: Walk <=> Run
         inputs.changeState = false;
@@ -180,12 +189,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
                 animator.SetBool(IDFall, true);
                 break;
             
-            case true when _jumpTimeOut > 0:
-                _jumpTimeOut -= Time.deltaTime;
+            case true when _jumpCD_Temp > 0:
+                _jumpCD_Temp -= Time.deltaTime;
                 animator.SetBool(IDJump, false);
                 break;
             
-            case true when _jumpTimeOut <= 0 && IsJump:
+            case true when _jumpCD_Temp <= 0 && IsJump:
                 ReleaseAction();
                 animator.SetBool(IDJump, true);
                 animator.SetBool(IDFall, false);
@@ -194,7 +203,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         }
         if (!IsGrounded)
         {
-            _jumpTimeOut = PlayerConfig.JumpCD;
+            _jumpCD_Temp = PlayerConfig.JumpCD;
             inputs.space = false;
             _pressedJump = true;
         }
@@ -210,15 +219,23 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         model.rotation = Quaternion.RotateTowards(model.rotation, rotation, 1000 * Time.deltaTime);
     }
     
-
+    public void TakeDamage(int damage)
+    {   
+        Debug.Log("Player Get hit");
+    }
+    public void Die()
+    {
+        Debug.Log("PlayerDie");
+    }
+    
+    
     public IEnumerator IncreaseSTCoroutine()
     {
         while (true)
         {
-            if (CurrentST <= 100 && CanIncreaseST)
+            if (StatusHandle.CurrentStamina <= 100 && CanIncreaseST)
             {
-                CurrentST = Mathf.Clamp(CurrentST + 2, 0, 100);
-                OnCurrentSTEvent();
+                StatusHandle.Increase(2, StatusHandle.StatusType.Stamina);
             }
             yield return new WaitForSeconds(.15f);
         }
@@ -227,10 +244,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     
     #region Event Callback
     public void OnDashEvent() => E_Dash?.Invoke();
-    public void OnCurrentHPEvent() => E_CurrentHP?.Invoke(CurrentHP);
-    public void OnCurrentSTEvent () => E_CurrentST?.Invoke(CurrentST);
-    protected void OnSkillCooldownEvent () => E_SkillCooldown?.Invoke(PlayerConfig.SkillCD);
-    protected void OnSpecialCooldownEvent () => E_SpecialCooldown?.Invoke(PlayerConfig.SpecialCD);
+    protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.SkillCD);
+    protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.SpecialCD);
     #endregion
 
     
@@ -238,12 +253,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     /// Giải phóng tất cả trạng thái khi nhảy hoặc lướt.
     /// </summary>
     public abstract void ReleaseAction();
-
-
-    public void TakeDamage(int damage)
-    {   
-        
-    }
+    
 }
 
 

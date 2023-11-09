@@ -14,7 +14,7 @@ public class PlayerDashState : PlayerBaseState
     public override void EnterState()
     {
         _machine.OnDashEvent();
-        _machine.CurrentST -= _machine.PlayerConfig.DashEnergy;
+        _machine.StatusHandle.Subtract(_machine.PlayerConfig.DashEnergy, StatusHandle.StatusType.Stamina);
         _machine.animator.SetTrigger(_machine.IDDash);
         _machine.animator.SetBool(_machine.IDJump, false);
         _machine.ReleaseAction();
