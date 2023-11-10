@@ -22,7 +22,7 @@ public class CharacterConfiguration : ScriptableObject
     public string Infor;
     
     
-    [Header("STATS")]
+    [Header("CHARACTER STATS")]
     [Tooltip("Máu tối đa")] 
     public int MaxHealth;
     

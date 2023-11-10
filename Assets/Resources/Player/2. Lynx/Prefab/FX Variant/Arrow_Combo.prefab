@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98cfa91a33c9a474a9f314ff0105fc53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionType: {fileID: 6427837937895899554}
   flash: {fileID: 6654510630607391548}
   projectile: {fileID: 118883632821677789}
   hit: {fileID: 5491099951011846736}
@@ -177,6 +178,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1424948506689747721, guid: 7f67f5c06b935c042bc988c2f2499476, type: 3}
+      propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1424948506689747721, guid: 7f67f5c06b935c042bc988c2f2499476, type: 3}
       propertyPath: OnEndTimerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3723554165989274676}
@@ -261,6 +266,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 118883632821677789}
     - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -269,9 +278,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3723554165989274676}
     - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3723554165989274676}
     - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: OnCollisionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: HandleCollision
@@ -280,6 +297,14 @@ PrefabInstance:
       propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3723554165989274676}
+    - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCollision
+      objectReference: {fileID: 0}
     - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -293,11 +318,19 @@ PrefabInstance:
       value: Arrow, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Arrow, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Arrow, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: OnCollisionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
@@ -407,3 +440,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8497637602894813001, guid: 01a005058297909478beb7ce15cb2803, type: 3}
   m_PrefabInstance: {fileID: 5350918179762334130}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6427837937895899554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+  m_PrefabInstance: {fileID: 5350918179762334130}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e43c06f6ae82f4fb284d09edbe66ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

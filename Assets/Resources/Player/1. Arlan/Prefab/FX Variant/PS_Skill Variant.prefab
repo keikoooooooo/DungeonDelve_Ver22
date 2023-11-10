@@ -5,11 +5,24 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2642276671208638912, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642276671208638912, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642276671208638912, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642276671208638914, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.907
       objectReference: {fileID: 0}
     - target: {fileID: 2642276671208638925, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: m_Layer
@@ -25,7 +38,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2642276671465729433, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: looping
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642276671465729433, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
+      propertyPath: lengthInSec
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2642276671465729433, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: InitialModule.maxNumParticles
@@ -81,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2642276671601690670, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.701
+      value: 2.885999
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672242937251, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: m_Layer
@@ -92,8 +109,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672242937254, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
+      propertyPath: lengthInSec
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642276672242937254, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642276672242937254, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642276672242937254, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642276672242937254, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672275990386, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: InitialModule.maxNumParticles
@@ -181,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672678386517, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 15.2
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672678386518, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: m_Layer
@@ -205,7 +238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672815484003, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.701
+      value: 2.885999
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672831896100, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: m_Layer
@@ -217,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672831896101, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.701
+      value: 2.885999
       objectReference: {fileID: 0}
     - target: {fileID: 2642276672831896123, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}
       propertyPath: InitialModule.maxNumParticles
@@ -228,4 +261,7 @@ PrefabInstance:
       value: 0.82
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01ffee2327db1174e8aa5af89ca50d97, type: 3}

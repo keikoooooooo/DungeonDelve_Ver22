@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -97,33 +98,31 @@ public class WarriorController : PlayerController
     }
 
 
-    protected override void AttackCombo()
+    protected override void NormalAttack()
     {
         WeaponEquipped();
-        
-        base.AttackCombo();
+        base.NormalAttack();
     }
-    protected override void AttackHolding()
+    protected override void ChargedAttack()
     {
         WeaponEquipped();
-        
-        animator.SetTrigger(IDChargedAttack);
         CanMove = false;
         CanRotation = false;
+        base.ChargedAttack();
     }
-    protected override void Skill()
+    protected override void ElementalSkill()
     {
         if(!IsSkillPressed) return;
         
         WeaponEquipped();
-        base.Skill();
+        base.ElementalSkill();
     }
-    protected override void Special()
+    protected override void ElementalBurst()
     {
         if(!IsSpecialPressed) return;
         
         WeaponEquipped();
-        base.Special();
+        base.ElementalBurst();
     }
     
 }

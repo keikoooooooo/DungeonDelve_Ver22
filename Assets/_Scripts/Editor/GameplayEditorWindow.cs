@@ -73,7 +73,7 @@ public class GameplayEditorWindow : EditorWindow
         dataPlayerConfig.Infor = EditorGUILayout.TextField("Infor", dataPlayerConfig.Infor, Width(500));
         
         Space(30);
-        GUILayout.Label("STATS -------------------------------", EditorStyles.boldLabel);
+        GUILayout.Label("CHARACTER STATS ----------------------", EditorStyles.boldLabel);
         dataPlayerConfig.MaxHealth = EditorGUILayout.IntField("Max HP", dataPlayerConfig.MaxHealth, Width(500));
         dataPlayerConfig.MaxStamina = EditorGUILayout.IntField("Max ST", dataPlayerConfig.MaxStamina, Width(500));
         dataPlayerConfig.ATK = EditorGUILayout.IntField("ATK", dataPlayerConfig.ATK, Width(500));
@@ -83,6 +83,10 @@ public class GameplayEditorWindow : EditorWindow
         dataPlayerConfig.RunFastSpeed = EditorGUILayout.FloatField("Run Fast Speed", dataPlayerConfig.RunFastSpeed, Width(500));
         dataPlayerConfig.DashEnergy = EditorGUILayout.IntField("Dash Energy", dataPlayerConfig.DashEnergy, Width(500));
         dataPlayerConfig.JumpHeight = EditorGUILayout.FloatField("Jump Height", dataPlayerConfig.JumpHeight, Width(500));
+
+        Space(30);
+        GUILayout.Label("WEAPON STATS -------------------------", EditorStyles.boldLabel);
+        dataPlayerConfig.WeaponLevel = EditorGUILayout.IntField("Weapon Level", dataPlayerConfig.WeaponLevel, Width(500));
         
         Space(30);
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);

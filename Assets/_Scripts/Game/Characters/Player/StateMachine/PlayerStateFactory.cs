@@ -15,13 +15,11 @@ public class PlayerStateFactory
 
     public PlayerStateFactory(PlayerStateMachine currentContext)
     {
-        var context = currentContext;
-        
-        _states.Add(PlayerState.Idle, new PlayerIdleState(context, this));
-        _states.Add(PlayerState.Walk, new PlayerWalkState(context, this));
-        _states.Add(PlayerState.Run, new PlayerRunState(context, this));
-        _states.Add(PlayerState.RunFast, new PlayerRunFastState(context, this));
-        _states.Add(PlayerState.Dash, new PlayerDashState(context, this));
+        _states.Add(PlayerState.Idle, new PlayerIdleState(currentContext, this));
+        _states.Add(PlayerState.Walk, new PlayerWalkState(currentContext, this));
+        _states.Add(PlayerState.Run, new PlayerRunState(currentContext, this));
+        _states.Add(PlayerState.RunFast, new PlayerRunFastState(currentContext, this));
+        _states.Add(PlayerState.Dash, new PlayerDashState(currentContext, this));
     }
 
     public PlayerBaseState Idle()    => _states[PlayerState.Idle];

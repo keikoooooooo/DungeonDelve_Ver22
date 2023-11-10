@@ -44,7 +44,6 @@ public class WarriorEffects : MonoBehaviour
     private Vector3 _posEffect;
     private Quaternion _rotEffect;
 
-    private Vector3 _posHit;
     
     // Coroutine
     private Coroutine _skillCoroutine;
@@ -119,7 +118,7 @@ public class WarriorEffects : MonoBehaviour
 
     public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
 
-    public void EffectHit(Vector3 _pos, GameObject collisionObject) => _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
+    public void EffectHit(Vector3 _pos) => _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
     private static Vector3 RandomPosition(Vector3 _posCurrent, float minVal, float maxVal)
     {
         return _posCurrent + new Vector3(Random.Range(minVal, maxVal), 

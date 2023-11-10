@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,18 +16,19 @@ public class ArcherEffects : MonoBehaviour
     
     [Header("Prefab projectile")] 
     [SerializeField] private EffectBase arrowComboPrefab;
-    [SerializeField] private EffectBase holdingPrefab;
+    [SerializeField] private EffectBase chargedPrefab;
+    [SerializeField] private EffectBase chargedNoFullyPrefab;
     
     [Space, Header("Visual Effect")]
     [SerializeField] private ParticleSystem effectHolding;
     [SerializeField] private ParticleSystem effectSpecial;
     
     private Transform slotsVFX;
-    private ObjectPooler<EffectBase> _poolArrowCombo;
-    private ObjectPooler<EffectBase> _poolArrowHold;
+    private ObjectPooler<EffectBase> _poolNormalArrow;
+    private ObjectPooler<EffectBase> _poolChargedArrow;
+    private ObjectPooler<EffectBase> _poolChargedNoFullyArrow;
 
     private Coroutine _mouseHoldTimeCoroutine;
-    private float _holdingTime;
     
     
     private float angleYAttack => archerController.model.eulerAngles.y;
@@ -35,26 +37,64 @@ public class ArcherEffects : MonoBehaviour
     
     // Coroutine
     private Coroutine _specialCoroutine;
+
     
-    
+
     private void Start()
     {
-        Initialized();
+        InitValue();
+        RegisterEvents();
     }
-    private void Initialized()
+    private void OnDestroy()
+    {
+        UnRegisterEvents();
+    }
+
+    
+    private void InitValue()
     {
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform; 
-        _poolArrowCombo = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsVFX, 10);
-        _poolArrowHold = new ObjectPooler<EffectBase>(holdingPrefab, slotsVFX, 10);
-
+        _poolNormalArrow = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsVFX, 15);
+        _poolChargedArrow = new ObjectPooler<EffectBase>(chargedPrefab, slotsVFX, 8);
+        _poolChargedNoFullyArrow = new ObjectPooler<EffectBase>(chargedNoFullyPrefab, slotsVFX, 8);
         effectSpecial.transform.SetParent(slotsVFX);
+    }
+    private void RegisterEvents()
+    {
+        foreach (var VARIABLE in _poolNormalArrow.Pool)
+        {
+            VARIABLE.detectionType.CollisionEnterEvent.AddListener(archerController.CauseDMG);
+        }
+        foreach (var VARIABLE in _poolChargedArrow.Pool)
+        {
+            VARIABLE.detectionType.CollisionEnterEvent.AddListener(archerController.CauseDMG);
+        }
+        foreach (var VARIABLE in _poolChargedNoFullyArrow.Pool)
+        {
+            VARIABLE.detectionType.CollisionEnterEvent.AddListener(archerController.CauseDMG);
+        }
+    }
+    private void UnRegisterEvents()
+    {
+        foreach (var VARIABLE in _poolNormalArrow.Pool)
+        {
+            VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(archerController.CauseDMG);
+        }
+        foreach (var VARIABLE in _poolChargedArrow.Pool)
+        {
+            VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(archerController.CauseDMG);
+        }
+        foreach (var VARIABLE in _poolChargedNoFullyArrow.Pool)
+        {
+            VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(archerController.CauseDMG);
+        }
     }
     
     
     private void EffectArrowCombo(AnimationEvent eEvent)
     {
         var _quaternion = isEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
-        var arrow = _poolArrowCombo.Get(attackPoint.position, _quaternion);
+        var arrow = _poolNormalArrow.Get(attackPoint.position, _quaternion);
         arrow.FIRE();
         
         archerController.AddForceAttack();
@@ -62,7 +102,9 @@ public class ArcherEffects : MonoBehaviour
     private void EffectArrowHold(AnimationEvent eEvent)
     {
         TurnOffFxHold();
-        var arrow = _poolArrowHold.Get(attackPoint.position, attackPoint.rotation);
+        var arrow = archerController.ChargedAttackTime >= 3.5f ? 
+                            _poolChargedArrow.Get(attackPoint.position, attackPoint.rotation) : 
+                            _poolChargedNoFullyArrow.Get(attackPoint.position, attackPoint.rotation) ;
         arrow.FIRE();
     }
     public void TurnOnFxHold()
@@ -80,7 +122,7 @@ public class ArcherEffects : MonoBehaviour
     {
         var position = attackPoint.position;
         var rotation = Quaternion.Euler(isEnemy ? -6f : angleXAttack, attackPoint.eulerAngles.y + eEvent.intParameter, attackPoint.eulerAngles.z);
-        var arrow = _poolArrowCombo.Get(position, rotation);
+        var arrow = _poolNormalArrow.Get(position, rotation);
         arrow.FIRE();
     }
     private void EffectSpecial(AnimationEvent eEvent)
@@ -110,7 +152,7 @@ public class ArcherEffects : MonoBehaviour
             var currentPos = transform.position + new Vector3(randomPoint.x, 7f, randomPoint.y);
             var targetPos = archerController.targetMarkerQ.transform.position + new Vector3(randomPoint.x, Random.Range(-.5f, .5f), randomPoint.y);
    
-            var arrow = _poolArrowHold.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
+            var arrow = _poolChargedArrow.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
             arrow.FIRE();
             yield return new WaitForSeconds(0.1f);
         }

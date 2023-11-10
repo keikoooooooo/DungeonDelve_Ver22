@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Player Config", menuName = "Characters Configuration/Player")]
@@ -14,6 +15,12 @@ public class PlayerConfiguration : CharacterConfiguration
     [Tooltip("Độ cao khi nhảy")] 
     public float JumpHeight = 1.2f;
 
+
+    [Header("WEAPON STATS")]
+    [Tooltip("Cấp độ của vũ khí"), Range(1, 10)]
+    public int WeaponLevel;
+    
+    
     [Header("COOLDOWN")]
     [Tooltip("Thời gian nhảy cho lần tiếp theo")] 
     public float JumpCD;
@@ -29,6 +36,4 @@ public class PlayerConfiguration : CharacterConfiguration
     public List<FloatMultiplier> SkillMultiplier;
     public List<FloatMultiplier> SpecialMultiplier;
     
-
-
 }

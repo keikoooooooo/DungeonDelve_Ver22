@@ -16,14 +16,15 @@ MonoBehaviour:
   Level: 1
   Infor: 
   MaxHealth: 200
-  ATK: 6
-  DEF: 9
+  ATK: 47
+  DEF: 32
   WalkSpeed: 2
   RunSpeed: 5.2
   RunFastSpeed: 8
   MaxStamina: 100
   DashEnergy: 25
   JumpHeight: 1.4
+  WeaponLevel: 1
   JumpCD: 0.37
   SkillCD: 20
   SpecialCD: 15
@@ -117,13 +118,13 @@ MonoBehaviour:
   SpecialMultiplier:
   - MultiplierTypeName: Skill DMG (%/0.3s)
     Multiplier:
-    - 38.19
-    - 42.17
-    - 47.92
-    - 52.47
-    - 57.03
-    - 62.38
-    - 65.36
-    - 69.01
-    - 75.78
-    - 80.63
+    - 30.01
+    - 34.37
+    - 37.92
+    - 41.82
+    - 45.39
+    - 49.94
+    - 54.61
+    - 59.02
+    - 64.54
+    - 69.72

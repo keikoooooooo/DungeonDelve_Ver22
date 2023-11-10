@@ -1,28 +1,23 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-public class TriggerDetection : MonoBehaviour
+public class TriggerDetection : DetectionBase
 {
-
-    [Tooltip("Layer cần kiểm tra va chạm")]
+    [Space, Tooltip("Layer cần kiểm tra va chạm")]
     public LayerMask layerToCheck;
     
-    [Space]
-    public UnityEvent<Collider> OnTriggerEnterEvent;
-    public UnityEvent<Collider> OnTriggerExitEvent;
-
-
     private void OnTriggerEnter(Collider other)
     {
         if(!layerToCheck.Contains(other.gameObject)) return;
         
-        OnTriggerEnterEvent?.Invoke(other);
+        CollisionEnterEvent?.Invoke(other.gameObject);
+        PositionEnterEvent?.Invoke(other.ClosestPointOnBounds(transform.position));
     }
 
     private void OnTriggerExit(Collider other)
     {
         if(!layerToCheck.Contains(other.gameObject)) return;
         
-        OnTriggerExitEvent?.Invoke(other);
+        CollisionExitEvent?.Invoke(other.gameObject);
+        PositionExitEvent?.Invoke(other.ClosestPointOnBounds(transform.position));
     }
 }

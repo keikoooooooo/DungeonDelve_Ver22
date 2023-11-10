@@ -71,7 +71,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         StateRun
     }
     private PlayerStateFactory _state;
-    private MovementState _movementState;
+    protected MovementState _movementState;
     [HideInInspector] protected Camera _mainCamera;
     [HideInInspector] private float _gravity;
     [HideInInspector] private bool _pressedJump;
@@ -79,6 +79,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] private float _jumpCD_Temp;
     [HideInInspector] protected float _skillCD_Temp;
     [HideInInspector] protected float _specialCD_Temp;
+    protected int _calculatedDamage;
     
     // Coroutine
     private Coroutine _handleSTCoroutine;
@@ -88,7 +89,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         SetVariables();
-        RegisterEvent();
     }
     private void Start()
     {
@@ -108,12 +108,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     private void OnDisable()
     {
-        UnRegisterEvent();
+        ResetVariables();
     }
 
 
     /// <summary>
-    /// Đặt các giá trị biến ban đầu, và sẽ gọi hàm mỗi lần object này được OnEnable
+    /// Khởi tạo giá trị biến ban đầu, và sẽ gọi hàm mỗi lần object này được OnEnable
     /// </summary>
     protected virtual void SetVariables()
     {
@@ -124,7 +124,16 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         _movementState = MovementState.StateRun;
 
         StatusHandle = new StatusHandle(PlayerConfig.MaxHealth, PlayerConfig.MaxStamina);
+        StatusHandle.E_Die += Die;
+        
+        DamageableData.Add(gameObject, this);
     }
+    private void ResetVariables()
+    {
+        DamageableData.Remove(gameObject);
+        StatusHandle.E_Die -= Die;
+    }
+
     
     /// <summary>
     /// Khởi tạo các tham chiếu, và sẽ gọi hàm này 1 lần bằng hàm Start
@@ -144,14 +153,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         _handleSTCoroutine = StartCoroutine(IncreaseSTCoroutine());
     }
     
-    private void RegisterEvent()
-    {
-        StatusHandle.E_Die += Die;
-    }
-    private void UnRegisterEvent()
-    {
-        StatusHandle.E_Die -= Die;
-    }
+
     
 
     public void HandleInput()
@@ -195,10 +197,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
                 break;
             
             case true when _jumpCD_Temp <= 0 && IsJump:
-                ReleaseAction();
                 animator.SetBool(IDJump, true);
                 animator.SetBool(IDFall, false);
                 _jumpVelocity = Mathf.Sqrt(PlayerConfig.JumpHeight * -2f * _gravity);
+                ReleaseAction();
                 break;
         }
         if (!IsGrounded)
@@ -218,15 +220,25 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         var rotation = Quaternion.LookRotation(InputMovement, Vector3.up);
         model.rotation = Quaternion.RotateTowards(model.rotation, rotation, 1000 * Time.deltaTime);
     }
+
     
-    public void TakeDamage(int damage)
+    #region HandleDMG
+    public void CauseDMG(GameObject _gameObject)
+    {
+        if (DamageableData.Contains(_gameObject, out var iDamageable))
+        {
+            iDamageable.TakeDMG(_calculatedDamage);
+        }
+    }
+    public void TakeDMG(int _damage)
     {   
-        Debug.Log("Player Get hit");
+        
     }
     public void Die()
     {
-        Debug.Log("PlayerDie");
+        
     }
+    #endregion
     
     
     public IEnumerator IncreaseSTCoroutine()
@@ -249,10 +261,28 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     #endregion
 
     
+    
     /// <summary>
     /// Giải phóng tất cả trạng thái khi nhảy hoặc lướt.
     /// </summary>
     public abstract void ReleaseAction();
+    
+    /// <summary>
+    /// Tính sát thương của Normal Attack
+    /// </summary>  
+    protected abstract void CalculateDMG_NA();
+    /// <summary>
+    /// Tính sát thương của Charged Attack
+    /// </summary>
+    protected abstract void CalculateDMG_CA();
+    /// <summary>
+    /// Tính sát thương của Elemental Skill
+    /// </summary>
+    protected abstract void CalculateDMG_EK();
+    /// <summary>
+    /// Tính sát thương của Elemental Burst
+    /// </summary>
+    protected abstract void CalculateDMG_EB();
     
 }
 

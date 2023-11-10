@@ -6,7 +6,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator
     [TaskCategory("Unity/Animator")]
     [TaskDescription("Nếu animator đang chạy clip có tag = parameterName => return True")]
     [TaskIcon("Assets/Behavior Designer/Behavior Designer Movement/Editor/Icons/CheckIcon.png")]
-    public class IsTag : Action
+    public class IsTag : Conditional
     {
         public SharedAnimator animator;
         [Tooltip("The name of the parameter")]
@@ -15,21 +15,18 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator
         public SharedBool boolValue;
 
         private bool _boolCheck;
-
-
-        public override void OnStart()
-        {
-            _boolCheck = animator.Value.IsTag(tagCheck.Value);
-        }
+        
 
         public override TaskStatus OnUpdate()
         {
-            return boolValue.Value == _boolCheck ? TaskStatus.Success : TaskStatus.Failure;
-        }
-        
-        public override void OnReset()
-        {
-            tagCheck = "";
+            if (animator != null && animator.Value != null)
+            {
+                _boolCheck = animator.Value.IsTag(tagCheck.Value);
+                return boolValue.Value == _boolCheck ? TaskStatus.Success : TaskStatus.Failure;
+            }
+            
+            Debug.LogWarning("Animator is null");
+            return TaskStatus.Failure;
         }
         
     }

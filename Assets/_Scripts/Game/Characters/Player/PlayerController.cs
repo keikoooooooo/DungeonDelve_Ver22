@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine;
 
 
@@ -36,19 +35,18 @@ public abstract class PlayerController : PlayerStateMachine
     protected bool IsSpecialPressed => inputs.q && _specialCD_Temp <= 0;
     public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding,
 
+    
     public bool DetectionEnemy => _enemies.Count > 0;
     
     private readonly List<GameObject> _enemies = new();
     
     
-    
     // Player
     protected bool CanAttack = true;                       // được phép attack ? 
-    [HideInInspector] private Vector3 _pushVelocity;       // hướng đẩy
-     protected int _attackCounter;        // số lần attackCombo
+    [HideInInspector] private Vector3 _pushVelocity;       // vận tốc đẩy 
+    [HideInInspector] private int _directionPushVelocity;  // hướng đẩy 
+    [HideInInspector] protected int _attackCounter;        // số lần attackCombo
     [HideInInspector] protected bool _isAttackPressed;     // có nhấn attack k ?
-    
-    private int _directionPushVelocity; // hướng đẩy 
     
     private Coroutine _pushVelocityCoroutine;
     private Coroutine _pushMoveCoroutine;
@@ -67,7 +65,6 @@ public abstract class PlayerController : PlayerStateMachine
             _ => 0
         };
     }
-
     protected void HandleAttack()
     {
         animator.SetFloat(IDStateTime, Mathf.Repeat(animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
@@ -82,8 +79,8 @@ public abstract class PlayerController : PlayerStateMachine
         if(!CanAttack || !IsGrounded) return;
         
         Attack();
-        Skill();
-        Special();
+        ElementalSkill();
+        ElementalBurst();
     }
 
     private void Attack()
@@ -96,18 +93,18 @@ public abstract class PlayerController : PlayerStateMachine
         
         switch (_isAttackPressed)
         {
-            case true when !IsAttackPressed && MouseHoldTime < .3f:
-                AttackCombo();
+            case true when !IsAttackPressed && MouseHoldTime < .5f:
+                NormalAttack();
                 break;
             
-            case true when IsAttackPressed && MouseHoldTime >= .3f:
+            case true when IsAttackPressed && MouseHoldTime >= .5f:
                 CanAttack = false;
                 _isAttackPressed = false;
-                AttackHolding();
+                ChargedAttack();
                 break;
         }
     }
-    protected virtual void AttackCombo()
+    protected virtual void NormalAttack()
     {
         CanMove = false;
         CanRotation = false;
@@ -116,10 +113,15 @@ public abstract class PlayerController : PlayerStateMachine
         MouseHoldTime = 0;
         animator.SetTrigger(IDNormalAttack);
 
+        CalculateDMG_NA();
         RotateToEnemy();
     }
-    protected abstract void AttackHolding();// Định nghĩa lại đòn tấn công của nhân vật.
-    protected virtual void Skill()
+    protected virtual void ChargedAttack()
+    {
+        animator.SetTrigger(IDChargedAttack);
+        CalculateDMG_CA();
+    }
+    protected virtual void ElementalSkill()
     {
         if(!IsSkillPressed) return;
 
@@ -127,20 +129,21 @@ public abstract class PlayerController : PlayerStateMachine
         CanAttack = false;
         CanMove = false;
         CanRotation = false;
-        
         _skillCD_Temp = PlayerConfig.SkillCD;
+        
+        CalculateDMG_EK();
         OnSkillCooldownEvent();
     }
-    protected virtual void Special()
+    protected virtual void ElementalBurst()
     {
         if(!IsSpecialPressed) return;
-        
         animator.SetTrigger(IDSpecial);
         CanAttack = false;
         CanMove = false;
         CanRotation = false;
-        
         _specialCD_Temp = PlayerConfig.SpecialCD;
+
+        CalculateDMG_EB();
         OnSpecialCooldownEvent();
     }
 
@@ -194,22 +197,69 @@ public abstract class PlayerController : PlayerStateMachine
             yield return null;
         }
     }
-    public void AddEnemy(Collider _collider)
+    public void AddEnemy(GameObject _gameObject)
     {
-        if(_enemies.Contains(_collider.gameObject)) 
+        if(_enemies.Contains(_gameObject)) 
             return;
-        _enemies.Add(_collider.gameObject);
+        _enemies.Add(_gameObject);
     }
-    public void RemoveEnemy(Collider _collider)
+    public void RemoveEnemy(GameObject _gameObject)
     {
-        if(!_enemies.Contains(_collider.gameObject)) 
+        if(!_enemies.Contains(_gameObject)) 
             return;
-        _enemies.Remove(_collider.gameObject);
+        _enemies.Remove(_gameObject);
     }
     #endregion
 
-    
-    
+    #region Tính sát thương đầu ra của 4Type Attack
+    protected override void CalculateDMG_NA()
+    {
+        // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ n
+        var _dmg = PlayerConfig.NormalAttackMultiplier[_attackCounter].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
+              
+        // chuyển %DMG sang giá trị cộng thêm
+        _dmg /= 100;
+                
+        // tính sát thường đầu ra
+        _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+    }
+    protected override void CalculateDMG_CA()
+    {
+        // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ 0
+        var _dmg = PlayerConfig.ChargedAttackMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
+              
+        // chuyển %DMG sang giá trị cộng thêm
+        _dmg /= 100;
+                
+        // tính sát thường đầu ra
+        _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+    }
+    protected override void CalculateDMG_EK()
+     {
+         // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ 0
+         var _dmg = PlayerConfig.SkillMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
+               
+         // chuyển %DMG sang giá trị cộng thêm
+         _dmg /= 100;
+                 
+         // tính sát thường đầu ra
+         _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+     }   
+    protected override void CalculateDMG_EB()
+    {
+        // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ 0
+        var _dmg = PlayerConfig.SpecialMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
+              
+        // chuyển %DMG sang giá trị cộng thêm
+        _dmg /= 100;
+                
+        // tính sát thường đầu ra
+        _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+    }
+    #endregion
+
+
+
     protected virtual void AttackEnd()
     {
         MouseHoldTime = 0;
@@ -230,6 +280,7 @@ public abstract class PlayerController : PlayerStateMachine
         AttackEnd();
     }
     
+    
     public override void ReleaseAction()
     {
         inputs.leftMouse = false;
@@ -237,6 +288,5 @@ public abstract class PlayerController : PlayerStateMachine
         inputs.q = false;
         AttackEnd();
     }
-    
     
 }

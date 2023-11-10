@@ -178,7 +178,7 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 128
-  OnTriggerEnterEvent:
+  TriggerEnterEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -193,7 +193,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  OnTriggerExitEvent:
+  TriggerExitEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -208,6 +208,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  PositionEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PositionExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1039497638930889798
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +346,7 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 128
-  OnTriggerEnterEvent:
+  TriggerEnterEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -355,7 +361,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  OnTriggerExitEvent:
+  TriggerExitEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -370,6 +376,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  PositionEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PositionExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3058335943946224998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,7 +3139,7 @@ GameObject:
   - component: {fileID: 8992531518441473535}
   - component: {fileID: 1486355612663124502}
   - component: {fileID: 1567438197516927852}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: RootSensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3212,7 +3224,7 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 2048
-  OnTriggerEnterEvent:
+  TriggerEnterEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -3227,7 +3239,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  OnTriggerExitEvent:
+  TriggerExitEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -3242,6 +3254,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  PositionEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PositionExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4960213918823089993
 PrefabInstance:
   m_ObjectHideFlags: 0

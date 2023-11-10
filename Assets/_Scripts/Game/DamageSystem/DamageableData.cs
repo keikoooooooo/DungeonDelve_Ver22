@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Lưu cặp Key-Value : GameObject-IDamageable, của các character để lấy Interface xử lý DMG
+/// </summary>
 public static class DamageableData
 {
     private static readonly Dictionary<GameObject, IDamageable> _dictionary = new();
-    
     
     public static void Add(GameObject _obj, IDamageable IDamage)
     {
@@ -20,10 +23,7 @@ public static class DamageableData
         _dictionary.Remove(_obj);
     }
     
-    public static bool Contains(GameObject _obj, out IDamageable iDamageable)
-    {
-        return _dictionary.TryGetValue(_obj, out iDamageable);
-    }
+    public static bool Contains(GameObject _obj, out IDamageable iDamageable) => _dictionary.TryGetValue(_obj, out iDamageable);
     
     
 }

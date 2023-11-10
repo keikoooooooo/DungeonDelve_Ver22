@@ -1,8 +1,12 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
-{    
+{
+    [Header("Ref"), Required] 
+    public DetectionBase detectionType;
+    
     [Header("Effect Prefab")]
     public ParticleSystem flash;
     public ParticleSystem projectile;

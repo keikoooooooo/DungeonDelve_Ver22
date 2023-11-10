@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7095017398946610073, guid: d8a7095ef67f5eb4eb38176f2032f298, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 6.6
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8412947257134852969, guid: d8a7095ef67f5eb4eb38176f2032f298, type: 3}
       propertyPath: m_RootOrder
@@ -698,7 +698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8712961556643560096, guid: d8a7095ef67f5eb4eb38176f2032f298, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8712961556643560097, guid: d8a7095ef67f5eb4eb38176f2032f298, type: 3}
       propertyPath: m_Enabled

@@ -1,14 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-
-public class ParticleDetection : MonoBehaviour
+public class ParticleDetection : DetectionBase
 {
-    public ParticleSystem particle;
     [Space]
-    public UnityEvent<Vector3, GameObject> OnParticleEnterEvent; // trả về vị trí va chạm (vector3) và dối tượng vừa va chạm (gameObject)
-
+    public ParticleSystem particle;
     
     private readonly List<ParticleCollisionEvent> _particleEvent = new();
     
@@ -19,8 +15,8 @@ public class ParticleDetection : MonoBehaviour
         if(nums <= 0) 
             return;
         
-        var point = _particleEvent[0].intersection;
-        OnParticleEnterEvent?.Invoke(point, other);
+        CollisionEnterEvent?.Invoke(other);
+        PositionEnterEvent?.Invoke(_particleEvent[0].intersection);
     }
 
     

@@ -8,7 +8,6 @@ using Spine.Unity;
 public class ArcherController : PlayerController
 {
     [Header("SubClass -------")]
-    
     [Tooltip("Visuel Effect đánh dấu vị trí skillSpecial xuất hiện")]
     public GameObject targetMarkerQ;
     
@@ -31,15 +30,18 @@ public class ArcherController : PlayerController
     [SerializeField] private AxisState xAxis;
     [SerializeField] private AxisState yAxis;
 
+    public float ChargedAttackTime { get; private set; }
     
     private ArcherEffects _effects;           // Script quản lí vũ khí của Archer
     [HideInInspector] private bool _lockCrosshair;       // có khóa tâm ngắm không
     [HideInInspector] private Vector3 worldPosition;
     [HideInInspector] private float _horizontalBlend;
     [HideInInspector] private float _verticalBlend;
+    private float _damageBonus;
     private Ray _ray;
 
     private Coroutine _attackCoroutine;
+    
     
     protected override void Update()
     {
@@ -84,18 +86,45 @@ public class ArcherController : PlayerController
         }
     }
     
-    // Handle Attack Holding
-    protected override void AttackHolding()
+ 
+    protected override void ChargedAttack()
     {
-        animator.SetTrigger(IDChargedAttack);
         if(_attackCoroutine != null) 
             StopCoroutine(_attackCoroutine);
         _attackCoroutine = StartCoroutine(AttackHoldingCoroutine());
+        
+        base.ChargedAttack();
     }
-    // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator AttackHoldingCoroutine()
     {
-        // Animation 
+        InitChargedAttackValue();
+        
+        while (IsAttackPressed)
+        {
+            BlendAnimationValue();
+            AimCamRotation();
+            _lockCrosshair = IsAttackPressed;
+            animator.SetBool(ID4Direction, IsAttackPressed);
+
+            ChargedAttackTime += Time.deltaTime;
+            _damageBonus = Mathf.MoveTowards(_damageBonus, 
+                                              PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1],
+                                            15 * Time.deltaTime);
+            yield return null;
+        }
+        CalculateDMG_CA();
+        
+        _movementState = MovementState.StateRun;
+        animator.SetBool(ID4Direction, false);
+        freeLookCam.m_XAxis.Value = xAxis.Value;
+        
+        if(IsJump || IsDash) yield break;
+        CanMove = false;
+        CanRotation = false;
+    }
+    private void InitChargedAttackValue()
+    {
+        // Animation
         _horizontalBlend = 0;
         _verticalBlend = 0;
         
@@ -109,19 +138,13 @@ public class ArcherController : PlayerController
         crosshair.gameObject.SetActive(true);
         crosshair.SetAnimation("Center_IN", false);
         crosshair.AddAnimation("Center_Wait", false, 1);
+
+        // State
+        _movementState = MovementState.StateWalk;
         
-        while (IsAttackPressed)
-        {
-            BlendAnimationValue();
-            AimCamRotation();
-            
-            _lockCrosshair = IsAttackPressed;
-            animator.SetBool(ID4Direction, IsAttackPressed);
-            yield return null;
-        }
-        
-        freeLookCam.m_XAxis.Value = xAxis.Value;
-        animator.SetBool(ID4Direction, false);
+        // DMG
+        ChargedAttackTime = 0;
+        _damageBonus = PlayerConfig.ChargedAttackMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
     }
     private void BlendAnimationValue()
     {
@@ -139,8 +162,7 @@ public class ArcherController : PlayerController
 
         model.rotation = Quaternion.Slerp(model.rotation, Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0), 50f * Time.deltaTime);
     }
-    
-    protected override void Special()
+    protected override void ElementalBurst()
     {
         if(!IsSpecialPressed) return;
         
@@ -212,12 +234,24 @@ public class ArcherController : PlayerController
         animator.ResetTrigger(IDSpecial);
         targetMarkerQ.SetActive(false);
     }
-
+    
     public override void ReleaseAction()
     {
         base.ReleaseAction();
         _effects.TurnOffFxHold();
     }
+
+    protected override void CalculateDMG_CA()
+    {
+        // tìm %DMG dựa theo thời gian Holding, % tối đa = PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1]
+        var _dmg = _damageBonus; 
+        
+        // chuyển %DMG sang giá trị cộng thêm
+        _dmg /= 100;
+                
+        // tính sát thường đầu ra
+        _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+    }
     
- 
+    
 }

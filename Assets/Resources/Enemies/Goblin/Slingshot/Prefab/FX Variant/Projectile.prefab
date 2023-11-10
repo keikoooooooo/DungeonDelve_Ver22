@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98cfa91a33c9a474a9f314ff0105fc53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionType: {fileID: 8338859320916319837}
   flash: {fileID: 3036600528078184193}
   projectile: {fileID: 3110734843526066466}
   hit: {fileID: 7873102012837512787}
@@ -104,9 +105,37 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7093725782271389711}
+    - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
       propertyPath: OnParticleEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7093725782271389711}
+    - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCollision
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Arrow, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+      propertyPath: PositionEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5324852122446157894, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
       value: 0.2
@@ -174,6 +203,17 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7576389217755142509, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
   m_PrefabInstance: {fileID: 4760077215791065167}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8338859320916319837 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3582232380951508498, guid: 6a0b83fec7bb45845bc03103b7192edf, type: 3}
+  m_PrefabInstance: {fileID: 4760077215791065167}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e43c06f6ae82f4fb284d09edbe66ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4787190787769662714
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(BehaviorTree))]
-public class EnemyController : MonoBehaviour, IDamageable
+public sealed class EnemyController : MonoBehaviour, IDamageable
 {
     // Ref
     [field: SerializeField, Required] public BehaviorTree BehaviorTree { get; private set; }
@@ -16,28 +16,41 @@ public class EnemyController : MonoBehaviour, IDamageable
     public StatusHandle StatusHandle { get; private set; }
     public bool CanAttack => _attackCooldown <= 0;
     public Vector3 PlayerPosition => _player.transform.position;
-    
+
+    public Animator animator;
     
     // Variables
     private GameObject _player;
     private float _attackCooldown;
     private float _attackCooldownTemp;
-    
-    
+
+
+    private void OnEnable()
+    {
+        SetVariables();
+    }
     private void Start()
     {
         GetReference();
-        SetVariables();
     }
     private void Update()
     {
         CheckAttack();
+    }
+    private void OnDisable()
+    {
+        ResetVariables();
     }
 
 
     private void SetVariables()
     {
         StatusHandle = new StatusHandle(EnemyConfig.MaxHealth);
+        DamageableData.Add(gameObject, this);
+    }
+    private void ResetVariables()
+    {
+        DamageableData.Remove(gameObject);
     }
     private void GetReference()
     {
@@ -49,6 +62,8 @@ public class EnemyController : MonoBehaviour, IDamageable
         BehaviorTree.SetVariableValue("RootPosition", transform.position);
         if (_player) BehaviorTree.SetVariableValue("Player", _player);
     }
+    
+    
     private void CheckAttack()
     {
         BehaviorTree.SetVariableValue("CanAttack", CanAttack);
@@ -67,14 +82,24 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     
     
-    public void TakeDamage(int damage)
+    #region HandleDMG
+    public void CauseDMG(GameObject _gameObject)
     {
-        Debug.Log("take damage");
+        
+    }
+    public void TakeDMG(int _damage)
+    {   
+        // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
+        var _damageReceived = Mathf.CeilToInt(_damage * (EnemyConfig.DEF / 100.0f));
+        
+        Debug.Log(_damageReceived);
     }
     public void Die()
     {
         
     }
+    #endregion
+
  
 
 }

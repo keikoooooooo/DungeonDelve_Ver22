@@ -16,14 +16,15 @@ MonoBehaviour:
   Level: 1
   Infor: 
   MaxHealth: 200
-  ATK: 10
-  DEF: 5
+  ATK: 60
+  DEF: 20
   WalkSpeed: 2
   RunSpeed: 5.7
   RunFastSpeed: 8
   MaxStamina: 100
   DashEnergy: 25
   JumpHeight: 1.4
+  WeaponLevel: 1
   JumpCD: 0.38
   SkillCD: 15
   SpecialCD: 12
@@ -103,16 +104,16 @@ MonoBehaviour:
     - 86.07
   - MultiplierTypeName: Fully-Charged Aimed Shot (%)
     Multiplier:
-    - 140
-    - 145
     - 150
-    - 155
-    - 165
-    - 175
-    - 185
-    - 195
-    - 205
-    - 215
+    - 200
+    - 250
+    - 300
+    - 350
+    - 400
+    - 450
+    - 500
+    - 550
+    - 600
   SkillMultiplier:
   - MultiplierTypeName: DMG Per Arrow (%)
     Multiplier:
@@ -129,13 +130,13 @@ MonoBehaviour:
   SpecialMultiplier:
   - MultiplierTypeName: Fiery Rain DMG Per Wave (%)
     Multiplier:
-    - 60.37
-    - 65.28
-    - 70.63
-    - 75.78
-    - 80.18
-    - 85.29
-    - 90.61
-    - 95.27
-    - 100.84
-    - 105.29
+    - 54.39
+    - 58.92
+    - 61.12
+    - 65.83
+    - 68.29
+    - 71.04
+    - 75.72
+    - 79.41
+    - 83.49
+    - 86.06

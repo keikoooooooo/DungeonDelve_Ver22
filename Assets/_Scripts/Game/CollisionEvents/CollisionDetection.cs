@@ -1,27 +1,25 @@
-using System;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class CollisionDetection : MonoBehaviour
+public class CollisionDetection : DetectionBase
 {
-    [Tooltip("Layer cần kiểm tra va chạm")]
+    [Space, Tooltip("Layer cần kiểm tra va chạm")]
     public LayerMask layerToCheck;
     
-    [Space]
-    public UnityEvent<Collision> OnCollisionEnterEvent;
-    public UnityEvent<Collision> OnCollisionExitEvent;
-
     private void OnCollisionEnter(Collision other)
     {
-        if(!layerToCheck.Contains(other.gameObject)) return;
+        if(!layerToCheck.Contains(other.gameObject)) 
+            return;
         
-        OnCollisionEnterEvent?.Invoke(other);
+        CollisionEnterEvent?.Invoke(other.gameObject);
+        PositionEnterEvent?.Invoke(other.GetContact(0).point);
     }
 
     private void OnCollisionExit(Collision other)
     {
-        if(!layerToCheck.Contains(other.gameObject)) return;
+        if(!layerToCheck.Contains(other.gameObject)) 
+            return;
         
-        OnCollisionExitEvent?.Invoke(other);
+        CollisionExitEvent?.Invoke(other.gameObject);
+        PositionExitEvent?.Invoke(other.GetContact(0).point);
     }
 }

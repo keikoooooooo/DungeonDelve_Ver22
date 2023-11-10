@@ -58,7 +58,7 @@ public class GoblinSword_Effects : MonoBehaviour
                 break;
         }
     }
-    public void EffectHit(Vector3 _position, GameObject collisionObject) => _poolHit.Get(_position);
+    public void EffectHit(Vector3 _position) => _poolHit.Get(_position);
     
     
     public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
