@@ -2,6 +2,7 @@ using BehaviorDesigner.Runtime;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(BehaviorTree))]
@@ -36,6 +37,7 @@ public sealed class EnemyController : MonoBehaviour, IDamageable
     private void Update()
     {
         CheckAttack();
+        
     }
     private void OnDisable()
     {
@@ -87,17 +89,18 @@ public sealed class EnemyController : MonoBehaviour, IDamageable
     {
         
     }
-    public void TakeDMG(int _damage)
+    public void TakeDMG(int _damage, bool _isCRIT)
     {   
         // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
         var _damageReceived = Mathf.CeilToInt(_damage * (EnemyConfig.DEF / 100.0f));
         
-        Debug.Log(_damageReceived);
+        DMGPopUpGenerator.Instance.CreateDMGPopUp(_damageReceived, transform.position, _isCRIT);
     }
     public void Die()
     {
         
     }
+
     #endregion
 
  

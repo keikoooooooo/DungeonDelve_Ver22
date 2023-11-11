@@ -77,6 +77,8 @@ public class GameplayEditorWindow : EditorWindow
         dataPlayerConfig.MaxHealth = EditorGUILayout.IntField("Max HP", dataPlayerConfig.MaxHealth, Width(500));
         dataPlayerConfig.MaxStamina = EditorGUILayout.IntField("Max ST", dataPlayerConfig.MaxStamina, Width(500));
         dataPlayerConfig.ATK = EditorGUILayout.IntField("ATK", dataPlayerConfig.ATK, Width(500));
+        dataPlayerConfig.CRITRate = EditorGUILayout.FloatField("CRIT Rate", dataPlayerConfig.CRITRate, Width(500));
+        dataPlayerConfig.CRITDMG = EditorGUILayout.IntField("CRIT DMG", dataPlayerConfig.CRITDMG, Width(500));
         dataPlayerConfig.DEF = EditorGUILayout.IntField("DEF", dataPlayerConfig.DEF, Width(500));
         dataPlayerConfig.WalkSpeed = EditorGUILayout.FloatField("Walk Speed", dataPlayerConfig.WalkSpeed, Width(500));
         dataPlayerConfig.RunSpeed = EditorGUILayout.FloatField("Run Speed", dataPlayerConfig.RunSpeed, Width(500));

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public enum PushDirectionEnum
@@ -219,7 +220,7 @@ public abstract class PlayerController : PlayerStateMachine
               
         // chuyển %DMG sang giá trị cộng thêm
         _dmg /= 100;
-                
+        
         // tính sát thường đầu ra
         _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
     }

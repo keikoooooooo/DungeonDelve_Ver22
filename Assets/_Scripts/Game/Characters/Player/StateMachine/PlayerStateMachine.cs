@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Quản lí tất cả state của player
@@ -225,12 +226,23 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     #region HandleDMG
     public void CauseDMG(GameObject _gameObject)
     {
-        if (DamageableData.Contains(_gameObject, out var iDamageable))
+        if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
+        
+        // Có kích CRIT không ?
+        var critRateRandom = Random.value;
+        var _isCrit = false;
+        if (critRateRandom <= PlayerConfig.CRITRate / 100)
         {
-            iDamageable.TakeDMG(_calculatedDamage);
-        }
+            var critDMG = (PlayerConfig.CRITDMG + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
+            var totalDMG = Mathf.CeilToInt(_calculatedDamage * critDMG);
+            
+            _calculatedDamage = totalDMG;
+            _isCrit = true;
+        } 
+        
+        iDamageable.TakeDMG(_calculatedDamage, _isCrit);
     }
-    public void TakeDMG(int _damage)
+    public void TakeDMG(int _damage, bool _isCRIT)
     {   
         
     }

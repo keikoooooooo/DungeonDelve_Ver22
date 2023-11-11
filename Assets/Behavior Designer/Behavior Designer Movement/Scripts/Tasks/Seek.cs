@@ -24,6 +24,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         {
             if (HasArrived())
             {
+                return TaskStatus.Success;
             }
             
             BlendAnimation();
