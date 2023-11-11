@@ -14,6 +14,7 @@ public interface IDamageable
     /// Nhận sát thương vào
     /// </summary>
     /// <param name="_damage"> Lượng sát thương nhận vào </param>
+    /// <param name="_isCRIT"> Sát thương có kích bạo không ? </param>
     public void TakeDMG(int _damage, bool _isCRIT);
     
     

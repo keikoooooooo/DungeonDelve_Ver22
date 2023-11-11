@@ -17,7 +17,6 @@ public class PlayerDashState : PlayerBaseState
         _machine.StatusHandle.Subtract(_machine.PlayerConfig.DashEnergy, StatusHandle.StatusType.Stamina);
         _machine.animator.SetTrigger(_machine.IDDash);
         _machine.animator.SetBool(_machine.IDJump, false);
-        _machine.ReleaseAction();
         
         speedPushDash = .3f;
         direction = Vector3.zero;
@@ -31,13 +30,11 @@ public class PlayerDashState : PlayerBaseState
             CheckSwitchState();
             return;
         }
-
+        _machine.ReleaseAction();
         direction = _machine.model.forward.normalized * dashSpeed;
         _machine.CharacterController.Move(direction * Time.deltaTime);
     }
-
-    protected override void ExitState()
-    { }
+    protected override void ExitState() { }
     public override void CheckSwitchState()
     {
         // // Kiểm tra các trạng thái khi nhân vật đang đứng dưới đất

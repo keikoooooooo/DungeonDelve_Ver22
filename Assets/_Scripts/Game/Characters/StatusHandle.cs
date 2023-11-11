@@ -35,8 +35,6 @@ public class StatusHandle
    private int _maxStamina;
    public int CurrentStamina { get; private set; }
    
-   private bool IsDie => CurrentHealth <= _maxHealth;
-   
    
 
    public void Increase(int _amount, StatusType _statusType)
@@ -62,13 +60,14 @@ public class StatusHandle
       {
          case StatusType.Health:
             CurrentHealth -= _amount;
-            if (CurrentHealth <= 0) CurrentHealth = 0;
-            E_HealthChanged?.Invoke(CurrentHealth);
-           
-            if (IsDie)
+            if (CurrentHealth <= 0)
             {
+               CurrentHealth = 0;
+               E_HealthChanged?.Invoke(CurrentHealth);
                E_Die?.Invoke();
+               return;
             }
+            E_HealthChanged?.Invoke(CurrentHealth);
             break;
          
          case StatusType.Stamina:

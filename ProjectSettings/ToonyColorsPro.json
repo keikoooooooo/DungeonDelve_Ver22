@@ -9,7 +9,11 @@
         "STYLIZATION",
         "THIRD PARTY PLUGINS",
         "LIGHTING",
-        "SPECIAL EFFECTS"
+        "SPECIAL EFFECTS",
+        "SURFACE",
+        "TRANSPARENCY/BLENDING",
+        "SHADER STATES",
+        "OPTIONS"
     ],
     "UseCustomFont": true,
     "CustomFont": {

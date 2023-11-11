@@ -28,6 +28,12 @@ Shader "CharacterShader"
 		_RimMax ("Rim Max", Range(0,2)) = 1
 		[TCP2Separator]
 		
+		[TCP2HeaderHelp(Dissolve)]
+		[Toggle(TCP2_DISSOLVE)] _UseDissolve ("Enable Dissolve", Float) = 0
+		[NoScaleOffset] _DissolveMap ("Map", 2D) = "gray" {}
+		_DissolveValue ("Value", Range(0,1)) = 0.5
+		[TCP2Separator]
+		
 		[TCP2HeaderHelp(Outline)]
 		_OutlineWidth ("Width", Range(0.1,4)) = 1
 		_OutlineColorVertex ("Color", Color) = (0,0,0,1)
@@ -50,6 +56,7 @@ Shader "CharacterShader"
 		{
 			"RenderPipeline" = "UniversalPipeline"
 			"RenderType"="Opaque"
+			"Queue"="AlphaTest"
 		}
 
 		HLSLINCLUDE
@@ -80,6 +87,7 @@ Shader "CharacterShader"
 		// Uniforms
 
 		// Shader Properties
+		TCP2_TEX2D_WITH_SAMPLER(_DissolveMap);
 		TCP2_TEX2D_WITH_SAMPLER(_BaseMap);
 
 		CBUFFER_START(UnityPerMaterial)
@@ -87,6 +95,7 @@ Shader "CharacterShader"
 			// Shader Properties
 			float _OutlineWidth;
 			fixed4 _OutlineColorVertex;
+			float _DissolveValue;
 			float4 _BaseMap_ST;
 			fixed4 _BaseColor;
 			half4 _Emission;
@@ -112,9 +121,8 @@ Shader "CharacterShader"
 		{
 			float4 vertex : POSITION;
 			float3 normal : NORMAL;
-			#if TCP2_UV1_AS_NORMALS
 			float4 texcoord0 : TEXCOORD0;
-		#elif TCP2_UV2_AS_NORMALS
+			#if TCP2_UV2_AS_NORMALS
 			float4 texcoord1 : TEXCOORD1;
 		#elif TCP2_UV3_AS_NORMALS
 			float4 texcoord2 : TEXCOORD2;
@@ -134,8 +142,9 @@ Shader "CharacterShader"
 		{
 			float4 vertex : SV_POSITION;
 			float4 vcolor : TEXCOORD0;
-			float3 pack1 : TEXCOORD1; /* pack1.xyz = worldNormal */
-			float3 pack2 : TEXCOORD2; /* pack2.xyz = worldPos */
+			float3 pack1 : TEXCOORD1; /* pack1.xyz = worldPos */
+			float3 pack2 : TEXCOORD2; /* pack2.xyz = worldNormal */
+			float2 pack3 : TEXCOORD3; /* pack3.xy = texcoord0 */
 			UNITY_VERTEX_INPUT_INSTANCE_ID
 			UNITY_VERTEX_OUTPUT_STEREO
 		};
@@ -149,13 +158,15 @@ Shader "CharacterShader"
 			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 			float3 worldNormalUv = mul(unity_ObjectToWorld, float4(v.normal, 1.0)).xyz;
+			// Texture Coordinates
+			output.pack3.xy = v.texcoord0.xy;
 			// Shader Properties Sampling
 			float __outlineWidth = ( _OutlineWidth );
 			float4 __outlineColorVertex = ( _OutlineColorVertex.rgba );
 
 			float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-			output.pack2.xyz = worldPos;
-			output.pack1.xyz = worldNormalUv;
+			output.pack1.xyz = worldPos;
+			output.pack2.xyz = worldNormalUv;
 		
 		#ifdef TCP2_COLORS_AS_NORMALS
 			//Vertex Color for Normals
@@ -225,13 +236,23 @@ Shader "CharacterShader"
 			UNITY_SETUP_INSTANCE_ID(input);
 			UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
-			float3 positionWS = input.pack2.xyz;
-			float3 normalWS = input.pack2.xyz;
+			float3 positionWS = input.pack1.xyz;
+			float3 normalWS = input.pack1.xyz;
 
 			// Shader Properties Sampling
 			float4 __outlineColor = ( float4(1,1,1,1) );
+			float __dissolveMap = ( TCP2_TEX2D_SAMPLE(_DissolveMap, _DissolveMap, input.pack3.xy).r );
+			float __dissolveValue = ( _DissolveValue );
 
 			half4 outlineColor = __outlineColor * input.vcolor.xyzw;
+			
+			//Dissolve
+			#if defined(TCP2_DISSOLVE)
+			half dissolveMap = __dissolveMap;
+			half dissolveValue = __dissolveValue;
+			float dissValue = dissolveValue;
+			clip(dissolveMap - dissValue * 1.001);
+			#endif
 
 			return outlineColor;
 		}
@@ -274,6 +295,10 @@ Shader "CharacterShader"
 
 			#pragma vertex Vertex
 			#pragma fragment Fragment
+
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature_local_fragment TCP2_DISSOLVE
 
 			// vertex input
 			struct Attributes
@@ -350,6 +375,8 @@ Shader "CharacterShader"
 				float4 __albedo = ( TCP2_TEX2D_SAMPLE(_BaseMap, _BaseMap, input.pack0.xy).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
+				float __dissolveMap = ( TCP2_TEX2D_SAMPLE(_DissolveMap, _DissolveMap, input.pack0.xy).r );
+				float __dissolveValue = ( _DissolveValue );
 				float __ambientIntensity = ( 1.0 );
 				float3 __emission = ( _Emission.rgb );
 				float __rampThreshold = ( _RampThreshold );
@@ -369,6 +396,14 @@ Shader "CharacterShader"
 				half alpha = __alpha;
 
 				half3 emission = half3(0,0,0);
+				
+				//Dissolve
+				#if defined(TCP2_DISSOLVE)
+				half dissolveMap = __dissolveMap;
+				half dissolveValue = __dissolveValue;
+				float dissValue = dissolveValue;
+				clip(dissolveMap - dissValue * 1.001);
+				#endif
 				
 				albedo *= __mainColor.rgb;
 
@@ -514,6 +549,10 @@ Shader "CharacterShader"
 			#pragma multi_compile _ TCP2_UV_NORMALS_FULL TCP2_UV_NORMALS_ZW
 			#pragma multi_compile_instancing
 			
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature_local_fragment TCP2_DISSOLVE
+
 			ENDHLSL
 		}
 		// Depth & Shadow Caster Passes
@@ -614,6 +653,8 @@ Shader "CharacterShader"
 				float4 __albedo = ( TCP2_TEX2D_SAMPLE(_BaseMap, _BaseMap, input.pack1.xy).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
+				float __dissolveMap = ( TCP2_TEX2D_SAMPLE(_DissolveMap, _DissolveMap, input.pack1.xy).r );
+				float __dissolveValue = ( _DissolveValue );
 
 				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - positionWS);
 				half ndv = abs(dot(viewDirWS, normalWS));
@@ -622,6 +663,14 @@ Shader "CharacterShader"
 				half3 albedo = half3(1,1,1);
 				half alpha = __alpha;
 				half3 emission = half3(0,0,0);
+				
+				//Dissolve
+				#if defined(TCP2_DISSOLVE)
+				half dissolveMap = __dissolveMap;
+				half dissolveValue = __dissolveValue;
+				float dissValue = dissolveValue;
+				clip(dissolveMap - dissValue * 1.001);
+				#endif
 
 				return 0;
 			}
@@ -657,6 +706,10 @@ Shader "CharacterShader"
 			#pragma vertex ShadowDepthPassVertex
 			#pragma fragment ShadowDepthPassFragment
 
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature_local_fragment TCP2_DISSOLVE
+
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 
@@ -691,6 +744,10 @@ Shader "CharacterShader"
 			#pragma vertex ShadowDepthPassVertex
 			#pragma fragment ShadowDepthPassFragment
 
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature_local_fragment TCP2_DISSOLVE
+
 			ENDHLSL
 		}
 
@@ -700,5 +757,5 @@ Shader "CharacterShader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(ver:"2.9.6";unity:"2022.3.12f1";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2019_4","UNITY_2020_1","UNITY_2021_1","UNITY_2021_2","OUTLINE","EMISSION","RIM","UNITY_2022_2","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0",RIM_LABEL="Rim Lighting"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
-/* TCP_HASH b6c6471c21bc39187867dd609dc71294 */
+/* TCP_DATA u config(ver:"2.9.6";unity:"2022.3.12f1";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2019_4","UNITY_2020_1","UNITY_2021_1","UNITY_2021_2","OUTLINE","EMISSION","RIM","UNITY_2022_2","DISSOLVE","DISSOLVE_SHADER_FEATURE","TEMPLATE_LWRP","DISSOLVE_CLIP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0",RIM_LABEL="Rim Lighting"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
+/* TCP_HASH a3d87d6f7a060f46baa16fcab537a8aa */

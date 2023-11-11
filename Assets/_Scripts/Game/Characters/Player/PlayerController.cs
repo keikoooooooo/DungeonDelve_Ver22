@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
-
 
 public enum PushDirectionEnum
 {
@@ -31,14 +29,13 @@ public abstract class PlayerController : PlayerStateMachine
     
     [Space, Tooltip("Thêm lực đẩy vào character khi tấn công"), SerializeField] 
     private AttackCustom attackCustom;
+    
     protected bool IsAttackPressed => inputs.leftMouse;
     protected bool IsSkillPressed => inputs.e && _skillCD_Temp <= 0;
     protected bool IsSpecialPressed => inputs.q && _specialCD_Temp <= 0;
     public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding,
-
-    
     public bool DetectionEnemy => _enemies.Count > 0;
-    
+
     private readonly List<GameObject> _enemies = new();
     
     

@@ -17,6 +17,8 @@ MonoBehaviour:
   Infor: 
   MaxHealth: 200
   ATK: 60
+  CRITRate: 5
+  CRITDMG: 50
   DEF: 20
   WalkSpeed: 2
   RunSpeed: 5.7
@@ -28,6 +30,8 @@ MonoBehaviour:
   JumpCD: 0.38
   SkillCD: 15
   SpecialCD: 12
+  DMGPopUpColorText: {r: 1, g: 0.77254903, b: 0, a: 1}
+  CRDPopUpColorText: {r: 1, g: 0.16470589, b: 0.32156864, a: 1}
   NormalAttackMultiplier:
   - MultiplierTypeName: 1 - Hit DMG (%)
     Multiplier:

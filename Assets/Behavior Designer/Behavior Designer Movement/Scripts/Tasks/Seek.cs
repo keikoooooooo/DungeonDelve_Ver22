@@ -27,7 +27,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 return TaskStatus.Success;
             }
             
-            BlendAnimation();
+            //BlendAnimation();
             SetDestination(Target());
             RotationToTarget(Target());
             

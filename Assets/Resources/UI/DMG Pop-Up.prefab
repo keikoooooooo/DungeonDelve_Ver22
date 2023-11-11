@@ -60,8 +60,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1329508307
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &3896789442968394837
 MonoBehaviour:
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &9175587668618280006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textPopUp: {fileID: 9138724648095566359}
-  mainCamera: {fileID: 0}
   opacityCurve:
     serializedVersion: 2
     m_Curve:
@@ -221,9 +220,9 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 4.25
-      inSlope: -10.833333
-      outSlope: -10.833333
+      value: 4.3
+      inSlope: -11
+      outSlope: -11
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -231,7 +230,7 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.3
       value: 1
-      inSlope: -10.833333
+      inSlope: -11
       outSlope: 0
       tangentMode: 69
       weightedMode: 0
@@ -249,8 +248,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  DMGColor: {r: 1, g: 1, b: 1, a: 1}
-  CRDColor: {r: 1, g: 0.77254903, b: 0, a: 1}
+  EnemyDMGColor: {r: 1, g: 0.77254903, b: 0, a: 1}
+  PlayerDMGColor: {r: 1, g: 1, b: 1, a: 1}
+  CRDColor: {r: 1, g: 0.16470589, b: 0.32156864, a: 1}
 --- !u!1 &6688072678434801978
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,8 +325,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 50687
-  m_fontColor: {r: 1, g: 0.7728097, b: 0, a: 0}
+    rgba: 5384959
+  m_fontColor: {r: 1, g: 0.16509432, b: 0.32049814, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -343,8 +343,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

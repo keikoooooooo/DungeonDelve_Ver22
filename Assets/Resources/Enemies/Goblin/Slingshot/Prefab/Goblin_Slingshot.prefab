@@ -175,10 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc9b52fb92c5de41b8da139f9fde2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerToCheck:
-    serializedVersion: 2
-    m_Bits: 128
-  TriggerEnterEvent:
+  CollisionEnterEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -193,7 +190,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  TriggerExitEvent:
+  CollisionExitEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -214,6 +211,9 @@ MonoBehaviour:
   PositionExitEvent:
     m_PersistentCalls:
       m_Calls: []
+  layerToCheck:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1039497638930889798
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,10 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc9b52fb92c5de41b8da139f9fde2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerToCheck:
-    serializedVersion: 2
-    m_Bits: 128
-  TriggerEnterEvent:
+  CollisionEnterEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -361,7 +358,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  TriggerExitEvent:
+  CollisionExitEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -382,6 +379,9 @@ MonoBehaviour:
   PositionExitEvent:
     m_PersistentCalls:
       m_Calls: []
+  layerToCheck:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &3058335943946224998
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,76 +501,77 @@ MonoBehaviour:
         set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":false,"SinglemaxDelta":0},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetBoolParameter","NodeData":{"Offset":"(4.32236862,192.820511)"},"ID":7,"Name":"Set
         Bool Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
         ph\u00e1t animation c\u1ee7a models","AnimatormValue":1},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_4Direction","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.Seek","NodeData":{"Offset":"(193.391663,130.419357)","Comment":"Moving
-        Root"},"ID":8,"Name":"Seek","Instant":true,"SharedVector3targetPosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"RootPosition","IsShared":true,"Tooltip":"Khu
+        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject.SetActive","NodeData":{"Offset":"(84.15491,416.883575)","Comment":"T\u1eaft
+        Effect \n(N\u1ebfu c\u00f3)"},"ID":8,"Name":"Set Active","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2},"SharedBoolactive":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.Seek","NodeData":{"Offset":"(193.391663,130.419357)","Comment":"Moving
+        Root"},"ID":9,"Name":"Seek","Instant":true,"SharedVector3targetPosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"RootPosition","IsShared":true,"Tooltip":"Khu
         v\u1ef1c Root th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0ykh\u1ecfi
         khu v\u1ef1c Root n\u00e0y th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0y","Vector3mValue":"(0,0,0)"},"SharedNavMeshAgentnavMeshAgent":{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
-        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":2},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Speed","IsShared":true,"Tooltip":"T\u1ed1c
+        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":3},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Speed","IsShared":true,"Tooltip":"T\u1ed1c
         \u0111\u1ed9 di chuy\u1ec3n","SinglemValue":3.5},"SharedFloatangularSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10},"SharedFloatarriveDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolstopOnTaskEnd":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":3},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null},"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":4},"SharedStringanimIDBlend":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":4},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null},"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":5},"SharedStringanimIDBlend":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
         set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloattargetBlend":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SinglemaxDeltaBlend":3}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-593.6042,144.227051)","Comment":"Player
-        trong ph\u1ea1m vi t\u1ea5n c\u00f4ng c\u1ee7a enemy ?\n(AttackRange)"},"ID":9,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-296.4247,126.185638)"},"ID":10,"Name":"If:
+        trong ph\u1ea1m vi t\u1ea5n c\u00f4ng c\u1ee7a enemy ?\n(AttackRange)"},"ID":10,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-296.4247,126.185638)"},"ID":11,"Name":"If:
         IsAttackRange = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsAttackRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng t\u1ea5n c\u00f4ng c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.RotateTowards","NodeData":{"Offset":"(-148.08934,133.048874)"},"ID":11,"Name":"Rotate
+        c\u00f3 \u0111ang trong v\u00f9ng t\u1ea5n c\u00f4ng c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.RotateTowards","NodeData":{"Offset":"(-148.08934,133.048874)"},"ID":12,"Name":"Rotate
         Towards","Instant":true,"BooleanusePhysics2D":false,"SharedFloatrotationEpsilon":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatmaxLookAtRotationDelta":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":15},"SharedBoolonlyY":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectthisRoration":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":5},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
-        c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"SharedVector3targetRotation":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-4.53086662,125.1638)"},"ID":12,"Name":"If:
+        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":6},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
+        c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"SharedVector3targetRotation":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-4.53086662,125.1638)"},"ID":13,"Name":"If:
         CanAttack = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"CanAttack","IsShared":true,"Tooltip":"C\u00f3
-        \u0111\u01b0\u1ee3c ph\u00e9p t\u1ea5n c\u00f4ng kh\u00f4ng ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Parallel","NodeData":{"Offset":"(134.525925,128.754364)"},"ID":13,"Name":"Parallel","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(-4.06306267,193.776825)"},"ID":14,"Name":"Set
+        \u0111\u01b0\u1ee3c ph\u00e9p t\u1ea5n c\u00f4ng kh\u00f4ng ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Parallel","NodeData":{"Offset":"(134.525925,128.754364)"},"ID":14,"Name":"Parallel","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(-4.06306267,193.776825)"},"ID":15,"Name":"Set
         Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":6},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetBoolParameter","NodeData":{"Offset":"(-3.40706062,276.038574)"},"ID":15,"Name":"Set
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":7},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetBoolParameter","NodeData":{"Offset":"(-3.40706062,276.038574)"},"ID":16,"Name":"Set
         Bool Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":7},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_4Direction","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetTrigger","NodeData":{"Offset":"(-3.34237671,98.63645)"},"ID":16,"Name":"Set
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":8},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_4Direction","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetTrigger","NodeData":{"Offset":"(-3.34237671,98.63645)"},"ID":17,"Name":"Set
         Trigger Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":8},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Attack","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":9},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Attack","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
         set trigger \u0111\u1ec3 ch\u1ea1y anim t\u1ea5n c\u00f4ng trong animator
-        c\u1ee7a enemy","StringmValue":"AI_Attack"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(0.521686554,371.586151)"},"ID":17,"Name":"Set
+        c\u1ee7a enemy","StringmValue":"AI_Attack"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(0.521686554,371.586151)"},"ID":18,"Name":"Set
         Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":9},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":false,"SinglemaxDelta":5}]},{"Type":"BehaviorDesigner.Runtime.Tasks.InvokeMethod","NodeData":{"Offset":"(245.3244,134.6154)"},"ID":18,"Name":"Method:
-        Attack","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":10},"SharedStringcomponentName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"EnemyController"},"SharedStringmethodName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"ResetAttackTime"}},{"Type":"BehaviorDesigner.Runtime.Tasks.WaitClip","NodeData":{"Offset":"(366.857483,125.7151)"},"ID":19,"Name":"Wait
-        Clip","Instant":true,"AnimationClipclip":11}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1.77776718,145.000031)","Comment":"Sau
-        khi t\u1ea5n c\u00f4ng xong ?"},"ID":20,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-1.36640167,127.659363)"},"ID":21,"Name":"If:
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":10},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":false,"SinglemaxDelta":5}]},{"Type":"BehaviorDesigner.Runtime.Tasks.InvokeMethod","NodeData":{"Offset":"(245.3244,134.6154)"},"ID":19,"Name":"Method:
+        Attack","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":11},"SharedStringcomponentName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"EnemyController"},"SharedStringmethodName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"ResetAttackTime"}},{"Type":"BehaviorDesigner.Runtime.Tasks.WaitClip","NodeData":{"Offset":"(366.857483,125.7151)"},"ID":20,"Name":"Wait
+        Clip","Instant":true,"AnimationClipclip":12}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1.77776718,145.000031)","Comment":"Sau
+        khi t\u1ea5n c\u00f4ng xong ?"},"ID":21,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-1.36640167,127.659363)"},"ID":22,"Name":"If:
         CanAttack = False","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"CanAttack","IsShared":true,"Tooltip":"C\u00f3
-        \u0111\u01b0\u1ee3c ph\u00e9p t\u1ea5n c\u00f4ng kh\u00f4ng ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(142.142853,125.112778)"},"ID":22,"Name":"Selector","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-19.7113266,150.90947)","Comment":"Player
-        g\u1ea7n Enemy ?\n-> Enemy l\u00f9i l\u1ea1i"},"ID":23,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-85.2158661,123.702515)"},"ID":24,"Name":"If:
+        \u0111\u01b0\u1ee3c ph\u00e9p t\u1ea5n c\u00f4ng kh\u00f4ng ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(142.142853,125.112778)"},"ID":23,"Name":"Selector","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-19.7113266,150.90947)","Comment":"Player
+        g\u1ea7n Enemy ?\n-> Enemy l\u00f9i l\u1ea1i"},"ID":24,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-85.2158661,123.702515)"},"ID":25,"Name":"If:
         IsChaseRange = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsChaseRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng ph\u00e1t hi\u1ec7n c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Parallel","NodeData":{"Offset":"(64.67569,123.251793)"},"ID":25,"Name":"Parallel","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.MoveCustom","NodeData":{"Offset":"(-4.70951843,95.80244)"},"ID":26,"Name":"Move
+        c\u00f3 \u0111ang trong v\u00f9ng ph\u00e1t hi\u1ec7n c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Parallel","NodeData":{"Offset":"(64.67569,123.251793)"},"ID":26,"Name":"Parallel","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.MoveCustom","NodeData":{"Offset":"(-4.70951843,95.80244)"},"ID":27,"Name":"Move
         Custom","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoollookAtTarget":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedFloatmaxDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatmaxLookAtRotationDelta":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":12},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":12},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
-        c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"PushDirectionEnumPushDirectionEnum":"Behind"},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(1.14159584,192.8192)"},"ID":27,"Name":"Set
-        Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":13},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":-1},"BooleanisLerp":true,"SinglemaxDelta":2}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(336.1614,149.4262)","Comment":"Player
-        xa Enemy ?\n-> Enemy gi\u1eef nguy\u00ean\nv\u1ecb tr\u00ed"},"ID":28,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-70.4448853,117.179489)"},"ID":29,"Name":"If:
-        IsChaseRange = False","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsChaseRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng ph\u00e1t hi\u1ec7n c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(76.93545,124.277985)"},"ID":30,"Name":"Set
+        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":13},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
+        c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"PushDirectionEnumPushDirectionEnum":"Behind"},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(1.14159584,192.8192)"},"ID":28,"Name":"Set
         Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
         ph\u00e1t animation c\u1ee7a models","AnimatormValue":14},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5}]}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(858.628662,134.230789)","Comment":"N\u1ebfu
-        player ngo\u00e0i ph\u1ea1m vi t\u1ea5n c\u00f4ng\n c\u1ee7a enemy ?\n(ChaseRange)"},"ID":31,"Name":"Sequence","Instant":true,"AbortTypeabortType":"Self","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-160.463181,124.617096)"},"ID":32,"Name":"If:
-        IsChaseRange = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsAttackRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng t\u1ea5n c\u00f4ng c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetBoolParameter","NodeData":{"Offset":"(-2.66086388,116.226395)"},"ID":33,"Name":"Set
-        Bool Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":15},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_4Direction","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject.SetActive","NodeData":{"Offset":"(-0.1544857,296.4167)","Comment":"T\u1eaft
-        Effect \n(N\u1ebfu c\u00f3)"},"ID":34,"Name":"Set Active","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":16},"SharedBoolactive":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(2.0190506,207.4952)"},"ID":35,"Name":"Set
+        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":-1},"BooleanisLerp":true,"SinglemaxDelta":2}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(294.49472,149.4262)","Comment":"Player
+        xa Enemy ?\n-> Enemy gi\u1eef nguy\u00ean\nv\u1ecb tr\u00ed"},"ID":29,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-70.4448853,117.179489)"},"ID":30,"Name":"If:
+        IsChaseRange = False","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsChaseRange","IsShared":true,"Tooltip":"Player
+        c\u00f3 \u0111ang trong v\u00f9ng ph\u00e1t hi\u1ec7n c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(76.93545,124.277985)"},"ID":31,"Name":"Set
         Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":17},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(129.523,122.032486)"},"ID":36,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.Patrol","NodeData":{"Offset":"(246.861954,123.77626)","Comment":"Tu\u1ea7n
-        tra theo c\u00e1c\nWaypoints \u0111\u01b0\u1ee3c \ncho tr\u01b0\u1edbc"},"ID":37,"Name":"Patrol","Instant":true,"SharedBoolrandomPatrol":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatwaypointPauseDuration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedTransformwaypoints":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Waypoints","IsShared":true,"Tooltip":"C\u00e1c
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":15},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5}]}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(858.628662,134.230789)","Comment":"N\u1ebfu
+        player ngo\u00e0i ph\u1ea1m vi t\u1ea5n c\u00f4ng\n c\u1ee7a enemy ?\n(ChaseRange)"},"ID":32,"Name":"Sequence","Instant":true,"AbortTypeabortType":"Self","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-160.463181,124.617096)"},"ID":33,"Name":"If:
+        IsChaseRange = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsAttackRange","IsShared":true,"Tooltip":"Player
+        c\u00f3 \u0111ang trong v\u00f9ng t\u1ea5n c\u00f4ng c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetBoolParameter","NodeData":{"Offset":"(-2.66086388,116.226395)"},"ID":34,"Name":"Set
+        Bool Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":16},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_4Direction","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject.SetActive","NodeData":{"Offset":"(-0.1544857,296.4167)","Comment":"T\u1eaft
+        Effect \n(N\u1ebfu c\u00f3)"},"ID":35,"Name":"Set Active","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":17},"SharedBoolactive":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(2.0190506,207.4952)"},"ID":36,"Name":"Set
+        Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":18},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(129.523,122.032486)"},"ID":37,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.Patrol","NodeData":{"Offset":"(246.861954,123.77626)","Comment":"Tu\u1ea7n
+        tra theo c\u00e1c\nWaypoints \u0111\u01b0\u1ee3c \ncho tr\u01b0\u1edbc"},"ID":38,"Name":"Patrol","Instant":true,"SharedBoolrandomPatrol":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatwaypointPauseDuration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedTransformwaypoints":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Waypoints","IsShared":true,"Tooltip":"C\u00e1c
         \u0111i\u1ec3m di chuy\u1ec3n tu\u1ea7n tra c\u1ee7a Enemy"},"SharedNavMeshAgentnavMeshAgent":{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
-        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":18},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatangularSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10},"SharedFloatarriveDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolstopOnTaskEnd":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":19},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
+        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":19},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatangularSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10},"SharedFloatarriveDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolstopOnTaskEnd":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
+        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":20},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
         c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":20},"SharedStringanimIDBlend":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":21},"SharedStringanimIDBlend":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
         set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloattargetBlend":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"SinglemaxDeltaBlend":3}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
-        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":21},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":22},{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":23},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
+        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":22},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
+        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":23},{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
+        ph\u00e1t animation c\u1ee7a models","AnimatormValue":24},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
         c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Speed","IsShared":true,"Tooltip":"T\u1ed1c
         \u0111\u1ed9 di chuy\u1ec3n","SinglemValue":3.5},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AttackCooldown","IsShared":true,"Tooltip":"Th\u1eddi
         gian ch\u1edd m\u1ee1i l\u1ea7n t\u1ea5n c\u00f4ng","SinglemValue":3.6},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsRootRange","IsShared":true,"Tooltip":"Enemy
@@ -590,6 +591,7 @@ MonoBehaviour:
         unityObjects:
         - {fileID: 5377621447942043150}
         - {fileID: 5377621447942043150}
+        - {fileID: 43024755016401523}
         - {fileID: 1039497637874342513}
         - {fileID: 5377621447949288564}
         - {fileID: 5377621447942043150}
@@ -631,6 +633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BehaviorTree>k__BackingField: {fileID: 1039497637874342512}
   <EnemyConfig>k__BackingField: {fileID: 11400000, guid: eca2f35e52c79e044a5bdaa24f42b3c4, type: 2}
+  animator: {fileID: 5377621447942043150}
 --- !u!1 &5377621447949288494
 GameObject:
   m_ObjectHideFlags: 0
@@ -3221,10 +3224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc9b52fb92c5de41b8da139f9fde2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerToCheck:
-    serializedVersion: 2
-    m_Bits: 2048
-  TriggerEnterEvent:
+  CollisionEnterEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -3239,7 +3239,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  TriggerExitEvent:
+  CollisionExitEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7720035537282813238}
@@ -3260,6 +3260,9 @@ MonoBehaviour:
   PositionExitEvent:
     m_PersistentCalls:
       m_Calls: []
+  layerToCheck:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1001 &4960213918823089993
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -31,10 +31,10 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         {
             if (HasArrived()) 
             {
-                targetBlend = 0;
+                //targetBlend = 0;
             }
             
-            BlendAnimation();
+            //BlendAnimation();
             RotationToTarget(target.Value.transform.position);
             
             return TaskStatus.Running;
@@ -46,11 +46,11 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             var randomDirection = _directions[Random.Range(0, _directions.Count)];
             randomDirection.x = Mathf.Sign(randomDirection.x);
             
-            targetBlend.Value =  randomDirection.x;
+            //targetBlend.Value =  randomDirection.x;
             randomPosition = currentPosition + randomDirection * maxDistance.Value;
             
-            if (objectRotation.Value.transform.eulerAngles.y is >= 90 and <= 225)
-                targetBlend.Value *= -1;
+            // if (objectRotation.Value.transform.eulerAngles.y is >= 90 and <= 225)
+            //     targetBlend.Value *= -1;
             
             return !NavMesh.SamplePosition(randomPosition, out var hit, maxDistance.Value, NavMesh.AllAreas) ? currentPosition : hit.position; 
         }

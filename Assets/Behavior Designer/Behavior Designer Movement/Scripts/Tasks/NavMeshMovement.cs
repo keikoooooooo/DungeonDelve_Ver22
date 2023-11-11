@@ -22,15 +22,15 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("Object của mục tiêu cần thao tác")]
         public SharedGameObject target;
         
-        [Space]
-        [Tooltip("Thành phần phát animation")]
-        public SharedAnimator animator;
-        [Tooltip("Parameter để set tốc độ để blend Animation")]
-        public SharedString animIDBlend;
-        [Tooltip("Giá trị mục tiêu cần hòa trộn tới")]
-        public SharedFloat targetBlend;
-        [Tooltip("Tỉ lệ hòa trộn animation tối đa trong 1fr")]
-        public float maxDeltaBlend = 3;
+        // [Space]
+        // [Tooltip("Thành phần phát animation")]
+        // public SharedAnimator animator;
+        // [Tooltip("Parameter để set tốc độ để blend Animation")]
+        // public SharedString animIDBlend;
+        // [Tooltip("Giá trị mục tiêu cần hòa trộn tới")]
+        // public SharedFloat targetBlend;
+        // [Tooltip("Tỉ lệ hòa trộn animation tối đa trong 1fr")]
+        // public float maxDeltaBlend = 3;
         
         
         // Component references
@@ -49,6 +49,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             navMeshAgent.Value.angularSpeed = angularSpeed.Value;
             navMeshAgent.Value.isStopped = false;
             startUpdateRotation = navMeshAgent.Value.updateRotation;
+            _animationBlend = 0;
             UpdateRotation(false);
             // UpdateRotation(updateRotation.Value);
         }
@@ -181,16 +182,16 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             return rotation;
         }
 
-        /// <summary>
-        /// Hòa trộn giá trị parameter của animator
-        /// NOTE: Trước khi Blend cần cập nhật giá trị lại của biến '_targetBlend' để blend tới giá trị đó
-        /// </summary>
-        protected void BlendAnimation()
-        {
-            if(animator.Value == null || animIDBlend.Value == null) return;
-            _animationBlend = Mathf.MoveTowards(_animationBlend, targetBlend.Value, maxDeltaBlend * Time.deltaTime);
-            animator.Value.SetFloat(animIDBlend.Value, _animationBlend);
-        }
+        // /// <summary>
+        // /// Hòa trộn giá trị parameter của animator
+        // /// NOTE: Trước khi Blend cần cập nhật giá trị lại của biến '_targetBlend' để blend tới giá trị đó
+        // /// </summary>
+        // protected void BlendAnimation()
+        // {
+        //     if(animator.Value == null || animIDBlend.Value == null) return;
+        //     _animationBlend = Mathf.MoveTowards(_animationBlend, targetBlend.Value, maxDeltaBlend * Time.deltaTime);
+        //     animator.Value.SetFloat(animIDBlend.Value, _animationBlend);
+        // }
         
     }
 }

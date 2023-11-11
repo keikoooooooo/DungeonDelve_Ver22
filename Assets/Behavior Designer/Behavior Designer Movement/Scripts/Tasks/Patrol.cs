@@ -37,7 +37,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                     waypointIndex = i;
                 }
             }
-            targetBlend.Value = 0.5f;
+            //targetBlend.Value = 0.5f;
             waypointReachedTime = -1;
             SetDestination(Target());
         }
@@ -49,7 +49,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             if (HasArrived()) {
                 if (waypointReachedTime == -1)
                 {
-                    targetBlend.Value = 0f;
+                    //targetBlend.Value = 0f;
                     waypointReachedTime = Time.time;
                 }
                 // wait the required duration before switching waypoints.
@@ -68,13 +68,13 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                     } else {
                         waypointIndex = (waypointIndex + 1) % waypoints.Value.childCount;
                     }
-                    targetBlend.Value = 0.5f;
+                    //targetBlend.Value = 0.5f;
                     SetDestination(Target());
                     waypointReachedTime = -1;
                 }
             }
             
-            BlendAnimation();
+            //BlendAnimation();
             RotationToTarget(Target());
             return TaskStatus.Running;
         }

@@ -66,13 +66,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public event Action<float> E_SpecialCD;
     
     // player
-    public enum MovementState
+    protected enum MovementState
     {
         StateWalk,
         StateRun
     }
     private PlayerStateFactory _state;
-    protected MovementState _movementState;
+    [HideInInspector] protected MovementState _movementState;
     [HideInInspector] protected Camera _mainCamera;
     [HideInInspector] private float _gravity;
     [HideInInspector] private bool _pressedJump;
@@ -245,6 +245,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public void TakeDMG(int _damage, bool _isCRIT)
     {   
         
+        DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, false);
     }
     public void Die()
     {

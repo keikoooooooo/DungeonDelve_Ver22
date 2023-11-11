@@ -1,4 +1,4 @@
-using System;
+    using System;
 using UnityEngine;
 
 public class LookAtCamera : MonoBehaviour
@@ -6,7 +6,7 @@ public class LookAtCamera : MonoBehaviour
     public Camera mainCamera;
 
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward,
             mainCamera.transform.rotation * Vector3.up);

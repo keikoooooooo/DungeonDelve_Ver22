@@ -1,11 +1,11 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class DMGPopUp : MonoBehaviour, IPooled<DMGPopUp>
 {
    public TextMeshProUGUI textPopUp;
-   public Camera mainCamera;
    
    [Space]
    public AnimationCurve opacityCurve;
@@ -16,43 +16,59 @@ public class DMGPopUp : MonoBehaviour, IPooled<DMGPopUp>
    public AnimationCurve CRDScaleCurve;
 
    [Space]
-   [Tooltip("Màu text khi nhận sát thương thường")]
-   public Color DMGColor;
    [Tooltip("Màu text khi nhận sát thương bạo kích")]
    public Color CRDColor;
-
+   [Tooltip("Màu text khi Enemy nhận sát thương thường")]
+   public Color EnemyDMGColor;
+   [Tooltip("Màu text khi Player nhận sát thương thường")]
+   public Color PlayerDMGColor = Color.white;
    
-   private float _time;
+   public Camera mainCamera { get; set; }
    private bool _isCrit;
+   private float _evaluateTime;
    private Color _currentColor;
    private Vector3 _originPosition;
    private Vector3 _originScale;
+   private Coroutine _updateCoroutine;
    
-   private void Update()
-   {
-      transform.forward = mainCamera.transform.forward;
-      
-      _currentColor.a = opacityCurve.Evaluate(_time);
-      textPopUp.color = _currentColor;
-
-      transform.localScale = _isCrit ? _originScale * CRDScaleCurve.Evaluate(_time) : _originScale * DMGScaleCurve.Evaluate(_time);
-      transform.position = _originPosition + new Vector3(0, 1 + heightCurve.Evaluate(_time), 0);
-      
-      _time += Time.deltaTime;
-   }
    
-   public void ShowDMGPopUp(int _damage, bool isApplyCRIT)
+   
+   public void Show(int _damage, bool isApplyCRIT,bool _isEnemy)
    {
       _isCrit = isApplyCRIT;
-      _currentColor = isApplyCRIT ? CRDColor : DMGColor;
-      
-      _originScale = new Vector3(.01f, .01f, .01f);
-      _originPosition = transform.position;
-      
+      _currentColor = isApplyCRIT ? CRDColor : _isEnemy ? EnemyDMGColor : PlayerDMGColor;
       textPopUp.color = _currentColor;
       textPopUp.text = $"{_damage}";
+      
+      if(_updateCoroutine != null) 
+         StopCoroutine(_updateCoroutine);
+      _updateCoroutine = StartCoroutine(UpdateCoroutine());
    }
+   private IEnumerator UpdateCoroutine()
+   {
+      _evaluateTime = 0;
+      _originPosition = transform.position;
+      _originScale = new Vector3(.01f, .01f, .01f);
+      
+      while (_evaluateTime <= 1)
+      {
+         transform.forward = mainCamera.transform.forward;
 
+         _currentColor.a = opacityCurve.Evaluate(_evaluateTime);
+         textPopUp.color = _currentColor;
+
+         transform.position = _originPosition + new Vector3(0, 1 + heightCurve.Evaluate(_evaluateTime), 0);
+         transform.localScale = _isCrit ? 
+                              _originScale * CRDScaleCurve.Evaluate(_evaluateTime) : 
+                              _originScale * DMGScaleCurve.Evaluate(_evaluateTime) ;
+
+         _evaluateTime += Time.deltaTime;
+         yield return null;
+      }
+      Release();
+   }
+   
+   
 
    
    public void Release() => ReleaseCallback?.Invoke(this);
