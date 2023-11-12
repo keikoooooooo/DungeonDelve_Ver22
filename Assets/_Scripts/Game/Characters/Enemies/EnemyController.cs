@@ -9,19 +9,14 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour, IDamageable
 {
     // Ref
-    [field: SerializeField] public BehaviorTree BehaviorTree { get; private set; }
+    //[field: SerializeField] public BehaviorTree BehaviorTree { get; private set; }
     [field: SerializeField] public EnemyConfiguration EnemyConfig { get; private set; }
-    
-    [field: SerializeField, Required] private Blackboard Blackboard;
-
-    [SerializeField] protected Animator animator;
+    [field: SerializeField, Required] public Blackboard Blackboard { get; private set; }
     
     
     // Get & Set Property 
     public StatusHandle StatusHandle { get; private set; }
-    public bool CanAttack => _attackCD <= 0; 
     public Vector3 PlayerPosition => _player.transform.position;
-
     
     // Variables
     private GameObject _player;
@@ -29,8 +24,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     private float _skillCD;
     private float _specialCD;
     
-    //private float _attackCooldownTemp;
-
 
     private void OnEnable()
     {
@@ -83,7 +76,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         //BehaviorTree.SetVariableValue("CanAttack", CanAttack);
         _attackCD = _attackCD > 0 ? _attackCD - Time.deltaTime : 0;
-        SetNormalAttack(CanAttack);
+        SetNormalAttack(_attackCD <= 0);
     }
     
     
@@ -95,6 +88,9 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     
     // Set BehaviorTrees Variables
+    public void ResetAttackCD() => _attackCD = EnemyConfig.AttackCD; // Đặt lại thời gian tấn công
+    public void ResetSkillCD() => _skillCD = EnemyConfig.SkillCD;
+    public void ResetSpecialCD() => _specialCD = EnemyConfig.SpecialCD;
     private void SetWalkSpeed(float _value) => Blackboard.SetVariableValue("WalkSpeed", _value);
     private void SetRunSpeed(float _value) => Blackboard.SetVariableValue("RunSpeed", _value);
     
@@ -107,18 +103,14 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void SetNormalAttack(bool _isType) => Blackboard.SetVariableValue("NormalAttack", _isType);
     private void SetSkillAttack(bool _isType) => Blackboard.SetVariableValue("SkillAttack", _isType);
     private void SetSpecialAttack(bool _isType) => Blackboard.SetVariableValue("SpecialAttack", _isType);
+    
+    // public float RandomSliderValue(float _minValue, float _maxValue) => Random.Range(_minValue, _maxValue);
+    // public Vector3 RandomUnitCirclePosition(float _radius)
+    // {
+    //     var point = Random.insideUnitCircle * _radius;
+    //     return transform.position + new Vector3(point.x, 0, point.y);
+    // }
 
-    public float RandomSliderValue(float _minValue, float _maxValue) => Random.Range(_minValue, _maxValue);
-    public Vector3 RandomUnitCirclePosition(float _radius)
-    {
-        var point = Random.insideUnitCircle * _radius;
-        return transform.position + new Vector3(point.x, 0, point.y);
-    }
-    public void ResetAttackCD() => _attackCD = EnemyConfig.AttackCD; // Đặt lại thời gian tấn công
-    public void ResetSkillCD() => _skillCD = EnemyConfig.SkillCD;
-    public void ResetSpecialCD() => _specialCD = EnemyConfig.SpecialCD;
-    
-    
     
     
     #region HandleDMG
@@ -138,7 +130,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
     public void Die()
     {
-        Debug.Log("Enemy Die");
+        SetDie(true);
     }
     #endregion
 

@@ -2,12 +2,11 @@ using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
 
-
 namespace NodeCanvas.Tasks.Actions
 {
 
     [Category("Movement/Direct")]
-    [Description("Moves the agent away from target per frame without pathfinding")]
+    [Description("Di chuyển Object ra khỏi mục tiêu nhưng không tìm đường")]
     public class MoveAway : ActionTask<Transform>
     {
 

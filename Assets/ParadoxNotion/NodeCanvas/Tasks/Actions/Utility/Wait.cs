@@ -1,7 +1,7 @@
 ﻿using NodeCanvas.Framework;
 using ParadoxNotion;
 using ParadoxNotion.Design;
-
+using UnityEngine;
 
 namespace NodeCanvas.Tasks.Actions
 {
@@ -9,17 +9,24 @@ namespace NodeCanvas.Tasks.Actions
     [Category("✫ Utility")]
     public class Wait : ActionTask
     {
-
+        [Tooltip("Có muốn Random thời gian chờ")]
+        public BBParameter<bool> randomValue;
+        public BBParameter<float> minValue, maxValue;
+        
+        [Space]
         public BBParameter<float> waitTime = 1f;
         public CompactStatus finishStatus = CompactStatus.Success;
 
-        protected override string info {
-            get { return string.Format("Wait {0} sec.", waitTime); }
-        }
+        protected override string info => $"Wait {waitTime} sec.";
 
         protected override void OnUpdate() {
+            if (randomValue.value)
+            {
+                waitTime.value = Random.Range(minValue.value, maxValue.value);
+            }
+            
             if ( elapsedTime >= waitTime.value ) {
-                EndAction(finishStatus == CompactStatus.Success ? true : false);
+                EndAction(finishStatus == CompactStatus.Success);
             }
         }
     }

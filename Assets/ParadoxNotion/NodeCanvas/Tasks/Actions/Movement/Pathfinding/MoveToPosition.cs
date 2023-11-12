@@ -1,7 +1,6 @@
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
-
 using NavMeshAgent = UnityEngine.AI.NavMeshAgent;
 
 namespace NodeCanvas.Tasks.Actions
@@ -11,8 +10,12 @@ namespace NodeCanvas.Tasks.Actions
     [Category("Movement/Pathfinding")]
     public class MoveToPosition : ActionTask<NavMeshAgent>
     {
-
+        // Đây là di chuyển tới vị trí được cho trước tức là không cập nhật vị trí mới trong lúc di chuyển như MoveToGameObject
+        // nên Node này không áp dụng objectApplyRotation vào.
+        
+        [Tooltip("Vị trí mục tiêu cần di chuyển tới")]
         public BBParameter<Vector3> targetPosition;
+        
         public BBParameter<float> speed = 4;
         public BBParameter<float> keepDistance = 0.1f;
 
@@ -37,9 +40,8 @@ namespace NodeCanvas.Tasks.Actions
                     return;
                 }
             }
-
+            
             lastRequest = targetPosition.value;
-
             if ( !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + keepDistance.value ) {
                 EndAction(true);
             }

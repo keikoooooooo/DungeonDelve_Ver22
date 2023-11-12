@@ -6,7 +6,7 @@ namespace NodeCanvas.Tasks.Actions
 {
 
     [Category("Movement/Direct")]
-    [Description("Moves the agent towards to target per frame without pathfinding")]
+    [Description("Di chuyển Object tới mục tiêu nhưng không tìm đường")]
     public class MoveTowards : ActionTask<Transform>
     {
 

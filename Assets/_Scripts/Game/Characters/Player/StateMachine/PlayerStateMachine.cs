@@ -198,6 +198,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
                 break;
             
             case true when _jumpCD_Temp <= 0 && IsJump:
+                inputs.leftMouse = false;
                 animator.SetBool(IDJump, true);
                 animator.SetBool(IDFall, false);
                 _jumpVelocity = Mathf.Sqrt(PlayerConfig.JumpHeight * -2f * _gravity);
@@ -207,6 +208,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         if (!IsGrounded)
         {
             _jumpCD_Temp = PlayerConfig.JumpCD;
+            inputs.leftMouse = false;
             inputs.space = false;
             _pressedJump = true;
         }

@@ -12,10 +12,10 @@ namespace NodeCanvas.Framework
     ///<summary>Base class for Conditions. Conditions dont span multiple frames like actions and return true or false immediately on execution. Derive this to create your own.</summary>
     //Generic version to define the AgentType where T is the agentType (Component or Interface) required by the Condition.
     //For GameObject, use 'Transform'
-    abstract public class ConditionTask<T> : ConditionTask where T : class
+    public abstract class ConditionTask<T> : ConditionTask where T : class
     {
-        sealed public override Type agentType { get { return typeof(T); } }
-        new public T agent { get { return base.agent as T; } }
+        public sealed override Type agentType { get { return typeof(T); } }
+        protected new T agent { get { return base.agent as T; } }
     }
 
     ///----------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ namespace NodeCanvas.Framework
 #endif
 
     ///<summary>Base class for all Conditions. Conditions dont span multiple frames like actions and return true or false immediately on execution. Derive this to create your own</summary>
-    abstract public class ConditionTask : Task
+    public abstract class ConditionTask : Task
     {
 
         [SerializeField]

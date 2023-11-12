@@ -7,10 +7,12 @@ namespace NodeCanvas.Tasks.Actions
 {
 
     [Category("Movement/Pathfinding")]
-    [Description("Flees away from the target")]
-    public class Flee : ActionTask<NavMeshAgent>
+    [Description("Di chuyển đối tượng tránh xa mục tiêu và trả về 2 giá trị: -1 đang di chuyển khỏi mục tiêu, 0 đã di chuyển xong")]
+    public class Flee : ActionTask<NavMeshAgent>    
     {
-
+        [RequiredField, Tooltip("Đối tượng nào sẽ áp dụng Rotation khi di chuyển")] 
+        public BBParameter<GameObject> objectApplyRotation;
+        
         [RequiredField, Tooltip("The target to flee from.")]
         public BBParameter<GameObject> target;
         [Tooltip("The speed to flee.")]
@@ -19,7 +21,10 @@ namespace NodeCanvas.Tasks.Actions
         public BBParameter<float> fledDistance = 10f;
         [Tooltip("A distance to look away from the target for valid flee destination.")]
         public BBParameter<float> lookAhead = 2f;
-
+        
+        [Space, Tooltip("Giá trị lưu vào"), RequiredField]
+        public BBParameter<float> saveFoundParameter;
+        
         protected override string info {
             get { return string.Format("Flee from {0}", target); }
         }
@@ -38,13 +43,18 @@ namespace NodeCanvas.Tasks.Actions
             var targetPos = target.value.transform.position;
             if ( ( agent.transform.position - targetPos ).magnitude >= fledDistance.value ) {
                 EndAction(true);
+                saveFoundParameter.value = 0;
                 return;
             }
 
+            var lookRot = Quaternion.LookRotation(target.value.transform.position - agent.transform.position);
+            objectApplyRotation.value.transform.rotation = Quaternion.RotateTowards(objectApplyRotation.value.transform.rotation,
+                Quaternion.Euler(0, lookRot.eulerAngles.y, 0), 15f);
+            saveFoundParameter.value = -1;
             var fleePos = targetPos + ( agent.transform.position - targetPos ).normalized * ( fledDistance.value + lookAhead.value + agent.stoppingDistance );
             if ( !agent.SetDestination(fleePos) ) {
                 EndAction(false);
-            }
+            } 
         }
 
 

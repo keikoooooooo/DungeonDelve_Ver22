@@ -30,11 +30,16 @@ public class PlayerDashState : PlayerBaseState
             CheckSwitchState();
             return;
         }
-        _machine.ReleaseAction();
+        _machine.inputs.leftMouse = false;
         direction = _machine.model.forward.normalized * dashSpeed;
         _machine.CharacterController.Move(direction * Time.deltaTime);
     }
-    protected override void ExitState() { }
+
+    protected override void ExitState()
+    {
+        _machine.inputs.leftMouse = false;
+        _machine.ReleaseAction();
+    }
     public override void CheckSwitchState()
     {
         // // Kiểm tra các trạng thái khi nhân vật đang đứng dưới đất

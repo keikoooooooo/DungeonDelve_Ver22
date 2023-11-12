@@ -50,8 +50,9 @@ public class GoblinSlingshot_Effects : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
 
-        var state = (SharedBool)enemyController.BehaviorTree.GetVariable("IsAttackRange");
-        if (!state.Value) yield break;
+        //var state = (SharedBool)enemyController.BehaviorTree.GetVariable("IsAttackRange");
+        var state = enemyController.Blackboard.GetVariable<bool>("AttackRange");
+        if (!state.value) yield break;
         
         effectHolding.gameObject.SetActive(true);
         effectHolding.Play();
