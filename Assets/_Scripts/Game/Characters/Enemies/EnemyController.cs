@@ -1,3 +1,4 @@
+using System;
 using NaughtyAttributes;
 using NodeCanvas.Framework;
 using UnityEngine;
@@ -18,14 +19,23 @@ public class EnemyController : MonoBehaviour, IDamageable
     private float _skillCD;
     private float _specialCD;
 
-    
+
+    private void Awake()
+    {
+        StatusHandle = new StatusHandle(EnemyConfig.MaxHealth);
+    }
     private void OnEnable()
     {
-        SetVariables();
+        StatusHandle.E_Die += Die;
+        DamageableData.Add(gameObject, this);
     }
     private void Start()
     {
-        GetReference();
+        _player = GameObject.FindGameObjectWithTag("Player");
+        SetRefPlayer(_player);
+        
+        SetRunSpeed(EnemyConfig.RunSpeed);
+        SetWalkSpeed(EnemyConfig.WalkSpeed);
     }
     private void Update()
     {
@@ -35,28 +45,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
     private void OnDisable()
     {
-        ResetVariables();
-    }
-    
-    
-    private void SetVariables()
-    {
-        StatusHandle = new StatusHandle(EnemyConfig.MaxHealth);
-        StatusHandle.E_Die += Die;
-        DamageableData.Add(gameObject, this);
-
-        SetWalkSpeed(EnemyConfig.WalkSpeed);
-        SetRunSpeed(EnemyConfig.RunSpeed);
-    }
-    private void ResetVariables()
-    { 
         StatusHandle.E_Die -= Die;
         DamageableData.Remove(gameObject);
-    }
-    private void GetReference()
-    {
-        _player = GameObject.FindGameObjectWithTag("Player");
-        SetRefPlayer(_player);
     }
     
     
@@ -75,9 +65,9 @@ public class EnemyController : MonoBehaviour, IDamageable
         _specialCD = _specialCD > 0 ? _specialCD - Time.deltaTime : 0;
         SetSpecialAttack(_specialCD <= 0);
     }
-    public void ResetAttackCD() => _attackCD = EnemyConfig.AttackCD; // Đặt lại thời gian tấn công
-    public void ResetSkillCD() => _skillCD = EnemyConfig.SkillCD;
-    public void ResetSpecialCD() => _specialCD = EnemyConfig.SpecialCD;
+    public void ResetAttackCD() => _attackCD = EnemyConfig.NormalAttackCD; // Đặt lại thời gian tấn công
+    public void ResetSkillCD() => _skillCD = EnemyConfig.SkillAttackCD;
+    public void ResetSpecialCD() => _specialCD = EnemyConfig.SpecialAttackCD;
     
     
     // Set BehaviorTrees Variables    
@@ -97,7 +87,10 @@ public class EnemyController : MonoBehaviour, IDamageable
     #region HandleDMG
     public void CauseDMG(GameObject _gameObject)
     {
-        
+        if (DamageableData.Contains(_gameObject, out var iDamageable))
+        {
+            
+        }
     }
     public void TakeDMG(int _damage, bool _isCRIT)
     {   

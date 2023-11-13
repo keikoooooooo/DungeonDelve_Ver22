@@ -3,7 +3,7 @@
     "SubFolders": true,
     "OverwriteConfig": false,
     "LoadAllShaders": false,
-    "CustomOutputPath": "Resources",
+    "CustomOutputPath": "Resources/Enemies/Reaper",
     "LastImplementationExportImportPath": "C:/Users/Admin/Desktop/Unity Training/Fantasy3D/Assets",
     "OpenedFoldouts": [
         "STYLIZATION",
@@ -11,8 +11,6 @@
         "LIGHTING",
         "SPECIAL EFFECTS",
         "SURFACE",
-        "TRANSPARENCY/BLENDING",
-        "SHADER STATES",
         "OPTIONS"
     ],
     "UseCustomFont": true,

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NodeCanvas.Tasks.Conditions
 {
-    [Name("Check Tag OnceFrame")] 
+    [Name("Check Tag Animation")] 
     [Description("Kiểm tra animator 1 lần duy nhất và trả về giá trị True - False nếu animation hiện tại có Tag = giá trị được chỉ định không ?")] 
     [Category("Animator")]
     public class MecanimCheckTag : ConditionTask<Animator>

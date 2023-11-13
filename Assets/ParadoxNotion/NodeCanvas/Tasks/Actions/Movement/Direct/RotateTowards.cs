@@ -39,8 +39,9 @@ namespace NodeCanvas.Tasks.Actions
 
         protected override void OnUpdate() 
         {
-            if (!updateFrameByFrame && Vector3.Angle(target.value.transform.position - agent.position, agent.forward) <= angleDifference.value ) 
+            if (!updateFrameByFrame && Vector3.Angle(target.value.transform.position - agent.position, agent.forward) <= angleDifference.value )
             {
+                saveFoundParameter.value = 0;
                 EndAction();
                 return;
             }
@@ -50,7 +51,7 @@ namespace NodeCanvas.Tasks.Actions
 
             deltaAngle = Mathf.DeltaAngle(currentRotate.eulerAngles.y, agent.eulerAngles.y);
             currentRotate = agent.rotation;
-            Debug.Log(deltaAngle);
+        
             saveFoundParameter.value = deltaAngle == 0 || Mathf.Abs(deltaAngle) <= angleDifference.value ? 0 : Mathf.Sign(deltaAngle);
             
         }

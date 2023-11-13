@@ -104,12 +104,15 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaToMask: 0
     - _Blend: 0
+    - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _Emission: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -128,6 +131,7 @@ Material:
     - _SpecSource: 0
     - _SpecularHighlights: 0
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
     - _Surface: 0
     - _UVSec: 0
     - _ZWrite: 1
@@ -135,5 +139,5 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0.52}
     - _Color: {r: 1, g: 1, b: 1, a: 0.52}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+    - _SpecColor: {r: 3.4677687, g: 3.4677687, b: 3.4677687, a: 1}
   m_BuildTextureStacks: []

@@ -29,7 +29,6 @@ namespace NodeCanvas.Tasks.Actions
             agent.speed = speed.value;
             if ( Vector3.Distance(agent.transform.position, targetPosition.value) < agent.stoppingDistance + keepDistance.value ) {
                 EndAction(true);
-                return;
             }
         }
 

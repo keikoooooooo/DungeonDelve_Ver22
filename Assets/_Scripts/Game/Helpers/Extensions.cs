@@ -1,6 +1,7 @@
 using UnityEngine;
 using Spine;
 using Spine.Unity;
+using AnimationState = Spine.AnimationState;
 
 public static class Extensions 
 {
@@ -43,7 +44,6 @@ public static class Extensions
 
 
     #region Spine
-
     /// <summary>
     /// Set Spine Animation theo tên truyền vào.
     /// </summary>
@@ -52,6 +52,15 @@ public static class Extensions
     /// <returns></returns>
     public static TrackEntry SetAnimation(this SkeletonGraphic skeletonGraphic, string animationName, bool isLoop)
         => skeletonGraphic.AnimationState.SetAnimation(0, animationName, isLoop);
+    /// <summary>
+    /// Set Spine Animation theo tên truyền vào.
+    /// </summary>
+    /// <param name="animationName"> Tên animation cần thao tác </param>
+    /// <param name="isLoop"> Có lặp lại hay không ? </param>
+    /// <returns></returns>
+    public static TrackEntry SetAnimation(this AnimationState animationState, string animationName, bool isLoop)
+        => animationState.SetAnimation(0, animationName, isLoop);
+    
 
     /// <summary>
     /// Add thêm Animation theo tên truyền vào. Animation vừa add vào sẽ chạy sau (delay?) giây
@@ -61,16 +70,26 @@ public static class Extensions
     /// <param name="delay"> Thời gian chờ để phát </param>
     public static void AddAnimation(this SkeletonGraphic skeletonGraphic, string animationName, bool isLoop, float delay)
         => skeletonGraphic.AnimationState.AddAnimation(0, animationName, isLoop, delay);
+    /// <summary>
+    /// Add thêm Animation theo tên truyền vào. Animation vừa add vào sẽ chạy sau (delay?) giây
+    /// </summary>
+    /// <param name="animationName"> Tên animation cần thao tác </param>
+    /// <param name="isLoop">  Có lặp lại hay không ? </param>
+    /// <param name="delay"> Thời gian chờ để phát </param>
+    public static void AddAnimation(this AnimationState animationState, string animationName, bool isLoop, float delay)
+        => animationState.AddAnimation(0, animationName, isLoop, delay);
+    
     
     /// <summary>
     /// Trả về animation hiện tại đang phát của bộ điều khiển Spine.
     /// </summary>
     /// <returns></returns>
     public static TrackEntry Get(this SkeletonGraphic skeletonGraphic) => skeletonGraphic.AnimationState.GetCurrent(0);
+    /// <summary>
+    /// Trả về animation hiện tại đang phát của bộ điều khiển Spine.
+    /// </summary>
+    /// <returns></returns>
+    public static TrackEntry Get(this AnimationState animationState) => animationState.GetCurrent(0);
     #endregion
-
-    
-    
-    
     
 }

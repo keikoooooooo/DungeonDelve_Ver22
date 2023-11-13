@@ -13,10 +13,11 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHATEST_ON
+  - _EMISSION
   - _NORMALMAP
   - _SPECULAR_COLOR
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2450
@@ -48,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f4fd3187d0e465f47874603a68e3b02a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -106,7 +107,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Shininess: 0.026
-    - _Smoothness: 0.026
+    - _Smoothness: 0.366
     - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
@@ -119,8 +120,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _SpecColor: {r: 0.12264148, g: 0.12264148, b: 0.12264148, a: 0.026}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 0}
+    - _SpecColor: {r: 0.12264145, g: 0.12264145, b: 0.12264145, a: 0.366}
   m_BuildTextureStacks: []
 --- !u!114 &344552966848850455
 MonoBehaviour:

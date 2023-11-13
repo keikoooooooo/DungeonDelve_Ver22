@@ -32,6 +32,7 @@ public class GameplayEditorWindow : EditorWindow
         }
     }
     
+    
     #region PLAYERS
     private readonly string[] _playerNames = { "Arlan", "Lynx" };
     private int _selectedPlayer = -1;
@@ -93,8 +94,8 @@ public class GameplayEditorWindow : EditorWindow
         Space(30);
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);
         dataPlayerConfig.JumpCD = EditorGUILayout.FloatField("Jump CD", dataPlayerConfig.JumpCD, Width(500));
-        dataPlayerConfig.SkillCD = EditorGUILayout.FloatField("Skill CD", dataPlayerConfig.SkillCD, Width(500));
-        dataPlayerConfig.SpecialCD = EditorGUILayout.FloatField("Special CD", dataPlayerConfig.SpecialCD, Width(500));
+        dataPlayerConfig.SkillCD = EditorGUILayout.FloatField("Elemental Skill CD", dataPlayerConfig.SkillCD, Width(500));
+        dataPlayerConfig.SpecialCD = EditorGUILayout.FloatField("Elemental Burst CD", dataPlayerConfig.SpecialCD, Width(500));
         
         Space(30);
         GUILayout.Label("MULTIPLIER -------------------------", EditorStyles.boldLabel);
@@ -268,7 +269,6 @@ public class GameplayEditorWindow : EditorWindow
     }
     #endregion
 
-
     #region ENEMIES
 
     private readonly string[] _enemiesNames = { "Goblin", "BOSS: Reaper" };
@@ -340,6 +340,12 @@ public class GameplayEditorWindow : EditorWindow
         _enemyConfiguration.RunSpeed = EditorGUILayout.FloatField("Run Speed", _enemyConfiguration.RunSpeed, Width(500));
         
         Space(30);
+        GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);
+        _enemyConfiguration.NormalAttackCD = EditorGUILayout.FloatField("Normal Attack CD", _enemyConfiguration.NormalAttackCD, Width(500));
+        _enemyConfiguration.SkillAttackCD = EditorGUILayout.FloatField("Skill Attack CD", _enemyConfiguration.SkillAttackCD, Width(500));
+        _enemyConfiguration.SpecialAttackCD = EditorGUILayout.FloatField("Special Attack CD", _enemyConfiguration.SpecialAttackCD, Width(500));
+        
+        Space(30);
         if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_enemyConfiguration);
         GUILayout.EndScrollView();
     }
@@ -347,8 +353,7 @@ public class GameplayEditorWindow : EditorWindow
     #endregion
 
 
-
-
+    
 
     private static void Space(float space) => GUILayout.Space(space);
     private static GUILayoutOption Width(float width) => GUILayout.Width(width);

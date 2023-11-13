@@ -6,13 +6,13 @@ public class EnemyConfiguration : CharacterConfiguration
     
     [Header("COOLDOWN")]
     [Tooltip("Thời gian chờ lần tấn công tiếp theo")]
-    public float AttackCD;
+    public float NormalAttackCD;
     
     [Tooltip("Thời gian chờ lần Skill tiếp theo")] 
-    public float SkillCD;
+    public float SkillAttackCD;
     
     [Tooltip("Thời gian chờ lần Special tiếp theo")] 
-    public float SpecialCD;
+    public float SpecialAttackCD;
     
     
 }

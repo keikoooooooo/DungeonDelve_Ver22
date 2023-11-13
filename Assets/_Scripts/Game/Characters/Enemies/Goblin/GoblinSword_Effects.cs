@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GoblinSword_Effects : MonoBehaviour
 {
+    public EnemyController enemyController;
+    
     [Tooltip("Điểm xuất hiện effect")]
     public Transform effectPoint;
 
@@ -13,7 +15,6 @@ public class GoblinSword_Effects : MonoBehaviour
     [Header("Prefab projectile")] 
     public Reference sword1SlashPrefab;
     public Reference sword2SlashPrefab;
-
     public Reference hitPrefab;
     
     [Tooltip("Offset góc quay và vị trí xuất hiện effect")] 
@@ -24,14 +25,42 @@ public class GoblinSword_Effects : MonoBehaviour
     private ObjectPooler<Reference> _poolHit;
     private Transform slotsVFX;
 
-    
+
+    private void Awake()
+    {
+        InitValue();
+    }
+
+    private void OnEnable()
+    {
+        RegisterEvents();
+    }
     private void Start()
+    {
+    }
+    private void OnDisable()
+    {
+        UnRegisterEvents();
+    }
+
+    
+
+    private void InitValue()
     {
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
         _poolSword1Slash = new ObjectPooler<Reference>(sword1SlashPrefab, slotsVFX, 5);
         _poolSword2Slash = new ObjectPooler<Reference>(sword2SlashPrefab, slotsVFX, 5);
         _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsVFX, 5);
     }
+    private void RegisterEvents()
+    {
+        physicsDetection.CollisionEnterEvent.AddListener(enemyController.CauseDMG);
+    }
+    private void UnRegisterEvents()
+    {
+        physicsDetection.CollisionEnterEvent.RemoveListener(enemyController.CauseDMG);
+    }
+
 
 
     private void EffectAttack(AnimationEvent eEvent)

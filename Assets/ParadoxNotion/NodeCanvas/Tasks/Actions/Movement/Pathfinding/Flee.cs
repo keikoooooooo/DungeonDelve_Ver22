@@ -17,7 +17,7 @@ namespace NodeCanvas.Tasks.Actions
         public BBParameter<GameObject> target;
         [Tooltip("The speed to flee.")]
         public BBParameter<float> speed = 4f;
-        [Tooltip("The distance to flee at.")]
+        [Tooltip("Khoảng cách đối tượng tránh xa mục tiêu.")]
         public BBParameter<float> fledDistance = 10f;
         [Tooltip("A distance to look away from the target for valid flee destination.")]
         public BBParameter<float> lookAhead = 2f;
@@ -34,7 +34,6 @@ namespace NodeCanvas.Tasks.Actions
             agent.speed = speed.value;
             if ( ( agent.transform.position - target.value.transform.position ).magnitude >= fledDistance.value ) {
                 EndAction(true);
-                return;
             }
         }
 
@@ -51,6 +50,7 @@ namespace NodeCanvas.Tasks.Actions
             objectApplyRotation.value.transform.rotation = Quaternion.RotateTowards(objectApplyRotation.value.transform.rotation,
                 Quaternion.Euler(0, lookRot.eulerAngles.y, 0), 15f);
             saveFoundParameter.value = -1;
+            
             var fleePos = targetPos + ( agent.transform.position - targetPos ).normalized * ( fledDistance.value + lookAhead.value + agent.stoppingDistance );
             if ( !agent.SetDestination(fleePos) ) {
                 EndAction(false);
