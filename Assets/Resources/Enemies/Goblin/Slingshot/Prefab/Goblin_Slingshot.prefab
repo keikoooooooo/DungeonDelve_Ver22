@@ -134,7 +134,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 11
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1039497638793560169
 Rigidbody:
@@ -393,8 +393,9 @@ GameObject:
   - component: {fileID: 3058335943946224997}
   - component: {fileID: 1039497637874342514}
   - component: {fileID: 1039497637874342513}
-  - component: {fileID: 1039497637874342512}
   - component: {fileID: 7720035537282813238}
+  - component: {fileID: 548215942791910745}
+  - component: {fileID: 8660382146088518952}
   m_Layer: 12
   m_Name: Goblin_Slingshot
   m_TagString: Enemy
@@ -464,161 +465,6 @@ NavMeshAgent:
   m_BaseOffset: -0.07
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1039497637874342512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3058335943946224998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startWhenEnabled: 1
-  asynchronousLoad: 0
-  pauseWhenDisabled: 1
-  restartWhenComplete: 1
-  logTaskChanges: 0
-  group: 0
-  resetValuesOnRestart: 0
-  externalBehavior: {fileID: 0}
-  mBehaviorSource:
-    behaviorName: Goblin_Slingshot
-    behaviorDescription: 
-    mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(-584.7092,-262.218658)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(-2.84630585,114.269455)"},"ID":1,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1374.74512,141.341888)","Comment":"N\u1ebfu
-        ra kh\u1ecfi v\u1ecb tr\u00ed Root ?\n-> Quay l\u1ea1i Root"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-147.119034,130.214279)"},"ID":3,"Name":"If:
-        IsRoot = False","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsRootRange","IsShared":true,"Tooltip":"Enemy
-        c\u00f3 di chuy\u1ec3n ra kh\u1ecfi v\u1ecb tr\u00ed Root ch\u01b0a ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-26.47845,132.74498)"},"ID":4,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2}},{"Type":"BehaviorDesigner.Runtime.Tasks.Parallel","NodeData":{"Offset":"(77.14099,125.714294)"},"ID":5,"Name":"Parallel","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(-2.85713387,100)"},"ID":6,"Name":"Set
-        Float Parameter","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":0},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":false,"SinglemaxDelta":0},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetBoolParameter","NodeData":{"Offset":"(4.32236862,192.820511)"},"ID":7,"Name":"Set
-        Bool Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":1},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_4Direction","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject.SetActive","NodeData":{"Offset":"(84.15491,416.883575)","Comment":"T\u1eaft
-        Effect \n(N\u1ebfu c\u00f3)"},"ID":8,"Name":"Set Active","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2},"SharedBoolactive":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.Seek","NodeData":{"Offset":"(193.391663,130.419357)","Comment":"Moving
-        Root"},"ID":9,"Name":"Seek","Instant":true,"SharedVector3targetPosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"RootPosition","IsShared":true,"Tooltip":"Khu
-        v\u1ef1c Root th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0ykh\u1ecfi
-        khu v\u1ef1c Root n\u00e0y th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0y","Vector3mValue":"(0,0,0)"},"SharedNavMeshAgentnavMeshAgent":{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
-        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":3},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Speed","IsShared":true,"Tooltip":"T\u1ed1c
-        \u0111\u1ed9 di chuy\u1ec3n","SinglemValue":3.5},"SharedFloatangularSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10},"SharedFloatarriveDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolstopOnTaskEnd":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":4},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null},"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":5},"SharedStringanimIDBlend":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloattargetBlend":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SinglemaxDeltaBlend":3}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-593.6042,144.227051)","Comment":"Player
-        trong ph\u1ea1m vi t\u1ea5n c\u00f4ng c\u1ee7a enemy ?\n(AttackRange)"},"ID":10,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-296.4247,126.185638)"},"ID":11,"Name":"If:
-        IsAttackRange = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsAttackRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng t\u1ea5n c\u00f4ng c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.RotateTowards","NodeData":{"Offset":"(-148.08934,133.048874)"},"ID":12,"Name":"Rotate
-        Towards","Instant":true,"BooleanusePhysics2D":false,"SharedFloatrotationEpsilon":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatmaxLookAtRotationDelta":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":15},"SharedBoolonlyY":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectthisRoration":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":6},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
-        c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"SharedVector3targetRotation":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-4.53086662,125.1638)"},"ID":13,"Name":"If:
-        CanAttack = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"CanAttack","IsShared":true,"Tooltip":"C\u00f3
-        \u0111\u01b0\u1ee3c ph\u00e9p t\u1ea5n c\u00f4ng kh\u00f4ng ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Parallel","NodeData":{"Offset":"(134.525925,128.754364)"},"ID":14,"Name":"Parallel","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(-4.06306267,193.776825)"},"ID":15,"Name":"Set
-        Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":7},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetBoolParameter","NodeData":{"Offset":"(-3.40706062,276.038574)"},"ID":16,"Name":"Set
-        Bool Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":8},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_4Direction","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetTrigger","NodeData":{"Offset":"(-3.34237671,98.63645)"},"ID":17,"Name":"Set
-        Trigger Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":9},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Attack","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set trigger \u0111\u1ec3 ch\u1ea1y anim t\u1ea5n c\u00f4ng trong animator
-        c\u1ee7a enemy","StringmValue":"AI_Attack"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(0.521686554,371.586151)"},"ID":18,"Name":"Set
-        Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":10},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":false,"SinglemaxDelta":5}]},{"Type":"BehaviorDesigner.Runtime.Tasks.InvokeMethod","NodeData":{"Offset":"(245.3244,134.6154)"},"ID":19,"Name":"Method:
-        Attack","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":11},"SharedStringcomponentName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"EnemyController"},"SharedStringmethodName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"ResetAttackTime"}},{"Type":"BehaviorDesigner.Runtime.Tasks.WaitClip","NodeData":{"Offset":"(366.857483,125.7151)"},"ID":20,"Name":"Wait
-        Clip","Instant":true,"AnimationClipclip":12}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1.77776718,145.000031)","Comment":"Sau
-        khi t\u1ea5n c\u00f4ng xong ?"},"ID":21,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-1.36640167,127.659363)"},"ID":22,"Name":"If:
-        CanAttack = False","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"CanAttack","IsShared":true,"Tooltip":"C\u00f3
-        \u0111\u01b0\u1ee3c ph\u00e9p t\u1ea5n c\u00f4ng kh\u00f4ng ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(142.142853,125.112778)"},"ID":23,"Name":"Selector","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-19.7113266,150.90947)","Comment":"Player
-        g\u1ea7n Enemy ?\n-> Enemy l\u00f9i l\u1ea1i"},"ID":24,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-85.2158661,123.702515)"},"ID":25,"Name":"If:
-        IsChaseRange = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsChaseRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng ph\u00e1t hi\u1ec7n c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Parallel","NodeData":{"Offset":"(64.67569,123.251793)"},"ID":26,"Name":"Parallel","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.MoveCustom","NodeData":{"Offset":"(-4.70951843,95.80244)"},"ID":27,"Name":"Move
-        Custom","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoollookAtTarget":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedFloatmaxDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatmaxLookAtRotationDelta":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":12},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":13},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
-        c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"PushDirectionEnumPushDirectionEnum":"Behind"},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(1.14159584,192.8192)"},"ID":28,"Name":"Set
-        Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":14},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":-1},"BooleanisLerp":true,"SinglemaxDelta":2}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(294.49472,149.4262)","Comment":"Player
-        xa Enemy ?\n-> Enemy gi\u1eef nguy\u00ean\nv\u1ecb tr\u00ed"},"ID":29,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-70.4448853,117.179489)"},"ID":30,"Name":"If:
-        IsChaseRange = False","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsChaseRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng ph\u00e1t hi\u1ec7n c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(76.93545,124.277985)"},"ID":31,"Name":"Set
-        Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":15},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Vertical","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Vertical"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5}]}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(858.628662,134.230789)","Comment":"N\u1ebfu
-        player ngo\u00e0i ph\u1ea1m vi t\u1ea5n c\u00f4ng\n c\u1ee7a enemy ?\n(ChaseRange)"},"ID":32,"Name":"Sequence","Instant":true,"AbortTypeabortType":"Self","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolComparison","NodeData":{"Offset":"(-160.463181,124.617096)"},"ID":33,"Name":"If:
-        IsChaseRange = True","Instant":true,"SharedBoolbool1":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsAttackRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng t\u1ea5n c\u00f4ng c\u1ee7a enemy ?","BooleanmValue":false},"SharedBoolbool2":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetBoolParameter","NodeData":{"Offset":"(-2.66086388,116.226395)"},"ID":34,"Name":"Set
-        Bool Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":16},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_4Direction","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set \u0111\u1ec3 ch\u1ea1y anim trong animator c\u1ee7a enemy","StringmValue":"AI_4Direction"},"SharedBoolboolValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject.SetActive","NodeData":{"Offset":"(-0.1544857,296.4167)","Comment":"T\u1eaft
-        Effect \n(N\u1ebfu c\u00f3)"},"ID":35,"Name":"Set Active","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":17},"SharedBoolactive":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator.SetFloatParameter","NodeData":{"Offset":"(2.0190506,207.4952)"},"ID":36,"Name":"Set
-        Float Animator","Instant":true,"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":18},"SharedStringparameterName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloatfloatValue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"BooleanisLerp":true,"SinglemaxDelta":5},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(129.523,122.032486)"},"ID":37,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.Patrol","NodeData":{"Offset":"(246.861954,123.77626)","Comment":"Tu\u1ea7n
-        tra theo c\u00e1c\nWaypoints \u0111\u01b0\u1ee3c \ncho tr\u01b0\u1edbc"},"ID":38,"Name":"Patrol","Instant":true,"SharedBoolrandomPatrol":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatwaypointPauseDuration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedTransformwaypoints":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Waypoints","IsShared":true,"Tooltip":"C\u00e1c
-        \u0111i\u1ec3m di chuy\u1ec3n tu\u1ea7n tra c\u1ee7a Enemy"},"SharedNavMeshAgentnavMeshAgent":{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
-        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":19},"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatangularSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":10},"SharedFloatarriveDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolstopOnTaskEnd":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedGameObjectobjectRotation":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":20},"SharedGameObjecttarget":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
-        c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},"SharedAnimatoranimator":{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":21},"SharedStringanimIDBlend":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"AI_Speed","IsShared":true,"IsGlobal":true,"Tooltip":"Parameters
-        set t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n trong animator c\u1ee7a enemy","StringmValue":"AI_Speed"},"SharedFloattargetBlend":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"SinglemaxDeltaBlend":3}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedNavMeshAgent","Name":"NavMesh","IsShared":true,"Tooltip":"Th\u00e0nh
-        ph\u1ea7n NavMesh di chuy\u1ec3n c\u1ee7a Enemy","NavMeshAgentmValue":22},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Model","IsShared":true,"Tooltip":"M\u00f4
-        h\u00ecnh c\u1ee7a Enemy","GameObjectmValue":23},{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true,"Tooltip":"B\u1ed9
-        ph\u00e1t animation c\u1ee7a models","AnimatormValue":24},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true,"Tooltip":"Gameobject
-        c\u1ee7a player \u0111ang c\u00f3 tr\u00ean scene"},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Speed","IsShared":true,"Tooltip":"T\u1ed1c
-        \u0111\u1ed9 di chuy\u1ec3n","SinglemValue":3.5},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AttackCooldown","IsShared":true,"Tooltip":"Th\u1eddi
-        gian ch\u1edd m\u1ee1i l\u1ea7n t\u1ea5n c\u00f4ng","SinglemValue":3.6},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsRootRange","IsShared":true,"Tooltip":"Enemy
-        c\u00f3 di chuy\u1ec3n ra kh\u1ecfi v\u1ecb tr\u00ed Root ch\u01b0a ?","BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsChaseRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng ph\u00e1t hi\u1ec7n c\u1ee7a enemy ?","BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsAttackRange","IsShared":true,"Tooltip":"Player
-        c\u00f3 \u0111ang trong v\u00f9ng t\u1ea5n c\u00f4ng c\u1ee7a enemy ?","BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"CanMove","IsShared":true,"Tooltip":"C\u00f3
-        \u0111\u01b0\u1ee3c di chuy\u1ec3n kh\u00f4ng ?","BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"CanAttack","IsShared":true,"Tooltip":"C\u00f3
-        \u0111\u01b0\u1ee3c ph\u00e9p t\u1ea5n c\u00f4ng kh\u00f4ng ?","BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"RootPosition","IsShared":true,"Tooltip":"Khu
-        v\u1ef1c Root th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0ykh\u1ecfi
-        khu v\u1ef1c Root n\u00e0y th\u00ec s\u1ebd ch\u1ea1y v\u1ec1 Position n\u00e0y","Vector3mValue":"(0,0,0)"},{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"Waypoints","IsShared":true,"Tooltip":"C\u00e1c
-        \u0111i\u1ec3m di chuy\u1ec3n tu\u1ea7n tra c\u1ee7a Enemy"}]}'
-      fieldSerializationData:
-        typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
-        unityObjects:
-        - {fileID: 5377621447942043150}
-        - {fileID: 5377621447942043150}
-        - {fileID: 43024755016401523}
-        - {fileID: 1039497637874342513}
-        - {fileID: 5377621447949288564}
-        - {fileID: 5377621447942043150}
-        - {fileID: 5377621447949288564}
-        - {fileID: 5377621447942043150}
-        - {fileID: 5377621447942043150}
-        - {fileID: 5377621447942043150}
-        - {fileID: 5377621447942043150}
-        - {fileID: 3058335943946224998}
-        - {fileID: 7400000, guid: a4708d73151a95047b8ccc5a203a7197, type: 2}
-        - {fileID: 5377621447949288564}
-        - {fileID: 5377621447942043150}
-        - {fileID: 5377621447942043150}
-        - {fileID: 5377621447942043150}
-        - {fileID: 43024755016401523}
-        - {fileID: 5377621447942043150}
-        - {fileID: 1039497637874342513}
-        - {fileID: 5377621447949288564}
-        - {fileID: 5377621447942043150}
-        - {fileID: 1039497637874342513}
-        - {fileID: 5377621447949288564}
-        - {fileID: 5377621447942043150}
-        byteData: 
-        byteDataArray: 
-      Version: 1.7.3
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
 --- !u!114 &7720035537282813238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,9 +477,167 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c23e9330b0b2c34a95bc94710542f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BehaviorTree>k__BackingField: {fileID: 1039497637874342512}
   <EnemyConfig>k__BackingField: {fileID: 11400000, guid: eca2f35e52c79e044a5bdaa24f42b3c4, type: 2}
-  animator: {fileID: 5377621447942043150}
+  <Blackboard>k__BackingField: {fileID: 8660382146088518952}
+--- !u!114 &548215942791910745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058335943946224998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad115aca74ce3c4891b3f6de0b4aae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: '{"type":"NodeCanvas.BehaviourTrees.BehaviourTree","nodes":[{"dynamic":true,"_position":{"x":-520.0499,"y":1568.747},"$type":"NodeCanvas.BehaviourTrees.Selector","$id":"0"},{"_subTree":{"_value":1},"_position":{"x":-1375.015,"y":1818.242},"_comment":"Khi
+    b\u1ecb TakeDamage, s\u1ebd set ChaseRange = True v\u00e0 t\u1ef1 \u0111\u1ecbnh
+    ngh\u0129a l\u1ea1i theo t\u1eebng Enemy","$type":"NodeCanvas.BehaviourTrees.SubTree","$id":"1"},{"isDynamic":true,"_condition":{"conditions":[{"valueA":{"_name":"ChaseRange","_targetVariableID":"14daa4e8-1cbf-4690-b7ba-981f07aef454"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},{"valueA":{"_name":"AttackRange","_targetVariableID":"91309c9a-4f37-4f9b-9a6c-165377703db7"},"valueB":{},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"}],"$type":"NodeCanvas.Framework.ConditionList"},"_position":{"x":-1107.83,"y":1822.798},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"2"},{"_action":{"executionMode":1,"actions":[{"objectApplyRotation":{"_name":"Model","_targetVariableID":"f549d7d3-a24e-481a-82f6-ac95cf209fef"},"target":{"_name":"Player","_targetVariableID":"228e13d6-2e8b-4815-aa60-e51a38b42538"},"speed":{"_name":"RunSpeed","_targetVariableID":"a5204500-d647-48ea-bfb4-afa977af47d4"},"keepDistance":{"_value":0.1},"overrideAgent":{"_type":"UnityEngine.AI.NavMeshAgent","_name":"NavMesh","_targetVariableID":"5beb4606-4611-4681-8e08-f8a758b4f125"},"$type":"NodeCanvas.Tasks.Actions.MoveToGameObject"},{"parameter":{"_name":"AI_4Direction","_targetVariableID":"8682168e-1ab5-4b31-a54a-a6fb24c6850e"},"parameterHashID":{},"setTo":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"},{"parameter":{"_name":"AI_Speed","_targetVariableID":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6"},"parameterHashID":{},"setTo":{"_value":1.0},"transitTime":0.15,"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"setObject":{"_value":2},"setTo":0,"$type":"NodeCanvas.Tasks.Actions.SetObjectActive"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-1145.629,"y":1995.713},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"3"},{"isDynamic":true,"_condition":{"valueA":{"_name":"AttackRange","_targetVariableID":"91309c9a-4f37-4f9b-9a6c-165377703db7"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-554.9213,"y":1804.663},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"4"},{"dynamic":true,"_position":{"x":-511.7666,"y":1961.931},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"5"},{"_action":{"parameter":{"_name":"AI_4Direction","_targetVariableID":"8682168e-1ab5-4b31-a54a-a6fb24c6850e"},"parameterHashID":{},"setTo":{"_value":true},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"},"_position":{"x":-777.0748,"y":2117.648},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"6"},{"_position":{"x":-230.8873,"y":2121.504},"$type":"NodeCanvas.BehaviourTrees.Parallel","$id":"7"},{"repeaterMode":1,"repeatTimes":{"_value":1},"_position":{"x":-495.5336,"y":2258.431},"$type":"NodeCanvas.BehaviourTrees.Repeater","$id":"8"},{"isDynamic":true,"_condition":{"valueA":{"_name":"NormalAttack","_targetVariableID":"4f7d07a4-92eb-42b3-9dac-f53e12cb3086"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-543.0839,"y":2369.359},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"9"},{"_action":{"actions":[{"setObject":{"_value":2},"setTo":1,"$type":"NodeCanvas.Tasks.Actions.SetObjectActive"},{"randomValue":{"_value":true},"minValue":{"_value":2.5},"maxValue":{"_value":3.5},"waitTime":{"_value":1.0},"$type":"NodeCanvas.Tasks.Actions.Wait"},{"setObject":{"_value":2},"setTo":0,"$type":"NodeCanvas.Tasks.Actions.SetObjectActive"},{"parameter":{"_name":"AI_Attack","_targetVariableID":"b35319eb-ba2b-4eb3-b7b7-781190d0dfb4"},"parameterHashID":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetTrigger"},{"method":{"_baseInfo":"EnemyController|ResetAttackCD|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-545.5177,"y":2509.321},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"10"},{"isDynamic":true,"_condition":{"tagCheck":{"_value":"Attack"},"layerCheck":{},"_invert":true,"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Conditions.MecanimCheckTag"},"_position":{"x":-38.05593,"y":2249.502},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"11"},{"dynamic":true,"_position":{"x":35.41652,"y":2374.094},"$type":"NodeCanvas.BehaviourTrees.Selector","$id":"12"},{"isDynamic":true,"_condition":{"conditions":[{"valueA":{"_name":"ChaseRange","_targetVariableID":"14daa4e8-1cbf-4690-b7ba-981f07aef454"},"valueB":{"_value":true},"_isDisabled":true,"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},{"vectorA":{"_name":"This","_targetVariableID":"cadadbe8-67ab-4229-8f07-653ac7122d86"},"vectorB":{"_name":"Player","_targetVariableID":"228e13d6-2e8b-4815-aa60-e51a38b42538"},"comparison":4,"distance":{"_value":5.0},"$type":"NodeCanvas.Tasks.Conditions.CheckVectorDistance"}],"$type":"NodeCanvas.Framework.ConditionList"},"_position":{"x":-199.792,"y":2495.622},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"13"},{"_action":{"executionMode":1,"actions":[{"objectApplyRotation":{"_name":"Model","_targetVariableID":"f549d7d3-a24e-481a-82f6-ac95cf209fef"},"target":{"_name":"Player","_targetVariableID":"228e13d6-2e8b-4815-aa60-e51a38b42538"},"speed":{"_name":"WalkSpeed","_targetVariableID":"62cdfac5-6bf6-4682-ba3c-ead421bbd5de"},"fledDistance":{"_name":"DistanceToPlayer"},"lookAhead":{"_value":0.2},"saveFoundParameter":{"_name":"VerticalAnimationBlend","_targetVariableID":"d07b5e36-7acb-459c-b0ab-c6c9e6a22cf1"},"$type":"NodeCanvas.Tasks.Actions.Flee"},{"parameter":{"_name":"AI_Horizontal","_targetVariableID":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57"},"parameterHashID":{},"setTo":{},"transitTime":0.2,"updateFrameByFrame":{"_value":true},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"parameter":{"_name":"AI_Vertical","_targetVariableID":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3"},"parameterHashID":{},"setTo":{"_name":"VerticalAnimationBlend","_targetVariableID":"d07b5e36-7acb-459c-b0ab-c6c9e6a22cf1"},"transitTime":0.35,"updateFrameByFrame":{"_value":true},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-261.1754,"y":2658.752},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"14"},{"_action":{"executionMode":1,"actions":[{"target":{"_name":"Player","_targetVariableID":"228e13d6-2e8b-4815-aa60-e51a38b42538"},"speed":{"_value":15.0},"updateFrameByFrame":true,"angleDifference":{"_value":0.5},"upVector":{"_value":{"y":1.0}},"saveFoundParameter":{"_name":"HorizontalAnimationBlend","_targetVariableID":"90cfaf85-9f8c-400e-8138-b65c728769c7"},"overrideAgent":{"_type":"UnityEngine.Transform","_name":"Model","_targetVariableID":"f549d7d3-a24e-481a-82f6-ac95cf209fef"},"$type":"NodeCanvas.Tasks.Actions.RotateTowards"},{"parameter":{"_name":"AI_Vertical","_targetVariableID":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3"},"parameterHashID":{},"setTo":{},"transitTime":0.2,"updateFrameByFrame":{"_value":true},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"parameter":{"_name":"AI_Horizontal","_targetVariableID":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57"},"parameterHashID":{},"setTo":{"_name":"HorizontalAnimationBlend","_targetVariableID":"90cfaf85-9f8c-400e-8138-b65c728769c7"},"transitTime":0.35,"updateFrameByFrame":{"_value":true},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":99.73786,"y":2494.747},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"15"},{"isDynamic":true,"_condition":{"valueA":{"_name":"AttackRange","_targetVariableID":"91309c9a-4f37-4f9b-9a6c-165377703db7"},"valueB":{},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":185.3923,"y":1827.765},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"16"},{"_action":{"executionMode":1,"actions":[{"setObject":{"_value":2},"setTo":0,"$type":"NodeCanvas.Tasks.Actions.SetObjectActive"},{"parameter":{"_name":"AI_4Direction","_targetVariableID":"8682168e-1ab5-4b31-a54a-a6fb24c6850e"},"parameterHashID":{},"setTo":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"},{"parameter":{"_name":"AI_Vertical","_targetVariableID":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3"},"parameterHashID":{},"setTo":{},"transitTime":0.0,"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"parameter":{"_name":"AI_Horizontal","_targetVariableID":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57"},"parameterHashID":{},"setTo":{},"transitTime":0.0,"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"parameter":{"_name":"AI_Speed","_targetVariableID":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6"},"parameterHashID":{},"setTo":{},"transitTime":0.15,"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":146.2973,"y":1965.697},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"17"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"4"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"16"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"5"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"6"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"7"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"8"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"11"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"9"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"9"},"_targetNode":{"$ref":"10"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"11"},"_targetNode":{"$ref":"12"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"12"},"_targetNode":{"$ref":"13"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"12"},"_targetNode":{"$ref":"15"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"13"},"_targetNode":{"$ref":"14"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"16"},"_targetNode":{"$ref":"17"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}},"derivedData":{"repeat":true,"$type":"NodeCanvas.BehaviourTrees.BehaviourTree+DerivedSerializationData"}}'
+  _boundGraphObjectReferences:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: e9db7f837694dcc41885047ba34d8517, type: 2}
+  - {fileID: 43024755016401523}
+  _boundGraphSource:
+    _version: 3.25
+    _category: 
+    _comments: 
+    _translation: {x: 987, y: -950}
+    _zoomFactor: 0.63374066
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 0
+  _graph: {fileID: 0}
+  _blackboard: {fileID: 8660382146088518952}
+--- !u!114 &8660382146088518952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058335943946224998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentBlackboard: {fileID: 0}
+  _serializedBlackboard: '{"_variables":{"This":{"_value":1,"_name":"This","_id":"cadadbe8-67ab-4229-8f07-653ac7122d86","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Transform,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"NavMesh":{"_value":2,"_name":"NavMesh","_id":"5beb4606-4611-4681-8e08-f8a758b4f125","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.AI.NavMeshAgent,
+    UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"Animator":{"_value":3,"_name":"Animator","_id":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Animator,
+    UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"Model":{"_value":4,"_name":"Model","_id":"f549d7d3-a24e-481a-82f6-ac95cf209fef","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Transform,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"Player":{"_name":"Player","_id":"228e13d6-2e8b-4815-aa60-e51a38b42538","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.GameObject,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"RandomPostion":{"_name":"RandomPostion","_id":"a8508978-c30f-4b03-84d6-55d0db666eee","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Vector3,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"WalkSpeed":{"_name":"WalkSpeed","_id":"62cdfac5-6bf6-4682-ba3c-ead421bbd5de","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"RunSpeed":{"_name":"RunSpeed","_id":"a5204500-d647-48ea-bfb4-afa977af47d4","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"HorizontalAnimationBlend":{"_name":"HorizontalAnimationBlend","_id":"90cfaf85-9f8c-400e-8138-b65c728769c7","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"VerticalAnimationBlend":{"_name":"VerticalAnimationBlend","_id":"d07b5e36-7acb-459c-b0ab-c6c9e6a22cf1","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"RootRange":{"_name":"RootRange","_id":"ffffab03-9180-4d88-8189-5eca31ec7ad7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"ChaseRange":{"_name":"ChaseRange","_id":"14daa4e8-1cbf-4690-b7ba-981f07aef454","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AttackRange":{"_name":"AttackRange","_id":"91309c9a-4f37-4f9b-9a6c-165377703db7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"NormalAttack":{"_name":"NormalAttack","_id":"4f7d07a4-92eb-42b3-9dac-f53e12cb3086","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"SkillAttack":{"_name":"SkillAttack","_id":"c05761d9-3d9e-40e8-9856-d1e176b04686","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"SpecialAttack":{"_name":"SpecialAttack","_id":"630d4aa6-4a81-4d2e-968b-c9d36c74fa7b","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"TakeDMG":{"_name":"TakeDMG","_id":"33db82ab-6c78-43d3-b210-7962cc7e2435","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"Die":{"_name":"Die","_id":"06e07d3c-3450-44e3-87d2-023a40b7ac51","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_4Direction":{"_value":"AI_4Direction","_name":"AI_4Direction","_id":"8682168e-1ab5-4b31-a54a-a6fb24c6850e","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Speed":{"_value":"AI_Speed","_name":"AI_Speed","_id":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Attack":{"_value":"AI_Attack","_name":"AI_Attack","_id":"b35319eb-ba2b-4eb3-b7b7-781190d0dfb4","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Damage":{"_value":"AI_Damage","_name":"AI_Damage","_id":"1278a292-3120-46b3-8929-1a647514975b","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Horizontal":{"_value":"AI_Horizontal","_name":"AI_Horizontal","_id":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Vertical":{"_value":"AI_Vertical","_name":"AI_Vertical","_id":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
+  _objectReferences:
+  - {fileID: 0}
+  - {fileID: 3058335943946224997}
+  - {fileID: 1039497637874342513}
+  - {fileID: 5377621447942043150}
+  - {fileID: 5377621447949523348}
+  _serializedVariables:
+  - _json: '{"_value":1,"_name":"This","_id":"cadadbe8-67ab-4229-8f07-653ac7122d86","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Transform,
+      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+    _references:
+    - {fileID: 0}
+    - {fileID: 3058335943946224997}
+  - _json: '{"_value":1,"_name":"NavMesh","_id":"5beb4606-4611-4681-8e08-f8a758b4f125","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.AI.NavMeshAgent,
+      UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+    _references:
+    - {fileID: 0}
+    - {fileID: 1039497637874342513}
+  - _json: '{"_value":1,"_name":"Animator","_id":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Animator,
+      UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+    _references:
+    - {fileID: 0}
+    - {fileID: 5377621447942043150}
+  - _json: '{"_value":1,"_name":"Model","_id":"f549d7d3-a24e-481a-82f6-ac95cf209fef","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Transform,
+      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+    _references:
+    - {fileID: 0}
+    - {fileID: 5377621447949523348}
+  - _json: '{"_name":"Player","_id":"228e13d6-2e8b-4815-aa60-e51a38b42538","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.GameObject,
+      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+    _references: []
+  - _json: '{"_name":"RandomPostion","_id":"a8508978-c30f-4b03-84d6-55d0db666eee","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Vector3,
+      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+    _references: []
+  - _json: '{"_name":"WalkSpeed","_id":"62cdfac5-6bf6-4682-ba3c-ead421bbd5de","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"RunSpeed","_id":"a5204500-d647-48ea-bfb4-afa977af47d4","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"HorizontalAnimationBlend","_id":"90cfaf85-9f8c-400e-8138-b65c728769c7","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"VerticalAnimationBlend","_id":"d07b5e36-7acb-459c-b0ab-c6c9e6a22cf1","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"RootRange","_id":"ffffab03-9180-4d88-8189-5eca31ec7ad7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"ChaseRange","_id":"14daa4e8-1cbf-4690-b7ba-981f07aef454","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"AttackRange","_id":"91309c9a-4f37-4f9b-9a6c-165377703db7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"NormalAttack","_id":"4f7d07a4-92eb-42b3-9dac-f53e12cb3086","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"SkillAttack","_id":"c05761d9-3d9e-40e8-9856-d1e176b04686","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"SpecialAttack","_id":"630d4aa6-4a81-4d2e-968b-c9d36c74fa7b","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"TakeDMG","_id":"33db82ab-6c78-43d3-b210-7962cc7e2435","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"Die","_id":"06e07d3c-3450-44e3-87d2-023a40b7ac51","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":"AI_4Direction","_name":"AI_4Direction","_id":"8682168e-1ab5-4b31-a54a-a6fb24c6850e","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":"AI_Speed","_name":"AI_Speed","_id":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":"AI_Attack","_name":"AI_Attack","_id":"b35319eb-ba2b-4eb3-b7b7-781190d0dfb4","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":"AI_Damage","_name":"AI_Damage","_id":"1278a292-3120-46b3-8929-1a647514975b","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":"AI_Horizontal","_name":"AI_Horizontal","_id":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":"AI_Vertical","_name":"AI_Vertical","_id":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
 --- !u!1 &5377621447949288494
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,7 +1002,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523344}
-  m_LocalEulerAnglesHint: {x: 46.846447, y: -63.00811, z: 34.92311}
+  m_LocalEulerAnglesHint: {x: 0.96932685, y: -89.5883, z: 23.053995}
 --- !u!1 &5377621447949288524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,7 +1065,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523344}
-  m_LocalEulerAnglesHint: {x: 62.369007, y: -162.15689, z: -74.083374}
+  m_LocalEulerAnglesHint: {x: 3.4923801, y: -91.741745, z: -26.540543}
 --- !u!1 &5377621447949288530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,7 +1520,7 @@ Transform:
   - {fileID: 5377621447949523408}
   - {fileID: 5377621447949523368}
   m_Father: {fileID: 5377621447949523330}
-  m_LocalEulerAnglesHint: {x: -3.4146986, y: 1.0857767, z: -14.969962}
+  m_LocalEulerAnglesHint: {x: 6.5401406, y: 3.063719, z: -13.547755}
 --- !u!1 &5377621447949288546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,7 +1552,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523328}
   m_Father: {fileID: 5377621447949523374}
-  m_LocalEulerAnglesHint: {x: -8.324531, y: 0.9504662, z: -20.088339}
+  m_LocalEulerAnglesHint: {x: 1.7676206, y: 2.0244243, z: -18.781918}
 --- !u!1 &5377621447949288548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,7 +1584,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523340}
   m_Father: {fileID: 5377621447949523368}
-  m_LocalEulerAnglesHint: {x: -16.002785, y: 65.13536, z: -1.9016114}
+  m_LocalEulerAnglesHint: {x: -8.977274, y: 22.355612, z: 98.7518}
 --- !u!1 &5377621447949288550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,7 +1615,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523342}
-  m_LocalEulerAnglesHint: {x: -0.00003415095, y: 0.0000069734447, z: -89.99997}
+  m_LocalEulerAnglesHint: {x: -0.00001878302, y: -0.0000042635575, z: -89.999985}
 --- !u!1 &5377621447949288552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1647,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523370}
   m_Father: {fileID: 5377621447949523374}
-  m_LocalEulerAnglesHint: {x: 17.788023, y: -156.93004, z: -19.898373}
+  m_LocalEulerAnglesHint: {x: 17.769964, y: -156.84883, z: -27.376879}
 --- !u!1 &5377621447949288554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,7 +1682,7 @@ Transform:
   - {fileID: 5377621447949523386}
   - {fileID: 5377621447949523380}
   m_Father: {fileID: 5377621447949523340}
-  m_LocalEulerAnglesHint: {x: 83.841, y: 7.3660088, z: 2.286096}
+  m_LocalEulerAnglesHint: {x: 52.630478, y: -30.129171, z: -59.289207}
 --- !u!1 &5377621447949288556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,7 +1715,7 @@ Transform:
   - {fileID: 5377621447949523338}
   - {fileID: 5377621447949523062}
   m_Father: {fileID: 5377621447949523332}
-  m_LocalEulerAnglesHint: {x: 0.0000011740381, y: 0.0000022764002, z: 62.71788}
+  m_LocalEulerAnglesHint: {x: 0.00000016449881, y: -0.0000003939194, z: 112.66518}
 --- !u!1 &5377621447949288558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,7 +1747,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523334}
   m_Father: {fileID: 5377621447949523370}
-  m_LocalEulerAnglesHint: {x: 5.086813, y: -31.294287, z: -36.401333}
+  m_LocalEulerAnglesHint: {x: -4.0102177, y: -23.347609, z: -30.365988}
 --- !u!1 &5377621447949288560
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1782,7 @@ Transform:
   - {fileID: 5377621447949523050}
   - {fileID: 43024755016401532}
   m_Father: {fileID: 5377621447949523416}
-  m_LocalEulerAnglesHint: {x: 9.916578, y: -87.504196, z: 1.1895355}
+  m_LocalEulerAnglesHint: {x: 9.916503, y: -87.50419, z: 1.1895362}
 --- !u!1 &5377621447949288564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,7 +1854,6 @@ MonoBehaviour:
   enemyController: {fileID: 7720035537282813238}
   effectPoint: {fileID: 505499064}
   projectilePrefab: {fileID: 7093725782271389711, guid: 6214c75a53ac604418b37be0d4ea9826, type: 3}
-  effectHolding: {fileID: 43024755016401534}
 --- !u!1 &5377621447949288832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,7 +1885,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523390}
   m_Father: {fileID: 5377621447949523338}
-  m_LocalEulerAnglesHint: {x: 0.04532329, y: 6.6160126, z: 1.7891426}
+  m_LocalEulerAnglesHint: {x: 0.045321487, y: 6.616013, z: -2.1123967}
 --- !u!1 &5377621447949288834
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,7 +1916,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523364}
-  m_LocalEulerAnglesHint: {x: 0.0000018209779, y: -0.0000018012227, z: -44.687515}
+  m_LocalEulerAnglesHint: {x: -0.00000084874506, y: 0.000001481671, z: -60.194637}
 --- !u!1 &5377621447949288836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1945,7 +1948,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523362}
   m_Father: {fileID: 5377621447949523366}
-  m_LocalEulerAnglesHint: {x: 0.000000015030283, y: 0.0000021343812, z: -0.4034694}
+  m_LocalEulerAnglesHint: {x: 0.0000009432447, y: 0.0000014860146, z: -18.369007}
 --- !u!1 &5377621447949288838
 GameObject:
   m_ObjectHideFlags: 0
@@ -1977,7 +1980,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523364}
   m_Father: {fileID: 5377621447949523338}
-  m_LocalEulerAnglesHint: {x: -49.628273, y: 95.164505, z: -32.09352}
+  m_LocalEulerAnglesHint: {x: -49.62828, y: 95.164505, z: -48.215256}
 --- !u!1 &5377621447949288840
 GameObject:
   m_ObjectHideFlags: 0
@@ -2009,7 +2012,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523332}
   m_Father: {fileID: 5377621447949523328}
-  m_LocalEulerAnglesHint: {x: 0.143429, y: 91.594574, z: 173.23956}
+  m_LocalEulerAnglesHint: {x: -22.503105, y: 59.18394, z: 147.37276}
 --- !u!1 &5377621447949288842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,7 +2045,7 @@ Transform:
   - {fileID: 5377621447949523342}
   - {fileID: 5377621447949523058}
   m_Father: {fileID: 5377621447949523336}
-  m_LocalEulerAnglesHint: {x: -0.0000012353785, y: 0.0000014555027, z: 66.88845}
+  m_LocalEulerAnglesHint: {x: -0.0000021914298, y: 0.0000036634503, z: 67.757225}
 --- !u!1 &5377621447949288844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,7 +2076,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523450}
-  m_LocalEulerAnglesHint: {x: 0.00021718313, y: 0.00014786146, z: -111.52243}
+  m_LocalEulerAnglesHint: {x: 0.00021814038, y: 0.00014754334, z: -111.811714}
 --- !u!1 &5377621447949288846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,7 +2141,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523378}
-  m_LocalEulerAnglesHint: {x: 0.000000424711, y: -0.00000064177533, z: -22.81433}
+  m_LocalEulerAnglesHint: {x: 0.0000016233074, y: -0.00000049927, z: -63.36901}
 --- !u!1 &5377621447949288850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2170,7 +2173,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523376}
   m_Father: {fileID: 5377621447949523380}
-  m_LocalEulerAnglesHint: {x: -0.0000011000621, y: -3.7091627e-10, z: -22.814331}
+  m_LocalEulerAnglesHint: {x: 0.0000000568067, y: -0.00000011328728, z: -63.36901}
 --- !u!1 &5377621447949288852
 GameObject:
   m_ObjectHideFlags: 0
@@ -2202,7 +2205,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523378}
   m_Father: {fileID: 5377621447949523338}
-  m_LocalEulerAnglesHint: {x: 0.045207262, y: -7.7768707, z: 1.7777128}
+  m_LocalEulerAnglesHint: {x: 0.045206673, y: -7.7768703, z: -40.00617}
 --- !u!1 &5377621447949288854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2233,7 +2236,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523384}
-  m_LocalEulerAnglesHint: {x: -0.0000022360543, y: -0.0000009118647, z: -22.814327}
+  m_LocalEulerAnglesHint: {x: 0.0000010636979, y: -0.00000081037103, z: -65.91218}
 --- !u!1 &5377621447949288856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,7 +2268,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523382}
   m_Father: {fileID: 5377621447949523386}
-  m_LocalEulerAnglesHint: {x: 0.00000006244239, y: -0.0000009525033, z: -22.81433}
+  m_LocalEulerAnglesHint: {x: 0.00000088947, y: -0.0000004206574, z: -65.912186}
 --- !u!1 &5377621447949288858
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,7 +2300,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523384}
   m_Father: {fileID: 5377621447949523338}
-  m_LocalEulerAnglesHint: {x: 0.04561896, y: -1.0930899, z: 1.7830144}
+  m_LocalEulerAnglesHint: {x: -2.5746825, y: -21.806822, z: -6.901736}
 --- !u!1 &5377621447949288860
 GameObject:
   m_ObjectHideFlags: 0
@@ -2328,7 +2331,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523390}
-  m_LocalEulerAnglesHint: {x: -0.000005508857, y: 0.000002317332, z: -22.81433}
+  m_LocalEulerAnglesHint: {x: 0.00000006742399, y: -0.0000015629956, z: -63.36901}
 --- !u!1 &5377621447949288862
 GameObject:
   m_ObjectHideFlags: 0
@@ -2360,7 +2363,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523388}
   m_Father: {fileID: 5377621447949523360}
-  m_LocalEulerAnglesHint: {x: -0.000003166754, y: -0.0000042253064, z: -22.81433}
+  m_LocalEulerAnglesHint: {x: 0.00000054879473, y: -0.0000028924467, z: -35.725563}
 --- !u!1 &5377621447949288864
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,7 +2395,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523422}
   m_Father: {fileID: 5377621447949523394}
-  m_LocalEulerAnglesHint: {x: 0.00000031853907, y: 0.0000000039058863, z: -69.72435}
+  m_LocalEulerAnglesHint: {x: 0.00000028619942, y: 0.00000014351163, z: -63.36901}
 --- !u!1 &5377621447949288866
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,7 +2427,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523392}
   m_Father: {fileID: 5377621447949523416}
-  m_LocalEulerAnglesHint: {x: -0.04520454, y: 7.7768693, z: -45.09045}
+  m_LocalEulerAnglesHint: {x: -0.04520689, y: 7.7768683, z: -40.00617}
 --- !u!1 &5377621447949288868
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,7 +2458,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523398}
-  m_LocalEulerAnglesHint: {x: -0.00000065293875, y: -0.0000006962996, z: -69.72435}
+  m_LocalEulerAnglesHint: {x: -0.00000019025032, y: -0.00000057294807, z: -63.36901}
 --- !u!1 &5377621447949288870
 GameObject:
   m_ObjectHideFlags: 0
@@ -2487,7 +2490,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523396}
   m_Father: {fileID: 5377621447949523400}
-  m_LocalEulerAnglesHint: {x: -0.0000013264421, y: -0.00000049002483, z: -69.72435}
+  m_LocalEulerAnglesHint: {x: 0.00000019079961, y: 0.00000009567443, z: -63.36901}
 --- !u!1 &5377621447949288872
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,7 +2522,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523398}
   m_Father: {fileID: 5377621447949523416}
-  m_LocalEulerAnglesHint: {x: -0.045617606, y: 1.093088, z: -45.08515}
+  m_LocalEulerAnglesHint: {x: -0.045617472, y: 1.0930885, z: -40.000866}
 --- !u!1 &5377621447949288874
 GameObject:
   m_ObjectHideFlags: 0
@@ -2550,7 +2553,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523404}
-  m_LocalEulerAnglesHint: {x: 0.0000008008707, y: 0.00000029586417, z: -69.72435}
+  m_LocalEulerAnglesHint: {x: -0.00000028592478, y: -0.00000038214844, z: -63.36901}
 --- !u!1 &5377621447949288876
 GameObject:
   m_ObjectHideFlags: 0
@@ -2582,7 +2585,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523402}
   m_Father: {fileID: 5377621447949523406}
-  m_LocalEulerAnglesHint: {x: -0.0000025983675, y: -0.00000004973858, z: -69.72435}
+  m_LocalEulerAnglesHint: {x: 0.0000003815992, y: 0.00000019134883, z: -63.36901}
 --- !u!1 &5377621447949288878
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,7 +2617,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523404}
   m_Father: {fileID: 5377621447949523416}
-  m_LocalEulerAnglesHint: {x: -0.045322362, y: -6.6160154, z: -45.07903}
+  m_LocalEulerAnglesHint: {x: -0.045322362, y: -6.616015, z: -39.994736}
 --- !u!1 &5377621447949288880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,7 +2649,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523450}
   m_Father: {fileID: 5377621447949523328}
-  m_LocalEulerAnglesHint: {x: 0.00002538235, y: 0.00008713001, z: -33.057083}
+  m_LocalEulerAnglesHint: {x: 0.000024621313, y: 0.00008635197, z: -33.057083}
 --- !u!1 &5377621447949288882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2678,7 +2681,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523418}
   m_Father: {fileID: 5377621447949523446}
-  m_LocalEulerAnglesHint: {x: -11.8546295, y: -60.512527, z: 16.241817}
+  m_LocalEulerAnglesHint: {x: -42.40773, y: -10.105771, z: 36.513153}
 --- !u!1 &5377621447949288884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,7 +2712,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523420}
-  m_LocalEulerAnglesHint: {x: -0.000008538035, y: -0.00011076781, z: -90.00014}
+  m_LocalEulerAnglesHint: {x: 0.000008537693, y: -0.00007145055, z: -90.00003}
 --- !u!1 &5377621447949288886
 GameObject:
   m_ObjectHideFlags: 0
@@ -2741,7 +2744,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523448}
   m_Father: {fileID: 5377621447949523374}
-  m_LocalEulerAnglesHint: {x: 1.0957849, y: 164.76213, z: -52.851604}
+  m_LocalEulerAnglesHint: {x: -0.64147145, y: 160.57874, z: -47.854286}
 --- !u!1 &5377621447949288888
 GameObject:
   m_ObjectHideFlags: 0
@@ -2777,7 +2780,7 @@ Transform:
   - {fileID: 5377621447949523394}
   - {fileID: 5377621447949523344}
   m_Father: {fileID: 5377621447949523418}
-  m_LocalEulerAnglesHint: {x: -77.10637, y: 118.3094, z: -115.396515}
+  m_LocalEulerAnglesHint: {x: -46.99366, y: 154.98811, z: -137.73839}
 --- !u!1 &5377621447949288890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2810,7 +2813,7 @@ Transform:
   - {fileID: 5377621447949523416}
   - {fileID: 5377621447949523064}
   m_Father: {fileID: 5377621447949523410}
-  m_LocalEulerAnglesHint: {x: -0.0000007865023, y: -0.0000026178122, z: 34.617683}
+  m_LocalEulerAnglesHint: {x: -0.000002095828, y: 0.0000014723694, z: 54.911034}
 --- !u!1 &5377621447949288892
 GameObject:
   m_ObjectHideFlags: 0
@@ -2842,7 +2845,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523412}
   m_Father: {fileID: 5377621447949523448}
-  m_LocalEulerAnglesHint: {x: -22.202486, y: 19.016378, z: -9.44674}
+  m_LocalEulerAnglesHint: {x: -31.16568, y: 29.06373, z: -16.980955}
 --- !u!1 &5377621447949288894
 GameObject:
   m_ObjectHideFlags: 0
@@ -2873,7 +2876,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523392}
-  m_LocalEulerAnglesHint: {x: -0.0000005451784, y: -0.00000037206138, z: -69.72435}
+  m_LocalEulerAnglesHint: {x: 0.0000009545474, y: 0.0000000010984618, z: -63.36901}
 --- !u!1 &5377621447949288898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2936,7 +2939,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5377621447949523442}
-  m_LocalEulerAnglesHint: {x: -0.0000030591434, y: 0.0000041966696, z: -63.372307}
+  m_LocalEulerAnglesHint: {x: -0.0000011382308, y: -0.00000016004824, z: -60.19462}
 --- !u!1 &5377621447949288914
 GameObject:
   m_ObjectHideFlags: 0
@@ -2968,7 +2971,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523440}
   m_Father: {fileID: 5377621447949523444}
-  m_LocalEulerAnglesHint: {x: 0.0000021436852, y: -0.0000016413132, z: -19.004536}
+  m_LocalEulerAnglesHint: {x: 0.00000020334456, y: -0.00000074223055, z: -18.369001}
 --- !u!1 &5377621447949288916
 GameObject:
   m_ObjectHideFlags: 0
@@ -3000,7 +3003,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523442}
   m_Father: {fileID: 5377621447949523416}
-  m_LocalEulerAnglesHint: {x: 49.62828, y: -95.164505, z: -50.757404}
+  m_LocalEulerAnglesHint: {x: 49.62829, y: -95.16451, z: -48.21526}
 --- !u!1 &5377621447949288918
 GameObject:
   m_ObjectHideFlags: 0
@@ -3032,7 +3035,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523410}
   m_Father: {fileID: 5377621447949523328}
-  m_LocalEulerAnglesHint: {x: -0.33305424, y: -84.19305, z: -176.2795}
+  m_LocalEulerAnglesHint: {x: -7.522944, y: -84.525024, z: -126.0428}
 --- !u!1 &5377621447949288920
 GameObject:
   m_ObjectHideFlags: 0
@@ -3065,7 +3068,7 @@ Transform:
   - {fileID: 5377621447949523420}
   - {fileID: 5377621447949523060}
   m_Father: {fileID: 5377621447949523414}
-  m_LocalEulerAnglesHint: {x: -0.000001299311, y: 0.0000011873249, z: 61.614826}
+  m_LocalEulerAnglesHint: {x: -0.0000028640159, y: 0.0000019085373, z: 63.44612}
 --- !u!1 &5377621447949288922
 GameObject:
   m_ObjectHideFlags: 0
@@ -3097,7 +3100,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523372}
   m_Father: {fileID: 5377621447949523408}
-  m_LocalEulerAnglesHint: {x: 6.997448, y: 9.038093, z: 37.550915}
+  m_LocalEulerAnglesHint: {x: 6.052663, y: 1.9728808, z: 36.64976}
 --- !u!1 &5377621447949288924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3129,7 +3132,7 @@ Transform:
   m_Children:
   - {fileID: 5377621447949523374}
   m_Father: {fileID: 5377621447949523044}
-  m_LocalEulerAnglesHint: {x: 0.00000020810198, y: -0.00000085187355, z: 90.532715}
+  m_LocalEulerAnglesHint: {x: 0.00000041597198, y: -0.00000077243243, z: 104.99991}
 --- !u!1 &5988946979368961566
 GameObject:
   m_ObjectHideFlags: 0
@@ -3336,10 +3339,5 @@ GameObject:
 --- !u!4 &43024755016401532 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4922120542379246901, guid: d82609335fd0a75408967284a94b19a3, type: 3}
-  m_PrefabInstance: {fileID: 4960213918823089993}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &43024755016401534 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4922120542379246903, guid: d82609335fd0a75408967284a94b19a3, type: 3}
   m_PrefabInstance: {fileID: 4960213918823089993}
   m_PrefabAsset: {fileID: 0}

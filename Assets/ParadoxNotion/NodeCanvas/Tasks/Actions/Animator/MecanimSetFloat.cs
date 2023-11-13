@@ -18,6 +18,8 @@ namespace NodeCanvas.Tasks.Actions
         [SliderField(0, 1)]
         public float transitTime = 0.25f;
 
+        public BBParameter<bool> updateFrameByFrame;
+        
         private float currentValue;
 
         protected override string info {
@@ -38,7 +40,7 @@ namespace NodeCanvas.Tasks.Actions
 
         protected override void OnUpdate() {
             Set(Mathf.Lerp(currentValue, setTo.value, elapsedTime / transitTime));
-            if ( elapsedTime >= transitTime ) {
+            if ( elapsedTime >= transitTime && !updateFrameByFrame.value ) {
                 EndAction(true);
             }
         }

@@ -2,16 +2,16 @@ using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
 
-
 namespace NodeCanvas.Tasks.Actions
 {
-
     [Name("Set Active")]
     [Category("GameObject")]
     [Description("Set the gameobject active state.")]
-    public class SetObjectActive : ActionTask<Transform>
+    public class SetObjectActive : ActionTask
     {
-
+        [RequiredField, Tooltip("Đối tượng cần thao tác")]
+        public BBParameter<GameObject> setObject;
+        
         public enum SetActiveMode
         {
             Deactivate = 0,
@@ -28,17 +28,15 @@ namespace NodeCanvas.Tasks.Actions
         protected override void OnExecute() {
 
             bool value;
-
-            if ( setTo == SetActiveMode.Toggle ) {
-
-                value = !agent.gameObject.activeSelf;
-
-            } else {
-
+            if ( setTo == SetActiveMode.Toggle ) 
+            {
+                value = !setObject.value.activeSelf;
+            } 
+            else
+            {
                 value = (int)setTo == 1;
             }
-
-            agent.gameObject.SetActive(value);
+            setObject.value.SetActive(value);
             EndAction();
         }
     }

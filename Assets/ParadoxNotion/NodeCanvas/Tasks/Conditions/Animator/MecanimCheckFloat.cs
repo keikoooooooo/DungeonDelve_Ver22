@@ -20,7 +20,7 @@ namespace NodeCanvas.Tasks.Conditions
         protected override string info {
             get
             {
-                return "Mec.Float " + parameter.ToString() + OperationTools.GetCompareString(comparison) + value;
+                return "Mec.Float " + parameter + OperationTools.GetCompareString(comparison) + value;
             }
         }
 
@@ -28,5 +28,7 @@ namespace NodeCanvas.Tasks.Conditions
 
             return OperationTools.Compare((float)agent.GetFloat(parameter.value), (float)value.value, comparison, 0.1f);
         }
+        
+        
     }
 }
