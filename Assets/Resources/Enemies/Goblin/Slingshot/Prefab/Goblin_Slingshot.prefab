@@ -503,8 +503,8 @@ MonoBehaviour:
     _version: 3.25
     _category: 
     _comments: 
-    _translation: {x: 917, y: -1187}
-    _zoomFactor: 0.63374066
+    _translation: {x: 525, y: -332}
+    _zoomFactor: 0.2500341
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
@@ -545,10 +545,11 @@ MonoBehaviour:
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"Die":{"_name":"Die","_id":"06e07d3c-3450-44e3-87d2-023a40b7ac51","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_4Direction":{"_value":"AI_4Direction","_name":"AI_4Direction","_id":"8682168e-1ab5-4b31-a54a-a6fb24c6850e","$type":"NodeCanvas.Framework.Variable`1[[System.String,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Speed":{"_value":"AI_Speed","_name":"AI_Speed","_id":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6","$type":"NodeCanvas.Framework.Variable`1[[System.String,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Attack":{"_value":"AI_Attack","_name":"AI_Attack","_id":"b35319eb-ba2b-4eb3-b7b7-781190d0dfb4","$type":"NodeCanvas.Framework.Variable`1[[System.String,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Damage":{"_value":"AI_Damage","_name":"AI_Damage","_id":"1278a292-3120-46b3-8929-1a647514975b","$type":"NodeCanvas.Framework.Variable`1[[System.String,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Horizontal":{"_value":"AI_Horizontal","_name":"AI_Horizontal","_id":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57","$type":"NodeCanvas.Framework.Variable`1[[System.String,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Vertical":{"_value":"AI_Vertical","_name":"AI_Vertical","_id":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Horizontal":{"_value":"AI_Horizontal","_name":"AI_Horizontal","_id":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Dead":{"_value":"AI_Dead","_name":"AI_Dead","_id":"3ab2e5ff-1f9f-4da8-92cc-db80f4f79274","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Damage":{"_value":"AI_Damage","_name":"AI_Damage","_id":"1278a292-3120-46b3-8929-1a647514975b","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AI_Attack":{"_value":"AI_Attack","_name":"AI_Attack","_id":"b35319eb-ba2b-4eb3-b7b7-781190d0dfb4","$type":"NodeCanvas.Framework.Variable`1[[System.String,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
   _objectReferences:
   - {fileID: 0}
@@ -622,16 +623,19 @@ MonoBehaviour:
   - _json: '{"_value":"AI_Speed","_name":"AI_Speed","_id":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6","$type":"NodeCanvas.Framework.Variable`1[[System.String,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
-  - _json: '{"_value":"AI_Attack","_name":"AI_Attack","_id":"b35319eb-ba2b-4eb3-b7b7-781190d0dfb4","$type":"NodeCanvas.Framework.Variable`1[[System.String,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
-    _references: []
-  - _json: '{"_value":"AI_Damage","_name":"AI_Damage","_id":"1278a292-3120-46b3-8929-1a647514975b","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+  - _json: '{"_value":"AI_Vertical","_name":"AI_Vertical","_id":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3","$type":"NodeCanvas.Framework.Variable`1[[System.String,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
   - _json: '{"_value":"AI_Horizontal","_name":"AI_Horizontal","_id":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57","$type":"NodeCanvas.Framework.Variable`1[[System.String,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
-  - _json: '{"_value":"AI_Vertical","_name":"AI_Vertical","_id":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+  - _json: '{"_value":"AI_Dead","_name":"AI_Dead","_id":"3ab2e5ff-1f9f-4da8-92cc-db80f4f79274","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":"AI_Damage","_name":"AI_Damage","_id":"1278a292-3120-46b3-8929-1a647514975b","$type":"NodeCanvas.Framework.Variable`1[[System.String,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":"AI_Attack","_name":"AI_Attack","_id":"b35319eb-ba2b-4eb3-b7b7-781190d0dfb4","$type":"NodeCanvas.Framework.Variable`1[[System.String,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
 --- !u!1 &5377621447949288494
@@ -3141,7 +3145,7 @@ GameObject:
   - component: {fileID: 8992531518441473535}
   - component: {fileID: 1486355612663124502}
   - component: {fileID: 1567438197516927852}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: RootSensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

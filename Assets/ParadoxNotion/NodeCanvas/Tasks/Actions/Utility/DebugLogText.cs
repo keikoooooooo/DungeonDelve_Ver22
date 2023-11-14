@@ -44,7 +44,8 @@ namespace NodeCanvas.Tasks.Actions
             if ( verboseMode == VerboseMode.LogAndDisplayLabel || verboseMode == VerboseMode.LogOnly ) {
                 var label = string.Format("(<b>{0}</b>) {1}", agent.gameObject.name, log.value);
                 if ( logMode == LogMode.Log ) {
-                    ParadoxNotion.Services.Logger.Log(label, LogTag.EXECUTION, this);
+                    //ParadoxNotion.Services.Logger.Log(label, LogTag.EXECUTION, this);
+                    ParadoxNotion.Services.Logger.Log(label,"", "");
                 }
                 if ( logMode == LogMode.Warning ) {
                     ParadoxNotion.Services.Logger.LogWarning(label, LogTag.EXECUTION, this);
