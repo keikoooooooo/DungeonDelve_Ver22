@@ -22,7 +22,7 @@ namespace NodeCanvas.Tasks.Actions
         public SetActiveMode setTo = SetActiveMode.Toggle;
 
         protected override string info {
-            get { return string.Format("{0} {1}", setTo, agentInfo); }
+            get { return string.Format("{0} {1}", setTo, setObject.value.name); }
         }
 
         protected override void OnExecute() {
