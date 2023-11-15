@@ -34,7 +34,7 @@ namespace NodeCanvas.Tasks.Actions
         
         protected override void OnExecute()
         {
-            currentRotate = Quaternion.Euler(Vector3.zero);
+            currentRotate = agent.rotation;
         }
 
         protected override void OnUpdate() 

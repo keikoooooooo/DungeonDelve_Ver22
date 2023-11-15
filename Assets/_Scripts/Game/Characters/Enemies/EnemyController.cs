@@ -1,4 +1,3 @@
-using System;
 using NaughtyAttributes;
 using NodeCanvas.Framework;
 using UnityEngine;
@@ -15,11 +14,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     // Variables
     private GameObject _player;
-    private float _attackCD;
-    private float _skillCD;
-    private float _specialCD;
-
-
+    
+    
     private void Awake()
     {
         StatusHandle = new StatusHandle(EnemyConfig.MaxHealth);
@@ -32,16 +28,13 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        SetRefPlayer(_player);
         
+        SetRefPlayer(_player);
         SetRunSpeed(EnemyConfig.RunSpeed);
         SetWalkSpeed(EnemyConfig.WalkSpeed);
-    }
-    private void Update()
-    {
-        CheckNormalAttack();
-        CheckSkillAttack();
-        CheckSpecialAttack();
+        SetCDNormalAttack(EnemyConfig.NormalAttackCD);
+        SetCDSkillAttack(EnemyConfig.SkillAttackCD);
+        SetCDSpecialAttack(EnemyConfig.SpecialAttackCD);
     }
     private void OnDisable()
     {
@@ -50,38 +43,19 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
     
     
-    private void CheckNormalAttack() //  Check có được tấn công không ?
-    {
-        _attackCD = _attackCD > 0 ? _attackCD - Time.deltaTime : 0;
-        SetNormalAttack(_attackCD <= 0);
-    }
-    private void CheckSkillAttack()
-    {
-        _skillCD = _skillCD > 0 ? _skillCD - Time.deltaTime : 0;
-        SetSkillAttack(_skillCD <= 0);
-    }
-    private void CheckSpecialAttack()
-    {
-        _specialCD = _specialCD > 0 ? _specialCD - Time.deltaTime : 0;
-        SetSpecialAttack(_specialCD <= 0);
-    }
-    public void ResetAttackCD() => _attackCD = EnemyConfig.NormalAttackCD; // Đặt lại thời gian tấn công
-    public void ResetSkillCD() => _skillCD = EnemyConfig.SkillAttackCD;
-    public void ResetSpecialCD() => _specialCD = EnemyConfig.SpecialAttackCD;
-    
-    
     // Set BehaviorTrees Variables    
     private void SetRefPlayer(GameObject _value) => Blackboard.SetVariableValue("Player", _value);
     private void SetWalkSpeed(float _value) => Blackboard.SetVariableValue("WalkSpeed", _value);
     private void SetRunSpeed(float _value) => Blackboard.SetVariableValue("RunSpeed", _value);
-    public void SetDie(bool _value) => Blackboard.SetVariableValue("Die", _value);
-    public void SetTakeDMG(bool _value) => Blackboard.SetVariableValue("TakeDMG", _value);
+    private void SetCDNormalAttack(float _value) => Blackboard.SetVariableValue("NormalAttackCD", _value);
+    private void SetCDSkillAttack(float _value) => Blackboard.SetVariableValue("SkillAttackCD", _value);
+    private void SetCDSpecialAttack(float _value) => Blackboard.SetVariableValue("SpecialAttackCD", _value);
     public void SetRootSensor(bool _value) => Blackboard.SetVariableValue("RootRange", _value);
     public void SetChaseSensor(bool _value) => Blackboard.SetVariableValue("ChaseRange", _value);
     public void SetAttackSensor(bool _value) => Blackboard.SetVariableValue("AttackRange", _value);
-    private void SetNormalAttack(bool _value) => Blackboard.SetVariableValue("NormalAttack", _value);
-    private void SetSkillAttack(bool _value) => Blackboard.SetVariableValue("SkillAttack", _value);
-    private void SetSpecialAttack(bool _value) => Blackboard.SetVariableValue("SpecialAttack", _value);
+    public void SetTakeDMG(bool _value) => Blackboard.SetVariableValue("TakeDMG", _value);
+    public void SetDie(bool _value) => Blackboard.SetVariableValue("Die", _value);
+    
     
     
     #region HandleDMG
