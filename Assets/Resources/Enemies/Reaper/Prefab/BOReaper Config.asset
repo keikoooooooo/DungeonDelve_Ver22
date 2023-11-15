@@ -20,8 +20,8 @@ MonoBehaviour:
   CRITRate: 5
   CRITDMG: 50
   DEF: 65
-  WalkSpeed: 4
-  RunSpeed: 6
+  WalkSpeed: 5.1
+  RunSpeed: 5.1
   NormalAttackCD: 5
   SkillAttackCD: 5
   SpecialAttackCD: 5

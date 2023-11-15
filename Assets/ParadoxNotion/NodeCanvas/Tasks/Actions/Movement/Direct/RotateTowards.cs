@@ -1,4 +1,3 @@
-using System;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
@@ -46,8 +45,12 @@ namespace NodeCanvas.Tasks.Actions
                 return;
             }
              
+            // var dir = target.value.transform.position - agent.position;
+            // agent.rotation = Quaternion.LookRotation(Vector3.RotateTowards(agent.forward, dir, speed.value * Time.deltaTime,
+            //         0), upVector.value);
+
             var dir = Quaternion.LookRotation(target.value.transform.position - agent.position);
-            agent.rotation = Quaternion.RotateTowards(agent.rotation,Quaternion.Euler(0, dir.eulerAngles.y, 0), 
+            agent.rotation = Quaternion.RotateTowards(agent.rotation, Quaternion.Euler(0, dir.eulerAngles.y, 0),
                 speed.value * Time.deltaTime);
 
             deltaAngle = Mathf.DeltaAngle(currentRotate.eulerAngles.y, agent.eulerAngles.y);
