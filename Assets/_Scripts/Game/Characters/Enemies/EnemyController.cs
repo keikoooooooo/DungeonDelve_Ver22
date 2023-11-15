@@ -50,11 +50,11 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void SetCDNormalAttack(float _value) => Blackboard.SetVariableValue("NormalAttackCD", _value);
     private void SetCDSkillAttack(float _value) => Blackboard.SetVariableValue("SkillAttackCD", _value);
     private void SetCDSpecialAttack(float _value) => Blackboard.SetVariableValue("SpecialAttackCD", _value);
-    public void SetRootSensor(bool _value) => Blackboard.SetVariableValue("RootRange", _value);
-    public void SetChaseSensor(bool _value) => Blackboard.SetVariableValue("ChaseRange", _value);
-    public void SetAttackSensor(bool _value) => Blackboard.SetVariableValue("AttackRange", _value);
-    public void SetTakeDMG(bool _value) => Blackboard.SetVariableValue("TakeDMG", _value);
-    public void SetDie(bool _value) => Blackboard.SetVariableValue("Die", _value);
+    public void SetRootSensor(bool _value) => Blackboard.SetVariableValue("RootSensor", _value);
+    public void SetChaseSensor(bool _value) => Blackboard.SetVariableValue("ChaseSensor", _value);
+    public void SetAttackSensor(bool _value) => Blackboard.SetVariableValue("AttackSensor", _value);
+    private void SetTakeDMG(bool _value) => Blackboard.SetVariableValue("TakeDMG", _value);
+    private void SetDie(bool _value) => Blackboard.SetVariableValue("Die", _value);
     
     
     

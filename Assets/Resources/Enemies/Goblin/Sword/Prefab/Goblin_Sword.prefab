@@ -5973,9 +5973,9 @@ MonoBehaviour:
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"HorizontalAnimationBlend":{"_name":"HorizontalAnimationBlend","_id":"90cfaf85-9f8c-400e-8138-b65c728769c7","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"VerticalAnimationBlend":{"_name":"VerticalAnimationBlend","_id":"d07b5e36-7acb-459c-b0ab-c6c9e6a22cf1","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"NormalAttackCD":{"_name":"NormalAttackCD","_id":"a6e8b603-177a-4299-8bec-dd196cfb3bf1","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"RootRange":{"_name":"RootRange","_id":"ffffab03-9180-4d88-8189-5eca31ec7ad7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"ChaseRange":{"_name":"ChaseRange","_id":"14daa4e8-1cbf-4690-b7ba-981f07aef454","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AttackRange":{"_name":"AttackRange","_id":"91309c9a-4f37-4f9b-9a6c-165377703db7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"RootSensor":{"_name":"RootSensor","_id":"ffffab03-9180-4d88-8189-5eca31ec7ad7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"ChaseSensor":{"_name":"ChaseSensor","_id":"14daa4e8-1cbf-4690-b7ba-981f07aef454","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"AttackSensor":{"_name":"AttackSensor","_id":"91309c9a-4f37-4f9b-9a6c-165377703db7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"SkillAttack":{"_name":"SkillAttack","_id":"c05761d9-3d9e-40e8-9856-d1e176b04686","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"TakeDMG":{"_name":"TakeDMG","_id":"33db82ab-6c78-43d3-b210-7962cc7e2435","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"Die":{"_name":"Die","_id":"06e07d3c-3450-44e3-87d2-023a40b7ac51","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
@@ -6032,13 +6032,13 @@ MonoBehaviour:
   - _json: '{"_name":"NormalAttackCD","_id":"a6e8b603-177a-4299-8bec-dd196cfb3bf1","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
-  - _json: '{"_name":"RootRange","_id":"ffffab03-9180-4d88-8189-5eca31ec7ad7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+  - _json: '{"_name":"RootSensor","_id":"ffffab03-9180-4d88-8189-5eca31ec7ad7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
-  - _json: '{"_name":"ChaseRange","_id":"14daa4e8-1cbf-4690-b7ba-981f07aef454","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+  - _json: '{"_name":"ChaseSensor","_id":"14daa4e8-1cbf-4690-b7ba-981f07aef454","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
-  - _json: '{"_name":"AttackRange","_id":"91309c9a-4f37-4f9b-9a6c-165377703db7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+  - _json: '{"_name":"AttackSensor","_id":"91309c9a-4f37-4f9b-9a6c-165377703db7","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
   - _json: '{"_name":"SkillAttack","_id":"c05761d9-3d9e-40e8-9856-d1e176b04686","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
