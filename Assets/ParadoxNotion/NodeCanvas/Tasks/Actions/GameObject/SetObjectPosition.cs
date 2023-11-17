@@ -13,6 +13,8 @@ namespace NodeCanvas.Tasks.Actions
         [RequiredField, Tooltip("Đối tượng cần thao tác")]
         public BBParameter<GameObject> setObject;
 
+        [Tooltip("Nếu object là Null thì sẽ lấy vị trí của toPosition")]
+        public BBParameter<GameObject> toObject;
         public BBParameter<Vector3> toPosition;
 
         public BBParameter<Vector3> offset;
@@ -24,7 +26,9 @@ namespace NodeCanvas.Tasks.Actions
             if(setObject.value == null) 
                 EndAction(false);
             
-            setObject.value.transform.position = toPosition.value + offset.value;
+            setObject.value.transform.position = toObject.value == null ?
+                                                                toPosition.value + offset.value :
+                                                                toObject.value.transform.position + offset.value;
             EndAction(true);
         }
     }

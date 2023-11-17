@@ -106,13 +106,18 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleMovement();
         
         HandleRotation();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            DamageBuff.Apply(this);
+        }
     }
     private void OnDisable()
     {
         ResetVariables();
     }
 
-
+    public DamageBuff DamageBuff;
     /// <summary>
     /// Khởi tạo giá trị biến ban đầu, và sẽ gọi hàm mỗi lần object này được OnEnable
     /// </summary>
