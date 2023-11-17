@@ -5,6 +5,8 @@ public class PlayerHUD : MonoBehaviour
 {
     [SerializeField, Required] private PlayerStateMachine player;
 
+    [SerializeField] private NameAndLevelText nameAndLevelText;
+    
     [SerializeField] private ProgressBar healthBar;
     [SerializeField] private ProgressBar staminaBar;
     
@@ -19,6 +21,8 @@ public class PlayerHUD : MonoBehaviour
         player.E_SkillCD += skillCooldownTime.StartCd;
         player.E_SpecialCD += specialCooldownTime.StartCd;
         
+        nameAndLevelText.ChangeNameText(player.PlayerConfig.Name);
+        nameAndLevelText.ChangeLevelText(player.PlayerConfig.Level);
         healthBar.Init(player.PlayerConfig.MaxHealth);
         staminaBar.Init(player.PlayerConfig.MaxStamina);
     }

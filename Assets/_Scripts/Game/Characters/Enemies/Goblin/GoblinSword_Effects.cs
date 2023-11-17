@@ -25,26 +25,22 @@ public class GoblinSword_Effects : MonoBehaviour
     private ObjectPooler<Reference> _poolHit;
     private Transform slotsVFX;
 
+    private Vector3 _posEffect;    // vị trí effect
+    private Quaternion _rotEffect; // góc quay effect
 
     private void Awake()
     {
         InitValue();
     }
-
     private void OnEnable()
     {
         RegisterEvents();
-    }
-    private void Start()
-    {
     }
     private void OnDisable()
     {
         UnRegisterEvents();
     }
-
     
-
     private void InitValue()
     {
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
@@ -61,29 +57,25 @@ public class GoblinSword_Effects : MonoBehaviour
         physicsDetection.CollisionEnterEvent.RemoveListener(enemyController.CauseDMG);
     }
 
-
-
+    
     private void EffectAttack(AnimationEvent eEvent)
     {
-        Vector3 _position;    // vị trí effect
-        Quaternion _rotation; // góc quay effect
-
         switch (eEvent.intParameter)
         {
             case 0: 
-                _position = effectPoint.position + transform.rotation *  effectOffsets[0].position;  
-                _rotation = Quaternion.Euler(effectOffsets[0].rotation.x,          
+                _posEffect = effectPoint.position + transform.rotation *  effectOffsets[0].position;  
+                _rotEffect = Quaternion.Euler(effectOffsets[0].rotation.x,          
                                            effectOffsets[0].rotation.y + effectPoint.eulerAngles.y,
                                              effectOffsets[0].rotation.z);
-                _poolSword1Slash.Get(_position, _rotation);
+                _poolSword1Slash.Get(_posEffect, _rotEffect);
                 break;
             
             case 1:
-                _position = effectPoint.position + transform.rotation *  effectOffsets[1].position;
-                _rotation = Quaternion.Euler(effectOffsets[1].rotation.x, 
+                _posEffect = effectPoint.position + transform.rotation *  effectOffsets[1].position;
+                _rotEffect = Quaternion.Euler(effectOffsets[1].rotation.x, 
                                            effectOffsets[1].rotation.y + effectPoint.eulerAngles.y,
                                              effectOffsets[1].rotation.z);
-                _poolSword2Slash.Get(_position, _rotation);
+                _poolSword2Slash.Get(_posEffect, _rotEffect);
                 break;
         }
     }

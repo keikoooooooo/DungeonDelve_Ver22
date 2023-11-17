@@ -142,3 +142,7 @@ MonoBehaviour:
     - 79.41
     - 83.49
     - 86.06
+  UpgradeCost: 0
+  CurrentExperience: 0
+  MaxExperience: 0
+  UpgradeMaterials: 01000000

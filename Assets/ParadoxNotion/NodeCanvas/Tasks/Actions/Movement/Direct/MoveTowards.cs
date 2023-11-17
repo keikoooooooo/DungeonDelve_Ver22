@@ -24,7 +24,8 @@ namespace NodeCanvas.Tasks.Actions
         private float CurrentDistance => (agent.position - target.value.transform.position).magnitude;
 
         
-        protected override void OnUpdate() {
+        protected override void OnUpdate() 
+        {
             if (CurrentDistance <= stopDistance.value )
             {
                 saveFoundParameter.value = 0;

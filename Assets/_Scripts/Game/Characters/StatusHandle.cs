@@ -24,6 +24,7 @@ public class StatusHandle
       Health,
       Stamina
    }
+   
    public event Action<int> E_HealthChanged;
    public event Action<int> E_StaminaChaged; 
    public event Action E_Die;

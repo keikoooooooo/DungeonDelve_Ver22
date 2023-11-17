@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Player Config", menuName = "Characters Configuration/Player")]
@@ -35,5 +34,16 @@ public class PlayerConfiguration : CharacterConfiguration
     public List<FloatMultiplier> ChargedAttackMultiplier;
     public List<FloatMultiplier> SkillMultiplier;
     public List<FloatMultiplier> SpecialMultiplier;
+
     
+    [Header("Level Upgrade")]
+    [Tooltip("Chi phí nâng cấp")]
+    public int UpgradeCost;
+    [Tooltip("Kinh nghiệm hiện tại")]
+    public int CurrentExperience;
+    [Tooltip("Kinh nghiệm tối đa")]
+    public int MaxExperience;
+    [Tooltip("Vật liệu nâng cấp")]
+    public List<ItemsType> UpgradeMaterials;
+
 }
