@@ -1,12 +1,16 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using DG.Tweening;
 
 public class ReaperEffects : MonoBehaviour
 {
-    public GameObject indicatorSkill;
+    [Tooltip("Effect Ping NormalAttack")]
     public GameObject indicatorNormalAttack;
+    
+    [Tooltip("Effect Ping Skill")]
+    public GameObject indicatorSkill;
+    
+    [Tooltip("Vị trí xuất hiện Attack Effect")]
     public Transform effectPoint;
     
     [Tooltip("Góc xoay của từng Effect Slash trên Normal Attack")] 
@@ -14,9 +18,11 @@ public class ReaperEffects : MonoBehaviour
     
     [Space] 
     public Reference slashPrefab;
+    public Reference skillPrefab;
     public Reference hitPrefab;
 
     private ObjectPooler<Reference> _poolSlash;
+    private ObjectPooler<Reference> _poolSkill;
     private ObjectPooler<Reference> _poolHit;
     private Transform slotVFX;
 
@@ -28,6 +34,8 @@ public class ReaperEffects : MonoBehaviour
         slotVFX = GameObject.FindGameObjectWithTag("SlotsVFX").transform;
 
         _poolSlash = new ObjectPooler<Reference>(slashPrefab, slotVFX, 10);
+        _poolSkill = new ObjectPooler<Reference>(skillPrefab, slotVFX, 2);
+        
         //_poolHit = new ObjectPooler<Reference>(hitPrefab, slotVFX, 10);
         indicatorSkill.transform.SetParent(slotVFX);
         indicatorNormalAttack.transform.SetParent(slotVFX);
