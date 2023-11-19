@@ -11,51 +11,41 @@ namespace NodeCanvas.Tasks.Actions
                  "(this) và (taget) <= angleDifference")]
     public class RotateTowards : ActionTask<Transform>
     {
-        [RequiredField]
+        [Tooltip("Nếu mục tiêu là Null thì sẽ lấy vị trí của targetPosition")]
         public BBParameter<GameObject> target;
+        public BBParameter<Vector3> targetPosition;
+        
         public BBParameter<float> speed = 2;
-
         
         public bool updateFrameByFrame;
         
         [SliderField(0, 180)]
         public BBParameter<float> angleDifference = 5;
-        public BBParameter<Vector3> upVector = Vector3.up;
         
         [Space, Tooltip("Biến để lưu giá trị xoay được vào, nếu target bên trái sẽ trả về -1 ngược lại trả về 1"), RequiredField]
         public BBParameter<float> saveFoundParameter;
 
         private Quaternion currentRotate;
         private float deltaAngle;
+        private bool isTarget;
+        
         
         protected override void OnExecute()
         {
+            isTarget = target.value != null;
             currentRotate = agent.rotation;
         }
 
         protected override void OnUpdate() 
         {
-            // if (!updateFrameByFrame && Vector3.Angle(target.value.transform.position - agent.position, agent.forward) <= angleDifference.value )
-            // {
-            //     saveFoundParameter.value = 0;
-            //     EndAction();
-            //     return;
-            // }
-             
-            // var dir = target.value.transform.position - agent.position;
-            // agent.rotation = Quaternion.LookRotation(Vector3.RotateTowards(agent.forward, dir, speed.value * Time.deltaTime,
-            //         0), upVector.value);
-
-            var dir = Quaternion.LookRotation(target.value.transform.position - agent.position);
-            agent.rotation = Quaternion.RotateTowards(agent.rotation, Quaternion.Euler(0, dir.eulerAngles.y, 0),
-                speed.value * Time.deltaTime);
+            var dir = Quaternion.LookRotation( isTarget ? target.value.transform.position - agent.position : targetPosition.value - agent.position);
+            agent.rotation = Quaternion.RotateTowards(agent.rotation, Quaternion.Euler(0, dir.eulerAngles.y, 0), speed.value * Time.deltaTime);
 
             deltaAngle = Mathf.DeltaAngle(currentRotate.eulerAngles.y, agent.eulerAngles.y);
             currentRotate = agent.rotation;
         
-            //saveFoundParameter.value = deltaAngle == 0 || Mathf.Abs(deltaAngle) <= angleDifference.value ? 0 : Mathf.Sign(deltaAngle);
             if (deltaAngle == 0 || Mathf.Abs(deltaAngle) <= angleDifference.value)
-            {
+            { 
                 saveFoundParameter.value = 0;
                 if (!updateFrameByFrame)
                 {

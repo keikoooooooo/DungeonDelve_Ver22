@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,16 @@ namespace HovlStudio
     public class RPChanger : EditorWindow
     {
         static RPChanger()
+        {
+            // string[] checkAsset = AssetDatabase.FindAssets("HSstartupCheck");
+            // foreach (var guid in checkAsset)
+            // {
+            //     ShowWindow();
+            //     AssetDatabase.DeleteAsset(AssetDatabase.GUIDToAssetPath(guid));
+            // }
+        }
+
+        private void OnEnable()
         {
             string[] checkAsset = AssetDatabase.FindAssets("HSstartupCheck");
             foreach (var guid in checkAsset)

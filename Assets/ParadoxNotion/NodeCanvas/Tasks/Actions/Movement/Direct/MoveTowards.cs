@@ -9,37 +9,53 @@ namespace NodeCanvas.Tasks.Actions
     [Description("Di chuyển Object tới mục tiêu nhưng không tìm đường")]
     public class MoveTowards : ActionTask<Transform>
     {
-
-        [RequiredField]
+        [Tooltip("Nếu mục tiêu là Null thì sẽ lấy vị trí của targetPosition")]
         public BBParameter<GameObject> target;
+        public BBParameter<Vector3> targetPosition;
+        
         public BBParameter<float> speed = 2;
         public BBParameter<float> stopDistance = 0.1f;
         public bool updateFrameByFrame;
         
         [Space, Tooltip("Biến để lưu giá trị xoay được vào, nếu target bên trái sẽ trả về -1 ngược lại trả về 1"), RequiredField]
         public BBParameter<float> saveFoundParameter;
+
+        private bool isTarget;
         
-        public bool waitActionFinish;
-       
-        private float CurrentDistance => (agent.position - target.value.transform.position).magnitude;
+        private float CurrentDistanceToTarget => (agent.position - target.value.transform.position).magnitude;
+        private float CurrentDistanceToVector => (agent.position - targetPosition.value).magnitude;
 
         
+        protected override void OnExecute()
+        {
+            isTarget = target.value != null;
+        }
+
         protected override void OnUpdate() 
         {
-            if (CurrentDistance <= stopDistance.value )
+            if (isTarget)
             {
-                saveFoundParameter.value = 0;
-                if(!updateFrameByFrame)
-                    EndAction();
-                return;
+                if (CurrentDistanceToTarget <= stopDistance.value )
+                {
+                    saveFoundParameter.value = 0;
+                    if(!updateFrameByFrame)
+                        EndAction();
+                    return;
+                }
+                
+                saveFoundParameter.value = 1;
+                agent.position = Vector3.MoveTowards(agent.position, target.value.transform.position, speed.value * Time.deltaTime);
             }
-            
-            saveFoundParameter.value = 1;
-            agent.position = Vector3.MoveTowards(agent.position, target.value.transform.position, speed.value * Time.deltaTime);
-
-            if ( !waitActionFinish ) 
+            else
             {
-                EndAction();
+                if (CurrentDistanceToVector <= stopDistance.value )
+                {
+                    saveFoundParameter.value = 0;
+                    if(!updateFrameByFrame)
+                        EndAction();
+                    return;
+                }
+                agent.position = Vector3.MoveTowards(agent.position, targetPosition.value, speed.value * Time.deltaTime);
             }
         }
 
