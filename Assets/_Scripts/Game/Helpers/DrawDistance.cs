@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class DrawDistance : MonoBehaviour
@@ -13,7 +14,7 @@ public class DrawDistance : MonoBehaviour
         Debug.DrawLine(transform.position, target.position, Color.black, .2f);
        
         if(debugValue)
-            Debug.Log("Distance = " + _currentDistance);
+            Debug.Log("Distance = " + _currentDistance.ToString("F1"));
     }
     
 }

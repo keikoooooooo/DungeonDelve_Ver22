@@ -68,8 +68,7 @@ public abstract class PlayerController : PlayerStateMachine
         animator.SetFloat(IDStateTime, Mathf.Repeat(animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
         animator.ResetTrigger(IDNormalAttack);
         
-        if (animator.IsTag("Attack") &&
-            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
+        if (animator.IsTag("Attack") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
         {
             AttackEnd();
         }
@@ -146,7 +145,7 @@ public abstract class PlayerController : PlayerStateMachine
     }
 
     
-    #region Handle rotation when attacking
+    #region Xử lí xoay nhân vật về phía Enemy mỗi khi Attack
     public void SetAttackCounter(int count) => _attackCounter = count; // gọi trên event animaiton
     public void AddForceAttack()
     {
@@ -160,7 +159,7 @@ public abstract class PlayerController : PlayerStateMachine
         while (timePush > 0)
         {
             _pushVelocity = model.forward * (attackCustom.pushForce[_attackCounter] * _directionPushVelocity);
-            CharacterController.Move(_pushVelocity * Time.deltaTime + new Vector3(0f, -9.81f, 0f) * Time.deltaTime);
+            characterController.Move(_pushVelocity * Time.deltaTime + new Vector3(0f, -9.81f, 0f) * Time.deltaTime);
             timePush -= Time.deltaTime;
             yield return null;
         }
@@ -256,8 +255,7 @@ public abstract class PlayerController : PlayerStateMachine
     }
     #endregion
 
-
-
+    
     protected virtual void AttackEnd()
     {
         MouseHoldTime = 0;

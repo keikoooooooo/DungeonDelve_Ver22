@@ -462,8 +462,7 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);
         _enemyConfiguration.NormalAttackCD = EditorGUILayout.FloatField("Normal Attack CD", _enemyConfiguration.NormalAttackCD, Width(500));
         _enemyConfiguration.SkillAttackCD = EditorGUILayout.FloatField("Skill Attack CD", _enemyConfiguration.SkillAttackCD, Width(500));
-        _enemyConfiguration.SpecialAttackCD = EditorGUILayout.FloatField("Special Attack CD", _enemyConfiguration.SpecialAttackCD, Width(500));
-        
+       
         Space(30);
         if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_enemyConfiguration);
         GUILayout.EndScrollView();

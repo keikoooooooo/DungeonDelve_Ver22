@@ -11,8 +11,4 @@ public class EnemyConfiguration : CharacterConfiguration
     [Tooltip("Thời gian chờ lần Skill tiếp theo")] 
     public float SkillAttackCD;
     
-    [Tooltip("Thời gian chờ lần Special tiếp theo")] 
-    public float SpecialAttackCD;
-    
-    
 }

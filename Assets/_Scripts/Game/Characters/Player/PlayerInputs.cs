@@ -15,10 +15,14 @@ public class PlayerInputs : MonoBehaviour
     
     private PlayerControl _playerControl;
 
-    
-    private void Start()
+
+    private void Awake()
     {
         _playerControl = new PlayerControl();
+    }
+
+    private void OnEnable()
+    {
         _playerControl.PlayerControls.Enable();
         
         _playerControl.PlayerControls.SwitchMode.started  += OnChangeStatePressed;

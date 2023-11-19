@@ -32,7 +32,7 @@ public class PlayerDashState : PlayerBaseState
         }
         _machine.inputs.leftMouse = false;
         direction = _machine.model.forward.normalized * dashSpeed;
-        _machine.CharacterController.Move(direction * Time.deltaTime);
+        _machine.characterController.Move(direction * Time.deltaTime);
     }
 
     protected override void ExitState()

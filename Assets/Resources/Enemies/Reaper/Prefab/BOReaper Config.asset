@@ -22,6 +22,5 @@ MonoBehaviour:
   DEF: 65
   WalkSpeed: 5.1
   RunSpeed: 5.1
-  NormalAttackCD: 5
-  SkillAttackCD: 5
-  SpecialAttackCD: 5
+  NormalAttackCD: 4
+  SkillAttackCD: 8

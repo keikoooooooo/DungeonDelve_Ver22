@@ -34,7 +34,6 @@ public class EnemyController : MonoBehaviour, IDamageable
         SetWalkSpeed(EnemyConfig.WalkSpeed);
         SetCDNormalAttack(EnemyConfig.NormalAttackCD);
         SetCDSkillAttack(EnemyConfig.SkillAttackCD);
-        SetCDSpecialAttack(EnemyConfig.SpecialAttackCD);
     }
     private void OnDisable()
     {
@@ -49,7 +48,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void SetRunSpeed(float _value) => Blackboard.SetVariableValue("RunSpeed", _value);
     private void SetCDNormalAttack(float _value) => Blackboard.SetVariableValue("NormalAttackCD", _value);
     private void SetCDSkillAttack(float _value) => Blackboard.SetVariableValue("SkillAttackCD", _value);
-    private void SetCDSpecialAttack(float _value) => Blackboard.SetVariableValue("SpecialAttackCD", _value);
     public void SetRootSensor(bool _value) => Blackboard.SetVariableValue("RootSensor", _value);
     public void SetChaseSensor(bool _value) => Blackboard.SetVariableValue("ChaseSensor", _value);
     public void SetAttackSensor(bool _value) => Blackboard.SetVariableValue("AttackSensor", _value);

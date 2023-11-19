@@ -6,28 +6,31 @@ using UnityEngine.Playables;
 public class TimelineBOReaper : MonoBehaviour
 {
     public PlayableDirector playableDirector;
-    public EmissionMetarial emissionMetarial;
+    public M_SetEmission setEmission;
 
-    private bool isEnterPlayer;
+    private bool isEnterPlayer; // player đã vào khu vực chưa 
+    private bool isTriggerPlayer; // có đang TriggerPlayer ?
+    
     private PlayerController _playerController;
     private Coroutine _enableTimelineCoroutine;
 
+    
 
-    public void OnEnterPlayerSensor(GameObject _gameObject)
+    public void OnEnterPlayer(GameObject _gameObject)
     {
-        if (_gameObject.TryGetComponent<PlayerController>(out var _player))
+        if (_playerController == null && _gameObject.TryGetComponent<PlayerController>(out var _player))
         {
             _playerController = _player;
         }
         
-        if(_enableTimelineCoroutine != null) 
-            StopCoroutine(EnableTimelineCoroutine());
+        isTriggerPlayer = true;
+        if (_enableTimelineCoroutine != null) StopCoroutine(EnableTimelineCoroutine());
         _enableTimelineCoroutine = StartCoroutine(EnableTimelineCoroutine());
     }
-    public void OnExitPlayerSensor(GameObject _gameObject)
+    public void OnExitPlayer(GameObject _gameObject)
     {
-        if(_enableTimelineCoroutine != null) 
-            StopCoroutine(EnableTimelineCoroutine());
+        isTriggerPlayer = false;
+        playableDirector.Stop();
     }
     
     
@@ -37,27 +40,39 @@ public class TimelineBOReaper : MonoBehaviour
             yield break;
         
         yield return new WaitForSeconds(.7f);
-        emissionMetarial.EnableEmission();
+        setEmission.currentIntensity = 0;
+        setEmission.intensitySetTo = 15f;
+        setEmission.Apply();
         
         yield return new WaitForSeconds(2f);
-        playableDirector.Play();
-        DeActiveControlPlayer();
-        isEnterPlayer = true;
+        
+        if (isTriggerPlayer)
+        {
+            DeActiveControlPlayer();
+            isEnterPlayer = true;
+            playableDirector.Play();
+        }
+        else
+        {
+            yield return new WaitForSeconds(.7f);
+            playableDirector.Stop();
+            setEmission.currentIntensity = 15f;
+            setEmission.intensitySetTo = 0f;
+            setEmission.Apply();
+        }
     }
     
-    public void ActiveControlPlayer()
+    public void ActiveControlPlayer() // gọi trên EventAnimationTimeline
     {
         if (!_playerController) 
             return;
-        _playerController.CanMove = true;
-        _playerController.CanRotation = true;
+        _playerController.enabled = true;
     }
     public void DeActiveControlPlayer()
     {
         if (!_playerController) 
             return;
-        _playerController.CanMove = false;
-        _playerController.CanRotation = false;
+        _playerController.enabled = false;
     }
 
 

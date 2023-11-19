@@ -22,9 +22,6 @@ namespace NodeCanvas.Tasks.Actions
         public BBParameter<float> angleDifference = 5;
         public BBParameter<Vector3> upVector = Vector3.up;
         
-        // [Tooltip("Nếu tùy chọn = TRUE node sẽ chờ khi góc xoay hoàn thành,")]
-        // public bool waitActionFinish;
-        
         [Space, Tooltip("Biến để lưu giá trị xoay được vào, nếu target bên trái sẽ trả về -1 ngược lại trả về 1"), RequiredField]
         public BBParameter<float> saveFoundParameter;
 
@@ -38,12 +35,12 @@ namespace NodeCanvas.Tasks.Actions
 
         protected override void OnUpdate() 
         {
-            if (!updateFrameByFrame && Vector3.Angle(target.value.transform.position - agent.position, agent.forward) <= angleDifference.value )
-            {
-                saveFoundParameter.value = 0;
-                EndAction();
-                return;
-            }
+            // if (!updateFrameByFrame && Vector3.Angle(target.value.transform.position - agent.position, agent.forward) <= angleDifference.value )
+            // {
+            //     saveFoundParameter.value = 0;
+            //     EndAction();
+            //     return;
+            // }
              
             // var dir = target.value.transform.position - agent.position;
             // agent.rotation = Quaternion.LookRotation(Vector3.RotateTowards(agent.forward, dir, speed.value * Time.deltaTime,
@@ -56,8 +53,19 @@ namespace NodeCanvas.Tasks.Actions
             deltaAngle = Mathf.DeltaAngle(currentRotate.eulerAngles.y, agent.eulerAngles.y);
             currentRotate = agent.rotation;
         
-            saveFoundParameter.value = deltaAngle == 0 || Mathf.Abs(deltaAngle) <= angleDifference.value ? 0 : Mathf.Sign(deltaAngle);
-            
+            //saveFoundParameter.value = deltaAngle == 0 || Mathf.Abs(deltaAngle) <= angleDifference.value ? 0 : Mathf.Sign(deltaAngle);
+            if (deltaAngle == 0 || Mathf.Abs(deltaAngle) <= angleDifference.value)
+            {
+                saveFoundParameter.value = 0;
+                if (!updateFrameByFrame)
+                {
+                    EndAction();
+                }
+            }
+            else
+            {
+                saveFoundParameter.value = Mathf.Sign(deltaAngle);
+            }
         }
     }
 }

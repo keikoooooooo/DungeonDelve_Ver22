@@ -2802,10 +2802,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5471503419370806153}
   - component: {fileID: 1802613745807339804}
-  - component: {fileID: 1802613745807339874}
   - component: {fileID: 1802613745807339805}
+  - component: {fileID: 1802613745807339874}
   - component: {fileID: 1787091444842432457}
-  - component: {fileID: 1180142262}
   - component: {fileID: 5471503419370806156}
   - component: {fileID: 1787091444842432454}
   m_Layer: 7
@@ -2861,25 +2860,6 @@ CharacterController:
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.785, z: 0}
---- !u!114 &1802613745807339874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471503419370806157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29093509f24219b4dbba78130fc62f55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move: {x: 0, y: 0}
-  changeState: 0
-  leftShift: 0
-  space: 0
-  leftMouse: 0
-  e: 0
-  q: 0
 --- !u!114 &1802613745807339805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2910,6 +2890,25 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerControls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1802613745807339874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5471503419370806157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29093509f24219b4dbba78130fc62f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: {x: 0, y: 0}
+  changeState: 0
+  leftShift: 0
+  space: 0
+  leftMouse: 0
+  e: 0
+  q: 0
 --- !u!95 &1787091444842432457
 Animator:
   serializedVersion: 5
@@ -2931,26 +2930,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1180142262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471503419370806157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efb20b2f20ca72e43952e734009fa93e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1787091444842432454}
-  visualVolume: {fileID: 7123373658553445390}
-  dashPartical: {fileID: 7123373656935290315}
-  metarialsList:
-  - {fileID: 2100000, guid: 7139dc56befc82b40b8bff02fc6a3710, type: 2}
-  - {fileID: 2100000, guid: 8ef7110b21947f949b4896d4b380ef76, type: 2}
-  - {fileID: 2100000, guid: 0d27a45291fc36440be5855cbeabdc71, type: 2}
-  - {fileID: 2100000, guid: 1572e7a66e928ba488ef41fe9b11cf1c, type: 2}
 --- !u!114 &5471503419370806156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2994,6 +2973,7 @@ MonoBehaviour:
   inputs: {fileID: 1802613745807339874}
   model: {fileID: 7101714960535657653}
   animator: {fileID: 1787091444842432457}
+  characterController: {fileID: 1802613745807339804}
   <PlayerConfig>k__BackingField: {fileID: 11400000, guid: b3465f53ee6eef34b95cff80710768c8, type: 2}
   IDSpeed: -823668238
   IDHorizontal: 475924382
@@ -4613,15 +4593,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00487666
+      value: 0.004876658
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000019013198
+      value: -8.6506036e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 9.2722e-12
+      value: 4.2186554e-12
       objectReference: {fileID: 0}
     - target: {fileID: 5822535128316044608, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y
@@ -4661,15 +4641,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0743763
+      value: 0.07437629
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000030634446
+      value: 0.000000024092643
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000002284805
+      value: -0.0000000017968984
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_RootOrder
@@ -5302,10 +5282,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 7101714960535657653}
     m_Modifications:
     - target: {fileID: 5511422373426188634, guid: cac36aef741874d479f0328b50c7d0fc, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511422373426188634, guid: cac36aef741874d479f0328b50c7d0fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -5349,6 +5325,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dash
       objectReference: {fileID: 0}
+    - target: {fileID: 7512306870647653534, guid: cac36aef741874d479f0328b50c7d0fc, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1787091444842432454}
+    - target: {fileID: 7512306870647653534, guid: cac36aef741874d479f0328b50c7d0fc, type: 3}
+      propertyPath: dashPartical
+      value: 
+      objectReference: {fileID: 7123373656935290315}
+    - target: {fileID: 7512306870647653534, guid: cac36aef741874d479f0328b50c7d0fc, type: 3}
+      propertyPath: visualVolume
+      value: 
+      objectReference: {fileID: 7123373658553445390}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

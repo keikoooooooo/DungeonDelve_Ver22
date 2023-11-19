@@ -3,32 +3,23 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-/// <summary>
-/// Quản lí tất cả state của player
-/// </summary>
 public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 {
     #region Variables
     [Header("BaseClass -------")]
-    [Tooltip("Nhận các giá trị đầu vào của player")]
     public PlayerInputs inputs;
-    
-    [Tooltip("Mô hình 3D")]
     public Transform model;
-
-    [Tooltip("Điều khiển animation"), SerializeField]
     public Animator animator;
-    
+    public CharacterController characterController;
     
     #region Get & Set Property
     [field: SerializeField] public PlayerConfiguration PlayerConfig { get; private set; }
     public StatusHandle StatusHandle { get; private set; }
-    public CharacterController CharacterController { get; set; }
     public PlayerBaseState CurrentState { get; set; }
     public Vector3 AppliedMovement { get; set; }
     public Vector3 InputMovement { get; set; }
     
-    protected bool IsGrounded => CharacterController.isGrounded;
+    protected bool IsGrounded => characterController.isGrounded;
     public bool CanMove { get; set; }
     public bool CanRotation { get; set; }
     public bool IsIdle => inputs.move.magnitude == 0;
@@ -65,13 +56,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public event Action<float> E_SkillCD; 
     public event Action<float> E_SpecialCD;
     
-    // player
+    // Player Config
+    private PlayerStateFactory _state;
     protected enum MovementState
     {
         StateWalk,
         StateRun
     }
-    private PlayerStateFactory _state;
     [HideInInspector] protected MovementState _movementState;
     [HideInInspector] protected Camera _mainCamera;
     [HideInInspector] private float _gravity;
@@ -80,20 +71,20 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] private float _jumpCD_Temp;
     [HideInInspector] protected float _skillCD_Temp;
     [HideInInspector] protected float _specialCD_Temp;
-    protected int _calculatedDamage;
+    [HideInInspector] protected int _calculatedDamage;
     
     // Coroutine
     private Coroutine _handleSTCoroutine;
     #endregion
 
 
+    private void Awake()
+    {
+        GetReference();
+    }
     private void OnEnable()
     {
         SetVariables();
-    }
-    private void Start()
-    {
-        SetReference();
     }
     protected virtual void Update()
     {
@@ -106,63 +97,48 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleMovement();
         
         HandleRotation();
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            DamageBuff.Apply(this);
-        }
     }
     private void OnDisable()
     {
-        ResetVariables();
+        StatusHandle.E_Die -= Die;
+        DamageableData.Remove(gameObject);
     }
 
-    public DamageBuff DamageBuff;
+    
+    private void GetReference()
+    {
+        _mainCamera = Camera.main;
+        _state = new PlayerStateFactory(this);
+        characterController = GetComponent<CharacterController>();
+        StatusHandle = new StatusHandle(PlayerConfig.MaxHealth, PlayerConfig.MaxStamina);
+    }
+
     /// <summary>
     /// Khởi tạo giá trị biến ban đầu, và sẽ gọi hàm mỗi lần object này được OnEnable
     /// </summary>
     protected virtual void SetVariables()
-    {
+    { 
+        // Set State
+        CurrentState = _state.Idle();
+        CurrentState.EnterState();
+        
+        // Set Config
         _gravity = -30f;
         CanMove = true;
         CanRotation = true;
         CanIncreaseST = true;
         _movementState = MovementState.StateRun;
-
-        StatusHandle = new StatusHandle(PlayerConfig.MaxHealth, PlayerConfig.MaxStamina);
-        StatusHandle.E_Die += Die;
         
+        if (_handleSTCoroutine != null) StopCoroutine(_handleSTCoroutine);
+        _handleSTCoroutine = StartCoroutine(IncreaseSTCoroutine());
+        
+        // Event
+        StatusHandle.E_Die += Die;
         DamageableData.Add(gameObject, this);
     }
-    private void ResetVariables()
-    {
-        DamageableData.Remove(gameObject);
-        StatusHandle.E_Die -= Die;
-    }
 
-    
-    /// <summary>
-    /// Khởi tạo các tham chiếu, và sẽ gọi hàm này 1 lần bằng hàm Start
-    /// </summary>
-    protected virtual void SetReference()
-    {
-        _mainCamera = Camera.main;
-        CharacterController = GetComponent<CharacterController>();
 
-        // Setup State
-        _state = new PlayerStateFactory(this);
-        CurrentState = _state.Idle();
-        CurrentState.EnterState();
-
-        if (_handleSTCoroutine != null)
-            StopCoroutine(_handleSTCoroutine);
-        _handleSTCoroutine = StartCoroutine(IncreaseSTCoroutine());
-    }
-    
-
-    
-
-    public void HandleInput()
+    private void HandleInput()
     {
         // Giá trị di chuyển
         var trans = transform;
@@ -179,10 +155,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     private void HandleMovement()
     {
-        if (!CanMove || !CharacterController.enabled) 
+        if (!CanMove || !characterController.enabled) 
             return;
         
-        CharacterController.Move(AppliedMovement * Time.deltaTime 
+        characterController.Move(AppliedMovement * Time.deltaTime 
                                  + new Vector3(0f, _jumpVelocity, 0f) * Time.deltaTime);
     }
     private void HandleJumping()
@@ -228,7 +204,19 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         var rotation = Quaternion.LookRotation(InputMovement, Vector3.up);
         model.rotation = Quaternion.RotateTowards(model.rotation, rotation, 1000 * Time.deltaTime);
     }
-
+    
+    public IEnumerator IncreaseSTCoroutine()
+    {
+        while (true)
+        {
+            if (StatusHandle.CurrentStamina <= 100 && CanIncreaseST)
+            {
+                StatusHandle.Increase(2, StatusHandle.StatusType.Stamina);
+            }
+            yield return new WaitForSeconds(.15f);
+        }
+    } 
+    
     
     #region HandleDMG
     public void CauseDMG(GameObject _gameObject)
@@ -260,32 +248,18 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     #endregion
     
-    
-    public IEnumerator IncreaseSTCoroutine()
-    {
-        while (true)
-        {
-            if (StatusHandle.CurrentStamina <= 100 && CanIncreaseST)
-            {
-                StatusHandle.Increase(2, StatusHandle.StatusType.Stamina);
-            }
-            yield return new WaitForSeconds(.15f);
-        }
-    } 
-    
-    
     #region Event Callback
     public void OnDashEvent() => E_Dash?.Invoke();
     protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.SkillCD);
     protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.SpecialCD);
     #endregion
-
     
     
     /// <summary>
     /// Giải phóng tất cả trạng thái khi nhảy hoặc lướt.
     /// </summary>
     public abstract void ReleaseAction();
+    
     
     /// <summary>
     /// Tính sát thương của Normal Attack

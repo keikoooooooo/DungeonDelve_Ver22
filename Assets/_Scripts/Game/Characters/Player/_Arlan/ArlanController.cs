@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,7 +14,6 @@ public class ArlanController : PlayerController
     private GameObject sword;
     
     private float _conversionTimeTemp;
-    private bool _characterControllerNull;
     private Coroutine _weaponUnEquippedCoroutine;
     
     
@@ -33,7 +31,6 @@ public class ArlanController : PlayerController
         while (true)
         {
             _conversionTimeTemp = _conversionTimeTemp > 0 ? _conversionTimeTemp - Time.deltaTime : 0;
-
             if (_conversionTimeTemp <= 0 && IsIdle && !swordOnShoulder.activeInHierarchy)
             {
                 animator.SetBool(IDWeaponEquip, false);
@@ -41,22 +38,21 @@ public class ArlanController : PlayerController
                 CanRotation = false;
             }
             
-            else if (!_characterControllerNull || !IsIdle || !IsGrounded)
+            else if (!IsIdle || !IsGrounded)
             {
                 _conversionTimeTemp = conversionTime;
             }
-            
             yield return null;
         }
     }
-    private void WeaponEquipped() // Cầm vũ khí
+    private void WeaponEquipped() // Cầm vũ khí 
     {
         _conversionTimeTemp = conversionTime;
         animator.SetBool(IDWeaponEquip, true);
         sword.SetActive(true);
         swordOnShoulder.SetActive(false);
     }
-    private void WeaponUnEquipped() // Không cầm vũ khí
+    private void WeaponUnEquipped() // Không cầm vũ khí 
     {
         CanMove = true;
         CanRotation = true;
@@ -79,22 +75,10 @@ public class ArlanController : PlayerController
     protected override void SetVariables()
     {
         base.SetVariables();
- 
+        
         _conversionTimeTemp = conversionTime;
-         
-        sword.SetActive(false);
-        swordOnShoulder.SetActive(true);
-        animator.SetBool(IDWeaponEquip, false);
-         
-        if(_weaponUnEquippedCoroutine !=null)
-            StopCoroutine(_weaponUnEquippedCoroutine);
+        if(_weaponUnEquippedCoroutine !=null) StopCoroutine(_weaponUnEquippedCoroutine);
         _weaponUnEquippedCoroutine = StartCoroutine(WeaponUnEquippedCoroutine());
-    }
-    protected override void SetReference()
-    {
-        base.SetReference();
-
-        _characterControllerNull = CharacterController != null;
     }
 
 

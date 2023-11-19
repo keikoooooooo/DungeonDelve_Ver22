@@ -8,6 +8,8 @@ using Spine.Unity;
 public class LynxController : PlayerController
 {
     [Header("SubClass -------")]
+    [Tooltip("Script quản lí vũ khí của Archer"), SerializeField]
+    private LynxEffects _effects;           
     [Tooltip("Visuel Effect đánh dấu vị trí SpecialAttac xuất hiện")]
     public GameObject indicatorQ;
     
@@ -32,16 +34,13 @@ public class LynxController : PlayerController
 
     public float ChargedAttackTime { get; private set; }
     
-    private LynxEffects _effects;           // Script quản lí vũ khí của Archer
     [HideInInspector] private bool _lockCrosshair;       // có khóa tâm ngắm không
     [HideInInspector] private Vector3 worldPosition;
     [HideInInspector] private float _horizontalBlend;
     [HideInInspector] private float _verticalBlend;
     private float _damageBonus;
     private Ray _ray;
-
     private Coroutine _attackCoroutine;
-    
     
     protected override void Update()
     {
@@ -58,12 +57,6 @@ public class LynxController : PlayerController
         
         _lockCrosshair = false;
         crosshair.gameObject.SetActive(false);
-    }
-    protected override void SetReference()
-    {
-        base.SetReference();
-
-        _effects = GetComponent<LynxEffects>();
     }
 
     private void CheckCrosshair()

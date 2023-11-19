@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class ReaperEffects : MonoBehaviour
 {
@@ -21,7 +23,6 @@ public class ReaperEffects : MonoBehaviour
     private Vector3 _posEffect;
     private Quaternion _rotEffect;
     
-    
     private void Start()
     {
         slotVFX = GameObject.FindGameObjectWithTag("SlotsVFX").transform;
@@ -41,7 +42,6 @@ public class ReaperEffects : MonoBehaviour
         
         _poolSlash.Get(_posEffect, _rotEffect);
     }
-    
     
     
 }

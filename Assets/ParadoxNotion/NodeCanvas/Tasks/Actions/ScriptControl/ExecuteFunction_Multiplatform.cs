@@ -18,7 +18,6 @@ namespace NodeCanvas.Tasks.Actions
     [Description("Execute a function on a script and save the return if any.\nIf function is an IEnumerator it will execute as a coroutine.")]
     public class ExecuteFunction_Multiplatform : ActionTask, IReflectedWrapper
     {
-
         [SerializeField]
         protected SerializedMethodInfo method;
         [SerializeField]
@@ -147,6 +146,7 @@ namespace NodeCanvas.Tasks.Actions
 
             if ( !Application.isPlaying && GUILayout.Button("Select Method") ) {
                 var menu = new UnityEditor.GenericMenu();
+                
                 if ( agent != null ) {
                     foreach ( var comp in agent.GetComponents(typeof(Component)).Where(c => !c.hideFlags.HasFlag(HideFlags.HideInInspector)) ) {
                         menu = EditorUtils.GetInstanceMethodSelectionMenu(comp.GetType(), typeof(object), typeof(object), SetMethod, 10, false, false, menu);
