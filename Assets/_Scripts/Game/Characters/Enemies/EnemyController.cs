@@ -52,8 +52,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     public void SetRootSensor(bool _value) => Blackboard.SetVariableValue("RootSensor", _value);
     public void SetChaseSensor(bool _value) => Blackboard.SetVariableValue("ChaseSensor", _value);
     public void SetAttackSensor(bool _value) => Blackboard.SetVariableValue("AttackSensor", _value);
-    private void SetTakeDMG(bool _value) => Blackboard.SetVariableValue("TakeDMG", _value);
-    private void SetDie(bool _value) => Blackboard.SetVariableValue("Die", _value);
+    public void SetTakeDMG(bool _value) => Blackboard.SetVariableValue("TakeDMG", _value);
+    public void SetDie(bool _value) => Blackboard.SetVariableValue("Die", _value);
     
     
     
