@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
-public class PhysicsDetection : DetectionBase
+public class PhysicsDetection : DetectionBase, IPooled<PhysicsDetection>
 {
-    [Tooltip("Bán kính kiểm tra va chạm"), Range(0.1f, 5f)]
+    [Tooltip("Bán kính kiểm tra va chạm"), Range(0.1f, 15f)]
     public float radiusCheck;
     
     [Tooltip("Layer cần kiểm tra va chạm")]
@@ -22,6 +23,9 @@ public class PhysicsDetection : DetectionBase
             PositionEnterEvent?.Invoke(hitColliders[i].ClosestPointOnBounds(transform.position));
         }
     }
+    
+    public void Release() => ReleaseCallback?.Invoke(this);
+    public Action<PhysicsDetection> ReleaseCallback { get; set; }
     
     public void OnDrawGizmos()
     {

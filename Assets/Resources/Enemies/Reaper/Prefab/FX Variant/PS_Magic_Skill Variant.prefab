@@ -10034,6 +10034,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1149073990277440, guid: 018425a5e75e2094eb0ca95d72327204, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8529193641335351290}
+    - targetCorrespondingSourceObject: {fileID: 1149073990277440, guid: 018425a5e75e2094eb0ca95d72327204, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6219489488738026434}
+    - targetCorrespondingSourceObject: {fileID: 1149073990277440, guid: 018425a5e75e2094eb0ca95d72327204, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6234236492139658407}
   m_SourcePrefab: {fileID: 100100000, guid: 018425a5e75e2094eb0ca95d72327204, type: 3}
 --- !u!4 &1387889809926049165 stripped
 Transform:
@@ -10076,6 +10082,62 @@ MonoBehaviour:
       - m_Target: {fileID: 744060462742371802}
         m_TargetAssemblyTypeName: Reference, Assembly-CSharp
         m_MethodName: Release
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6219489488738026434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389653563124238195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a937e8ecddd26f14da9fba361d5bf8fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  CollisionExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PositionEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PositionExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  radiusCheck: 15
+  layerToCheck:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &6234236492139658407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389653563124238195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42a765dc2da0354fb65f72690ec3325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0.1
+  OnEndTimerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6219489488738026434}
+        m_TargetAssemblyTypeName: PhysicsDetection, Assembly-CSharp
+        m_MethodName: CheckCollision
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

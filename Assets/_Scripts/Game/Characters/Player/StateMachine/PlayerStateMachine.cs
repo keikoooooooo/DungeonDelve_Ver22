@@ -239,7 +239,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     public void TakeDMG(int _damage, bool _isCRIT)
     {   
-        
+        Debug.Log("Player TakeDMG");
         DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, false);
     }
     public void Die()

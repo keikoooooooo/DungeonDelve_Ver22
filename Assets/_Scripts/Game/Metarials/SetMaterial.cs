@@ -22,6 +22,10 @@ public abstract class SetMaterial : MonoBehaviour
     protected int nameID;
     private void Awake() => nameID = Shader.PropertyToID(propertyToID);
 
-
+    /// <summary>
+    /// Thay đổi thời gian áp dụng
+    /// </summary>
+    /// <param name="_value"> Thời gian set Value mới vào Material </param>
+    public void ChangeDurationApply(float _value) => durationApply = _value;
     public abstract void Apply();
 }

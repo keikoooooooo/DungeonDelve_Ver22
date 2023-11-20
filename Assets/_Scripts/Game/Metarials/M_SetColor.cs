@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class M_SetColor : SetMaterial
 {
-    [Tooltip("Màu cần set")]
-    public Color colorSetTo;
+    [Tooltip("Màu cần set"), SerializeField]
+    private Color colorSetTo;
 
     private Color currentColor;
     public override void Apply()

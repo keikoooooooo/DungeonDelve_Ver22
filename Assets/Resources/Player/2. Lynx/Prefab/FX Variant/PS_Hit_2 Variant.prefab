@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 283013355865483560, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
@@ -19,6 +20,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -25431899
       objectReference: {fileID: 0}
+    - target: {fileID: 283013355865483560, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 58d4ce9ee552f8a4196af170a915c118, type: 2}
     - target: {fileID: 344186832200227388, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 5
@@ -45,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 841321089633104318, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 0.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 841321089633104318, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
@@ -420,13 +425,24 @@ PrefabInstance:
       value: 1.86
       objectReference: {fileID: 0}
     - target: {fileID: 8856055675077884578, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856055675077884578, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8856055675077884578, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 3
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856055675077884578, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.5529412
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5761300332687458995, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
