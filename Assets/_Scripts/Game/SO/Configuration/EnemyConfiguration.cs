@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Enemy Config", menuName = "Characters Configuration/Enemy")]
@@ -14,4 +15,8 @@ public class EnemyConfiguration : CharacterConfiguration
     [Tooltip("Thời gian chờ lần Special tiếp theo")] 
     public float SpecialAttackCD;
     
+    [Header("ATTACK MULTIPLIER")]
+    public List<FloatMultiplier> NormalAttackMultiplier;
+    public List<FloatMultiplier> SkillMultiplier;
+    public List<FloatMultiplier> SpecialMultiplier;
 }

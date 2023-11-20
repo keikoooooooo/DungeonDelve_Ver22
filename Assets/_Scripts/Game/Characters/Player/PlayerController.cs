@@ -208,51 +208,35 @@ public abstract class PlayerController : PlayerStateMachine
     }
     #endregion
 
-    #region Tính sát thương đầu ra của 4Type Attack
+    #region Damage Calculation
     protected override void CalculateDMG_NA()
     {
         // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ n
-        var _dmg = PlayerConfig.NormalAttackMultiplier[_attackCounter].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
-              
-        // chuyển %DMG sang giá trị cộng thêm
-        _dmg /= 100;
-        
-        // tính sát thường đầu ra
-        _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+        var _percent = PlayerConfig.NormalAttackMultiplier[_attackCounter].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
+        _calculatedDamage = Calculation(_percent); 
     }
     protected override void CalculateDMG_CA()
     {
-        // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ 0
-        var _dmg = PlayerConfig.ChargedAttackMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
-              
-        // chuyển %DMG sang giá trị cộng thêm
-        _dmg /= 100;
-                
-        // tính sát thường đầu ra
-        _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+        var _percent = PlayerConfig.ChargedAttackMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
+        _calculatedDamage = Calculation(_percent);
     }
     protected override void CalculateDMG_EK()
      {
-         // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ 0
-         var _dmg = PlayerConfig.SkillMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
-               
-         // chuyển %DMG sang giá trị cộng thêm
-         _dmg /= 100;
-                 
-         // tính sát thường đầu ra
-         _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+         var _percent = PlayerConfig.SkillMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; 
+         _calculatedDamage = Calculation(_percent); 
      }   
     protected override void CalculateDMG_EB()
     {
-        // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ 0
-        var _dmg = PlayerConfig.SpecialMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
-              
-        // chuyển %DMG sang giá trị cộng thêm
-        _dmg /= 100;
-                
-        // tính sát thường đầu ra
-        _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+        var _percent = PlayerConfig.SpecialMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
+        _calculatedDamage = Calculation(_percent); 
     }
+    
+    /// <summary>
+    /// Tính sát thương đầu ra theo phần trăm * ATK của player
+    /// </summary>
+    /// <param name="_percent"> Phần trăm sát thương. </param>
+    /// <returns></returns>
+    protected int Calculation(float _percent) => Mathf.CeilToInt(PlayerConfig.ATK * (_percent / 100.0f)); 
     #endregion
 
     

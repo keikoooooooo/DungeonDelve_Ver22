@@ -229,17 +229,22 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         if (critRateRandom <= PlayerConfig.CRITRate / 100)
         {
             var critDMG = (PlayerConfig.CRITDMG + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
-            var totalDMG = Mathf.CeilToInt(_calculatedDamage * critDMG);
-            
-            _calculatedDamage = totalDMG;
+            _calculatedDamage = Mathf.CeilToInt(_calculatedDamage * critDMG);
             _isCrit = true;
         } 
         
         iDamageable.TakeDMG(_calculatedDamage, _isCrit);
     }
     public void TakeDMG(int _damage, bool _isCRIT)
-    {   
-        Debug.Log("Player TakeDMG");
+    {
+        // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
+        var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.DEF * 0.5f) : PlayerConfig.DEF;
+        
+        // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
+        var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
+        _damage -= _def;
+        
+        StatusHandle.Subtract(_damage, StatusHandle.StatusType.Health);
         DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, false);
     }
     public void Die()

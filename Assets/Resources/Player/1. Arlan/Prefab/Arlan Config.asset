@@ -19,7 +19,7 @@ MonoBehaviour:
   ATK: 47
   CRITRate: 5
   CRITDMG: 50
-  DEF: 32
+  DEF: 50
   WalkSpeed: 1.65
   RunSpeed: 5.2
   RunFastSpeed: 8

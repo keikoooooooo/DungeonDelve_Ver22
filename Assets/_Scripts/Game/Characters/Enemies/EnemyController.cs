@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using NodeCanvas.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour, IDamageable
 {
@@ -11,6 +12,9 @@ public class EnemyController : MonoBehaviour, IDamageable
     // Get & Set Property 
     public StatusHandle StatusHandle { get; private set; }
     public Vector3 PlayerPosition => _player.transform.position;
+    public int CalculatedDamage { get; set; }
+    
+    private readonly List<int> _enemyLevel = new() { 11, 21, 31, 41, 51, 61, 71, 81, 91, 101};
     
     // Variables
     private GameObject _player;
@@ -60,25 +64,79 @@ public class EnemyController : MonoBehaviour, IDamageable
     #region HandleDMG
     public void CauseDMG(GameObject _gameObject)
     {
-        if (DamageableData.Contains(_gameObject, out var iDamageable))
+        if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
+
+        // Có kích CRIT không ?
+        var critRateRandom = Random.value;
+        var _isCrit = false;
+        if (critRateRandom <= EnemyConfig.CRITRate / 100)
         {
+            var critDMG = (EnemyConfig.CRITDMG + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
             
-        }
+            CalculatedDamage = Mathf.CeilToInt(CalculatedDamage * critDMG);
+            _isCrit = true;
+        } 
+        
+        iDamageable.TakeDMG(CalculatedDamage, _isCrit);
     }
     public void TakeDMG(int _damage, bool _isCRIT)
     {   
-        // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
-        var _damageReceived = Mathf.CeilToInt(_damage * (EnemyConfig.DEF / 100.0f));
-        
-        StatusHandle.Subtract(_damageReceived, StatusHandle.StatusType.Health);
-
         SetTakeDMG(true);
-        DMGPopUpGenerator.Instance.Create(transform.position, _damageReceived, _isCRIT, true);
+        
+        // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
+        var _valueDef = _isCRIT ? Random.Range(0, EnemyConfig.DEF * 0.5f) : EnemyConfig.DEF;
+        
+        // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
+        var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
+        _damage -= _def;
+        
+        StatusHandle.Subtract(_damage, StatusHandle.StatusType.Health);
+        DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, true);
     }
     public void Die()
     {
         SetDie(true);
     }
+    
+        
+    // Damage Calculation - Tính và gán sát thường đầu ra 
+    public void CalculateDMG_NA(AnimationEvent eEvent)
+    {
+        var _level = FindLevelIndex();
+        var _percent = EnemyConfig.NormalAttackMultiplier[eEvent.intParameter].Multiplier[_level];
+        CalculatedDamage = Calculation(_percent);
+    }
+    public void CalculateDMG_EK(AnimationEvent eEvent)
+    {
+        var _level = FindLevelIndex();
+        var _percent = EnemyConfig.SkillMultiplier[eEvent.intParameter].Multiplier[_level];
+        CalculatedDamage = Calculation(_percent);
+    }
+    public void CalculateDMG_EB(AnimationEvent eEvent)
+    {
+        var _level = FindLevelIndex();
+        var _percent = EnemyConfig.SpecialMultiplier[eEvent.intParameter].Multiplier[_level];
+        CalculatedDamage = Calculation(_percent);
+    }
+    private int FindLevelIndex() // Tìm %ATK cộng thêm của dựa trên level hiện tại của enemy 
+    {
+        var _level = 0;
+        for (var i = 0; i < _enemyLevel.Count; i++)
+        {
+            if (EnemyConfig.Level >= _enemyLevel[i]) continue;
+            _level = i;
+            break;
+        }
+        return _level;
+    }
+    
+    /// <summary>
+    /// Tính sát thương đầu ra theo phần trăm * ATK của player
+    /// </summary>
+    /// <param name="_percent"> Phần trăm sát thương. </param>
+    /// <returns></returns>
+    private int Calculation(float _percent) => Mathf.CeilToInt(EnemyConfig.ATK * (_percent / 100.0f));
+    
     #endregion
 
  

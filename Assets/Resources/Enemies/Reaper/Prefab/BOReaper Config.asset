@@ -13,15 +13,78 @@ MonoBehaviour:
   m_Name: BOReaper Config
   m_EditorClassIdentifier: 
   Name: 'BOSS: Reaper'
-  Level: 1
+  Level: 21
   Infor: 
-  MaxHealth: 1000
-  ATK: 100
-  CRITRate: 5
+  MaxHealth: 10000
+  ATK: 150
+  CRITRate: 30
   CRITDMG: 50
-  DEF: 65
+  DEF: 250
   WalkSpeed: 5.1
   RunSpeed: 5.1
   NormalAttackCD: 4
   SkillAttackCD: 5
   SpecialAttackCD: 6
+  NormalAttackMultiplier:
+  - MultiplierTypeName: Index Attack 0
+    Multiplier:
+    - 65.32
+    - 75.1
+    - 84.93
+    - 93.19
+    - 102.01
+    - 114.38
+    - 204.16
+    - 217.09
+    - 228.34
+    - 239.01
+  - MultiplierTypeName: Index Attack 1
+    Multiplier:
+    - 69.39
+    - 79.91
+    - 88.11
+    - 97.54
+    - 107.39
+    - 119.56
+    - 209.18
+    - 220.51
+    - 230.19
+    - 244.14
+  - MultiplierTypeName: Index Attack 2
+    Multiplier:
+    - 73.01
+    - 83.17
+    - 92.16
+    - 101.34
+    - 111.23
+    - 203.95
+    - 213.32
+    - 224.12
+    - 234.16
+    - 250.34
+  SkillMultiplier:
+  - MultiplierTypeName: ' Elemental Skill'
+    Multiplier:
+    - 120.47
+    - 132.47
+    - 145.12
+    - 158.04
+    - 172.84
+    - 185.71
+    - 198.39
+    - 212.48
+    - 227.01
+    - 241.47
+  SpecialMultiplier:
+  - MultiplierTypeName: ' Elemental Burst'
+    Multiplier:
+    - 160.74
+    - 184.16
+    - 220.64
+    - 245.29
+    - 270.57
+    - 295.37
+    - 320.47
+    - 355.19
+    - 375.28
+    - 400.01

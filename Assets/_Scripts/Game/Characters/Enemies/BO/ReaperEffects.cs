@@ -29,7 +29,7 @@ public class ReaperEffects : MonoBehaviour
     public M_SetFloat edgeWidth;
     public M_SetFloat noiseScale;
     public M_SetFloat dissolve;
-    
+
     private ObjectPooler<Reference> _poolIndicator;
     private ObjectPooler<Reference> _poolSlash;
     private ObjectPooler<PhysicsDetection> _poolSpecial;
@@ -122,13 +122,13 @@ public class ReaperEffects : MonoBehaviour
     public void GetIndicator(Vector3 _position) => _poolIndicator.Get(_position);
     public void GetSpecialEffect(Vector3 _position) => _poolSpecial.Get(_position);
     
-    
     public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
-    public void EffectHit(Vector3 _pos) => _poolHit.Get(RandomPosition(_pos, .15f, .4f));
-    private static Vector3 RandomPosition(Vector3 _posCurrent, float minVal, float maxVal)
-    {
-        return _posCurrent + new Vector3(Random.Range(minVal, maxVal), 
-            Random.Range(minVal, maxVal), 
-            Random.Range(minVal, maxVal));
-    }
+    public void EffectHit(Vector3 _pos) => _poolHit.Get(_pos + new Vector3(Random.Range(-.1f, .1f), Random.Range(.5f, 1f), 0));
+
+    
+    private void CalculateDMG_NA(AnimationEvent eEvent) => enemyController.CalculateDMG_NA(eEvent);
+    private void CalculateDMG_EK(AnimationEvent eEvent) => enemyController.CalculateDMG_EK(eEvent);
+    private void CalculateDMG_EB(AnimationEvent eEvent) => enemyController.CalculateDMG_EB(eEvent);
+
+    
 }

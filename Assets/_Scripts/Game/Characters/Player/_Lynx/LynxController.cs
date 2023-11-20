@@ -42,6 +42,7 @@ public class LynxController : PlayerController
     private Ray _ray;
     private Coroutine _attackCoroutine;
     
+    
     protected override void Update()
     {
         base.Update();
@@ -50,6 +51,7 @@ public class LynxController : PlayerController
 
         CheckCrosshair();
     }
+    
     
     protected override void SetVariables()
     {
@@ -100,9 +102,7 @@ public class LynxController : PlayerController
             animator.SetBool(ID4Direction, IsAttackPressed);
 
             ChargedAttackTime += Time.deltaTime;
-            _damageBonus = Mathf.MoveTowards(_damageBonus, 
-                                              PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1],
-                                            15 * Time.deltaTime);
+            _damageBonus = Mathf.MoveTowards(_damageBonus, PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1], 15f * Time.deltaTime);
             yield return null;
         }
         CalculateDMG_CA();
@@ -224,7 +224,6 @@ public class LynxController : PlayerController
         animator.ResetTrigger(IDSpecial);
         indicatorQ.SetActive(false);
     }
-    
     public override void ReleaseAction()
     {
         base.ReleaseAction();
@@ -234,13 +233,7 @@ public class LynxController : PlayerController
     protected override void CalculateDMG_CA()
     {
         // tìm %DMG dựa theo thời gian Holding, % tối đa = PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1]
-        var _dmg = _damageBonus; 
-        
-        // chuyển %DMG sang giá trị cộng thêm
-        _dmg /= 100;
-                
-        // tính sát thường đầu ra
-        _calculatedDamage = Mathf.CeilToInt(PlayerConfig.ATK * _dmg);
+        _calculatedDamage = Calculation(_damageBonus);
     }
     
     

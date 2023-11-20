@@ -56,7 +56,7 @@ public class GameplayEditorWindow : EditorWindow
     
     private PlayerConfiguration arlanConfig;
     private PlayerConfiguration lynxConfig;
-    private void ShowPlayerConfig(PlayerConfiguration dataPlayerConfig)
+    private void ShowPlayerConfig(PlayerConfiguration dataPlayerConfig) 
     {
         if (dataPlayerConfig == null)
         {
@@ -78,8 +78,8 @@ public class GameplayEditorWindow : EditorWindow
         dataPlayerConfig.MaxHealth = EditorGUILayout.IntField("Max HP", dataPlayerConfig.MaxHealth, Width(500));
         dataPlayerConfig.MaxStamina = EditorGUILayout.IntField("Max ST", dataPlayerConfig.MaxStamina, Width(500));
         dataPlayerConfig.ATK = EditorGUILayout.IntField("ATK", dataPlayerConfig.ATK, Width(500));
-        dataPlayerConfig.CRITRate = EditorGUILayout.FloatField("CRIT Rate", dataPlayerConfig.CRITRate, Width(500));
-        dataPlayerConfig.CRITDMG = EditorGUILayout.IntField("CRIT DMG", dataPlayerConfig.CRITDMG, Width(500));
+        dataPlayerConfig.CRITRate = EditorGUILayout.FloatField("CRIT Rate(%)", dataPlayerConfig.CRITRate, Width(500));
+        dataPlayerConfig.CRITDMG = EditorGUILayout.IntField("CRIT DMG(%)", dataPlayerConfig.CRITDMG, Width(500));
         dataPlayerConfig.DEF = EditorGUILayout.IntField("DEF", dataPlayerConfig.DEF, Width(500));
         dataPlayerConfig.WalkSpeed = EditorGUILayout.FloatField("Walk Speed", dataPlayerConfig.WalkSpeed, Width(500));
         dataPlayerConfig.RunSpeed = EditorGUILayout.FloatField("Run Speed", dataPlayerConfig.RunSpeed, Width(500));
@@ -93,9 +93,9 @@ public class GameplayEditorWindow : EditorWindow
         
         Space(30);
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);
-        dataPlayerConfig.JumpCD = EditorGUILayout.FloatField("Jump CD", dataPlayerConfig.JumpCD, Width(500));
-        dataPlayerConfig.SkillCD = EditorGUILayout.FloatField("Elemental Skill CD", dataPlayerConfig.SkillCD, Width(500));
-        dataPlayerConfig.SpecialCD = EditorGUILayout.FloatField("Elemental Burst CD", dataPlayerConfig.SpecialCD, Width(500));
+        dataPlayerConfig.JumpCD = EditorGUILayout.FloatField("Jump CD(s)", dataPlayerConfig.JumpCD, Width(500));
+        dataPlayerConfig.SkillCD = EditorGUILayout.FloatField("Elemental Skill CD(s)", dataPlayerConfig.SkillCD, Width(500));
+        dataPlayerConfig.SpecialCD = EditorGUILayout.FloatField("Elemental Burst CD(s)", dataPlayerConfig.SpecialCD, Width(500));
         
         Space(30);
         GUILayout.Label("MULTIPLIER -------------------------", EditorStyles.boldLabel);
@@ -454,16 +454,145 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.Label("STATS -------------------------------", EditorStyles.boldLabel);
         _enemyConfiguration.MaxHealth = EditorGUILayout.IntField("Max HP", _enemyConfiguration.MaxHealth, Width(500));
         _enemyConfiguration.ATK = EditorGUILayout.IntField("ATK", _enemyConfiguration.ATK, Width(500));
+        _enemyConfiguration.CRITRate = EditorGUILayout.FloatField("CRIT Rate(%)", _enemyConfiguration.CRITRate, Width(500));
+        _enemyConfiguration.CRITDMG = EditorGUILayout.IntField("CRIT DMG(%)", _enemyConfiguration.CRITDMG, Width(500));
         _enemyConfiguration.DEF = EditorGUILayout.IntField("DEF", _enemyConfiguration.DEF, Width(500));
         _enemyConfiguration.WalkSpeed = EditorGUILayout.FloatField("Walk Speed", _enemyConfiguration.WalkSpeed, Width(500));
         _enemyConfiguration.RunSpeed = EditorGUILayout.FloatField("Run Speed", _enemyConfiguration.RunSpeed, Width(500));
         
         Space(30);
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);
-        _enemyConfiguration.NormalAttackCD = EditorGUILayout.FloatField("Normal Attack CD", _enemyConfiguration.NormalAttackCD, Width(500));
-        _enemyConfiguration.SkillAttackCD = EditorGUILayout.FloatField("Skill Attack CD", _enemyConfiguration.SkillAttackCD, Width(500));
-       
+        _enemyConfiguration.NormalAttackCD = EditorGUILayout.FloatField("Normal Attack CD(s)", _enemyConfiguration.NormalAttackCD, Width(500));
+        _enemyConfiguration.SkillAttackCD = EditorGUILayout.FloatField("Skill Attack CD(s)", _enemyConfiguration.SkillAttackCD, Width(500));
+        _enemyConfiguration.SpecialAttackCD = EditorGUILayout.FloatField("Special Attack CD(s)", _enemyConfiguration.SpecialAttackCD, Width(500));
+        
         Space(30);
+        GUILayout.Label("MULTIPLIER -------------------------", EditorStyles.boldLabel);
+        #region Normal Attack
+        Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("NORMAL ATTACK MULTIPLIER", Width(200), Height(25));
+        for (var i = 1; i <= 100; i++)
+        {
+            GUILayout.Box($"Lv {i} - {i + 9}", Width(80), Height(25));
+            i += 9;
+        }
+        GUILayout.EndHorizontal();
+        
+        for (var i = 0; i < _enemyConfiguration.NormalAttackMultiplier.Count; i++)
+        {
+            GUILayout.BeginHorizontal();
+            _enemyConfiguration.NormalAttackMultiplier[i].MultiplierTypeName = 
+                EditorGUILayout.TextField($"", _enemyConfiguration.NormalAttackMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
+            for (var j = 0; j < _enemyConfiguration.NormalAttackMultiplier[i].Multiplier.Count; j++)
+            {
+                _enemyConfiguration.NormalAttackMultiplier[i].Multiplier[j] = 
+                    EditorGUILayout.FloatField("", _enemyConfiguration.NormalAttackMultiplier[i].Multiplier[j], EditorStyles.numberField, Width(80), Height(27));
+                Space(1);
+            }
+            GUILayout.EndHorizontal();
+        }
+        
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
+        {
+            var FloatMultiplier = new FloatMultiplier
+            {
+                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
+            };
+            _enemyConfiguration.NormalAttackMultiplier.Add(FloatMultiplier);
+        }
+        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfiguration.NormalAttackMultiplier.Count != 0)
+        {
+            _enemyConfiguration.NormalAttackMultiplier.Remove(_enemyConfiguration.NormalAttackMultiplier[^1]);
+        }
+        GUILayout.EndHorizontal();
+        #endregion
+        
+        #region Elemental Skill
+        Space(10);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("ELEMENTAL SKILL MULTIPLIER", Width(200), Height(25));
+        for (var i = 1; i <= 100; i++)
+        {
+            GUILayout.Box($"Lv {i} - {i + 9}", Width(80), Height(25));
+            i += 9;
+        }
+        GUILayout.EndHorizontal();
+        
+        for (var i = 0; i < _enemyConfiguration.SkillMultiplier.Count; i++)
+        {
+            GUILayout.BeginHorizontal();
+            _enemyConfiguration.SkillMultiplier[i].MultiplierTypeName = 
+                EditorGUILayout.TextField($"", _enemyConfiguration.SkillMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
+            for (var j = 0; j < _enemyConfiguration.SkillMultiplier[i].Multiplier.Count; j++)
+            {
+                _enemyConfiguration.SkillMultiplier[i].Multiplier[j] = 
+                    EditorGUILayout.FloatField("", _enemyConfiguration.SkillMultiplier[i].Multiplier[j],
+                        EditorStyles.numberField, Width(80), Height(27));
+                Space(1);
+            }
+            GUILayout.EndHorizontal();
+        }
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
+        {
+            var FloatMultiplier = new FloatMultiplier
+            {
+                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
+            };
+            _enemyConfiguration.SkillMultiplier.Add(FloatMultiplier);
+        }
+        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfiguration.SkillMultiplier.Count != 0)
+        {
+            _enemyConfiguration.SkillMultiplier.Remove(_enemyConfiguration.SkillMultiplier[^1]);
+        }
+        GUILayout.EndHorizontal();
+        #endregion
+        
+        #region Elemental Burst
+        Space(10);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("ELEMENTAL BURST MULTIPLIER", Width(200), Height(25));
+        for (var i = 1; i <= 100; i++)
+        {
+            GUILayout.Box($"Lv {i} - {i + 9}", Width(80), Height(25));
+            i += 9;
+        }
+        GUILayout.EndHorizontal();
+        
+        for (var i = 0; i < _enemyConfiguration.SpecialMultiplier.Count; i++)
+        {
+            GUILayout.BeginHorizontal();
+            _enemyConfiguration.SpecialMultiplier[i].MultiplierTypeName = 
+                EditorGUILayout.TextField($"", _enemyConfiguration.SpecialMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
+            for (var j = 0; j < _enemyConfiguration.SpecialMultiplier[i].Multiplier.Count; j++)
+            {
+                _enemyConfiguration.SpecialMultiplier[i].Multiplier[j] = 
+                    EditorGUILayout.FloatField("", _enemyConfiguration.SpecialMultiplier[i].Multiplier[j],
+                        EditorStyles.numberField, Width(80), Height(27));
+                Space(1);
+            }
+            GUILayout.EndHorizontal();
+        }
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
+        {
+            var FloatMultiplier = new FloatMultiplier
+            {
+                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
+            };
+            _enemyConfiguration.SpecialMultiplier.Add(FloatMultiplier);
+        }
+        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfiguration.SpecialMultiplier.Count != 0)
+        {
+            _enemyConfiguration.SpecialMultiplier.Remove(_enemyConfiguration.SpecialMultiplier[^1]);
+        }
+        GUILayout.EndHorizontal();
+        #endregion
+        
         if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_enemyConfiguration);
         GUILayout.EndScrollView();
     }

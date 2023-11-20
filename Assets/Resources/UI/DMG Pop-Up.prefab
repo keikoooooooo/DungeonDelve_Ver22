@@ -220,9 +220,9 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 4.3
-      inSlope: -11
-      outSlope: -11
+      value: 5.5
+      inSlope: -14.999999
+      outSlope: -14.999999
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -230,7 +230,7 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.3
       value: 1
-      inSlope: -11
+      inSlope: -14.999999
       outSlope: 0
       tangentMode: 69
       weightedMode: 0
@@ -248,9 +248,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CRDColor: {r: 1, g: 0.16470589, b: 0.32156864, a: 1}
   EnemyDMGColor: {r: 1, g: 0.77254903, b: 0, a: 1}
   PlayerDMGColor: {r: 1, g: 1, b: 1, a: 1}
-  CRDColor: {r: 1, g: 0.16470589, b: 0.32156864, a: 1}
 --- !u!1 &6688072678434801978
 GameObject:
   m_ObjectHideFlags: 0

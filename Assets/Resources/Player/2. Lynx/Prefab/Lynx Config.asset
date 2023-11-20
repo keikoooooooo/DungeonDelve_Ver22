@@ -16,10 +16,10 @@ MonoBehaviour:
   Level: 1
   Infor: 
   MaxHealth: 200
-  ATK: 60
+  ATK: 70
   CRITRate: 5
   CRITDMG: 50
-  DEF: 20
+  DEF: 36
   WalkSpeed: 1.7
   RunSpeed: 5.7
   RunFastSpeed: 8
