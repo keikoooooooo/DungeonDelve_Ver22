@@ -14,12 +14,12 @@ public class EnemyHUD : MonoBehaviour
         nameAndLevelText.ChangeNameText(enemy.EnemyConfig.Name);
         nameAndLevelText.ChangeLevelText(enemy.EnemyConfig.Level);
         
-        enemy.StatusHandle.E_HealthChanged += healthBar.ChangeValue;
+        enemy.Health.E_OnValueChanged += healthBar.ChangedValue;
         healthBar.Init(enemy.EnemyConfig.MaxHealth);
     }
     private void OnDestroy()
     {
-        enemy.StatusHandle.E_HealthChanged -= healthBar.ChangeValue;
+        enemy.Health.E_OnValueChanged -= healthBar.ChangedValue;
     }
     
     

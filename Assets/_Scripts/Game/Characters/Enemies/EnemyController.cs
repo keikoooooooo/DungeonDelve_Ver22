@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     [field: SerializeField, Required] public Blackboard Blackboard { get; private set; }
     
     // Get & Set Property 
-    public StatusHandle StatusHandle { get; private set; }
+    public StatusHandle Health { get; private set; }
     public Vector3 PlayerPosition => _player.transform.position;
     public int CalculatedDamage { get; set; }
     
@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     private void Awake()
     {
-        StatusHandle = new StatusHandle(EnemyConfig.MaxHealth);
+        Health = new StatusHandle(EnemyConfig.MaxHealth);
     }
     private void OnEnable()
     {
@@ -79,8 +79,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
     public void TakeDMG(int _damage, bool _isCRIT)
     {   
-        SetTakeDMG(true);
-        
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, EnemyConfig.DEF * 0.5f) : EnemyConfig.DEF;
         
@@ -88,14 +86,19 @@ public class EnemyController : MonoBehaviour, IDamageable
         var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
         _damage -= _def;
         
-        StatusHandle.Subtract(_damage, StatusHandle.StatusType.Health);
+        Health.Subtract(_damage);
         DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, true);
+
+        if (Health.CurrentValue <= 0)
+        {
+            SetDie(true);
+        }
+        else
+        {
+            SetTakeDMG(true);
+        }
     }
-    public void Die()
-    {
-        SetDie(true);
-    }
-    
+
         
     // Damage Calculation - Tính và gán sát thường đầu ra 
     public void CalculateDMG_NA(AnimationEvent eEvent)

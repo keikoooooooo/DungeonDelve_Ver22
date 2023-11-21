@@ -47,7 +47,7 @@ public class PlayerRunState : PlayerBaseState
         switch (isLeftShiftPressed)
         {
             case true when !_machine.inputs.leftShift && lastInputLeftShift <= .2f:
-                if(_machine.StatusHandle.CurrentStamina >= _machine.PlayerConfig.DashEnergy) 
+                if(_machine.Stamina.CurrentValue >= _machine.PlayerConfig.DashEnergy) 
                     SwitchState(_factory.Dash());
                 
                 lastInputLeftShift = 0;

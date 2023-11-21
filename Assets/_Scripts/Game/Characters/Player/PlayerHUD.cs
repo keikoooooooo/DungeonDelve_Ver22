@@ -15,8 +15,8 @@ public class PlayerHUD : MonoBehaviour
     
     private void Start()
     {
-        player.StatusHandle.E_HealthChanged += healthBar.ChangeValue;
-        player.StatusHandle.E_StaminaChaged += staminaBar.ChangeValue;
+        player.Health.E_OnValueChanged += healthBar.ChangedValue;
+        player.Stamina.E_OnValueChanged += staminaBar.ChangedValue;
         
         player.E_SkillCD += skillCooldownTime.StartCd;
         player.E_SpecialCD += specialCooldownTime.StartCd;
@@ -30,8 +30,8 @@ public class PlayerHUD : MonoBehaviour
     {
         if (player == null) return;
         
-        player.StatusHandle.E_HealthChanged -= healthBar.ChangeValue;
-        player.StatusHandle.E_StaminaChaged -= staminaBar.ChangeValue;
+        player.Health.E_OnValueChanged -= healthBar.ChangedValue;
+        player.Stamina.E_OnValueChanged -= staminaBar.ChangedValue;
         
         player.E_SkillCD -= skillCooldownTime.StartCd;
         player.E_SpecialCD -= specialCooldownTime.StartCd;

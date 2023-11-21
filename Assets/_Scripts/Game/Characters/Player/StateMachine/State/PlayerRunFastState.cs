@@ -46,7 +46,7 @@ public class PlayerRunFastState : PlayerBaseState
         {  
             SwitchState(_factory.Idle());
         }
-        else if (_machine.IsRun || _machine.StatusHandle.CurrentStamina <= 0)
+        else if (_machine.IsRun || _machine.Stamina.CurrentValue <= 0)
         {
             SwitchState(_factory.Run());
         }
@@ -54,9 +54,9 @@ public class PlayerRunFastState : PlayerBaseState
     
     private IEnumerator SubtractSTCoroutine() // giảm ST
     {
-        while (_machine.StatusHandle.CurrentStamina > 0)
+        while (_machine.Stamina.CurrentValue > 0)
         {
-            _machine.StatusHandle.Subtract(1, StatusHandle.StatusType.Stamina);
+            _machine.Stamina.Subtract(1);
             yield return new WaitForSeconds(.07f);
         }
     }

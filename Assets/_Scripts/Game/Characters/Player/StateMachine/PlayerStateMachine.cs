@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using NaughtyAttributes.Test;
 using UnityEngine;
-using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
@@ -16,7 +14,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     
     #region Get & Set Property
     [field: SerializeField] public PlayerConfiguration PlayerConfig { get; private set; }
-    public StatusHandle StatusHandle { get; private set; }
+    public StatusHandle Health { get; private set; }
+    public StatusHandle Stamina { get; private set; }
     public PlayerBaseState CurrentState { get; set; }
     public Vector3 AppliedMovement { get; set; }
     public Vector3 InputMovement { get; set; }
@@ -30,7 +29,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public bool IsJump => inputs.space && !inputs.leftShift && !animator.IsTag(1, "Damage");
     public bool IsWalk => !IsIdle && _movementState == MovementState.StateWalk;
     public bool IsRun => !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
-    public bool IsDash => inputs.leftShift && IsGrounded && StatusHandle.CurrentStamina >= PlayerConfig.DashEnergy;
+    public bool IsDash => inputs.leftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.DashEnergy;
 
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
@@ -124,7 +123,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         _mainCamera = Camera.main;
         _state = new PlayerStateFactory(this);
         characterController = GetComponent<CharacterController>();
-        StatusHandle = new StatusHandle(PlayerConfig.MaxHealth, PlayerConfig.MaxStamina);
+        Health = new StatusHandle(PlayerConfig.MaxHealth);
+        Stamina = new StatusHandle(PlayerConfig.MaxStamina);
     }
 
     /// <summary>
@@ -224,9 +224,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     {
         while (true)
         {
-            if (StatusHandle.CurrentStamina <= 100 && CanIncreaseST)
+            if (Stamina.CurrentValue <= 100 && CanIncreaseST)
             {
-                StatusHandle.Increase(2, StatusHandle.StatusType.Stamina);
+                Stamina.Increase(2);
             }
             yield return new WaitForSeconds(.15f);
         }
@@ -259,11 +259,11 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
         _damage -= _def;
         
-        StatusHandle.Subtract(_damage, StatusHandle.StatusType.Health);
+        Health.Subtract(_damage);
         DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, false);
 
 
-        if (StatusHandle.CurrentHealth <= 0)
+        if (Health.CurrentValue <= 0)
         {
             Die();
             return;

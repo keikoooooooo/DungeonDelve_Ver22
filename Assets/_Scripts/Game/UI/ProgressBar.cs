@@ -59,7 +59,7 @@ public class ProgressBar : MonoBehaviour
     /// Khi giá trị thay đổi
     /// </summary>
     /// <param name="value"> Giá trị đã thay đổi </param>
-    public void ChangeValue(int value)
+    public void ChangedValue(int value)
     {
         value = (int)Mathf.Clamp(value, mainProgressSlider.minValue, mainProgressSlider.maxValue);
         

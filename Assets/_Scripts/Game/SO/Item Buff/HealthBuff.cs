@@ -6,6 +6,6 @@ public class HealthBuff : BuffEffect
     
     public override void Apply(PlayerStateMachine _player)
     {
-        _player.StatusHandle.Increase(Mathf.CeilToInt(Value), StatusHandle.StatusType.Health);    
+        _player.Health.Increase(Mathf.CeilToInt(Value));    
     }
 }
