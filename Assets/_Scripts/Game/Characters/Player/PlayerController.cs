@@ -40,7 +40,6 @@ public abstract class PlayerController : PlayerStateMachine
     
     
     // Player
-    protected bool CanAttack = true;                       // được phép attack ? 
     [HideInInspector] private Vector3 _pushVelocity;       // vận tốc đẩy 
     [HideInInspector] private int _directionPushVelocity;  // hướng đẩy 
     [HideInInspector] protected int _attackCounter;        // số lần attackCombo
@@ -145,14 +144,13 @@ public abstract class PlayerController : PlayerStateMachine
     }
 
     
-    #region Xử lí xoay nhân vật về phía Enemy mỗi khi Attack
+
     public void SetAttackCounter(int count) => _attackCounter = count; // gọi trên event animaiton
     public void AddForceAttack()
     {
         if(_pushMoveCoroutine != null) StopCoroutine(PushMoveCoroutine());
         _pushMoveCoroutine = StartCoroutine(PushMoveCoroutine());
     }
-
     private IEnumerator PushMoveCoroutine()
     {
         var timePush = attackCustom.pushTime;
@@ -164,6 +162,8 @@ public abstract class PlayerController : PlayerStateMachine
             yield return null;
         }
     }
+    
+    #region Xử lí xoay nhân vật về phía Enemy mỗi khi Attack
     public Transform FindClosestEnemy()
     {
         _enemies.Sort((a, b)
@@ -208,6 +208,7 @@ public abstract class PlayerController : PlayerStateMachine
     }
     #endregion
 
+    
     #region Damage Calculation
     protected override void CalculateDMG_NA()
     {
@@ -230,6 +231,7 @@ public abstract class PlayerController : PlayerStateMachine
         var _percent = PlayerConfig.SpecialMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
         _calculatedDamage = Calculation(_percent); 
     }
+    
     
     /// <summary>
     /// Tính sát thương đầu ra theo phần trăm * ATK của player

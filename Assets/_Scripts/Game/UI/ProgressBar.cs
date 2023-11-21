@@ -7,14 +7,11 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    [Tooltip("Slider tiến trình chính"), SerializeField] 
+    [Tooltip("Slider tiến trình chính"), SerializeField, Required] 
     private Slider mainProgressSlider;
     
-    [Tooltip("Slider tiến trình phụ"), ShowIf("UseBackFill"), SerializeField] 
+    [Tooltip("Slider tiến trình phụ"), SerializeField, Required] 
     private Slider backProgressSlider;
-    [Tooltip("Có sử dụng Fill phụ không không ?")]
-    public bool UseBackFill;
-
 
     [Space, Tooltip("Text hiển thị tiến trình"), ShowIf("ShowText"), SerializeField] 
     private TextMeshProUGUI progressText;
@@ -28,11 +25,17 @@ public class ProgressBar : MonoBehaviour
     
     private Tween mainProgressTween;
     private Tween backProgressTween;
-    
-    private void Start()
+
+
+    private void OnEnable()
     {
-        ShowText = progressText != null;
-        UseBackFill = backProgressSlider != null;
+        if (!ShowText || !progressText) return;
+        mainProgressSlider.onValueChanged.AddListener(SliderChangeValue);
+    }
+    private void OnDisable()
+    {
+        if (!ShowText || !progressText) return;
+        mainProgressSlider.onValueChanged.RemoveListener(SliderChangeValue);
     }
 
 
@@ -46,15 +49,9 @@ public class ProgressBar : MonoBehaviour
         mainProgressSlider.maxValue = maxValue;
         mainProgressSlider.value = maxValue;
 
-        if (UseBackFill)
-        {
-            backProgressSlider.minValue = 0;
-            backProgressSlider.maxValue = maxValue;
-            backProgressSlider.value = maxValue;
-        }
-        
-        if(ShowText)
-            progressText.text = $"{mainProgressSlider.value} / {mainProgressSlider.maxValue}";
+        backProgressSlider.minValue = 0;
+        backProgressSlider.maxValue = maxValue;
+        backProgressSlider.value = maxValue;
     }
     
 
@@ -69,15 +66,12 @@ public class ProgressBar : MonoBehaviour
         mainProgressTween?.Kill();
         mainProgressTween = mainProgressSlider.DOValue(value, mainDuration);
 
-        if (UseBackFill)
-        {
-            backProgressTween?.Kill();
-            backProgressTween = backProgressSlider.DOValue(value, backDuration);
-        }
-        
-        if(ShowText)
-            progressText.text = $"{mainProgressSlider.value} / {mainProgressSlider.maxValue}";
+        backProgressTween?.Kill();
+        backProgressTween = backProgressSlider.DOValue(value, backDuration);
     }
+
+
+    private void SliderChangeValue(float _value) => progressText.text = $"{_value} / {mainProgressSlider.maxValue}";
     
 
 }

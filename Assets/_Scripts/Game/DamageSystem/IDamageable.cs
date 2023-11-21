@@ -4,9 +4,9 @@ public interface IDamageable
 {
     
     /// <summary>
-    /// Áp dụng lượng DMG vừa tính và gọi TakeDMG(?) trên _gameObject
+    /// Tính lượng DMG(x) của từng nhân vật và áp dụng lượng DMG này vào TakeDMG(x) trên _gameObject
     /// </summary>
-    /// <param name="_gameObject"> Đối tượng bị TakeDMG </param>
+    /// <param name="_gameObject"> Đối tượng bị TakeDMG (nếu có) </param>
     public void CauseDMG(GameObject _gameObject);
     
     
@@ -17,11 +17,4 @@ public interface IDamageable
     /// <param name="_isCRIT"> Sát thương có kích bạo không ? </param>
     public void TakeDMG(int _damage, bool _isCRIT);
     
-    
-    /// <summary>
-    /// Nhân vật Die
-    /// </summary>
-    public void Die();
-    
-
 }

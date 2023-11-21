@@ -40,6 +40,15 @@ public static class Extensions
     /// <returns></returns>
     public static bool IsTag(this Animator _animator, string tagCheck)
         => _animator.GetCurrentAnimatorStateInfo(0).IsTag(tagCheck);
+    
+    /// <summary>
+    /// Trả về True nếu Tag của animation hiện tại đang chạy giống với Tag của paramater
+    /// </summary>
+    /// <param name="layerIndex"> Layer cần kiểm tra </param>
+    /// <param name="tagCheck"> Tag cần kiểm tra </param>
+    /// <returns></returns>
+    public static bool IsTag(this Animator _animator, int layerIndex, string tagCheck)
+        => _animator.GetCurrentAnimatorStateInfo(layerIndex).IsTag(tagCheck);
     #endregion
 
 

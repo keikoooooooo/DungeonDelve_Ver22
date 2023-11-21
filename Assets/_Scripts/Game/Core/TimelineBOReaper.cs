@@ -39,12 +39,11 @@ public class TimelineBOReaper : MonoBehaviour
             yield break;
         
         yield return new WaitForSeconds(.7f);
-        setEmission.currentIntensity = 0;
-        setEmission.intensitySetTo = 15f;
+        setEmission.ChangeCurrentIntensity(0);
+        setEmission.ChangeIntensitySet(15f);
         setEmission.Apply();
         
         yield return new WaitForSeconds(2f);
-        
         if (isTriggerPlayer)
         {
             DeActiveControlPlayer();
@@ -55,8 +54,8 @@ public class TimelineBOReaper : MonoBehaviour
         {
             yield return new WaitForSeconds(.7f);
             playableDirector.Stop();
-            setEmission.currentIntensity = 15f;
-            setEmission.intensitySetTo = 0f;
+            setEmission.ChangeCurrentIntensity(15);
+            setEmission.ChangeIntensitySet(0); 
             setEmission.Apply();
         }
     }
@@ -65,13 +64,13 @@ public class TimelineBOReaper : MonoBehaviour
     {
         if (!_playerController) 
             return;
-        _playerController.enabled = true;
+        _playerController.CanControl = true;
     }
     public void DeActiveControlPlayer()
     {
         if (!_playerController) 
             return;
-        _playerController.enabled = false;
+        _playerController.CanControl = false;
     }
 
 

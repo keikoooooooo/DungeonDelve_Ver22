@@ -26,7 +26,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
     private void OnEnable()
     {
-        StatusHandle.E_Die += Die;
         DamageableData.Add(gameObject, this);
     }
     private void Start()
@@ -41,7 +40,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
     private void OnDisable()
     {
-        StatusHandle.E_Die -= Die;
         DamageableData.Remove(gameObject);
     }
     

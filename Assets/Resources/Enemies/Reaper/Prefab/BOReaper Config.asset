@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d56ae838fb1cb14da67553452be21d5, type: 3}
   m_Name: BOReaper Config
   m_EditorClassIdentifier: 
-  Name: 'BOSS: Reaper'
+  Name: Reaper
   Level: 21
   Infor: 
   MaxHealth: 10000
   ATK: 150
-  CRITRate: 30
+  CRITRate: 50
   CRITDMG: 50
-  DEF: 250
+  DEF: 40
   WalkSpeed: 5.1
   RunSpeed: 5.1
   NormalAttackCD: 4

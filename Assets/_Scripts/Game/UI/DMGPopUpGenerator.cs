@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class DMGPopUpGenerator : Singleton<DMGPopUpGenerator>
 {
-    [Required] public Camera _mainCamera;
     public DMGPopUp dmgPopUpPrefab;
     
+    private Camera _mainCamera;
     private ObjectPooler<DMGPopUp> _poolDMGPopUp;
     
     private void Start()
     {
+        _mainCamera = Camera.main;
         _poolDMGPopUp = new ObjectPooler<DMGPopUp>(dmgPopUpPrefab, transform, 25);
         foreach (var VARIABLE in _poolDMGPopUp.Pool)
         {

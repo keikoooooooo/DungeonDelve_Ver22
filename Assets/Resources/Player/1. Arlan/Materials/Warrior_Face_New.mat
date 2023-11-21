@@ -130,7 +130,7 @@ Material:
     - _Dissolvecolor: {r: 1, g: 1, b: 1, a: 1}
     - _DissolvespeedXY: {r: 0, g: 0, b: 0, a: 0}
     - _EdgeColor: {r: 0, g: 3.890196, b: 4, a: 0}
-    - _Emission: {r: -0, g: -0.003198506, b: -0.009765625, a: -10}
+    - _Emission: {r: 0, g: 0.00022266129, b: 0.00073146453, a: -50}
     - _HColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
     - _Maincolor: {r: 0.7609469, g: 0.8547776, b: 0.9433962, a: 1}
     - _NoiseUVSpeed: {r: 0, g: 0, b: 0, a: 0}

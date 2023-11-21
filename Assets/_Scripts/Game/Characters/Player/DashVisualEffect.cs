@@ -16,17 +16,17 @@ public class DashVisualEffect : MonoBehaviour
     private void Start()
     {
         if(player)
-            player.E_Dash += OnDashEvent;
+            player.E_Dash += OnEnableDashVisual;
         dashPartical.gameObject.SetActive(false);
     }
     private void OnDestroy()
     {
         if(player)
-            player.E_Dash -= OnDashEvent;
+            player.E_Dash -= OnEnableDashVisual;
     }
 
 
-    private void OnDashEvent()
+    public void OnEnableDashVisual()
     {
         dashPartical.gameObject.SetActive(true);
         dashPartical.Play();

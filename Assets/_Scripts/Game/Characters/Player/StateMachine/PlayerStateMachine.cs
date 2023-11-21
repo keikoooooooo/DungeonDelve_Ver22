@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using NaughtyAttributes.Test;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
@@ -20,15 +22,22 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public Vector3 InputMovement { get; set; }
     
     protected bool IsGrounded => characterController.isGrounded;
-    public bool CanMove { get; set; }
-    public bool CanRotation { get; set; }
+    public bool CanControl { get; set; } // nhân vật có thể điều khiển ?
+    protected bool CanMove { get; set; }
+    protected bool CanRotation { get; set; }
+    protected bool CanAttack { get; set; }
     public bool IsIdle => inputs.move.magnitude == 0;
-    public bool IsJump => inputs.space && !inputs.leftShift;
+    public bool IsJump => inputs.space && !inputs.leftShift && !animator.IsTag(1, "Damage");
     public bool IsWalk => !IsIdle && _movementState == MovementState.StateWalk;
     public bool IsRun => !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
     public bool IsDash => inputs.leftShift && IsGrounded && StatusHandle.CurrentStamina >= PlayerConfig.DashEnergy;
+
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
+    
+    [Header("Set Material")] 
+    public M_SetEmission setEmission;
+    public M_SetFloat setDissolve;
     
     #region Animation IDs Paramater
     // FLOAT
@@ -41,6 +50,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] public int IDFall = Animator.StringToHash("Fall");                    //  rơi
     [HideInInspector] public int IDWeaponEquip = Animator.StringToHash("WeaponEquipped ");  //  switchMode: cầm / không cầm vũ khí
     [HideInInspector] public int ID4Direction = Animator.StringToHash("4Direction");        //  di chuyển 4 hướng: LFRB
+    [HideInInspector] public int IDDead = Animator.StringToHash("Dead");                    //  die
     // TRIGGER
     [HideInInspector] public int IDDamageFall = Animator.StringToHash("Damage_Fall");       //  nhận sát thương (ngã)
     [HideInInspector] public int IDDamageStand = Animator.StringToHash("Damage_Stand");     //  nhận sát thương (đứng)
@@ -75,6 +85,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     
     // Coroutine
     private Coroutine _handleSTCoroutine;
+    private Coroutine _handleDamageCoroutine;
     #endregion
 
 
@@ -97,10 +108,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleMovement();
         
         HandleRotation();
+        
+        if(Input.GetKeyDown(KeyCode.Alpha1)) TakeDMG(100, true);
+        if(Input.GetKeyDown(KeyCode.Alpha2)) TakeDMG(100, false);
+        
     }
     private void OnDisable()
     {
-        StatusHandle.E_Die -= Die;
         DamageableData.Remove(gameObject);
     }
 
@@ -124,16 +138,17 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         
         // Set Config
         _gravity = -30f;
+        CanControl = true;
         CanMove = true;
         CanRotation = true;
         CanIncreaseST = true;
         _movementState = MovementState.StateRun;
+        characterController.enabled = true;
         
         if (_handleSTCoroutine != null) StopCoroutine(_handleSTCoroutine);
         _handleSTCoroutine = StartCoroutine(IncreaseSTCoroutine());
         
         // Event
-        StatusHandle.E_Die += Die;
         DamageableData.Add(gameObject, this);
     }
 
@@ -193,7 +208,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
             inputs.space = false;
             _pressedJump = true;
         }
-        
+
         _jumpVelocity += _gravity * Time.deltaTime;
     }
     private void HandleRotation()
@@ -246,14 +261,73 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         
         StatusHandle.Subtract(_damage, StatusHandle.StatusType.Health);
         DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, false);
+
+
+        if (StatusHandle.CurrentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+        
+        if (animator.IsTag(1, "Damage") || !IsGrounded)
+        {
+            return;
+        }
+
+        HandleDamage();
+        if (_isCRIT)
+        {
+            animator.SetTrigger(IDDamageFall);
+            if(_handleDamageCoroutine != null) StopCoroutine(HandleDamageCoroutine());
+            _handleDamageCoroutine = StartCoroutine(HandleDamageCoroutine());
+        }
+        else
+        {
+            animator.SetTrigger(IDDamageStand);
+        }
+        
+        CanMove = false;
+        CanAttack = false;
+        CanRotation = false;
+    }
+
+    private IEnumerator HandleDamageCoroutine()
+    {
+        var _timePush = .35f;
+        var _pushSpeed = 8f;
+        while (_timePush > 0)
+        {
+           var _pushVelocity = -model.forward * _pushSpeed;
+            characterController.Move(_pushVelocity * Time.deltaTime + new Vector3(0f, -9.81f, 0f) * Time.deltaTime);
+            
+            _timePush -= Time.deltaTime;
+            yield return null;
+        }
     }
     public void Die()
     {
+        CanControl = false;
+        animator.SetBool(IDDead, true);
+        characterController.enabled = false;
+        Invoke(nameof(DeadDissolve), 2f);
+    }
+    private void DeadDissolve()
+    {
+        setEmission.ChangeCurrentIntensity(-3f);   
+        setEmission.ChangeIntensitySet(5f);
+        setEmission.ChangeDurationApply(.15f);
+        setEmission.Apply();
         
+        setDissolve.ChangeCurrentValue(0);
+        setDissolve.ChangeValueSet(1);
+        setDissolve.ChangeDurationApply(4.5f);
+        setDissolve.Apply();
     }
     #endregion
+
     
     #region Event Callback
+
     public void OnDashEvent() => E_Dash?.Invoke();
     protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.SkillCD);
     protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.SpecialCD);
@@ -261,10 +335,14 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     
     
     /// <summary>
-    /// Giải phóng tất cả trạng thái khi nhảy hoặc lướt.
+    /// Giải phóng tất cả trạng thái khi nhảy, lướt,
     /// </summary>
     public abstract void ReleaseAction();
-    
+
+    /// <summary>
+    /// Khi nhận sát thương, nếu nhân vật cần thực hiện hành vi thì Override lại
+    /// </summary>
+    protected virtual void HandleDamage() { }
     
     /// <summary>
     /// Tính sát thương của Normal Attack

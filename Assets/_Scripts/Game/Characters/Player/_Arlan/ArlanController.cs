@@ -19,6 +19,8 @@ public class ArlanController : PlayerController
     
     protected override void Update()
     {
+        if(!CanControl) return;
+
         base.Update();
         
         HandleAttack();
@@ -81,7 +83,11 @@ public class ArlanController : PlayerController
         _weaponUnEquippedCoroutine = StartCoroutine(WeaponUnEquippedCoroutine());
     }
 
-
+    protected override void HandleDamage()
+    {
+        WeaponEquipped();
+        base.HandleDamage();
+    }
     protected override void NormalAttack()
     {
         WeaponEquipped();

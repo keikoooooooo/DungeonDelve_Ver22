@@ -160,7 +160,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 0, g: 3.890196, b: 4, a: 0}
-    - _Emission: {r: -0, g: -0.003198506, b: -0.009765625, a: -10}
+    - _Emission: {r: 0, g: 0.00022266129, b: 0.00073146453, a: -50}
     - _EmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _HColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
     - _NoiseUVSpeed: {r: 0, g: 0, b: 0, a: 0}

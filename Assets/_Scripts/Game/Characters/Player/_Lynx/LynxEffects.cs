@@ -19,7 +19,7 @@ public class LynxEffects : MonoBehaviour
     [SerializeField] private EffectBase chargedPrefab;
     [SerializeField] private EffectBase chargedNoFullyPrefab;
     
-    [Space, Header("Visual Effect")]
+    [Header("Visual Effect")]
     [SerializeField] private ParticleSystem effectHolding;
     [SerializeField] private ParticleSystem effectSpecial;
     
@@ -160,7 +160,6 @@ public class LynxEffects : MonoBehaviour
         effectSpecial.gameObject.SetActive(false);
         effectSpecial.Stop();
     }
-    
     
     private Quaternion RandomDirection()
     {
