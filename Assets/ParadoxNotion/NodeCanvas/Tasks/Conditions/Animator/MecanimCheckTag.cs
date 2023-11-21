@@ -12,7 +12,7 @@ namespace NodeCanvas.Tasks.Conditions
         [RequiredField]
         public BBParameter<string> tagCheck;
         public BBParameter<int> layerCheck = 0;
-        
+
         protected override string info => $"CurrentTag == {tagCheck}";
         protected override bool OnCheck() => agent.GetCurrentAnimatorStateInfo(layerCheck.value).IsTag(tagCheck.value);
         

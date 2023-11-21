@@ -185,7 +185,7 @@ Material:
     - _DissolveDirection: {r: 0, g: 0.1, b: 0, a: 0}
     - _DissolveOffest: {r: 0, g: 0, b: 0, a: 0}
     - _EdgeColor: {r: 0, g: 3.890196, b: 4, a: 0}
-    - _Emission: {r: 0, g: 0, b: 0, a: 1}
+    - _Emission: {r: 0, g: 0.0001641609, b: 0.0007314645, a: 1}
     - _EmissionColor: {r: 0.26415092, g: 0.25542894, b: 0.25542894, a: 1}
     - _HColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     - _NoiseScale: {r: 1, g: 1, b: 0, a: 0}
