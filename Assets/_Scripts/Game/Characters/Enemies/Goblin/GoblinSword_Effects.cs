@@ -61,24 +61,12 @@ public class GoblinSword_Effects : MonoBehaviour, ICalculateDMG
     
     private void EffectAttack(AnimationEvent eEvent)
     {
-        switch (eEvent.intParameter)
-        {
-            case 0: 
-                _posEffect = effectPoint.position + transform.rotation *  effectOffsets[0].position;  
-                _rotEffect = Quaternion.Euler(effectOffsets[0].rotation.x,          
-                                           effectOffsets[0].rotation.y + effectPoint.eulerAngles.y,
-                                             effectOffsets[0].rotation.z);
-                _poolSword1Slash.Get(_posEffect, _rotEffect);
-                break;
-            
-            case 1:
-                _posEffect = effectPoint.position + transform.rotation *  effectOffsets[1].position;
-                _rotEffect = Quaternion.Euler(effectOffsets[1].rotation.x, 
-                                           effectOffsets[1].rotation.y + effectPoint.eulerAngles.y,
-                                             effectOffsets[1].rotation.z);
-                _poolSword2Slash.Get(_posEffect, _rotEffect);
-                break;
-        }
+        var index = eEvent.intParameter;
+        _posEffect = effectPoint.position + transform.rotation *  effectOffsets[index].position;
+        _rotEffect = Quaternion.Euler(effectOffsets[index].rotation.x, 
+                                    effectOffsets[index].rotation.y + effectPoint.eulerAngles.y,
+                                      effectOffsets[index].rotation.z);
+        _poolSword2Slash.Get(_posEffect, _rotEffect);
     }
     public void EffectHit(Vector3 _position) => _poolHit.Get(_position);
     

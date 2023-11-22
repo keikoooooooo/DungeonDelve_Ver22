@@ -18,12 +18,10 @@ public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
     {
         InitValue();
     }
-
     private void OnEnable()
     {
         RegisterEvents();
     }
-
     private void OnDisable()
     {
         UnRegisterEvents();
@@ -35,7 +33,6 @@ public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
         _poolProjectile = new ObjectPooler<EffectBase>(projectilePrefab, slotsVFX, 5);
     }
-
     private void RegisterEvents()
     {
         foreach (var VARIABLE in _poolProjectile.Pool)
@@ -43,7 +40,6 @@ public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
             VARIABLE.detectionType.CollisionEnterEvent.AddListener(enemyController.CauseDMG);
         }
     }
-
     private void UnRegisterEvents()
     {
         foreach (var VARIABLE in _poolProjectile.Pool)
@@ -61,8 +57,7 @@ public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
         var projectile = _poolProjectile.Get(effectPoint.position, rotation);
         projectile.FIRE();
     }
-
-
+    
     public void CalculateDMG_NA()
     {
         var _level = enemyController.FindLevelIndex();

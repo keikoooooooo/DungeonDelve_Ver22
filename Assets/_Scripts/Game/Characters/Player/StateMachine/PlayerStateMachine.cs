@@ -257,7 +257,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         Health.Subtract(_damage);
         DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, false);
 
-
+        animator.ResetTrigger(IDDamageStand);
+        animator.ResetTrigger(IDDamageFall);
+        
         if (Health.CurrentValue <= 0)
         {
             Die();

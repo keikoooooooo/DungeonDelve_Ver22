@@ -38,5 +38,29 @@ MonoBehaviour:
     - 52.18
     - 55.39
     - 59.76
+  - MultiplierTypeName: Attack 1
+    Multiplier:
+    - 31.32
+    - 35.42
+    - 38.01
+    - 41.05
+    - 44.17
+    - 47.38
+    - 51.57
+    - 54.98
+    - 59.28
+    - 63.19
+  - MultiplierTypeName: Attack 2
+    Multiplier:
+    - 35.18
+    - 38.91
+    - 41.48
+    - 45.29
+    - 48.16
+    - 52.05
+    - 58.23
+    - 61.59
+    - 65.13
+    - 70.89
   SkillMultiplier: []
   SpecialMultiplier: []
