@@ -1199,7 +1199,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: BOSS_ Reaper/Enemy HUD Canvas/StatsBar
+    path: BOSS_ Reaper/Enemy HUD Canvas
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -1230,7 +1230,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1316075800
+      path: 272888043
       attribute: 1574349066
       script: {fileID: 0}
       typeID: 225
@@ -1478,7 +1478,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: BOSS_ Reaper/Enemy HUD Canvas/StatsBar
+    path: BOSS_ Reaper/Enemy HUD Canvas
     classID: 225
     script: {fileID: 0}
     flags: 0

@@ -157,7 +157,7 @@ Material:
     - _DstBlendAlpha: 0
     - _DstBlendOutline: 0
     - _EdgeColorIntensity: 1
-    - _EdgeWidth: 0.18
+    - _EdgeWidth: 0.4
     - _Emission: 1
     - _EmissionChannel: 4
     - _EnableOutline: 0
@@ -176,7 +176,7 @@ Material:
     - _MatCapType: 0
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseScale: 31
+    - _NoiseScale: 22
     - _NormalScale: 1
     - _NormalsSource: 0
     - _NormalsUVType: 0

@@ -41,7 +41,7 @@ namespace NodeCanvas.Tasks.Actions
             if ( target.value == null ) { EndAction(false); return; }
             var targetPos = target.value.transform.position;
             if ( ( agent.transform.position - targetPos ).magnitude >= fledDistance.value ) {
-                Debug.Log("End");
+                
                 saveFoundParameter.value = 0;
                 EndAction(true);
                 return;

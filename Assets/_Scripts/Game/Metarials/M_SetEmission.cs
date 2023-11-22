@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class M_SetEmission : SetMaterial
+public class M_SetEmission : SetMaterials
 {
     [Tooltip("Màu cần set"), SerializeField]
     private Color colorSetTo;
@@ -12,12 +12,6 @@ public class M_SetEmission : SetMaterial
     [Tooltip("Cường độ cần set của màu"), SerializeField]
     private float intensitySetTo;
     
-    public override void Apply()
-    {
-        _applyTween?.Kill();
-        _applyTween = !useList ? DOVirtual.Float(currentIntensity, intensitySetTo, durationApply, Set)
-                               : DOVirtual.Float(currentIntensity, intensitySetTo, durationApply, Sets);
-    }
 
     /// <summary>
     /// Thay đổi màu
@@ -37,9 +31,21 @@ public class M_SetEmission : SetMaterial
     /// <param name="_value"> Giá trị mới để áp dụng </param>
     public void ChangeIntensitySet(float _value) => intensitySetTo = _value;
     
-     
-    private void Set(float _value) => material.SetColor(nameID, colorSetTo * _value);
-    private void Sets(float _value) => metarialsList.ForEach(x => x.SetColor(nameID, colorSetTo * _value));
 
+    public override void Apply()
+    {
+        _applyTween?.Kill();
+        _applyTween = DOVirtual.Float(currentIntensity, intensitySetTo, durationApply, Set);
+    }
+    private void Set(float _value)
+    {
+        foreach(var _renderer in Renderers)
+        {
+            foreach (var _material in _renderer.materials)
+            {
+                _material.SetColor(nameID, colorSetTo *_value); 
+            }
+        }
+    }
     
 }

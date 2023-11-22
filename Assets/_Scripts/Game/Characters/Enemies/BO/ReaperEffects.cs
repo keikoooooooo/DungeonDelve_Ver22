@@ -2,7 +2,9 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ReaperEffects : MonoBehaviour
+
+
+public class ReaperEffects : MonoBehaviour, ICalculateDMG
 {
     [SerializeField] private EnemyController enemyController;
     public PhysicsDetection physicsDetection;
@@ -35,6 +37,7 @@ public class ReaperEffects : MonoBehaviour
     private ObjectPooler<PhysicsDetection> _poolSpecial;
     private ObjectPooler<Reference> _poolHit;
 
+    private int _attackCounter;
     private Transform slotVFX;
     private Vector3 _posEffect;
     private Quaternion _rotEffect;
@@ -124,11 +127,26 @@ public class ReaperEffects : MonoBehaviour
     
     public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
     public void EffectHit(Vector3 _pos) => _poolHit.Get(_pos + new Vector3(Random.Range(-.1f, .1f), Random.Range(.5f, 1f), 0));
-
     
-    private void CalculateDMG_NA(AnimationEvent eEvent) => enemyController.CalculateDMG_NA(eEvent);
-    private void CalculateDMG_EK(AnimationEvent eEvent) => enemyController.CalculateDMG_EK(eEvent);
-    private void CalculateDMG_EB(AnimationEvent eEvent) => enemyController.CalculateDMG_EB(eEvent);
 
-    
+    public void SetAttackCounter(int count) => _attackCounter = count; // Set đòn đánh thứ (x), gọi trên animationEvent
+    public void CalculateDMG_NA()
+    {
+        var _level = enemyController.FindLevelIndex();
+        var _percent = enemyController.EnemyConfig.NormalAttackMultiplier[_attackCounter].Multiplier[_level];
+        enemyController.ConvertDMG(_percent);
+    }
+    public void CalculateDMG_CA() { }
+    public void CalculateDMG_EK()
+    {
+        var _level = enemyController.FindLevelIndex();
+        var _percent = enemyController.EnemyConfig.SkillMultiplier[0].Multiplier[_level];
+        enemyController.ConvertDMG(_percent);
+    }
+    public void CalculateDMG_EB()
+    {
+        var _level = enemyController.FindLevelIndex();
+        var _percent = enemyController.EnemyConfig.SpecialMultiplier[0].Multiplier[_level];
+        enemyController.ConvertDMG(_percent);
+    }
 }

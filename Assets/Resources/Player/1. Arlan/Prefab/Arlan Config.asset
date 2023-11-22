@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Arlan
   Level: 1
   Infor: 
-  MaxHealth: 200
+  MaxHealth: 200000
   ATK: 47
   CRITRate: 5
   CRITDMG: 50

@@ -232,7 +232,7 @@ public class LynxController : PlayerController
         _effects.TurnOffFxHold();
     }
 
-    protected override void CalculateDMG_CA()
+    public override void CalculateDMG_CA()
     {
         // tìm %DMG dựa theo thời gian Holding, % tối đa = PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1]
         _calculatedDamage = Calculation(_damageBonus);

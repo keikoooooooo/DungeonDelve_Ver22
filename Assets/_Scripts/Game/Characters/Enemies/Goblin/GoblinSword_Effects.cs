@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoblinSword_Effects : MonoBehaviour
+public class GoblinSword_Effects : MonoBehaviour, ICalculateDMG
 {
     public EnemyController enemyController;
     
@@ -25,6 +25,7 @@ public class GoblinSword_Effects : MonoBehaviour
     private ObjectPooler<Reference> _poolHit;
     private Transform slotsVFX;
 
+    private int _attackCounter;
     private Vector3 _posEffect;    // vị trí effect
     private Quaternion _rotEffect; // góc quay effect
 
@@ -83,5 +84,16 @@ public class GoblinSword_Effects : MonoBehaviour
     
     
     public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
-    
+
+
+    public void SetAttackCounter(int count) => _attackCounter = count; // Set đòn đánh thứ (x), gọi trên animationEvent
+    public void CalculateDMG_NA()
+    {
+        var _level = enemyController.FindLevelIndex();
+        var _percent = enemyController.EnemyConfig.NormalAttackMultiplier[_attackCounter].Multiplier[_level];
+        enemyController.ConvertDMG(_percent);
+    }
+    public void CalculateDMG_CA() { }
+    public void CalculateDMG_EK() { }
+    public void CalculateDMG_EB() { }
 }

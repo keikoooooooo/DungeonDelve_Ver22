@@ -98,28 +98,14 @@ public class EnemyController : MonoBehaviour, IDamageable
             SetTakeDMG(true);
         }
     }
-
-        
-    // Damage Calculation - Tính và gán sát thường đầu ra 
-    public void CalculateDMG_NA(AnimationEvent eEvent)
-    {
-        var _level = FindLevelIndex();
-        var _percent = EnemyConfig.NormalAttackMultiplier[eEvent.intParameter].Multiplier[_level];
-        CalculatedDamage = Calculation(_percent);
-    }
-    public void CalculateDMG_EK(AnimationEvent eEvent)
-    {
-        var _level = FindLevelIndex();
-        var _percent = EnemyConfig.SkillMultiplier[eEvent.intParameter].Multiplier[_level];
-        CalculatedDamage = Calculation(_percent);
-    }
-    public void CalculateDMG_EB(AnimationEvent eEvent)
-    {
-        var _level = FindLevelIndex();
-        var _percent = EnemyConfig.SpecialMultiplier[eEvent.intParameter].Multiplier[_level];
-        CalculatedDamage = Calculation(_percent);
-    }
-    private int FindLevelIndex() // Tìm %ATK cộng thêm của dựa trên level hiện tại của enemy 
+    #endregion
+    
+    
+    /// <summary>
+    /// Tìm Index của %ATK cộng thêm dựa trên level hiện tại của enemy 
+    /// </summary>
+    /// <returns></returns>
+    public int FindLevelIndex()
     {
         var _level = 0;
         for (var i = 0; i < _enemyLevel.Count; i++)
@@ -130,16 +116,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
         return _level;
     }
-    
+
     /// <summary>
-    /// Tính sát thương đầu ra theo phần trăm * ATK của player
+    /// Chuyển đổi phần trăm (%) vừa tính thành sát thương đầu ra của Enemy
     /// </summary>
     /// <param name="_percent"> Phần trăm sát thương. </param>
-    /// <returns></returns>
-    private int Calculation(float _percent) => Mathf.CeilToInt(EnemyConfig.ATK * (_percent / 100.0f));
-    
-    #endregion
-
- 
+    public void ConvertDMG(float _percent) => CalculatedDamage = Mathf.CeilToInt(EnemyConfig.ATK * (_percent / 100.0f));
 
 }

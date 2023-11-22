@@ -16,7 +16,7 @@ MonoBehaviour:
   Level: 2
   Infor: 
   MaxHealth: 200
-  ATK: 15
+  ATK: 40
   CRITRate: 5
   CRITDMG: 50
   DEF: 50
@@ -25,3 +25,18 @@ MonoBehaviour:
   NormalAttackCD: 6
   SkillAttackCD: 8
   SpecialAttackCD: 10
+  NormalAttackMultiplier:
+  - MultiplierTypeName: Attack 0
+    Multiplier:
+    - 28.39
+    - 31.38
+    - 34.85
+    - 38.12
+    - 42.58
+    - 45.01
+    - 48.81
+    - 52.18
+    - 55.39
+    - 59.76
+  SkillMultiplier: []
+  SpecialMultiplier: []

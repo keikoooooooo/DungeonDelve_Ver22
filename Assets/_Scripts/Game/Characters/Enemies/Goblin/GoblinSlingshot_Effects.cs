@@ -2,16 +2,14 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class GoblinSlingshot_Effects : MonoBehaviour
+public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
 {
     public EnemyController enemyController;
-    
-    [Tooltip("Điểm xuất hiện effect")]
-    public Transform effectPoint;
 
-    [Header("Prefab projectile")] 
-    public EffectBase projectilePrefab;
-    
+    [Tooltip("Điểm xuất hiện effect")] public Transform effectPoint;
+
+    [Header("Prefab projectile")] public EffectBase projectilePrefab;
+
     private ObjectPooler<EffectBase> _poolProjectile;
     private Transform slotsVFX;
 
@@ -20,14 +18,12 @@ public class GoblinSlingshot_Effects : MonoBehaviour
     {
         InitValue();
     }
+
     private void OnEnable()
     {
         RegisterEvents();
     }
-    private void Start()
-    {
-        
-    }
+
     private void OnDisable()
     {
         UnRegisterEvents();
@@ -39,6 +35,7 @@ public class GoblinSlingshot_Effects : MonoBehaviour
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
         _poolProjectile = new ObjectPooler<EffectBase>(projectilePrefab, slotsVFX, 5);
     }
+
     private void RegisterEvents()
     {
         foreach (var VARIABLE in _poolProjectile.Pool)
@@ -46,6 +43,7 @@ public class GoblinSlingshot_Effects : MonoBehaviour
             VARIABLE.detectionType.CollisionEnterEvent.AddListener(enemyController.CauseDMG);
         }
     }
+
     private void UnRegisterEvents()
     {
         foreach (var VARIABLE in _poolProjectile.Pool)
@@ -54,8 +52,6 @@ public class GoblinSlingshot_Effects : MonoBehaviour
         }
     }
 
-
-    
 
     public void EffectAttack()
     {
@@ -67,7 +63,13 @@ public class GoblinSlingshot_Effects : MonoBehaviour
     }
 
 
-    
-    
-    
+    public void CalculateDMG_NA()
+    {
+        var _level = enemyController.FindLevelIndex();
+        var _percent = enemyController.EnemyConfig.NormalAttackMultiplier[0].Multiplier[_level];
+        enemyController.ConvertDMG(_percent);
+    }
+    public void CalculateDMG_CA() { }
+    public void CalculateDMG_EK() { }
+    public void CalculateDMG_EB() { }
 }

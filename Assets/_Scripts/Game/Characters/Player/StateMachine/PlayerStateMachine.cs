@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
+public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculateDMG
 {
     #region Variables
     [Header("BaseClass -------")]
@@ -107,10 +107,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleMovement();
         
         HandleRotation();
-        
-        if(Input.GetKeyDown(KeyCode.Alpha1)) TakeDMG(100, true);
-        if(Input.GetKeyDown(KeyCode.Alpha2)) TakeDMG(100, false);
-        
     }
     private void OnDisable()
     {
@@ -208,7 +204,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
             inputs.space = false;
             _pressedJump = true;
         }
-
         _jumpVelocity += _gravity * Time.deltaTime;
     }
     private void HandleRotation()
@@ -250,7 +245,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         
         iDamageable.TakeDMG(_calculatedDamage, _isCrit);
     }
-    public void TakeDMG(int _damage, bool _isCRIT)
+    public void TakeDMG(int _damage, bool _isCRIT) 
     {
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.DEF * 0.5f) : PlayerConfig.DEF;
@@ -268,22 +263,19 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
             Die();
             return;
         }
-        
-        if (animator.IsTag(1, "Damage") || !IsGrounded)
-        {
-            return;
-        }
 
         HandleDamage();
+        
+        if(_handleDamageCoroutine != null) StopCoroutine(_handleDamageCoroutine);
         if (_isCRIT)
         {
             animator.SetTrigger(IDDamageFall);
-            if(_handleDamageCoroutine != null) StopCoroutine(HandleDamageCoroutine());
-            _handleDamageCoroutine = StartCoroutine(HandleDamageCoroutine());
+            _handleDamageCoroutine = StartCoroutine(HandleDamageCoroutine(.35f, 8));
         }
         else
         {
             animator.SetTrigger(IDDamageStand);
+            _handleDamageCoroutine = StartCoroutine(HandleDamageCoroutine(.2f,1.5f));
         }
         
         CanMove = false;
@@ -291,13 +283,11 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         CanRotation = false;
     }
 
-    private IEnumerator HandleDamageCoroutine()
+    private IEnumerator HandleDamageCoroutine(float _timePush, float _force)
     {
-        var _timePush = .35f;
-        var _pushSpeed = 8f;
         while (_timePush > 0)
         {
-           var _pushVelocity = -model.forward * _pushSpeed;
+           var _pushVelocity = -model.forward * _force;
             characterController.Move(_pushVelocity * Time.deltaTime + new Vector3(0f, -9.81f, 0f) * Time.deltaTime);
             
             _timePush -= Time.deltaTime;
@@ -307,9 +297,16 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public void Die()
     {
         CanControl = false;
-        animator.SetBool(IDDead, true);
         characterController.enabled = false;
-        Invoke(nameof(DeadDissolve), 2f);
+        _jumpVelocity = -9.81f;
+        if(_handleDamageCoroutine != null) StopCoroutine(_handleDamageCoroutine);
+        if (IsGrounded)
+        {
+            Invoke(nameof(DeadDissolve), 2f);
+            animator.SetBool(IDDead, true);
+            return;
+        }
+        DeadDissolve();
     }
     private void DeadDissolve()
     {
@@ -320,24 +317,20 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         
         setDissolve.ChangeCurrentValue(0);
         setDissolve.ChangeValueSet(1);
-        setDissolve.ChangeDurationApply(4.5f);
+        setDissolve.ChangeDurationApply(3f);
         setDissolve.Apply();
     }
     #endregion
 
     
     #region Event Callback
-
     public void OnDashEvent() => E_Dash?.Invoke();
     protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.SkillCD);
     protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.SpecialCD);
     #endregion
     
     
-    /// <summary>
-    /// Giải phóng tất cả trạng thái khi nhảy, lướt,
-    /// </summary>
-    public abstract void ReleaseAction();
+
 
     /// <summary>
     /// Khi nhận sát thương, nếu nhân vật cần thực hiện hành vi thì Override lại
@@ -345,21 +338,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     protected virtual void HandleDamage() { }
     
     /// <summary>
-    /// Tính sát thương của Normal Attack
-    /// </summary>  
-    protected abstract void CalculateDMG_NA();
-    /// <summary>
-    /// Tính sát thương của Charged Attack
+    /// Giải phóng tất cả trạng thái khi nhảy, lướt,
     /// </summary>
-    protected abstract void CalculateDMG_CA();
-    /// <summary>
-    /// Tính sát thương của Elemental Skill
-    /// </summary>
-    protected abstract void CalculateDMG_EK();
-    /// <summary>
-    /// Tính sát thương của Elemental Burst
-    /// </summary>
-    protected abstract void CalculateDMG_EB();
+    public abstract void ReleaseAction();    
+    public abstract void CalculateDMG_NA();
+    public abstract void CalculateDMG_CA();
+    public abstract void CalculateDMG_EK();
+    public abstract void CalculateDMG_EB();
     
 }
 

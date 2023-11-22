@@ -210,23 +210,23 @@ public abstract class PlayerController : PlayerStateMachine
 
     
     #region Damage Calculation
-    protected override void CalculateDMG_NA()
+    public override void CalculateDMG_NA()
     {
         // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ n
         var _percent = PlayerConfig.NormalAttackMultiplier[_attackCounter].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
         _calculatedDamage = Calculation(_percent); 
     }
-    protected override void CalculateDMG_CA()
+    public override void CalculateDMG_CA()
     {
         var _percent = PlayerConfig.ChargedAttackMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
         _calculatedDamage = Calculation(_percent);
     }
-    protected override void CalculateDMG_EK()
+    public override void CalculateDMG_EK()
      {
          var _percent = PlayerConfig.SkillMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; 
          _calculatedDamage = Calculation(_percent); 
      }   
-    protected override void CalculateDMG_EB()
+    public override void CalculateDMG_EB()
     {
         var _percent = PlayerConfig.SpecialMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
         _calculatedDamage = Calculation(_percent); 
@@ -249,7 +249,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanMove = true;
         CanRotation = true;
     }
-    private void SkillEnd()
+    protected virtual void SkillEnd()
     {
         inputs.e = false;
         
