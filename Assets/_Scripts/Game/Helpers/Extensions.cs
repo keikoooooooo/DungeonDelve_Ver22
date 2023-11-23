@@ -32,6 +32,15 @@ public static class Extensions
     /// <returns></returns>
     public static float Length(this AnimatorOverrideController _overrideController, string _slotName)
         => _overrideController[_slotName].length;
+
+
+    /// <summary>
+    /// Trả về độ dài của animationClip hiện tại trên Layer được chỉ định
+    /// </summary>
+    /// <param name="layerIndex"> Layer cần lấy độ dài của animationClip </param>
+    /// <returns></returns>
+    public static float Length(this Animator _animator, int layerIndex)
+        => _animator.GetCurrentAnimatorStateInfo(layerIndex).length;
     
     /// <summary>
     /// Trả về True nếu Tag của animation hiện tại đang chạy giống với Tag của paramater

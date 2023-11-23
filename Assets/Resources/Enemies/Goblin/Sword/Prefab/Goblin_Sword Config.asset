@@ -17,7 +17,7 @@ MonoBehaviour:
   Infor: 
   MaxHealth: 200
   ATK: 40
-  CRITRate: 5
+  CRITRate: 90
   CRITDMG: 50
   DEF: 50
   WalkSpeed: 2.5

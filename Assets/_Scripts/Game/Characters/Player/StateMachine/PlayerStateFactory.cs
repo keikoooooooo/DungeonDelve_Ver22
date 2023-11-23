@@ -8,7 +8,10 @@ public class PlayerStateFactory
         Walk,
         Run,
         RunFast,
-        Dash
+        Dash,
+        DamageStand,
+        DamageFall,
+        Dead
     }
     
     private readonly Dictionary<PlayerState, PlayerBaseState> _states = new ();
@@ -20,6 +23,9 @@ public class PlayerStateFactory
         _states.Add(PlayerState.Run, new PlayerRunState(currentContext, this));
         _states.Add(PlayerState.RunFast, new PlayerRunFastState(currentContext, this));
         _states.Add(PlayerState.Dash, new PlayerDashState(currentContext, this));
+        _states.Add(PlayerState.DamageStand, new PlayerDamageStandState(currentContext, this));
+        _states.Add(PlayerState.DamageFall, new PlayerDamageFallState(currentContext, this));
+        _states.Add(PlayerState.Dead, new PlayerDeadState(currentContext, this));
     }
 
     public PlayerBaseState Idle()    => _states[PlayerState.Idle];
@@ -27,6 +33,8 @@ public class PlayerStateFactory
     public PlayerBaseState Run()     => _states[PlayerState.Run];
     public PlayerBaseState RunFast() => _states[PlayerState.RunFast];
     public PlayerBaseState Dash()    => _states[PlayerState.Dash];
+    public PlayerBaseState DamageStand() => _states[PlayerState.DamageStand];
+    public PlayerBaseState DamageFall() => _states[PlayerState.DamageFall];
+    public PlayerBaseState Dead() => _states[PlayerState.Dead];
 
-    
 }

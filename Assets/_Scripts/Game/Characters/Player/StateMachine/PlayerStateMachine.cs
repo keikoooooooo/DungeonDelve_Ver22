@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,16 +19,16 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     public Vector3 AppliedMovement { get; set; }
     public Vector3 InputMovement { get; set; }
     
-    protected bool IsGrounded => characterController.isGrounded;
+    public bool IsGrounded => characterController.isGrounded;
     public bool CanControl { get; set; } // nhân vật có thể điều khiển ?
     protected bool CanMove { get; set; }
     protected bool CanRotation { get; set; }
     protected bool CanAttack { get; set; }
     public bool IsIdle => inputs.move.magnitude == 0;
-    public bool IsJump => inputs.space && !inputs.leftShift && !animator.IsTag(1, "Damage");
-    public bool IsWalk => !IsIdle && _movementState == MovementState.StateWalk;
-    public bool IsRun => !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
-    public bool IsDash => inputs.leftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.DashEnergy;
+    public bool IsJump => CanControl && inputs.space && !inputs.leftShift && !animator.IsTag(1, "Damage");
+    public bool IsWalk => CanControl && !IsIdle && _movementState == MovementState.StateWalk;
+    public bool IsRun => CanControl && !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
+    public bool IsDash => CanControl && inputs.leftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.DashEnergy;
 
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
@@ -78,13 +77,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     [HideInInspector] private bool _pressedJump;
     [HideInInspector] private float _jumpVelocity;
     [HideInInspector] private float _jumpCD_Temp;
+    [HideInInspector] private float _delayIncreaseST;
     [HideInInspector] protected float _skillCD_Temp;
     [HideInInspector] protected float _specialCD_Temp;
     [HideInInspector] protected int _calculatedDamage;
-    
-    // Coroutine
-    private Coroutine _handleSTCoroutine;
-    private Coroutine _handleDamageCoroutine;
     #endregion
 
 
@@ -102,11 +98,15 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         
         CurrentState.UpdateState();
         
+        if(!CanControl) return;
+        
         HandleJumping();
         
         HandleMovement();
         
         HandleRotation();
+
+        HandleStamina();
     }
     private void OnDisable()
     {
@@ -140,9 +140,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         CanIncreaseST = true;
         _movementState = MovementState.StateRun;
         characterController.enabled = true;
-        
-        if (_handleSTCoroutine != null) StopCoroutine(_handleSTCoroutine);
-        _handleSTCoroutine = StartCoroutine(IncreaseSTCoroutine());
         
         // Event
         DamageableData.Add(gameObject, this);
@@ -214,18 +211,19 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         var rotation = Quaternion.LookRotation(InputMovement, Vector3.up);
         model.rotation = Quaternion.RotateTowards(model.rotation, rotation, 1000 * Time.deltaTime);
     }
-    
-    public IEnumerator IncreaseSTCoroutine()
+    private void HandleStamina()
     {
-        while (true)
+        if(!CanIncreaseST || Stamina.CurrentValue >= PlayerConfig.MaxStamina) return;
+
+        if (_delayIncreaseST > 0)
         {
-            if (Stamina.CurrentValue <= 100 && CanIncreaseST)
-            {
-                Stamina.Increase(2);
-            }
-            yield return new WaitForSeconds(.15f);
+            _delayIncreaseST -= Time.deltaTime;
+            return;
         }
-    } 
+
+        _delayIncreaseST = .15f;
+        Stamina.Increase(2);
+    }
     
     
     #region HandleDMG
@@ -262,66 +260,17 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         
         if (Health.CurrentValue <= 0)
         {
-            Die();
+            CurrentState.SwitchState(_state.Dead());
             return;
         }
 
         HandleDamage();
-        
-        if(_handleDamageCoroutine != null) StopCoroutine(_handleDamageCoroutine);
-        if (_isCRIT)
-        {
-            animator.SetTrigger(IDDamageFall);
-            _handleDamageCoroutine = StartCoroutine(HandleDamageCoroutine(.35f, 8));
-        }
-        else
-        {
-            animator.SetTrigger(IDDamageStand);
-            _handleDamageCoroutine = StartCoroutine(HandleDamageCoroutine(.2f,1.5f));
-        }
-        
+        CurrentState.SwitchState(_isCRIT ? _state.DamageFall() : _state.DamageStand());
         CanMove = false;
         CanAttack = false;
         CanRotation = false;
     }
-
-    private IEnumerator HandleDamageCoroutine(float _timePush, float _force)
-    {
-        while (_timePush > 0)
-        {
-           var _pushVelocity = -model.forward * _force;
-            characterController.Move(_pushVelocity * Time.deltaTime + new Vector3(0f, -9.81f, 0f) * Time.deltaTime);
-            
-            _timePush -= Time.deltaTime;
-            yield return null;
-        }
-    }
-    public void Die()
-    {
-        CanControl = false;
-        characterController.enabled = false;
-        _jumpVelocity = -9.81f;
-        if(_handleDamageCoroutine != null) StopCoroutine(_handleDamageCoroutine);
-        if (IsGrounded)
-        {
-            Invoke(nameof(DeadDissolve), 2f);
-            animator.SetBool(IDDead, true);
-            return;
-        }
-        DeadDissolve();
-    }
-    private void DeadDissolve()
-    {
-        setEmission.ChangeCurrentIntensity(-3f);   
-        setEmission.ChangeIntensitySet(5f);
-        setEmission.ChangeDurationApply(.15f);
-        setEmission.Apply();
-        
-        setDissolve.ChangeCurrentValue(0);
-        setDissolve.ChangeValueSet(1);
-        setDissolve.ChangeDurationApply(3f);
-        setDissolve.Apply();
-    }
+    public void SwitchIdleState() => CurrentState.SwitchState(_state.Idle());    
     #endregion
 
     
@@ -331,8 +280,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.SpecialCD);
     #endregion
     
-    
-
 
     /// <summary>
     /// Khi nhận sát thương, nếu nhân vật cần thực hiện hành vi thì Override lại
@@ -350,10 +297,3 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     
 }
 
-
-[Serializable]
-public struct EffectOffset
-{
-    public Vector3 position;
-    public Vector3 rotation;
-}

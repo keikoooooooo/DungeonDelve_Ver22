@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Lynx
   Level: 1
   Infor: 
-  MaxHealth: 200
+  MaxHealth: 200000
   ATK: 70
   CRITRate: 5
   CRITDMG: 50

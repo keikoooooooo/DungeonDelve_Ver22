@@ -5,6 +5,6 @@ public class ExperienceBuff : BuffEffect
 {
     public override void Apply(PlayerStateMachine _player)
     {
-        
+        //_player.PlayerConfig.ex
     }
 }

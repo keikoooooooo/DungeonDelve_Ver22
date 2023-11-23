@@ -54,7 +54,7 @@ public class LynxEffects : MonoBehaviour
     private void InitValue()
     {
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform; 
-        _poolNormalArrow = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsVFX, 15);
+        _poolNormalArrow = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsVFX, 25);
         _poolChargedArrow = new ObjectPooler<EffectBase>(chargedPrefab, slotsVFX, 8);
         _poolChargedNoFullyArrow = new ObjectPooler<EffectBase>(chargedNoFullyPrefab, slotsVFX, 8);
         effectSpecial.transform.SetParent(slotsVFX);
@@ -143,15 +143,15 @@ public class LynxEffects : MonoBehaviour
         
         // Out
         var maxRadius = 3f;
-        for (var i = 0; i < 20; i++)
+        for (var i = 0; i < 30; i++)
         {
             // lấy 1 vị tri ngẫu nhiên trong bán kính maxRadius
             var randomPoint = Random.insideUnitCircle * maxRadius;
             
             // Từ vị trí xuất hiện và vị trí mục tiêu tìm ngẫu nhiên 1 vị trí mới trong bk vừa tìm đc
             var currentPos = transform.position + new Vector3(randomPoint.x, 7f, randomPoint.y);
-            var targetPos = lynxController.indicatorQ.transform.position + new Vector3(randomPoint.x, Random.Range(-.5f, .5f), randomPoint.y);
-   
+            var targetPos = lynxController.indicatorQ.transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
+            
             var arrow = _poolChargedArrow.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
             arrow.FIRE();
             yield return new WaitForSeconds(0.1f);

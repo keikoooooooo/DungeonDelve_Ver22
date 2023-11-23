@@ -19,8 +19,6 @@ public class ArlanController : PlayerController
     
     protected override void Update()
     {
-        if(!CanControl) return;
-
         base.Update();
         
         HandleAttack();

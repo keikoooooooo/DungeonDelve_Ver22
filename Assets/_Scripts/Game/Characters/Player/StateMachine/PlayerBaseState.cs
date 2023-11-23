@@ -44,7 +44,7 @@ public abstract class PlayerBaseState
     /// Đổi và cập nhật trạng thái mới vào StateMachine của player
     /// </summary>
     /// <param name="newState"> Trạng thái cần đổi </param>
-    protected void SwitchState(PlayerBaseState newState)
+    public void SwitchState(PlayerBaseState newState)
     {
         // Thoát State, bất kể trạng thái nào.
         ExitState();

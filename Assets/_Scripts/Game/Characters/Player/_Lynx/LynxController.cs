@@ -45,8 +45,6 @@ public class LynxController : PlayerController
     
     protected override void Update()
     {
-        if(!CanControl) return;
-        
         base.Update();
         
         HandleAttack();
@@ -61,6 +59,7 @@ public class LynxController : PlayerController
         
         _lockCrosshair = false;
         crosshair.gameObject.SetActive(false);
+        indicatorQ.transform.SetParent(null);
     }
 
     private void CheckCrosshair()

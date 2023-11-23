@@ -13,7 +13,6 @@ public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
     public ParticleSystem hit;
 
     
-
     protected enum ActiveType
     {
         Enable,
@@ -46,7 +45,6 @@ public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
                 break;
         }
     }
-
     
     /// <summary>
     /// Set Active của Effect Projectile theo Parameter
@@ -69,8 +67,7 @@ public abstract class EffectBase : MonoBehaviour, IPooled<EffectBase>
                 break;
         }
     }
-
-
+    
     /// <summary>
     /// Set Active của Effect Hit theo Parameter tại vị trí Pos
     /// </summary>

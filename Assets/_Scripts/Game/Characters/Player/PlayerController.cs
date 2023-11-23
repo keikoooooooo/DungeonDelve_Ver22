@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[Serializable]
+public struct EffectOffset
+{
+    public Vector3 position;
+    public Vector3 rotation;
+}
 public enum PushDirectionEnum
 {
     Forward,
@@ -72,7 +79,7 @@ public abstract class PlayerController : PlayerStateMachine
             AttackEnd();
         }
         
-        if(!CanAttack || !IsGrounded) return;
+        if(!CanAttack || !IsGrounded || !CanControl) return;
         
         Attack();
         ElementalSkill();
