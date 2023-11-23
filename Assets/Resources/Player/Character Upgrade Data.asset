@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a7e38069a31c004aa187e49dba98df4, type: 3}
+  m_Name: Character Upgrade Data
+  m_EditorClassIdentifier: 
+  LevelingTextAsset: {fileID: 4900000, guid: fbf6d9971e4474b4e86d6d50733e0b69, type: 3}
+  defaultDatas:
+  - Level: 1
+    EXP: 1000
+  - Level: 2
+    EXP: 1325
+  - Level: 3
+    EXP: 1700
+  - Level: 4
+    EXP: 2150
+  - Level: 5
+    EXP: 2625
+  - Level: 6
+    EXP: 3150
+  - Level: 7
+    EXP: 3725
+  - Level: 8
+    EXP: 4350
+  - Level: 9
+    EXP: 5000
+  - Level: 10
+    EXP: 5700
+  - Level: 11
+    EXP: 6450
+  - Level: 12
+    EXP: 7225
+  - Level: 13
+    EXP: 8050
+  - Level: 14
+    EXP: 8925
+  - Level: 15
+    EXP: 9825
+  - Level: 16
+    EXP: 10750
+  - Level: 17
+    EXP: 11725
+  - Level: 18
+    EXP: 12725
+  - Level: 19
+    EXP: 13775
+  - Level: 20
+    EXP: 14875
+  - Level: 21
+    EXP: 16800
+  - Level: 22
+    EXP: 18000
+  - Level: 23
+    EXP: 19250
+  - Level: 24
+    EXP: 20550
+  - Level: 25
+    EXP: 21875
+  - Level: 26
+    EXP: 23250
+  - Level: 27
+    EXP: 24650
+  - Level: 28
+    EXP: 26100
+  - Level: 29
+    EXP: 27575
+  - Level: 30
+    EXP: 29100
+  - Level: 31
+    EXP: 30650
+  - Level: 32
+    EXP: 32250
+  - Level: 33
+    EXP: 33875
+  - Level: 34
+    EXP: 35550
+  - Level: 35
+    EXP: 37250
+  - Level: 36
+    EXP: 38975
+  - Level: 37
+    EXP: 40750
+  - Level: 38
+    EXP: 42575
+  - Level: 39
+    EXP: 44425
+  - Level: 40
+    EXP: 46300
+  - Level: 41
+    EXP: 50625
+  - Level: 42
+    EXP: 52700
+  - Level: 43
+    EXP: 54775
+  - Level: 44
+    EXP: 56900
+  - Level: 45
+    EXP: 59075
+  - Level: 46
+    EXP: 61275
+  - Level: 47
+    EXP: 63525
+  - Level: 48
+    EXP: 65800
+  - Level: 49
+    EXP: 68125
+  - Level: 50
+    EXP: 70475
+  - Level: 51
+    EXP: 76500
+  - Level: 52
+    EXP: 79050
+  - Level: 53
+    EXP: 81650
+  - Level: 54
+    EXP: 84275
+  - Level: 55
+    EXP: 86950
+  - Level: 56
+    EXP: 89650
+  - Level: 57
+    EXP: 92400
+  - Level: 58
+    EXP: 95175
+  - Level: 59
+    EXP: 98000
+  - Level: 60
+    EXP: 100875
+  - Level: 61
+    EXP: 108950
+  - Level: 62
+    EXP: 112050
+  - Level: 63
+    EXP: 115175
+  - Level: 64
+    EXP: 118325
+  - Level: 65
+    EXP: 121525
+  - Level: 66
+    EXP: 124775
+  - Level: 67
+    EXP: 128075
+  - Level: 68
+    EXP: 131400
+  - Level: 69
+    EXP: 134775
+  - Level: 70
+    EXP: 138175
+  - Level: 71
+    EXP: 148700
+  - Level: 72
+    EXP: 152375
+  - Level: 73
+    EXP: 156075
+  - Level: 74
+    EXP: 159825
+  - Level: 75
+    EXP: 163600
+  - Level: 76
+    EXP: 167425
+  - Level: 77
+    EXP: 171300
+  - Level: 78
+    EXP: 175225
+  - Level: 79
+    EXP: 179175
+  - Level: 80
+    EXP: 183175
+  - Level: 81
+    EXP: 216225
+  - Level: 82
+    EXP: 243025
+  - Level: 83
+    EXP: 273100
+  - Level: 84
+    EXP: 306800
+  - Level: 85
+    EXP: 344600
+  - Level: 86
+    EXP: 386950
+  - Level: 87
+    EXP: 434425
+  - Level: 88
+    EXP: 487625
+  - Level: 89
+    EXP: 547200
+  - Level: 90
+    EXP: 999452800

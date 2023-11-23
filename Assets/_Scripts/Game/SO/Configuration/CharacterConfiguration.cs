@@ -9,14 +9,6 @@ public class FloatMultiplier
     public List<float> Multiplier;
 }
 
-
-[Serializable]
-public class ItemUpgrade
-{
-    public int Value;
-    public ItemType Type;
-}
-
 public class CharacterConfiguration : ScriptableObject
 {
     [Header("INFORMATION")]
@@ -25,6 +17,9 @@ public class CharacterConfiguration : ScriptableObject
 
     [Tooltip("Cấp nhân vật")] 
     public int Level;
+
+    [Tooltip("Kinh nghiệm hiện tại của nhân vật")]
+    public int CurrentEXP;
     
     [Tooltip("Giới thiệu nhân vật")] 
     public string Infor;
@@ -51,6 +46,5 @@ public class CharacterConfiguration : ScriptableObject
     
     [Tooltip("Tốc độ chạy")]  
     public float RunSpeed = 4f;
-    
 
 }

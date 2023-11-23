@@ -12,7 +12,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     public CharacterController characterController;
     
     #region Get & Set Property
-    [field: SerializeField] public PlayerConfiguration PlayerConfig { get; private set; }
+    public PlayerDataHandle PlayerData;
+    public PlayerConfiguration PlayerConfig => PlayerData.PlayerConfig;
     public StatusHandle Health { get; private set; }
     public StatusHandle Stamina { get; private set; }
     public PlayerBaseState CurrentState { get; set; }
@@ -82,8 +83,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     [HideInInspector] protected float _specialCD_Temp;
     [HideInInspector] protected int _calculatedDamage;
     #endregion
-
-
+    
     private void Awake()
     {
         GetReference();

@@ -15,3 +15,4 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 0cc10918b747c234397ad20ff7e34a06, type: 3}
   Description: Increases Character EXP by 1000.
   Value: 1000
+  UpgradeCost: 250
