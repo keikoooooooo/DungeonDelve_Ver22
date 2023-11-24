@@ -60,14 +60,14 @@ public class GameplayEditorWindow : EditorWindow
                 }
                 break;
             case 1:
-                _characterUpgradeData = EditorGUIUtility.Load("Assets/Resources/Player/Character Upgrade Data.asset") as CharacterUpgradeData;
-                ShowUpgradeDetails(_characterUpgradeData);
+                _upgradeData = EditorGUIUtility.Load("Assets/Resources/Player/Character Upgrade Data.asset") as UpgradeData;
+                ShowUpgradeDetails(_upgradeData);
                 break;
         }
     }
     
     private PlayerConfiguration arlanConfig;
-    private CharacterUpgradeData _characterUpgradeData;
+    private UpgradeData _upgradeData;
     private PlayerConfiguration lynxConfig;
     private void ShowPlayerConfig(PlayerConfiguration dataPlayerConfig) 
     {
@@ -401,11 +401,11 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.EndScrollView();
     }
 
-    private void ShowUpgradeDetails(CharacterUpgradeData characterUpgradeData)
+    private void ShowUpgradeDetails(UpgradeData upgradeData)
     {
-        if(_characterUpgradeData == null) 
+        if(_upgradeData == null) 
             return;
-        _characterUpgradeData.SetData();   
+        _upgradeData.SetData();   
         
         Space(10);
         GUILayout.BeginHorizontal();
@@ -415,12 +415,12 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
         
         scrollView = GUILayout.BeginScrollView(scrollView);
-        for (var i = 0; i < _characterUpgradeData.defaultDatas.Count; i++)
+        for (var i = 0; i < _upgradeData.defaultDatas.Count; i++)
         {
-            int totalEXP = i == 0 ? 0 : _characterUpgradeData.defaultDatas[i].EXP + _characterUpgradeData.defaultDatas[i - 1].EXP;
+            int totalEXP = i == 0 ? 0 : _upgradeData.defaultDatas[i].EXP + _upgradeData.defaultDatas[i - 1].EXP;
             GUILayout.BeginHorizontal();
-            _characterUpgradeData.defaultDatas[i].Level = EditorGUILayout.IntField("", _characterUpgradeData.defaultDatas[i].Level, Width(150));
-            _characterUpgradeData.defaultDatas[i].EXP = EditorGUILayout.IntField("", _characterUpgradeData.defaultDatas[i].EXP, Width(150));
+            _upgradeData.defaultDatas[i].Level = EditorGUILayout.IntField("", _upgradeData.defaultDatas[i].Level, Width(150));
+            _upgradeData.defaultDatas[i].EXP = EditorGUILayout.IntField("", _upgradeData.defaultDatas[i].EXP, Width(150));
             GUILayout.Box($"{totalEXP}" , Width(150));
             GUILayout.EndHorizontal();
         }

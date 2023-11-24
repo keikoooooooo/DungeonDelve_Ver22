@@ -2878,6 +2878,7 @@ GameObject:
   - component: {fileID: 1787091444842432457}
   - component: {fileID: 5471503419370806156}
   - component: {fileID: 1787091444842432454}
+  - component: {fileID: 5139688112690164920}
   m_Layer: 7
   m_Name: Arlan
   m_TagString: Player
@@ -3046,7 +3047,7 @@ MonoBehaviour:
   model: {fileID: 7101714960535657653}
   animator: {fileID: 1787091444842432457}
   characterController: {fileID: 1802613745807339804}
-  <PlayerConfig>k__BackingField: {fileID: 11400000, guid: b3465f53ee6eef34b95cff80710768c8, type: 2}
+  PlayerData: {fileID: 5139688112690164920}
   setEmission: {fileID: 6697748734349368505}
   setDissolve: {fileID: 5532174074674715041}
   IDSpeed: -823668238
@@ -3077,6 +3078,20 @@ MonoBehaviour:
   conversionTime: 20
   swordOnShoulder: {fileID: 1802613745006003178}
   sword: {fileID: 668992469876404971}
+--- !u!114 &5139688112690164920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5471503419370806157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444c015705f9caa479fab8cdcdaf6aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <UpgradeData>k__BackingField: {fileID: 11400000, guid: 7714e7e3de6a62b469215008daafd0b8, type: 2}
+  <PlayerConfig>k__BackingField: {fileID: 11400000, guid: b3465f53ee6eef34b95cff80710768c8, type: 2}
 --- !u!1 &5621947119810528533
 GameObject:
   m_ObjectHideFlags: 0
@@ -4830,15 +4845,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0048766606
+      value: 0.0048766616
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000023106392
+      value: -0.0000000028876859
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.1268338e-11
+      value: 1.4082436e-11
       objectReference: {fileID: 0}
     - target: {fileID: 5822535128316044608, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y
@@ -4878,15 +4893,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.074376285
+      value: 0.07437627
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1.5140395e-15
+      value: -0.000000007429944
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.9776165e-16
+      value: 5.5414634e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_RootOrder

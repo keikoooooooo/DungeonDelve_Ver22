@@ -34,16 +34,16 @@ public class AttackCustom
 public abstract class PlayerController : PlayerStateMachine
 {
     
-    [Space, Tooltip("Thêm lực đẩy vào character khi tấn công"), SerializeField] 
+    [Tooltip("Thêm lực đẩy vào character khi tấn công"), SerializeField] 
     private AttackCustom attackCustom;
+    public event Action<float> E_SkillCD; 
+    public event Action<float> E_SpecialCD;
     
     protected bool IsAttackPressed => inputs.leftMouse;
     protected bool IsSkillPressed => inputs.e && _skillCD_Temp <= 0;
     protected bool IsSpecialPressed => inputs.q && _specialCD_Temp <= 0;
-    public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding,
+    public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding
     public bool DetectionEnemy => _enemies.Count > 0;
-
-    private readonly List<GameObject> _enemies = new();
     
     
     // Player
@@ -52,10 +52,12 @@ public abstract class PlayerController : PlayerStateMachine
     [HideInInspector] protected int _attackCounter;        // số lần attackCombo
     [HideInInspector] protected bool _isAttackPressed;     // có nhấn attack k ?
     
+    private readonly List<GameObject> _enemies = new();
     private Coroutine _pushVelocityCoroutine;
     private Coroutine _pushMoveCoroutine;
     private Coroutine _rotateToTargetCoroutine;
 
+    
     protected override void SetVariables()
     {
         base.SetVariables();
@@ -149,7 +151,8 @@ public abstract class PlayerController : PlayerStateMachine
         CalculateDMG_EB();
         OnSpecialCooldownEvent();
     }
-
+    protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.SkillCD);
+    protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.SpecialCD);
     
 
     public void SetAttackCounter(int count) => _attackCounter = count; // gọi trên event animaiton
@@ -169,6 +172,7 @@ public abstract class PlayerController : PlayerStateMachine
             yield return null;
         }
     }
+    
     
     #region Xử lí xoay nhân vật về phía Enemy mỗi khi Attack
     public Transform FindClosestEnemy()
@@ -268,8 +272,6 @@ public abstract class PlayerController : PlayerStateMachine
         
         AttackEnd();
     }
-    
-    
     public override void ReleaseAction()
     {
         inputs.leftMouse = false;

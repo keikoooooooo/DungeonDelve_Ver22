@@ -62,8 +62,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     
     // Events
     public event Action E_Dash;
-    public event Action<float> E_SkillCD; 
-    public event Action<float> E_SpecialCD;
     
     // Player Config
     private PlayerStateFactory _state;
@@ -276,8 +274,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     
     #region Event Callback
     public void OnDashEvent() => E_Dash?.Invoke();
-    protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.SkillCD);
-    protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.SpecialCD);
     #endregion
     
 

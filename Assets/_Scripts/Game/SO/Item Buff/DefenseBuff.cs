@@ -11,7 +11,7 @@ public class DefenseBuff : BuffEffect
     private int _value;
     
     
-    public override void Apply(PlayerStateMachine _player)
+    public override void Apply(PlayerController _player)
     {
         _value = Mathf.CeilToInt(Value);
         

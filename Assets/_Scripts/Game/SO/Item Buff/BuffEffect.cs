@@ -11,5 +11,5 @@ public abstract class BuffEffect : ScriptableObject
     [Tooltip("Giá trị Buff cộng vào")]
     public float Value;
     
-    public abstract void Apply(PlayerStateMachine _player);
+    public abstract void Apply(PlayerController _player);
 }

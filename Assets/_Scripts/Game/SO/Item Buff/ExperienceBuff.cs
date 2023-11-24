@@ -7,7 +7,7 @@ public class ExperienceBuff : BuffEffect
     [Tooltip("Chi phí sử dụng Item nâng cấp")]
     public int UpgradeCost;
     
-    public override void Apply(PlayerStateMachine _player)
+    public override void Apply(PlayerController _player)
     {
         if(_player.PlayerData.UserData.GalacticGems < UpgradeCost) return;
 

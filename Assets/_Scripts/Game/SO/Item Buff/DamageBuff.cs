@@ -10,7 +10,7 @@ public class DamageBuff : BuffEffect
     private Coroutine _buffCoroutine;
     private int _value;
     
-    public override void Apply(PlayerStateMachine _player)
+    public override void Apply(PlayerController _player)
     {
         _value = Mathf.CeilToInt(Value);
         

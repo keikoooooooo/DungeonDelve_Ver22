@@ -4,7 +4,7 @@ using UnityEngine;
 public class HealthBuff : BuffEffect
 {
     
-    public override void Apply(PlayerStateMachine _player)
+    public override void Apply(PlayerController _player)
     {
         _player.Health.Increase(Mathf.CeilToInt(Value));    
     }

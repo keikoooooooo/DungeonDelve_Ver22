@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerHUD : MonoBehaviour
 {
-    [SerializeField, Required] private PlayerStateMachine player;
+    [SerializeField, Required] private PlayerController player;
 
     [SerializeField] private NameAndLevelText nameAndLevelText;
     
