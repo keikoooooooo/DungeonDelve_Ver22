@@ -35,8 +35,8 @@ TagManager:
   - Obstacle
   - Items
   - 
-  - Mesh_UI
-  - 
+  - MeshCharacter_UI
+  - MeshWeapon_UI
   - 
   - 
   - 
