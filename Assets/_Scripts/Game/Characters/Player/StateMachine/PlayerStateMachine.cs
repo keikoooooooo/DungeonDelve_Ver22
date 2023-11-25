@@ -117,8 +117,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         _mainCamera = Camera.main;
         _state = new PlayerStateFactory(this);
         characterController = GetComponent<CharacterController>();
-        Health = new StatusHandle(PlayerConfig.MaxHealth);
-        Stamina = new StatusHandle(PlayerConfig.MaxStamina);
+        Health = new StatusHandle(PlayerConfig.MaxHP);
+        Stamina = new StatusHandle(PlayerConfig.MaxST);
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     }
     private void HandleStamina()
     {
-        if(!CanIncreaseST || Stamina.CurrentValue >= PlayerConfig.MaxStamina) return;
+        if(!CanIncreaseST || Stamina.CurrentValue >= PlayerConfig.MaxST) return;
 
         if (_delayIncreaseST > 0)
         {

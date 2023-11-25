@@ -27,7 +27,7 @@ public class CharacterConfiguration : ScriptableObject
     
     [Header("CHARACTER STATS")]
     [Tooltip("Máu tối đa")] 
-    public int MaxHealth;
+    public int MaxHP;
     
     [Tooltip("Sát thương tấn công")] 
     public int ATK;

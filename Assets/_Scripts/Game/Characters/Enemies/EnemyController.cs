@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     private void Awake()
     {
-        Health = new StatusHandle(EnemyConfig.MaxHealth);
+        Health = new StatusHandle(EnemyConfig.MaxHP);
     }
     private void OnEnable()
     {

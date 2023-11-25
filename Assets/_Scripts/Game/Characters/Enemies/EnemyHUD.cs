@@ -14,7 +14,7 @@ public class EnemyHUD : MonoBehaviour
         nameAndLevelText.ChangeLevelText(enemy.EnemyConfig.Level);
         
         enemy.Health.E_OnValueChanged += healthBar.ChangedValue;
-        healthBar.Init(enemy.EnemyConfig.MaxHealth);
+        healthBar.Init(enemy.EnemyConfig.MaxHP);
     }
     private void OnDestroy()
     {

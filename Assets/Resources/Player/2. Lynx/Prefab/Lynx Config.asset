@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Lynx
   Level: 1
+  CurrentEXP: 0
   Infor: 
-  MaxHealth: 200000
+  MaxHP: 0
   ATK: 70
   CRITRate: 5
   CRITDMG: 50
@@ -23,13 +24,15 @@ MonoBehaviour:
   WalkSpeed: 1.7
   RunSpeed: 5.7
   RunFastSpeed: 8
-  MaxStamina: 100
+  MaxST: 100
   DashEnergy: 25
   JumpHeight: 1.4
-  WeaponLevel: 1
   JumpCD: 0.38
-  SkillCD: 15
-  SpecialCD: 12
+  ElementalSkillCD: 12
+  ElementalBurstlCD: 17
+  WeaponName: 
+  WeaponInfo: 
+  WeaponLevel: 1
   NormalAttackMultiplier:
   - MultiplierTypeName: 1 - Hit DMG (%)
     Multiplier:
@@ -142,125 +145,3 @@ MonoBehaviour:
     - 79.41
     - 83.49
     - 86.06
-  CharacterUpgrade:
-  - LevelUpgrade: 1
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 1000
-    MaterialsUpgrade:
-    - Value: 2
-      Type: 3
-  - LevelUpgrade: 2
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 2150
-    MaterialsUpgrade:
-    - Value: 3
-      Type: 3
-  - LevelUpgrade: 3
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 3350
-    MaterialsUpgrade:
-    - Value: 3
-      Type: 3
-  - LevelUpgrade: 4
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 4600
-    MaterialsUpgrade:
-    - Value: 4
-      Type: 3
-  - LevelUpgrade: 5
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 5900
-    MaterialsUpgrade:
-    - Value: 5
-      Type: 3
-  - LevelUpgrade: 6
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 7250
-    MaterialsUpgrade:
-    - Value: 5
-      Type: 3
-  - LevelUpgrade: 7
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 8650
-    MaterialsUpgrade:
-    - Value: 6
-      Type: 3
-  - LevelUpgrade: 8
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 10100
-    MaterialsUpgrade:
-    - Value: 6
-      Type: 3
-  - LevelUpgrade: 9
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 11600
-    MaterialsUpgrade:
-    - Value: 8
-      Type: 3
-  - LevelUpgrade: 10
-    UpgradeCost: 1000
-    MaxExperienceUpgrade: 13150
-    MaterialsUpgrade:
-    - Value: 10
-      Type: 3
-  WeaponUpgrade:
-  - LevelUpgrade: 1
-    UpgradeCost: 25000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 2
-      Type: 1
-  - LevelUpgrade: 2
-    UpgradeCost: 50000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 6
-      Type: 1
-  - LevelUpgrade: 3
-    UpgradeCost: 75000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 10
-      Type: 1
-  - LevelUpgrade: 4
-    UpgradeCost: 100000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 14
-      Type: 1
-  - LevelUpgrade: 5
-    UpgradeCost: 125000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 18
-      Type: 1
-  - LevelUpgrade: 6
-    UpgradeCost: 150000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 22
-      Type: 1
-  - LevelUpgrade: 7
-    UpgradeCost: 175000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 26
-      Type: 1
-  - LevelUpgrade: 8
-    UpgradeCost: 200000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 30
-      Type: 1
-  - LevelUpgrade: 9
-    UpgradeCost: 225000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 34
-      Type: 1
-  - LevelUpgrade: 10
-    UpgradeCost: 250000
-    MaxExperienceUpgrade: 0
-    MaterialsUpgrade:
-    - Value: 38
-      Type: 1

@@ -9,7 +9,7 @@ public class PlayerConfiguration : CharacterConfiguration
     [Tooltip("Tốc độ chạy nhanh")] 
     public float RunFastSpeed = 8f;
     [Tooltip("Sức bền tối đa")] 
-    public int MaxStamina = 100;
+    public int MaxST = 100;
     [Tooltip("Năng lượng cho mỗi lần lướt")]
     public int DashEnergy = 25;
     [Tooltip("Độ cao khi nhảy")] 
@@ -19,13 +19,20 @@ public class PlayerConfiguration : CharacterConfiguration
     [Tooltip("Thời gian nhảy cho lần tiếp theo")] 
     public float JumpCD;
     [Tooltip("Thời gian hồi kỹ năng (s)")] 
-    public float SkillCD;
+    public float ElementalSkillCD;
     [Tooltip("Thời gian hồi kỹ năng đặc biệt (s)")] 
-    public float SpecialCD;
+    public float ElementalBurstlCD;
+
+    [Header("WEAPON")] 
+    [Tooltip("Tên của vũ khí")]
+    public string WeaponName;
     
-    [Header("WEAPON STATS")]
+    [Tooltip("Thông tin của vũ khí")]
+    public string WeaponInfo;
+    
     [Tooltip("Cấp độ của vũ khí"), Range(1, 10)]
     public int WeaponLevel;
+
     
     [Header("ATTACK MULTIPLIER")]
     public List<FloatMultiplier> NormalAttackMultiplier;

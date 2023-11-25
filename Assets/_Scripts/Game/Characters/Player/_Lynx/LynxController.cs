@@ -200,7 +200,7 @@ public class LynxController : PlayerController
                 model.rotation = Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0);
                 animator.SetTrigger(IDSpecial);
                 
-                _specialCD_Temp = PlayerConfig.SpecialCD;
+                _specialCD_Temp = PlayerConfig.ElementalBurstlCD;
                 OnSpecialCooldownEvent();
                 yield break;
             }

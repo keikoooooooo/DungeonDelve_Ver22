@@ -134,7 +134,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanAttack = false;
         CanMove = false;
         CanRotation = false;
-        _skillCD_Temp = PlayerConfig.SkillCD;
+        _skillCD_Temp = PlayerConfig.ElementalSkillCD;
         
         CalculateDMG_EK();
         OnSkillCooldownEvent();
@@ -146,13 +146,13 @@ public abstract class PlayerController : PlayerStateMachine
         CanAttack = false;
         CanMove = false;
         CanRotation = false;
-        _specialCD_Temp = PlayerConfig.SpecialCD;
+        _specialCD_Temp = PlayerConfig.ElementalBurstlCD;
 
         CalculateDMG_EB();
         OnSpecialCooldownEvent();
     }
-    protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.SkillCD);
-    protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.SpecialCD);
+    protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.ElementalSkillCD);
+    protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.ElementalBurstlCD);
     
 
     public void SetAttackCounter(int count) => _attackCounter = count; // gọi trên event animaiton

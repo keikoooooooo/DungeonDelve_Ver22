@@ -89,8 +89,8 @@ public class GameplayEditorWindow : EditorWindow
         
         Space(30);
         GUILayout.Label("CHARACTER STATS ----------------------", EditorStyles.boldLabel);
-        dataPlayerConfig.MaxHealth = EditorGUILayout.IntField("Max HP", dataPlayerConfig.MaxHealth, Width(500));
-        dataPlayerConfig.MaxStamina = EditorGUILayout.IntField("Max ST", dataPlayerConfig.MaxStamina, Width(500));
+        dataPlayerConfig.MaxHP = EditorGUILayout.IntField("Max HP", dataPlayerConfig.MaxHP, Width(500));
+        dataPlayerConfig.MaxST = EditorGUILayout.IntField("Max ST", dataPlayerConfig.MaxST, Width(500));
         dataPlayerConfig.ATK = EditorGUILayout.IntField("ATK", dataPlayerConfig.ATK, Width(500));
         dataPlayerConfig.CRITRate = EditorGUILayout.FloatField("CRIT Rate(%)", dataPlayerConfig.CRITRate, Width(500));
         dataPlayerConfig.CRITDMG = EditorGUILayout.IntField("CRIT DMG(%)", dataPlayerConfig.CRITDMG, Width(500));
@@ -102,14 +102,16 @@ public class GameplayEditorWindow : EditorWindow
         dataPlayerConfig.JumpHeight = EditorGUILayout.FloatField("Jump Height", dataPlayerConfig.JumpHeight, Width(500));
 
         Space(30);
-        GUILayout.Label("WEAPON STATS -------------------------", EditorStyles.boldLabel); 
+        GUILayout.Label("WEAPON -------------------------", EditorStyles.boldLabel);
+        dataPlayerConfig.WeaponName = EditorGUILayout.TextField("Weapon Name", dataPlayerConfig.WeaponName, Width(500));
+        dataPlayerConfig.WeaponInfo = EditorGUILayout.TextField("Weapon Info", dataPlayerConfig.WeaponInfo, Width(500));
         dataPlayerConfig.WeaponLevel = EditorGUILayout.IntSlider("Weapon Level", dataPlayerConfig.WeaponLevel, 1, 10, Width(500));
         
         Space(30);
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);
         dataPlayerConfig.JumpCD = EditorGUILayout.FloatField("Jump CD(s)", dataPlayerConfig.JumpCD, Width(500));
-        dataPlayerConfig.SkillCD = EditorGUILayout.FloatField("Elemental Skill CD(s)", dataPlayerConfig.SkillCD, Width(500));
-        dataPlayerConfig.SpecialCD = EditorGUILayout.FloatField("Elemental Burst CD(s)", dataPlayerConfig.SpecialCD, Width(500));
+        dataPlayerConfig.ElementalSkillCD = EditorGUILayout.FloatField("Elemental Skill CD(s)", dataPlayerConfig.ElementalSkillCD, Width(500));
+        dataPlayerConfig.ElementalBurstlCD = EditorGUILayout.FloatField("Elemental Burst CD(s)", dataPlayerConfig.ElementalBurstlCD, Width(500));
         
         Space(30);
         GUILayout.Label("MULTIPLIER -------------------------", EditorStyles.boldLabel);
@@ -492,7 +494,7 @@ public class GameplayEditorWindow : EditorWindow
         
         Space(30);
         GUILayout.Label("STATS -------------------------------", EditorStyles.boldLabel);
-        _enemyConfiguration.MaxHealth = EditorGUILayout.IntField("Max HP", _enemyConfiguration.MaxHealth, Width(500));
+        _enemyConfiguration.MaxHP = EditorGUILayout.IntField("Max HP", _enemyConfiguration.MaxHP, Width(500));
         _enemyConfiguration.ATK = EditorGUILayout.IntField("ATK", _enemyConfiguration.ATK, Width(500));
         _enemyConfiguration.CRITRate = EditorGUILayout.FloatField("CRIT Rate(%)", _enemyConfiguration.CRITRate, Width(500));
         _enemyConfiguration.CRITDMG = EditorGUILayout.IntField("CRIT DMG(%)", _enemyConfiguration.CRITDMG, Width(500));

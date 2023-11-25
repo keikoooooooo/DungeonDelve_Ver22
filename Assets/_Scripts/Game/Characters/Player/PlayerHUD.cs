@@ -23,8 +23,8 @@ public class PlayerHUD : MonoBehaviour
         
         nameAndLevelText.ChangeNameText(player.PlayerConfig.Name);
         nameAndLevelText.ChangeLevelText(player.PlayerConfig.Level);
-        healthBar.Init(player.PlayerConfig.MaxHealth);
-        staminaBar.Init(player.PlayerConfig.MaxStamina);
+        healthBar.Init(player.PlayerConfig.MaxHP);
+        staminaBar.Init(player.PlayerConfig.MaxST);
     }
     private void OnDestroy()
     {
