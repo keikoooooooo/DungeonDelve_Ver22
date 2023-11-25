@@ -34,4 +34,13 @@ public enum ItemType
     // Others (OR)
     ORCommonSword,
     ORCommonBow,
+    
+    
+    // Upgrade (UP)
+    UPSpearhead1,
+    UPSpearhead2,
+    UPSpearhead3,
+    UPForgedBow,
+    UPForgedSword
+    
 }
