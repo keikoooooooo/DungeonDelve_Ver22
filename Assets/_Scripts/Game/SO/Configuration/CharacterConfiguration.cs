@@ -35,7 +35,7 @@ public class CharacterConfiguration : ScriptableObject
     [Tooltip("Tỷ lệ bạo kích (%)")] 
     public float CRITRate = 5f; // Mặc định Char = 5%CRIT
     
-    [Tooltip("Sát thương bạo kích")] 
+    [Tooltip("Sát thương bạo kích (%)")] 
     public int CRITDMG = 50; // 50CRIT DMG <=> +150% DMG
     
     [Tooltip("Sức phòng thủ")] 

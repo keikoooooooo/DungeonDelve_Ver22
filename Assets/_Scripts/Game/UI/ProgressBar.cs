@@ -10,11 +10,11 @@ public class ProgressBar : MonoBehaviour
     [Tooltip("Slider tiến trình chính"), SerializeField, Required] 
     private Slider mainProgressSlider;
     
-    [Tooltip("Slider tiến trình phụ"), SerializeField, Required] 
+    [Tooltip("Slider tiến trình phụ"), SerializeField] 
     private Slider backProgressSlider;
 
-    [Space, Tooltip("Text hiển thị tiến trình"), ShowIf("ShowText"), SerializeField] 
-    private TextMeshProUGUI progressText;
+    [Space, Tooltip("Text hiển thị tiến trình"), ShowIf("ShowText")] 
+    public TextMeshProUGUI progressText;
     [Tooltip("Có cập nhật giá trị vào Text không")]
     public bool ShowText;
     

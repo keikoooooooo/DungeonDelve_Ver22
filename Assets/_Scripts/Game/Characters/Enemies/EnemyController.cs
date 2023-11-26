@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
         _damage -= _def;
         
-        Health.Subtract(_damage);
+        Health.Decreases(_damage);
         DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, true);
 
         if (Health.CurrentValue <= 0)

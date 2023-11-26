@@ -15,7 +15,7 @@ public class StatusHandle
    
 
 
-   public void Increase(int _amount)
+   public void Increases(int _amount)
    {
       CurrentValue += _amount;
       if (CurrentValue >= _maxValue)
@@ -23,7 +23,7 @@ public class StatusHandle
       
       E_OnValueChanged?.Invoke(CurrentValue);
    }
-   public void Subtract(int _amount)
+   public void Decreases(int _amount)
    {
       CurrentValue -= _amount;
       if (CurrentValue <= 0)

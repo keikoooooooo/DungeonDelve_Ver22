@@ -5,7 +5,7 @@ public class StaminaBuff : BuffEffect
 {
     public override void Apply(PlayerController _player)
     {   
-        _player.Stamina.Increase(Mathf.CeilToInt(Value));
+        _player.Stamina.Increases(Mathf.CeilToInt(Value));
     }
     
 }

@@ -95,6 +95,7 @@ public class GameplayEditorWindow : EditorWindow
         dataPlayerConfig.CRITRate = EditorGUILayout.FloatField("CRIT Rate(%)", dataPlayerConfig.CRITRate, Width(500));
         dataPlayerConfig.CRITDMG = EditorGUILayout.IntField("CRIT DMG(%)", dataPlayerConfig.CRITDMG, Width(500));
         dataPlayerConfig.DEF = EditorGUILayout.IntField("DEF", dataPlayerConfig.DEF, Width(500));
+        dataPlayerConfig.ChargedAttackStaminaCost = EditorGUILayout.IntField("Charged Attack ST Cost", dataPlayerConfig.ChargedAttackStaminaCost, Width(500));
         dataPlayerConfig.WalkSpeed = EditorGUILayout.FloatField("Walk Speed", dataPlayerConfig.WalkSpeed, Width(500));
         dataPlayerConfig.RunSpeed = EditorGUILayout.FloatField("Run Speed", dataPlayerConfig.RunSpeed, Width(500));
         dataPlayerConfig.RunFastSpeed = EditorGUILayout.FloatField("Run Fast Speed", dataPlayerConfig.RunFastSpeed, Width(500));

@@ -5,11 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Player Config", menuName = "Characters Configuration/Player")]
 public class PlayerConfiguration : CharacterConfiguration
 {
-    
-    [Tooltip("Tốc độ chạy nhanh")] 
-    public float RunFastSpeed = 8f;
     [Tooltip("Sức bền tối đa")] 
     public int MaxST = 100;
+    [Tooltip("Sức bền tiêu hao khi Charged Attack")]
+    public int ChargedAttackStaminaCost = 20;
+    [Tooltip("Tốc độ chạy nhanh")] 
+    public float RunFastSpeed = 8f;
     [Tooltip("Năng lượng cho mỗi lần lướt")]
     public int DashEnergy = 25;
     [Tooltip("Độ cao khi nhảy")] 

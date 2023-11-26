@@ -23,15 +23,16 @@ MonoBehaviour:
   DEF: 36
   WalkSpeed: 1.7
   RunSpeed: 5.7
-  RunFastSpeed: 8
   MaxST: 100
+  ChargedAttackStaminaCost: 20
+  RunFastSpeed: 8
   DashEnergy: 25
   JumpHeight: 1.4
   JumpCD: 0.38
   ElementalSkillCD: 12
   ElementalBurstlCD: 17
-  WeaponName: 
-  WeaponInfo: 
+  WeaponName: Twilight
+  WeaponInfo: Increases Elemental Skill and Elemental Burst DMG by 36%
   WeaponLevel: 1
   NormalAttackMultiplier:
   - MultiplierTypeName: 1 - Hit DMG (%)

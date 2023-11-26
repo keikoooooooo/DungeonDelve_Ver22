@@ -56,7 +56,7 @@ public class PlayerRunFastState : PlayerBaseState
     {
         while (_machine.Stamina.CurrentValue > 0)
         {
-            _machine.Stamina.Subtract(1);
+            _machine.Stamina.Decreases(1);
             yield return new WaitForSeconds(.07f);
         }
     }

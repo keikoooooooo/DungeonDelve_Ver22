@@ -23,8 +23,9 @@ MonoBehaviour:
   DEF: 50
   WalkSpeed: 1.65
   RunSpeed: 5.2
-  RunFastSpeed: 8
   MaxST: 100
+  ChargedAttackStaminaCost: 20
+  RunFastSpeed: 8
   DashEnergy: 25
   JumpHeight: 1.4
   JumpCD: 0.37

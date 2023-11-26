@@ -220,7 +220,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         }
 
         _delayIncreaseST = .15f;
-        Stamina.Increase(2);
+        Stamina.Increases(2);
     }
     
     
@@ -250,7 +250,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
         _damage -= _def;
         
-        Health.Subtract(_damage);
+        Health.Decreases(_damage);
         DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, false);
 
         animator.ResetTrigger(IDDamageStand);
