@@ -183,8 +183,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5.0000153, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: -1.6542053, y: 0}
+  m_SizeDelta: {x: -13.3084, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3929699647476138621
 GameObject:
@@ -355,7 +355,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 36, y: 12.3253}
+  m_SizeDelta: {x: 32.5481, y: 12.3253}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8893013505775532270
 CanvasRenderer:
@@ -428,8 +428,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0.910141, y: 0}
+  m_SizeDelta: {x: -8.1795, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5660798666845423709
 GameObject:
@@ -516,12 +516,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 9109553969734675411}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 5
-  m_WholeNumbers: 0
+  m_MaxValue: 10
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6539635566078509939}
+        m_TargetAssemblyTypeName: SettingSliderBar, Assembly-CSharp
+        m_MethodName: OnSetValueText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7544306052443131050
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,6 +621,7 @@ GameObject:
   - component: {fileID: 5993483744681705462}
   - component: {fileID: 3919090378177812239}
   - component: {fileID: 8316511434886616450}
+  - component: {fileID: 6539635566078509939}
   m_Layer: 5
   m_Name: Setting Slider Type
   m_TagString: Untagged
@@ -675,6 +688,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6539635566078509939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7695395410394589750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1aa943515780f4db32e26b0443df43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useText: 1
+  valueSliderText: {fileID: 936980228885808}
+  Slider: {fileID: 7128981603322189727}
 --- !u!1 &8905125743643653180
 GameObject:
   m_ObjectHideFlags: 0

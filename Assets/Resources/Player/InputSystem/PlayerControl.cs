@@ -159,17 +159,6 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""d0c6d3ce-a604-4460-81ca-07b34cc7a868"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""53e4ff93-7b16-4e5c-b3e6-26c043f888b5"",
                     ""path"": ""<Keyboard>/leftShift"",

@@ -965,6 +965,7 @@ GameObject:
   - component: {fileID: 5573201819108506125}
   - component: {fileID: 6890827013456218990}
   - component: {fileID: 3166072400102810867}
+  - component: {fileID: 1435594533264697717}
   m_Layer: 5
   m_Name: Setting Dropdown Type
   m_TagString: Untagged
@@ -1031,6 +1032,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1435594533264697717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5920406602216414302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c00c656e565bc98478b3de5359eadcdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dropdown: {fileID: 8751374240411865505}
 --- !u!1 &6394261850575716489
 GameObject:
   m_ObjectHideFlags: 0

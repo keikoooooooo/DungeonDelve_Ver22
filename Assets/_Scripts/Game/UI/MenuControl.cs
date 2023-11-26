@@ -49,14 +49,19 @@ public class MenuControl : Singleton<MenuControl>
 
     private void Update()
     {
+        
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
         
         menuPanel.SetActive(!menuPanel.activeSelf);
         
         var _type = menuPanel.activeSelf;
-        if (!_type) return;
-        
-        
+        if (!_type)
+        {
+            Time.timeScale = 1;
+            return;
+        }
+
+        Time.timeScale = 0;
         SetActivePanel(characterPanel);
         foreach (var animator in _animators)
         {
