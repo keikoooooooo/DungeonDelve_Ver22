@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,9 +26,8 @@ public class GUI_CharacterStats : MonoBehaviour
     
     [Header("Defense")] 
     public TextBar defText;
+
     
-
-
     public void OpenCharacterRenderTexture()
     {
         if (!MenuController.Instance.Player) return;

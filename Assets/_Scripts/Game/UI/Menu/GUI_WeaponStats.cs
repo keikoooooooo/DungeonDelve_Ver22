@@ -26,7 +26,7 @@ public class GUI_WeaponStats : MonoBehaviour
     public TextBar elementalSkillText;
     public TextBar elementalBurstText;
     [Header("Details")] 
-    public TextBar weaponInfo;
+    public TextBar weaponDetailsText;
 
     
     
