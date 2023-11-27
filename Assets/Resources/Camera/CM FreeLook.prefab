@@ -216,7 +216,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8956583454589446629}
   - component: {fileID: 6778633892591463217}
-  - component: {fileID: 1223641888}
   - component: {fileID: 4062728998078992600}
   m_Layer: 7
   m_Name: CM FreeLook
@@ -348,29 +347,6 @@ MonoBehaviour:
   - {fileID: 3321171035397771395}
   - {fileID: 764986131827648675}
   - {fileID: 6286560910510677781}
---- !u!114 &1223641888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4258665712214486848}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ApplyAfter: 1
-  m_ChannelMask: 1
-  m_Gain: 1
-  m_Use2DDistance: 0
-  m_UseCameraSpace: 0
-  m_ReactionSettings:
-    m_SecondaryNoise: {fileID: 0}
-    m_AmplitudeGain: 0
-    m_FrequencyGain: 0
-    m_Duration: 0
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &4062728998078992600
 MonoBehaviour:
   m_ObjectHideFlags: 0

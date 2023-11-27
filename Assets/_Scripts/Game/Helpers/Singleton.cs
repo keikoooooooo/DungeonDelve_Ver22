@@ -23,6 +23,7 @@ public class Singleton <T> : MonoBehaviour where T : MonoBehaviour
         if (IsValid && _reference != null)
         {
             Destroy(gameObject);
+            Debug.Log("Destroy");
         }
         else
         {
