@@ -8,8 +8,6 @@ public class ItemCustom
 {
     public ItemType Type;
     public Sprite Sprite;
-
-    public ItemCustom() { }
 }
 
 /// <summary>

@@ -18,8 +18,6 @@ public class UserData
     {
         public ItemType ItemType;
         public int Value;
-        
-        public InventoryData() { }
     }
     
     private List<InventoryData> UserInventory;

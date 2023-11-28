@@ -13,13 +13,13 @@ public class GameplayEditorWindow : EditorWindow
         editor.titleContent = new GUIContent("Gameplay Custom");
     }
 
-    private readonly string[] _toolTitles = { "PLAYERS", "ENEMIES" };
+    private readonly string[] _toolTitles = { "PLAYERS", "ENEMIES", "GAME CUSTOM" };
     private int _selectedTool = -1;
     private Vector2 scrollView;
     
     private void OnGUI()
     {
-        _selectedTool = GUILayout.Toolbar(_selectedTool, _toolTitles, Width(200), Height(40));
+        _selectedTool = GUILayout.Toolbar(_selectedTool, _toolTitles, Width(500), Height(50));
         switch (_selectedTool)
         {
             case 0:
@@ -29,19 +29,28 @@ public class GameplayEditorWindow : EditorWindow
             case 1:
                 HandlePanelEnemies();
                 break;
+            
+            case 2:
+                HandlePanelGameCustom();
+                break;
         }
     }
     
     
     #region PLAYERS
     private int _selectedType = -1;
-    private readonly string[] _type = { "STATS CONFIG", "CHARACTER UPGRADE DATA", "GAME ITEM DATA" };
+    private readonly string[] _type = { "STATS CONFIG", "CHARACTER UPGRADE DATA" };
     private int _selectedPlayer = -1;
     private readonly string[] _playerNames = { "Arlan", "Lynx" };
+    
+    private PlayerConfiguration arlanConfig;
+    private PlayerConfiguration lynxConfig;
+    private UpgradeData _upgradeData;
+    
     private void HandlePanelPlayers()
     {
         Space(15);
-        _selectedType = GUILayout.Toolbar(_selectedType, _type, Width(400), Height(40));
+        _selectedType = GUILayout.Toolbar(_selectedType, _type, Width(250), Height(35));
         switch (_selectedType)
         {
             case 0:
@@ -63,17 +72,9 @@ public class GameplayEditorWindow : EditorWindow
                 _upgradeData = EditorGUIUtility.Load("Assets/Resources/Player/Character Upgrade Data.asset") as UpgradeData;
                 ShowUpgradeDetails(_upgradeData);
                 break;
-            case 2:
-                _gameItemData= EditorGUIUtility.Load("Assets/Resources/Player/Game Item Data.asset") as GameItemData;
-                ShowItemsDetails(_gameItemData);
-                break;
+
         }
     }
-    
-    private PlayerConfiguration arlanConfig;
-    private PlayerConfiguration lynxConfig;
-    private UpgradeData _upgradeData;
-    private GameItemData _gameItemData;
     private void ShowPlayerConfig(PlayerConfiguration dataPlayerConfig) 
     {
         if (dataPlayerConfig == null)
@@ -313,52 +314,6 @@ public class GameplayEditorWindow : EditorWindow
         }
         GUILayout.EndScrollView();
     }
-    private void ShowItemsDetails(GameItemData gameItemData)
-    {
-        if(gameItemData == null) return;
-        
-        EditorGUI.BeginChangeCheck();
-        
-        Space(10);
-        scrollView = GUILayout.BeginScrollView(scrollView);
-        
-        GUILayout.BeginHorizontal();
-        for (var i = 0; i < gameItemData.GameItemDatas.Count; i++)
-        {
-            if (i % 7 == 0 && i != 0)
-            {
-                GUILayout.EndHorizontal();
-                Space(10);
-                GUILayout.BeginHorizontal();
-            }
-            GUILayout.BeginVertical();
-            var itemDefault = gameItemData.GameItemDatas[i];
-            itemDefault.Type = (ItemType)EditorGUILayout.EnumPopup("", itemDefault.Type, Width(100));
-            itemDefault.Sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.Sprite, typeof(Sprite), false, Width(100), Height(100));
-            GUILayout.EndVertical();
-        }
-        GUILayout.EndHorizontal();
-        GUILayout.EndScrollView();
-        
-        Space(10);
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("+", Width(45), Height(25)))
-        {
-            gameItemData.GameItemDatas.Add(new ItemCustom());
-        }
-        GUILayout.Box("Add new Item");
-        GUILayout.EndHorizontal();
-        
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("-", Width(45), Height(25)) && gameItemData.GameItemDatas.Count != 0)
-        {
-            gameItemData.GameItemDatas.RemoveAt(gameItemData.GameItemDatas.Count - 1);
-        }
-        GUILayout.Box("Remove Item");
-        GUILayout.EndHorizontal();
-        
-        if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(gameItemData);
-    }
     #endregion
 
     #region ENEMIES
@@ -377,7 +332,7 @@ public class GameplayEditorWindow : EditorWindow
     private void HandlePanelEnemies()
     {
         Space(10);
-        _selectedEnemy = GUILayout.Toolbar(_selectedEnemy, _enemiesNames, Width(200), Height(30));
+        _selectedEnemy = GUILayout.Toolbar(_selectedEnemy, _enemiesNames, Width(250), Height(35));
         switch (_selectedEnemy)
         {
             case 0:
@@ -572,6 +527,72 @@ public class GameplayEditorWindow : EditorWindow
     
     #endregion
 
+
+    #region GAMECUSTOM
+    
+    private GameItemData _gameItemData;
+    private int _selectedPanelGameCustomType = -1;
+    private readonly string[] _gameCustomtype = { "ITEM DATA" };
+    
+    private void HandlePanelGameCustom()
+    {
+        Space(15);
+        _selectedPanelGameCustomType = GUILayout.Toolbar(_selectedPanelGameCustomType, _gameCustomtype, Width(250), Height(35));
+        switch (_selectedPanelGameCustomType)
+        {
+            case 0:
+                _gameItemData= EditorGUIUtility.Load("Assets/Resources/Player/Game Item Data.asset") as GameItemData;
+                ShowItemsDetails(_gameItemData);
+                break;
+        }
+    }
+    private void ShowItemsDetails(GameItemData gameItemData)
+    {
+        if(gameItemData == null) return;
+        
+        EditorGUI.BeginChangeCheck();
+        
+        Space(10);
+        scrollView = GUILayout.BeginScrollView(scrollView);
+        
+        GUILayout.BeginHorizontal();
+        for (var i = 0; i < gameItemData.GameItemDatas.Count; i++)
+        {
+            if (i % 8 == 0 && i != 0)
+            {
+                GUILayout.EndHorizontal();
+                Space(10);
+                GUILayout.BeginHorizontal();
+            }
+            GUILayout.BeginVertical();
+            var itemDefault = gameItemData.GameItemDatas[i];
+            itemDefault.Type = (ItemType)EditorGUILayout.EnumPopup("", itemDefault.Type, Width(100));
+            itemDefault.Sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.Sprite, typeof(Sprite), false, Width(100), Height(100));
+            GUILayout.EndVertical();
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.EndScrollView();
+        
+        Space(10);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
+        {
+            gameItemData.GameItemDatas.Add(new ItemCustom());
+        }
+        GUILayout.Box("Add new Item");
+        GUILayout.EndHorizontal();
+        
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("-", Width(45), Height(25)) && gameItemData.GameItemDatas.Count != 0)
+        {
+            gameItemData.GameItemDatas.RemoveAt(gameItemData.GameItemDatas.Count - 1);
+        }
+        GUILayout.Box("Remove Item");
+        GUILayout.EndHorizontal();
+        
+        if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(gameItemData);
+    }
+    #endregion
 
     
 
