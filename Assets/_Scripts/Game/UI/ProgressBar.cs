@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
@@ -7,11 +6,11 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    [Tooltip("Slider tiến trình chính"), SerializeField, Required] 
-    private Slider mainProgressSlider;
+    [Tooltip("Slider tiến trình chính"), Required] 
+    public Slider mainProgressSlider;
     
-    [Tooltip("Slider tiến trình phụ"), SerializeField] 
-    private Slider backProgressSlider;
+    [Tooltip("Slider tiến trình phụ")] 
+    public Slider backProgressSlider;
 
     [Space, Tooltip("Text hiển thị tiến trình"), ShowIf("ShowText")] 
     public TextMeshProUGUI progressText;

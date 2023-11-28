@@ -13,7 +13,7 @@ public class DefaultData
 /// <summary>
 /// Dự liệu EXP nâng cấp của tất cả Player trong game (Lv 1 -> Lv 90)
 /// </summary>
-[CreateAssetMenu(fileName = "Character Upgrade Data", menuName = "Characters Configuration/Upgrade Data")]
+[CreateAssetMenu(fileName = "Upgrade Data", menuName = "Game Configuration/Upgrade Data")]
 public class UpgradeData : ScriptableObject
 {
     public TextAsset LevelingTextAsset;

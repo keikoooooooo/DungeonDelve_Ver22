@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d8134f0559e7949a929c4e44663828, type: 3}
   m_Name: DMG_BU
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: abc3ce8ff0840a04eae7bcd5d0cb0407, type: 3}
+  ItemCustom:
+    Type: 2
+    Sprite: {fileID: 21300000, guid: abc3ce8ff0840a04eae7bcd5d0cb0407, type: 3}
   Description: Increase ATK by 25% for 100s.
   Value: 25
   buffTimeOut: 0

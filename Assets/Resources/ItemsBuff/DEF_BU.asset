@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c66ba66b52a80b49a8eb7024342520f, type: 3}
   m_Name: DEF_BU
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: 31d570494b2993248ab4baf6fb1bf7d7, type: 3}
+  ItemCustom:
+    Type: 3
+    Sprite: {fileID: 21300000, guid: 31d570494b2993248ab4baf6fb1bf7d7, type: 3}
   Description: Increase DEF by 50% for 50s.
   Value: 50
   buffTimeOut: 0

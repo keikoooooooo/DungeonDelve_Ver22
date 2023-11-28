@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3a656301b83054e8f10b595b8d6d4f, type: 3}
   m_Name: ExpBig_BU
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: fef42ac893ebefc4bbe5d78ec309dd22, type: 3}
+  ItemCustom:
+    Type: 19
+    Sprite: {fileID: 21300000, guid: fef42ac893ebefc4bbe5d78ec309dd22, type: 3}
   Description: Increases Character EXP by 12000.
   Value: 20000
   UpgradeCost: 5000

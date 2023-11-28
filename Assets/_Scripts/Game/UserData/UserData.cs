@@ -1,31 +1,33 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 [Serializable]
 public class UserData
 {
     [Tooltip("Tên User")]
-    public string Name;
+    public string Username;
     
-    [Tooltip("Cấp độ User")] 
-    public int Level;
-
     [Tooltip("Gems")] 
     public int GalacticGems;
+
     
-    [Tooltip("Kinh nghiệm hiện tại của User")] 
-    public int CurrentEXP;
+    [Serializable]
+    public class InventoryData
+    {
+        public ItemType ItemType;
+        public int Value;
+        
+        public InventoryData() { }
+    }
     
-    [Tooltip("Kinh nghiệm tối đa của User cho Level tiếp theo")] 
-    public int MaxEXP;
+    private List<InventoryData> UserInventory;
     
     public UserData()
     {
-        Name = "";
-        Level = 1;
+        Username = "";
         GalacticGems = 1000;
-        CurrentEXP = 0;
-        MaxEXP = 200;
     }
     
 }

@@ -35,7 +35,7 @@ public class GameplayEditorWindow : EditorWindow
     
     #region PLAYERS
     private int _selectedType = -1;
-    private readonly string[] _type = { "STATS CONFIG", "CHARACTER UPGRADE DATA" };
+    private readonly string[] _type = { "STATS CONFIG", "CHARACTER UPGRADE DATA", "GAME ITEM DATA" };
     private int _selectedPlayer = -1;
     private readonly string[] _playerNames = { "Arlan", "Lynx" };
     private void HandlePanelPlayers()
@@ -63,12 +63,17 @@ public class GameplayEditorWindow : EditorWindow
                 _upgradeData = EditorGUIUtility.Load("Assets/Resources/Player/Character Upgrade Data.asset") as UpgradeData;
                 ShowUpgradeDetails(_upgradeData);
                 break;
+            case 2:
+                _gameItemData= EditorGUIUtility.Load("Assets/Resources/Player/Game Item Data.asset") as GameItemData;
+                ShowItemsDetails(_gameItemData);
+                break;
         }
     }
     
     private PlayerConfiguration arlanConfig;
-    private UpgradeData _upgradeData;
     private PlayerConfiguration lynxConfig;
+    private UpgradeData _upgradeData;
+    private GameItemData _gameItemData;
     private void ShowPlayerConfig(PlayerConfiguration dataPlayerConfig) 
     {
         if (dataPlayerConfig == null)
@@ -279,131 +284,10 @@ public class GameplayEditorWindow : EditorWindow
         }
         GUILayout.EndHorizontal();
         #endregion
-
-        // #region Character Upgrade
-        // Space(30);
-        // GUILayout.Label("CHARACTER UPGRADE -------------------------", EditorStyles.boldLabel);
-        // Space(5);
-        // GUILayout.BeginHorizontal();
-        // GUILayout.Label("", Width(70), Height(25));
-        //
-        // GUILayout.Box("Level Upgrade", Width(150), Height(25));
-        // GUILayout.Box("Upgrade Cost", Width(150), Height(25));
-        // GUILayout.Box("Max Experience Upgrade", Width(150), Height(25));
-        // GUILayout.Box("Value", Width(150), Height(25));
-        // GUILayout.Box("Type", Width(150), Height(25));
-        // GUILayout.EndHorizontal();
-        //
-        // for (var i = 0; i < dataPlayerConfig.CharacterUpgrade.Count; i++)
-        // {
-        //     GUILayout.BeginHorizontal();
-        //     GUILayout.Box($"{i}", Width(70));
-        //     var playerUpgrade = dataPlayerConfig.CharacterUpgrade[i];
-        //     playerUpgrade.LevelUpgrade = EditorGUILayout.IntField("", playerUpgrade.LevelUpgrade, Width(150));
-        //     playerUpgrade.UpgradeCost = EditorGUILayout.IntField("", playerUpgrade.UpgradeCost, Width(150));
-        //     playerUpgrade.MaxExperienceUpgrade = EditorGUILayout.IntField("", playerUpgrade.MaxExperienceUpgrade, Width(150));
-        //     
-        //     foreach (var Materials in playerUpgrade.MaterialsUpgrade)
-        //     {
-        //         Materials.Value = EditorGUILayout.IntField("", Materials.Value, Width(150));
-        //         Materials.Type = (ItemType)EditorGUILayout.EnumPopup("", Materials.Type, Width(150));
-        //     }
-        //     
-        //     GUILayout.BeginHorizontal();
-        //     if (GUILayout.Button("+", Width(45)))
-        //     {
-        //         var itemUpgrade = new ItemUpgrade();
-        //         playerUpgrade.MaterialsUpgrade.Add(itemUpgrade);
-        //     }
-        //     if(GUILayout.Button("-", Width(45)) && playerUpgrade.MaterialsUpgrade.Count != 0)
-        //     {
-        //         playerUpgrade.MaterialsUpgrade.Remove(playerUpgrade.MaterialsUpgrade[^1]);
-        //     }
-        //     GUILayout.EndHorizontal();
-        //
-        //     
-        //     GUILayout.EndHorizontal();
-        // }
-        // GUILayout.BeginHorizontal();
-        // if (GUILayout.Button("+", Width(45), Height(25)))
-        // {
-        //     var playerUpgrade = new PlayerUpgrade
-        //     {
-        //         MaterialsUpgrade = new List<ItemUpgrade>()
-        //     };
-        //     dataPlayerConfig.CharacterUpgrade.Add(playerUpgrade);
-        // }
-        // if(GUILayout.Button("-", Width(45), Height(25)) && dataPlayerConfig.CharacterUpgrade.Count != 0)
-        // {
-        //     dataPlayerConfig.CharacterUpgrade.Remove(dataPlayerConfig.CharacterUpgrade[^1]);
-        // }
-        // GUILayout.EndHorizontal();
-        // #endregion
-        
-        // #region Weapon Upgrade
-        // Space(30);
-        // GUILayout.Label("WEAPON UPGRADE -------------------------", EditorStyles.boldLabel);
-        // Space(5);
-        // GUILayout.BeginHorizontal();
-        // GUILayout.Label("", Width(70), Height(25));
-        //
-        // GUILayout.Box("Level Upgrade", Width(150), Height(25));
-        // GUILayout.Box("Upgrade Cost", Width(150), Height(25));
-        // GUILayout.Box("Max Experience Upgrade", Width(150), Height(25));
-        // GUILayout.Box("Value", Width(150), Height(25));
-        // GUILayout.Box("Type", Width(150), Height(25));
-        // GUILayout.EndHorizontal();
-        //
-        // for (var i = 0; i < dataPlayerConfig.WeaponUpgrade.Count; i++)
-        // {
-        //     GUILayout.BeginHorizontal();
-        //     GUILayout.Box($"{i}", Width(70));
-        //     var weaponUpgrade = dataPlayerConfig.WeaponUpgrade[i];
-        //     weaponUpgrade.LevelUpgrade = EditorGUILayout.IntField("", weaponUpgrade.LevelUpgrade, Width(150));
-        //     weaponUpgrade.UpgradeCost = EditorGUILayout.IntField("", weaponUpgrade.UpgradeCost, Width(150));
-        //     weaponUpgrade.MaxExperienceUpgrade = EditorGUILayout.IntField("", weaponUpgrade.MaxExperienceUpgrade, Width(150));
-        //     
-        //     foreach (var Materials in weaponUpgrade.MaterialsUpgrade)
-        //     {
-        //         Materials.Value = EditorGUILayout.IntField("", Materials.Value, Width(150));
-        //         Materials.Type = (ItemType)EditorGUILayout.EnumPopup("", Materials.Type, Width(150));
-        //     }
-        //     
-        //     GUILayout.BeginHorizontal();
-        //     if (GUILayout.Button("+", Width(45)))
-        //     {
-        //         var itemUpgrade = new ItemUpgrade();
-        //         weaponUpgrade.MaterialsUpgrade.Add(itemUpgrade);
-        //     }
-        //     if(GUILayout.Button("-", Width(45)) && weaponUpgrade.MaterialsUpgrade.Count != 0)
-        //     {
-        //         weaponUpgrade.MaterialsUpgrade.Remove(weaponUpgrade.MaterialsUpgrade[^1]);
-        //     }
-        //     GUILayout.EndHorizontal();
-        //
-        //     
-        //     GUILayout.EndHorizontal();
-        // }
-        // GUILayout.BeginHorizontal();
-        // if (GUILayout.Button("+", Width(45), Height(25)))
-        // {
-        //     var weaponUpgrade = new PlayerUpgrade
-        //     {
-        //         MaterialsUpgrade = new List<ItemUpgrade>()
-        //     };
-        //     dataPlayerConfig.WeaponUpgrade.Add(weaponUpgrade);
-        // }
-        // if(GUILayout.Button("-", Width(45), Height(25)) && dataPlayerConfig.WeaponUpgrade.Count != 0)
-        // {
-        //     dataPlayerConfig.WeaponUpgrade.Remove(dataPlayerConfig.WeaponUpgrade[^1]);
-        // }
-        // GUILayout.EndHorizontal();
-        // #endregion
         
         if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(dataPlayerConfig);
         GUILayout.EndScrollView();
     }
-
     private void ShowUpgradeDetails(UpgradeData upgradeData)
     {
         if(_upgradeData == null) 
@@ -428,6 +312,52 @@ public class GameplayEditorWindow : EditorWindow
             GUILayout.EndHorizontal();
         }
         GUILayout.EndScrollView();
+    }
+    private void ShowItemsDetails(GameItemData gameItemData)
+    {
+        if(gameItemData == null) return;
+        
+        EditorGUI.BeginChangeCheck();
+        
+        Space(10);
+        scrollView = GUILayout.BeginScrollView(scrollView);
+        
+        GUILayout.BeginHorizontal();
+        for (var i = 0; i < gameItemData.GameItemDatas.Count; i++)
+        {
+            if (i % 7 == 0 && i != 0)
+            {
+                GUILayout.EndHorizontal();
+                Space(10);
+                GUILayout.BeginHorizontal();
+            }
+            GUILayout.BeginVertical();
+            var itemDefault = gameItemData.GameItemDatas[i];
+            itemDefault.Type = (ItemType)EditorGUILayout.EnumPopup("", itemDefault.Type, Width(100));
+            itemDefault.Sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.Sprite, typeof(Sprite), false, Width(100), Height(100));
+            GUILayout.EndVertical();
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.EndScrollView();
+        
+        Space(10);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
+        {
+            gameItemData.GameItemDatas.Add(new ItemCustom());
+        }
+        GUILayout.Box("Add new Item");
+        GUILayout.EndHorizontal();
+        
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("-", Width(45), Height(25)) && gameItemData.GameItemDatas.Count != 0)
+        {
+            gameItemData.GameItemDatas.RemoveAt(gameItemData.GameItemDatas.Count - 1);
+        }
+        GUILayout.Box("Remove Item");
+        GUILayout.EndHorizontal();
+        
+        if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(gameItemData);
     }
     #endregion
 

@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public Sprite icon;
-    public ItemType type;
+    public ItemCustom ItemCustom;
     public int value;
     
 }
