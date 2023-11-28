@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class FPSDisplay : MonoBehaviour
 
     private float fps;
     private int currentFPS;
-
+    private float refreshRate;
     private Coroutine _fpsCoroutine;
 
 
@@ -26,8 +27,10 @@ public class FPSDisplay : MonoBehaviour
     {
         while (true)
         {
+            refreshRate = (float)Screen.currentResolution.refreshRateRatio.value;
+            
             fps = 1.0f / Time.unscaledDeltaTime;
-            currentFPS = Mathf.RoundToInt(fps);
+            currentFPS = Mathf.RoundToInt(fps / refreshRate);
             fpsText.text = $"{currentFPS}";
             yield return null;
         }

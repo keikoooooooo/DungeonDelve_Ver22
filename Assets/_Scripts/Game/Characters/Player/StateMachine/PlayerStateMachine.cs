@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     public Transform model;
     public Animator animator;
     public CharacterController characterController;
+    public CinemachineFreeLook cinemachineFreeLook;
     
     #region Get & Set Property
     public PlayerDataHandle PlayerData;
@@ -116,7 +118,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         _mainCamera = Camera.main;
         _state = new PlayerStateFactory(this);
-        characterController = GetComponent<CharacterController>();
         Health = new StatusHandle(PlayerConfig.MaxHP);
         Stamina = new StatusHandle(PlayerConfig.MaxST);
     }
@@ -268,7 +269,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         CanAttack = false;
         CanRotation = false;
     }
-    public void SwitchIdleState() => CurrentState.SwitchState(_state.Idle());    
+    public void SwitchIdleState() => CurrentState.SwitchState(_state.Idle());    // gọi trên animationEvent để player được di chuyển sau khi TakeDMG
     #endregion
 
     

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
 
 
@@ -20,6 +19,8 @@ public class SwitchPanelControl : MonoBehaviour
     { 
         Panels.ForEach(panel => panel.SetActive(panel == _panelObject));
     }
+    
+    public void DeActiveAllPanel() => Panels.ForEach(panel => panel.SetActive(false));
     
     public void SelectButton(Animator _animatorCheck)
     {

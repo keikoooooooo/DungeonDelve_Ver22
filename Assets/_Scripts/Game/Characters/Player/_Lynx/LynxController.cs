@@ -19,9 +19,7 @@ public class LynxController : PlayerController
     [Tooltip("Layer kiểm tra va chạm khi giữ tâm ngắm"), SerializeField]
     private LayerMask crosshairMask;
     
-    [Space(10), Tooltip("Camera gameplay"), SerializeField]
-    private CinemachineFreeLook freeLookCam;
-    
+    [Space(10)]
     [Tooltip("Camera khi hold attack"), SerializeField]
     private CinemachineVirtualCamera aimCam;
     
@@ -110,7 +108,7 @@ public class LynxController : PlayerController
         
         _movementState = MovementState.StateRun;
         animator.SetBool(ID4Direction, false);
-        freeLookCam.m_XAxis.Value = xAxis.Value;
+        cinemachineFreeLook.m_XAxis.Value = xAxis.Value;
         
         if(IsJump || IsDash) yield break;
         CanMove = false;
@@ -124,8 +122,8 @@ public class LynxController : PlayerController
         
         // Aim Camera
         aimCam.gameObject.SetActive(true);
-        xAxis.Value = freeLookCam.m_XAxis.Value;
-        yAxis.Value = freeLookCam.m_YAxis.Value;
+        xAxis.Value = cinemachineFreeLook.m_XAxis.Value;
+        yAxis.Value = cinemachineFreeLook.m_YAxis.Value;
         targetCameraFocus.rotation = _mainCamera.transform.rotation;
         
         // Crosshair
