@@ -1,17 +1,16 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class GUI_SettingGraphics : MonoBehaviour
 {
     [SerializeField] private DropdownBar displayModeDropdown;
     [SerializeField] private DropdownBar fpsDropdown;
-    [SerializeField] private DropdownBar showFPSDropdown;
-    
-    [SerializeField] private TextMeshProUGUI showFPSPanel;
     
     
-    private readonly List<int> _fps = new() { 24, 30, 45, 60 };
+    private readonly List<string> _fps = new()
+    {
+        "24", "30", "45", "60", "120", "144", "Unlimit"
+    };
     private readonly List<Resolution> _resolutions = new()
     {
         new Resolution { width = 3840, height = 2160},  // 4K
@@ -24,19 +23,15 @@ public class GUI_SettingGraphics : MonoBehaviour
         new Resolution { width =  640, height =  360},  
         new Resolution { width =  426, height =  240},  
     };
-    private readonly List<string> _fpsType = new() { "ON", "OFF" };
-
     
     // Key PlayerPrefs
     private readonly string PP_CurrentResolutionIndex = "ResolutionIndex";
     private readonly string PP_CurrentFPSIndex = "FPSIndex";
-    private readonly string PP_ShowFPSIndex = "isShowFPSIndex";
     
     
     private void Start()
     {
         Initialized();
-        
     }
 
     
@@ -49,44 +44,29 @@ public class GUI_SettingGraphics : MonoBehaviour
              _options.Add($"{_resolution.width} x {_resolution.height} {typeMode}");
          }
          
-         var resolutionIdx = GetIntPlayerPrefs(PP_CurrentResolutionIndex, 2);  // tìm độ phân giải trước đó đã lưu (nếu có)
-         var fpsIdx = GetIntPlayerPrefs(PP_CurrentFPSIndex, 3);
-         var showFpsIdx = GetIntPlayerPrefs(PP_ShowFPSIndex, 0);
-            
+         var resolutionIdx = PP_CurrentResolutionIndex.GetIntPP(2);  // tìm độ phân giải trước đó đã lưu (nếu có)
+         var fpsIdx = PP_CurrentFPSIndex.GetIntPP(3);
+
          displayModeDropdown.InitValue(_options, resolutionIdx);
-         fpsDropdown.InitValue(_fps, fpsIdx, IntToStringConverter);
-         showFPSDropdown.InitValue(_fpsType, showFpsIdx);
+         fpsDropdown.InitValue(_fps, fpsIdx);
          
          OnValueDisplayModeChanged(resolutionIdx);
          OnValueFPSChanged(fpsIdx);
-         OnValueShowFPSChanged(showFpsIdx);
     }
     private static bool CheckFullscreenResolution(Resolution _resolution) => _resolution is { width: >= 1920, height: >= 1080 };
-
-
-    
-    private static string IntToStringConverter(int _value) => _value.ToString();
-    private static int GetIntPlayerPrefs(string _key, int _defaultValue) => PlayerPrefs.GetInt(_key, _defaultValue);
-    
     
     
     public void OnValueDisplayModeChanged(int _index)
     {
-        PlayerPrefs.SetInt(PP_CurrentResolutionIndex, _index);
-        
+        PP_CurrentResolutionIndex.SetIntPP(_index);
         var _res = _resolutions[_index];
         Screen.SetResolution(_res.width, _res.height, CheckFullscreenResolution(_res));
     }
     public void OnValueFPSChanged(int _index)
     {
-        PlayerPrefs.SetInt(PP_CurrentFPSIndex, _index);
-        Application.targetFrameRate = _fps[_index];
+        PP_CurrentFPSIndex.SetIntPP(_index);
+        var fpsIdx = _index >= 6 ? -1 : int.Parse(_fps[_index]);
+        Application.targetFrameRate = fpsIdx;
     }
-    public void OnValueShowFPSChanged(int _index)
-    {
-        PlayerPrefs.SetInt(PP_ShowFPSIndex, _index);
-        showFPSPanel.gameObject.SetActive(_index == 0);
-    }
-
     
 }

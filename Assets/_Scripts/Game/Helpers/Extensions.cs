@@ -123,7 +123,7 @@ public static class Extensions
     /// Trả về giá trị Int được lưu trong PlayerPrefs nếu không có sẽ trả về _defaultValue
     /// </summary>
     /// <param name="_key">  Key cần lấy giá trị </param>
-    /// <param name="_defaultValue"> Giá trị trả về nếu key chưa có giá trị </param>
+    /// <param name="_defaultValue"> Trả về giá trị này nếu key chưa có giá trị </param>
     /// <returns></returns>
     public static int GetIntPP(this string _key, int _defaultValue) => PlayerPrefs.GetInt(_key, _defaultValue);
 
@@ -138,7 +138,7 @@ public static class Extensions
     /// Trả về giá trị Float được lưu trong PlayerPrefs nếu không có sẽ trả về _defaultValue
     /// </summary>
     /// <param name="_key">  Key cần lấy giá trị </param>
-    /// <param name="_defaultValue"> Giá trị trả về nếu key chưa có giá trị </param>
+    /// <param name="_defaultValue"> Trả về giá trị này nếu key chưa có giá trị </param>
     /// <returns></returns>
     public static float GetFloatPP(this string _key, float _defaultValue) => PlayerPrefs.GetFloat(_key, _defaultValue);
     
@@ -153,7 +153,7 @@ public static class Extensions
     /// Trả về giá trị String được lưu trong PlayerPrefs nếu không có sẽ trả về _defaultValue
     /// </summary>
     /// <param name="_key">  Key cần lấy giá trị </param>
-    /// <param name="_defaultValue"> Giá trị trả về nếu key chưa có giá trị </param>
+    /// <param name="_defaultValue"> Trả về giá trị này nếu key chưa có giá trị </param>
     /// <returns></returns>
     public static string GetStringPP(this string _key, string _defaultValue) => PlayerPrefs.GetString(_key, _defaultValue);
     

@@ -27,10 +27,8 @@ public class PlayerConfiguration : CharacterConfiguration
     [Header("WEAPON")] 
     [Tooltip("Tên của vũ khí")]
     public string WeaponName;
-    
     [Tooltip("Thông tin của vũ khí")]
     public string WeaponInfo;
-    
     [Tooltip("Cấp độ của vũ khí"), Range(1, 10)]
     public int WeaponLevel;
 

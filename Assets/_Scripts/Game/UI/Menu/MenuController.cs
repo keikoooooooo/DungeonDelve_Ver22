@@ -13,6 +13,8 @@ public class MenuController : Singleton<MenuController>
     private void Start()
     {
         Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        if(Player) PlayerRefGUIManager.SendRef(Player);
+        
         Initialized();
     }
     private void Update()
