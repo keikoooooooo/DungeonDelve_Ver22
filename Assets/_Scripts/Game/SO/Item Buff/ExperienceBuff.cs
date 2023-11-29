@@ -9,9 +9,9 @@ public class ExperienceBuff : BuffEffect
     
     public override void Apply(PlayerController _player)
     {
-        if(_player.PlayerData.UserData.GalacticGems < UpgradeCost) return;
+        if(GameManager.Instance.UserData.galacticGems < UpgradeCost) return;
 
-        _player.PlayerData.UserData.GalacticGems -= UpgradeCost;
+        GameManager.Instance.UserData.galacticGems -= UpgradeCost;
         _player.PlayerConfig.CurrentEXP += (int)Value;
     }
 }
