@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
@@ -26,6 +28,7 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     private void Start()
     {
         _isLogin = false;
+        PlayerConfig = ScriptableObject.CreateInstance<PlayerConfiguration>();
         PlayFabController.Instance.OnLoginSuccessEvent.AddListener(OnLoginSuccess);
     }
     private void OnDestroy()
@@ -47,10 +50,11 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
         switch (_keySave)
         {
             case PF_Key.UserData_Key:
-                jsonText = JsonUtility.ToJson(UserData, true);
+                jsonText = JsonConvert.SerializeObject(UserData, Formatting.Indented);
                 break;
             case PF_Key.PlayerConfigData_Key:
-                jsonText = JsonUtility.ToJson(PlayerConfig, true);
+                jsonText = JsonConvert.SerializeObject(PlayerConfig, Formatting.Indented);
+                
                 break;
             default:
                 Debug.LogWarning("Non save data to playFab");
@@ -95,7 +99,6 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
         }, ErrorCallback);
     }
     
-    
     private void GetUserData()
     {
         if(!_isLogin) return;
@@ -116,11 +119,11 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
         
         if (_result.Data.TryGetValue($"{PF_Key.UserData_Key}", out var userDataRecord))
         {
-            UserData = JsonUtility.FromJson<UserData>(userDataRecord.Value);
+            UserData = JsonConvert.DeserializeObject<UserData>(userDataRecord.Value);
         }
         if (_result.Data.TryGetValue($"{PF_Key.PlayerConfigData_Key}", out var playerConfigDataRecord))
         {
-            PlayerConfig = JsonUtility.FromJson<PlayerConfiguration>(playerConfigDataRecord.Value);
+            PlayerConfig = JsonConvert.DeserializeObject<PlayerConfiguration>(playerConfigDataRecord.Value);
         }
     }
     
