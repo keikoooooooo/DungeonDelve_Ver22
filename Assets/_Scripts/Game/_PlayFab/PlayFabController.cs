@@ -30,6 +30,7 @@ public class PlayFabController : Singleton<PlayFabController>
 
         if (!PlayerPrefs.HasKey(EMAIL_Key))
         {
+            OnAccountHandleFailureEvent?.Invoke("Please to login");
             return;
         }
 

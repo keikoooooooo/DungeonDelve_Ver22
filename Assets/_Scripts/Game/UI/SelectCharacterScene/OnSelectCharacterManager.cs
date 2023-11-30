@@ -31,6 +31,7 @@ public class OnSelectCharacterManager : MonoBehaviour
     
     private Coroutine _loadPanelCoroutine;
 
+    private int _selectChar = -1;
     private UserData _userData;
     private PlayerConfiguration _playerConfig;
 
@@ -41,6 +42,7 @@ public class OnSelectCharacterManager : MonoBehaviour
     }
     private void Start()
     {
+        _selectChar = -1;
         char_01RawImage.color = _unSelectColor;
         char_02RawImage.color = _unSelectColor;
         textChar_01Tween = nameChar_02.transform.DOScale(Vector3.one, _durationTween);
@@ -50,8 +52,8 @@ public class OnSelectCharacterManager : MonoBehaviour
     {
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
         
+        _selectChar = -1;
         ClearDotTween();
-        _playerConfig = null;
         char_01RawImage.DOColor(_unSelectColor, _durationTween);
         char_02RawImage.DOColor(_unSelectColor, _durationTween);
         textChar_01Tween = nameChar_01.transform.DOScale(Vector3.one, _durationTween);
@@ -63,7 +65,7 @@ public class OnSelectCharacterManager : MonoBehaviour
         
         if (char_01RawImage == _charRawImage)
         {
-            _playerConfig = char_01Config;
+            _selectChar = 1;
             colorChar_01Tween = char_01RawImage.DOColor(Color.white, _durationTween);
             colorChar_02Tween = char_02RawImage.DOColor(_unSelectColor, _durationTween);
             textChar_01Tween = nameChar_01.transform.DOScale(_selectScale, _durationTween);
@@ -74,8 +76,8 @@ public class OnSelectCharacterManager : MonoBehaviour
             char_02Animator.SetTrigger(IDTalkingDeSelect);
         }
         else
-        {           
-            _playerConfig = char_02Config;
+        {
+            _selectChar = 2;
             colorChar_01Tween = char_01RawImage.DOColor(_unSelectColor, _durationTween);
             colorChar_02Tween = char_02RawImage.DOColor(Color.white, _durationTween);
             textChar_01Tween = nameChar_01.transform.DOScale(Vector3.one, _durationTween);
@@ -95,14 +97,17 @@ public class OnSelectCharacterManager : MonoBehaviour
     }
     
     
-
     public void UpdateUserData()
     {
-        if (!PlayFabHandleUserData.Instance || !_playerConfig) return;
+        if (!PlayFabHandleUserData.Instance || _selectChar <= 0) return;
         
         _userData = new UserData(PlayFabController.Instance.username, 1000);
-        PlayFabHandleUserData.Instance.SetUserData(_userData, PlayFabHandleUserData.PF_Key.UserData_Key);
-        PlayFabHandleUserData.Instance.SetUserData(_playerConfig, PlayFabHandleUserData.PF_Key.PlayerConfigData_Key);
+        _playerConfig = Instantiate(_selectChar == 1 ? char_01Config : char_02Config);
+        
+        PlayFabHandleUserData.Instance.UserData = _userData;
+        PlayFabHandleUserData.Instance.PlayerConfig = _playerConfig;
+        PlayFabHandleUserData.Instance.SetUserData(PlayFabHandleUserData.PF_Key.UserData_Key);
+        PlayFabHandleUserData.Instance.SetUserData(PlayFabHandleUserData.PF_Key.PlayerConfigData_Key);
         OpenPanelLoad(2.5f);
     }
 
@@ -122,6 +127,7 @@ public class OnSelectCharacterManager : MonoBehaviour
         if (!PlayFabHandleUserData.Instance || !_playerConfig)
             yield break;
         
+        yield return new WaitForSeconds(Random.Range(0.5f, 1.2f));
         loadSceneButton.LoadScene();
     }
 

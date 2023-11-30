@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Reaper
   Level: 21
+  CurrentEXP: 0
   Infor: 
-  MaxHealth: 10000
+  MaxHP: 10000
   ATK: 150
   CRITRate: 50
   CRITDMG: 50

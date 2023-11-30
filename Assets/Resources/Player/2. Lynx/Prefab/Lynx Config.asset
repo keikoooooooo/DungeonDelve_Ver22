@@ -16,7 +16,7 @@ MonoBehaviour:
   Level: 1
   CurrentEXP: 0
   Infor: 
-  MaxHP: 10000
+  MaxHP: 5000
   ATK: 70
   CRITRate: 5
   CRITDMG: 50

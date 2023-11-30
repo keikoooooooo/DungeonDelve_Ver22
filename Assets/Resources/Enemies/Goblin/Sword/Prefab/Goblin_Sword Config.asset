@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Goblin Sword
   Level: 2
+  CurrentEXP: 0
   Infor: 
-  MaxHealth: 200
+  MaxHP: 200
   ATK: 40
   CRITRate: 90
   CRITDMG: 50

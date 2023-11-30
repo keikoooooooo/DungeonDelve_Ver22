@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerDataHandle : MonoBehaviour
@@ -13,30 +12,17 @@ public class PlayerDataHandle : MonoBehaviour
     /// </summary>
     public PlayerRenderTexture PlayerRenderTexture { get; private set; }
     [SerializeField] private PlayerRenderTexture playerRenderTexturePrefab;
-
     
-    private void OnEnable()
-    {
-        if(!PlayFabHandleUserData.Instance) return;
-        SetCharacterData();
-    }
     private void Start()
     {
         PlayerRenderTexture = Instantiate(playerRenderTexturePrefab, null);
     }
-    private void OnDisable()
-    {
-        if(!PlayFabHandleUserData.Instance) return;
-        SetCharacterData();
-    }
+ 
 
     
-    private void SetCharacterData()
+    public void SetCharacterData(PlayerConfiguration _playerConfig)
     {
-        PlayerConfig = PlayFabHandleUserData.Instance.PlayerConfig;
-        Debug.Log("On get data in playfab");
-        Debug.Log("Skill CD = "+PlayerConfig.ElementalSkillCD);
-        Debug.Log("Burst CD = "+PlayerConfig.ElementalBurstlCD);
+        PlayerConfig = _playerConfig;
     }
     
     

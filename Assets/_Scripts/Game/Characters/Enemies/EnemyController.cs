@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
     private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
+        _player = GameManager.Instance.player.gameObject;
         if(_player) SetRefPlayer(_player);
         SetRunSpeed(EnemyConfig.RunSpeed);
         SetWalkSpeed(EnemyConfig.WalkSpeed);

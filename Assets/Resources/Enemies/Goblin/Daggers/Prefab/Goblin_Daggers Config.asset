@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Goblin Daggers
   Level: 2
+  CurrentEXP: 0
   Infor: 
-  MaxHealth: 200
+  MaxHP: 200
   ATK: 18
   CRITRate: 5
   CRITDMG: 50
@@ -25,3 +26,6 @@ MonoBehaviour:
   NormalAttackCD: 4.5
   SkillAttackCD: 6
   SpecialAttackCD: 10
+  NormalAttackMultiplier: []
+  SkillMultiplier: []
+  SpecialMultiplier: []

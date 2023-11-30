@@ -321,10 +321,8 @@ public class GameplayEditorWindow : EditorWindow
     #endregion
 
     #region ENEMIES
-
     private readonly string[] _enemiesNames = { "Goblin", "BOSS: Reaper" };
     private int _selectedEnemy = -1;
-    
     private readonly string[] _goblinType = { "Goblin: Sword", "Goblin: Slingshot", "Goblin: Daggers" };
     private int _selectedTypeEnemy = -1;
     
@@ -528,15 +526,15 @@ public class GameplayEditorWindow : EditorWindow
         if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_enemyConfiguration);
         GUILayout.EndScrollView();
     }
-    
     #endregion
 
 
     #region GAMECUSTOM
-    private GameItemData _gameItemData;
-    private CharacterData _characterData;
     private int _selectedPanelGameCustomType = -1;
     private readonly string[] _gameCustomtype = { "ITEM DATA" , "CHARACTER DATA"};
+    
+    private GameItemData _gameItemData;
+    private CharacterData _characterData;
     
     private void HandlePanelGameCustom()
     {
@@ -569,13 +567,15 @@ public class GameplayEditorWindow : EditorWindow
             if (i % 8 == 0 && i != 0)
             {
                 GUILayout.EndHorizontal();
-                Space(10);
+                Space(25);
                 GUILayout.BeginHorizontal();
             }
             GUILayout.BeginVertical();
             var itemDefault = gameItemData.GameItemDatas[i];
-            itemDefault.code = (ItemNameCode)EditorGUILayout.EnumPopup("", itemDefault.code, Width(100));
-            itemDefault.sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.sprite, typeof(Sprite), false, Width(100), Height(100));
+            itemDefault.code = (ItemNameCode)EditorGUILayout.EnumPopup("", itemDefault.code, Width(150));
+            itemDefault.sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.sprite, typeof(Sprite), false, Width(150), Height(150));
+            Space(2);
+            itemDefault.ratity = (ItemRarity)EditorGUILayout.EnumPopup("", itemDefault.ratity, Width(150));
             GUILayout.EndVertical();
         }
         GUILayout.EndHorizontal();

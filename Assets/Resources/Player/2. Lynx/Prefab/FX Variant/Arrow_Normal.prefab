@@ -406,7 +406,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2959334866490560796, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4579740666373964048, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
@@ -430,7 +430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5468526304508266351, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 4096
+      value: 1052680
       objectReference: {fileID: 0}
     - target: {fileID: 5468526304508266351, guid: 01a005058297909478beb7ce15cb2803, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar

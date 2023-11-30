@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Goblin Slingshot
   Level: 2
+  CurrentEXP: 0
   Infor: 
-  MaxHealth: 200
+  MaxHP: 200
   ATK: 28
   CRITRate: 5
   CRITDMG: 50
