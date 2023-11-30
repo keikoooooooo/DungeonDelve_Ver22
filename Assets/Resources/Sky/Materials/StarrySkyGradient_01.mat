@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StarrySkyGradient 1
+  m_Name: StarrySkyGradient_01
   m_Shader: {fileID: 4800000, guid: 274541675e6514140807034ecef69715, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -101,8 +101,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GradientFadeBegin: -0.31
-    - _GradientFadeEnd: 0.4
+    - _GradientFadeBegin: -0.4
+    - _GradientFadeEnd: 0.34
     - _HorizonScaleFactor: 0.6
     - _Metallic: 0
     - _Mode: 0
@@ -116,7 +116,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StarFadeBegin: -0.002
+    - _StarFadeBegin: -0.38
     - _StarFadeEnd: 0.711
     - _StarLayer1Density: 0.0239
     - _StarLayer1EdgeFade: 0.819
@@ -144,8 +144,8 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GradientHorizonColor: {r: 0.74093556, g: 0.53333336, b: 0.9529412, a: 1}
-    - _GradientSkyColor: {r: 0.0934256, g: 0.2600022, b: 0.39705884, a: 1}
+    - _GradientHorizonColor: {r: 0.6999483, g: 0.46274507, b: 0.99215686, a: 1}
+    - _GradientSkyColor: {r: 0.09411765, g: 0.25882354, b: 0.39607844, a: 1}
     - _MoonColor: {r: 0.66, g: 0.65, b: 0.55, a: 1}
     - _MoonComputedPositionData: {r: -0.36930114, g: 0.66199994, b: 0.65220606, a: 0}
     - _MoonComputedRotationData: {r: 5.5597014, g: 5.7679644, b: 0, a: 0}
