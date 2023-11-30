@@ -6,11 +6,11 @@ using UnityEngine;
 [Serializable]
 public class Inventory
 {
-    public ItemTypeEnums itemType;
+    public ItemNameCode itemCode;
     public int value;
-    public Inventory(ItemTypeEnums _itemType, int _value)
+    public Inventory(ItemNameCode _itemCode, int _value)
     {
-        itemType = _itemType;
+        itemCode = _itemCode;
         value = _value;
     }
 }
@@ -20,9 +20,6 @@ public class UserData
 {
     [Tooltip("Tên User")]
     public string username;
-
-    [Tooltip("Nhân vật của người dùng")]
-    public CharacterTypeEnums characterType;
     
     [Tooltip("Gems")] 
     public int galacticGems;
@@ -30,12 +27,22 @@ public class UserData
     [Tooltip("Dữ liệu Item của User")]
     public List<Inventory> inventories;
     
-    public UserData(string _username, int _galacticGems, CharacterTypeEnums _characterType)
+    
+    /// <summary>
+    /// Tạo một data mới cho user
+    /// </summary>
+    /// <param name="_username"> Tên của User, có thể lấy username lúc tạo tài khoản. </param>
+    /// <param name="_galacticGems"> Đá quý ban đầu cho User </param>
+    public UserData(string _username, int _galacticGems)
     {
         username = _username;
         galacticGems = _galacticGems;
-        characterType = _characterType;
-        inventories = new List<Inventory>();
+        
+        inventories = new List<Inventory>
+        {
+            new(ItemNameCode.POHealth, 5),
+            new(ItemNameCode.POStamina, 5),
+        };
     }
     
 }

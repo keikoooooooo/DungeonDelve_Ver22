@@ -5107,7 +5107,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroy: 1
-  panelLoading: {fileID: 2068299058}
   animator: {fileID: 1288368982}
 --- !u!1 &1301371000
 GameObject:
@@ -5670,7 +5669,7 @@ MonoBehaviour:
   accountBtt: {fileID: 1420499449}
   animator: {fileID: 1347155542}
   panelAnimatedLoading: {fileID: 143547778}
-  panelClickToBegin: {fileID: 1429287723}
+  loadSceneButton: {fileID: 1429287726}
   guiLogin: {fileID: 560234202}
   guiRegister: {fileID: 893655990}
   guiForgotPw: {fileID: 103304324}
@@ -6668,10 +6667,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ac9955d5ff34a449e3def916b6c381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDontDestroy: 0
+  OnLoadUserDataSuccessEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLoadUserDataFailureEvent:
+    m_PersistentCalls:
+      m_Calls: []
   UserData:
-    Username: 
-    GalacticGems: 0
-    Inventories: []
+    username: 
+    galacticGems: 0
+    inventories: []
+  PlayerConfig: {fileID: 0}
 --- !u!1 &1672277782
 GameObject:
   m_ObjectHideFlags: 0

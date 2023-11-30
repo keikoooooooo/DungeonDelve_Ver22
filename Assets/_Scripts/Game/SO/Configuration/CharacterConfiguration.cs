@@ -9,6 +9,7 @@ public class FloatMultiplier
     public List<float> Multiplier;
 }
 
+[Serializable]
 public class CharacterConfiguration : ScriptableObject
 {
     [Header("INFORMATION")]

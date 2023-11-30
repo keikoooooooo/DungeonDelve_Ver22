@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class LoadSceneManager : Singleton<LoadSceneManager>
 {
-    [SerializeField] private GameObject panelLoading;
     public Animator animator;
 
     private readonly int IDSceneLoading_IN = Animator.StringToHash("SceneLoading_IN");
@@ -29,7 +28,6 @@ public class LoadSceneManager : Singleton<LoadSceneManager>
         while (true)
         {
             if(_progressLoad > .9f) break;
-            Debug.Log("LOAD SCENE");
             _progressLoad = Mathf.Clamp01(scene.progress / 0.9f);
             yield return new WaitForSeconds(Random.Range(1.5f, 2.5f));
             yield return null;

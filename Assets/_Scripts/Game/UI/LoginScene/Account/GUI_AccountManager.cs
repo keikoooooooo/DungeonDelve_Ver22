@@ -9,7 +9,7 @@ public class GUI_AccountManager : MonoBehaviour
     [Space] 
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject panelAnimatedLoading;
-    [SerializeField] private GameObject panelClickToBegin;
+    [SerializeField] private LoadSceneButton loadSceneButton;
     [Space]
     [SerializeField] private GUI_Login guiLogin;
     [SerializeField] private GUI_Register guiRegister;
@@ -21,7 +21,7 @@ public class GUI_AccountManager : MonoBehaviour
     {
         OpenPanelLogin();
         
-        panelClickToBegin.gameObject.SetActive(false);
+        loadSceneButton.gameObject.SetActive(false);
         logoutBtt.onClick.AddListener(LogoutAccount);
         accountBtt.onClick.AddListener(OpenPanelLogin);
         accountBtt.gameObject.SetActive(true);
@@ -52,7 +52,13 @@ public class GUI_AccountManager : MonoBehaviour
         PlayFabController.Instance.OnMailSendForgotPWSuccessEvent.AddListener(HandleRegisterSuccess);
         PlayFabController.Instance.OnAccountHandleFailureEvent.AddListener(guiForgotPw.SetErrorText);
         #endregion
+
+        if(!PlayFabHandleUserData.Instance) return;
         
+        #region Loading Data
+        PlayFabHandleUserData.Instance.OnLoadUserDataSuccessEvent.AddListener(OnLoadUserDataSuccess);
+        PlayFabHandleUserData.Instance.OnLoadUserDataFailureEvent.AddListener(OnLoadUserDataFailure);
+        #endregion
     }
     private void OnDisable()
     {
@@ -84,6 +90,13 @@ public class GUI_AccountManager : MonoBehaviour
         PlayFabController.Instance.OnMailSendForgotPWSuccessEvent.RemoveListener(HandleRegisterSuccess);
         PlayFabController.Instance.OnAccountHandleFailureEvent.RemoveListener(guiForgotPw.SetErrorText);
         #endregion
+        
+        if(!PlayFabHandleUserData.Instance) return;
+        
+        #region Loading Data
+        PlayFabHandleUserData.Instance.OnLoadUserDataSuccessEvent.RemoveListener(OnLoadUserDataSuccess);
+        PlayFabHandleUserData.Instance.OnLoadUserDataFailureEvent.RemoveListener(OnLoadUserDataFailure);
+        #endregion
     }
 
 
@@ -96,8 +109,10 @@ public class GUI_AccountManager : MonoBehaviour
         ClearAccountTemp();
         accountBtt.gameObject.SetActive(true);
         logoutBtt.gameObject.SetActive(false);
-        panelClickToBegin.SetActive(false);
+        loadSceneButton.gameObject.SetActive(false);
     }
+    
+    
     private void HandleLoginSuccess()
     {
         if(_handleCoroutine != null) StopCoroutine(_handleCoroutine);
@@ -108,10 +123,10 @@ public class GUI_AccountManager : MonoBehaviour
         panelAnimatedLoading.SetActive(true);
         yield return new WaitForSeconds(2f);
         animator.Play("Disable");
+        panelAnimatedLoading.SetActive(false);
         logoutBtt.gameObject.SetActive(true);
         accountBtt.gameObject.SetActive(false);
-        panelClickToBegin.SetActive(true);
-        panelAnimatedLoading.SetActive(false);
+        loadSceneButton.gameObject.SetActive(true);
     }
 
     private void HandleRegisterSuccess()
@@ -126,12 +141,29 @@ public class GUI_AccountManager : MonoBehaviour
         animator.Play("OpenLoginPanel");
         panelAnimatedLoading.SetActive(false);
     }
+
+
+    
+    /// <summary>
+    /// Nếu có dữ liệu người chơi trên PlayFab -> Load scene gameplay
+    /// </summary>
+    private void OnLoadUserDataSuccess()
+    {
+        loadSceneButton.SceneName = "DungeonScene";
+    }
+    /// <summary>
+    /// Nếu chưa có dữ liệu -> Load scene chọn nhân vật mới
+    /// </summary>
+    private void OnLoadUserDataFailure()
+    {
+        loadSceneButton.SceneName = "NewSelectCharacterScene";
+    }
+    
     
 
     public void ClearAccountTemp()
     {
         if(PlayFabController.Instance) PlayFabController.Instance.ClearAccountTemp();
     }
-    
     
 }

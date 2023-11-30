@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum CharacterTypeEnums
+public enum CharacterNameCode
 {
     Arlan = 0,
     Lynx = 1
@@ -12,8 +12,8 @@ public enum CharacterTypeEnums
 [Serializable]
 public class CharacterCustom
 {
-    public PlayerController Character;
-    public CharacterTypeEnums Type;
+    public PlayerController prefab;
+    public CharacterNameCode nameCode;
 }
 
 /// <summary>

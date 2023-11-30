@@ -69,7 +69,7 @@ public class GameplayEditorWindow : EditorWindow
                 }
                 break;
             case 1:
-                _characterUpgradeData = EditorGUIUtility.Load("Assets/Resources/Player/Character Upgrade Data.asset") as CharacterUpgradeData;
+                _characterUpgradeData = EditorGUIUtility.Load("Assets/Resources/GameData/Character Upgrade Data.asset") as CharacterUpgradeData;
                 ShowUpgradeDetails(_characterUpgradeData);
                 break;
 
@@ -87,8 +87,12 @@ public class GameplayEditorWindow : EditorWindow
         EditorGUI.BeginChangeCheck();
         
         Space(30);
+        GUILayout.Label("CODE ---------------------------------", EditorStyles.boldLabel);
+        dataPlayerConfig.NameCode = (CharacterNameCode)EditorGUILayout.EnumPopup("Name Code", dataPlayerConfig.NameCode, Width(500));
+        
+        Space(30);
         GUILayout.Label("INFORMATION ------------------------", EditorStyles.boldLabel);
-        dataPlayerConfig.Name = EditorGUILayout.TextField("Name", dataPlayerConfig.Name, Width(500));
+        dataPlayerConfig.Name = EditorGUILayout.TextField("Name", $"{dataPlayerConfig.NameCode}", Width(500));
         dataPlayerConfig.Level = EditorGUILayout.IntField("Level", dataPlayerConfig.Level, Width(500));
         dataPlayerConfig.CurrentEXP = EditorGUILayout.IntField("Current EXP", dataPlayerConfig.CurrentEXP, Width(500));
         dataPlayerConfig.Infor = EditorGUILayout.TextField("Infor", dataPlayerConfig.Infor, Width(500));
@@ -529,10 +533,10 @@ public class GameplayEditorWindow : EditorWindow
 
 
     #region GAMECUSTOM
-    
     private GameItemData _gameItemData;
+    private CharacterData _characterData;
     private int _selectedPanelGameCustomType = -1;
-    private readonly string[] _gameCustomtype = { "ITEM DATA" };
+    private readonly string[] _gameCustomtype = { "ITEM DATA" , "CHARACTER DATA"};
     
     private void HandlePanelGameCustom()
     {
@@ -541,8 +545,12 @@ public class GameplayEditorWindow : EditorWindow
         switch (_selectedPanelGameCustomType)
         {
             case 0:
-                _gameItemData= EditorGUIUtility.Load("Assets/Resources/Player/Game Item Data.asset") as GameItemData;
+                _gameItemData= EditorGUIUtility.Load("Assets/Resources/GameData/Game Item Data.asset") as GameItemData;
                 ShowItemsDetails(_gameItemData);
+                break;
+            case 1:
+                _characterData= EditorGUIUtility.Load("Assets/Resources/GameData/Character Data.asset") as CharacterData;
+                ShowCharacterData(_characterData);
                 break;
         }
     }
@@ -566,8 +574,8 @@ public class GameplayEditorWindow : EditorWindow
             }
             GUILayout.BeginVertical();
             var itemDefault = gameItemData.GameItemDatas[i];
-            itemDefault.Type = (ItemTypeEnums)EditorGUILayout.EnumPopup("", itemDefault.Type, Width(100));
-            itemDefault.Sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.Sprite, typeof(Sprite), false, Width(100), Height(100));
+            itemDefault.code = (ItemNameCode)EditorGUILayout.EnumPopup("", itemDefault.code, Width(100));
+            itemDefault.sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.sprite, typeof(Sprite), false, Width(100), Height(100));
             GUILayout.EndVertical();
         }
         GUILayout.EndHorizontal();
@@ -591,6 +599,52 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
         
         if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(gameItemData);
+    }
+    private void ShowCharacterData(CharacterData characterData)
+    {
+        if(characterData == null) return;
+        
+        EditorGUI.BeginChangeCheck();
+        
+        Space(10);
+        
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("NameCode", Width(150));
+        GUILayout.Label("", Width(30));
+        GUILayout.Label("Player Prefab", Width(150));
+        GUILayout.EndHorizontal();
+        
+        scrollView = GUILayout.BeginScrollView(scrollView);
+        foreach (var characterCustom in characterData.CharactersData)
+        {
+            GUILayout.BeginHorizontal();
+            characterCustom.nameCode = (CharacterNameCode)EditorGUILayout.EnumPopup("", characterCustom.nameCode, Width(150));
+            GUILayout.Label("  ->  ", Width(30));
+            characterCustom.prefab = (PlayerController)EditorGUILayout.ObjectField(characterCustom.prefab, typeof(PlayerController), false, Width(200));
+            GUILayout.EndHorizontal();
+            Space(10);
+        }
+        GUILayout.EndScrollView();
+        
+        Space(10);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
+        {
+            characterData.CharactersData.Add(new CharacterCustom());
+        }
+        GUILayout.Box("Add new Character");
+        GUILayout.EndHorizontal();
+        
+        
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("-", Width(45), Height(25)) && characterData.CharactersData.Count != 0)
+        {
+            characterData.CharactersData.RemoveAt(characterData.CharactersData.Count - 1);
+        }
+        GUILayout.Box("Remove Character");
+        GUILayout.EndHorizontal();
+        
+        if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(characterData);
     }
     #endregion
 

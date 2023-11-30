@@ -1,17 +1,27 @@
-using System;
 using System.Collections.Generic;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
 {
+    public UnityEvent OnLoadUserDataSuccessEvent;
+    public UnityEvent OnLoadUserDataFailureEvent;
+    
     public UserData UserData;
+    public PlayerConfiguration PlayerConfig;
+    
     private bool _isLogin;
     
-    // PlayerFab KeyValue
-    private const string UserData_Key = "USER_Data";
+  
+    public enum PF_Key : byte // PlayerFab KeyValue
+    {
+        UserData_Key,
+        PlayerConfigData_Key
+    }
+    
     
     private void Start()
     {
@@ -22,62 +32,98 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     {
         PlayFabController.Instance.OnLoginSuccessEvent.RemoveListener(OnLoginSuccess);
     }
-
-    // private void Update()
-    // {
-    //     if(!_isLogin) return;
-    //     if (Input.GetKeyDown(KeyCode.S))
-    //     {
-    //         SetUserData();
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.L))
-    //     {
-    //         GetUserData();
-    //     }
-    // }
-
+    
     private void OnLoginSuccess()
     {
         _isLogin = true;
         GetUserData();
     }
     
-    private void SetUserData()
+    public void SetUserData(PF_Key _keySave)
     {
-        var request = new UpdateUserDataRequest()
+        if(!_isLogin) return;
+
+        var jsonText = "";
+        switch (_keySave)
         {
-            Data = new Dictionary<string, string>()
+            case PF_Key.UserData_Key:
+                jsonText = JsonUtility.ToJson(UserData, true);
+                break;
+            case PF_Key.PlayerConfigData_Key:
+                jsonText = JsonUtility.ToJson(PlayerConfig, true);
+                break;
+            default:
+                Debug.LogWarning("Non save data to playFab");
+                break;
+        }
+
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
             {
                 {
-                     UserData_Key,
-                     JsonUtility.ToJson(UserData)
+                    _keySave.ToString(),
+                    jsonText
                 }
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, result => { Debug.Log("Update User Data Success"); }, ErrorCallback);
+        PlayFabClientAPI.UpdateUserData(request, _resul =>
+        {
+            Debug.Log("Player Update User Data Success");
+            GetUserData();
+        }, ErrorCallback);
     }
+    public void SetUserData<T> (T _data, PF_Key _keySave)
+    {
+        if(!_isLogin) return;
 
+        var jsonText = JsonUtility.ToJson(_data, true);
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                {
+                    _keySave.ToString(),
+                    jsonText
+                }
+            }
+        };
+        PlayFabClientAPI.UpdateUserData(request, _result =>
+        {
+            Debug.Log("Player Update User Data Success");
+            GetUserData();
+        }, ErrorCallback);
+    }
+    
+    
     private void GetUserData()
     {
+        if(!_isLogin) return;
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetUserDataSuccess, ErrorCallback);
     }
-
     private void OnGetUserDataSuccess(GetUserDataResult _result)
     {
-        Debug.Log("Get User Data Success");
-        if (_result.Data != null && _result.Data.TryGetValue(UserData_Key, out var userDataRecord))
+        if (_result.Data == null || !_result.Data.ContainsKey($"{PF_Key.UserData_Key}")) 
+        {
+            Debug.Log("Get Data Failure.\nCreate new Userdata");
+
+            OnLoadUserDataFailureEvent?.Invoke();
+            return;
+        }
+        
+        OnLoadUserDataSuccessEvent?.Invoke();
+        Debug.Log("Get Data Success");
+        
+        if (_result.Data.TryGetValue($"{PF_Key.UserData_Key}", out var userDataRecord))
         {
             UserData = JsonUtility.FromJson<UserData>(userDataRecord.Value);
         }
-        else
+        if (_result.Data.TryGetValue($"{PF_Key.PlayerConfigData_Key}", out var playerConfigDataRecord))
         {
-            // UserData = new UserData(PlayFabController.Instance.username, 1000, CharacterTypeEnums.Arlan);
-            // UserData.inventories.Add(new Inventory(ItemTypeEnums.POHealth, 5));
-            // UserData.inventories.Add(new Inventory(ItemTypeEnums.POStamina, 5));
+            PlayerConfig = JsonUtility.FromJson<PlayerConfiguration>(playerConfigDataRecord.Value);
         }
     }
-
-    private void ErrorCallback(PlayFabError _error) => Debug.LogWarning(_error.Error);
-
-
+    
+    
+    private static void ErrorCallback(PlayFabError _error) => Debug.LogWarning(_error.Error);
 }

@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "Player Config", menuName = "Characters Configuration/Player")]
+[Serializable, CreateAssetMenu(fileName = "Player Config", menuName = "Characters Configuration/Player")]
 public class PlayerConfiguration : CharacterConfiguration
 {
     [Tooltip("Sức bền tối đa")] 
@@ -38,5 +39,8 @@ public class PlayerConfiguration : CharacterConfiguration
     public List<FloatMultiplier> ChargedAttackMultiplier;
     public List<FloatMultiplier> SkillMultiplier;
     public List<FloatMultiplier> SpecialMultiplier;
-    
+
+
+    [Header("TYPE")]
+    public CharacterNameCode NameCode;
 }

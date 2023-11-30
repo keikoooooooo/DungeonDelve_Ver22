@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemTypeEnums 
+public enum ItemNameCode 
 {
     // Potion (PO)
     POHealth,
@@ -53,8 +53,8 @@ public enum ItemTypeEnums
 [Serializable]
 public class ItemCustom
 {
-    public ItemTypeEnums Type;
-    public Sprite Sprite;
+    public ItemNameCode code;
+    public Sprite sprite;
 }
 
 /// <summary>
