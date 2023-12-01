@@ -1,51 +1,96 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class MenuController : Singleton<MenuController>
 {
-    public UnityEvent OnMenuOpenEvent;
-    public UnityEvent OnMenuCloseEvent;
+    [SerializeField] private TextMeshProUGUI currencyText;
+    
+    [Space]
+    public UnityEvent OnClickEscOpenMenuEvent;
+    public UnityEvent OnClickBOpenMenuEvent;
+    public UnityEvent OnCloseMenuEvent;
+    
+    
     private bool isOpenMenu;
+    private bool isEventRegistered;
     
-    public PlayerController Player { get; private set; }
+    private PlayerController _player;
+    private UserData _userData;
+    private SO_GameItemData _gameItemData;
+    private SO_CharacterUpgradeData _characterUpgradeData;
+    
+    
+    
+    private void OnEnable()
+    {
+        if(!GameManager.Instance) return;
 
-    
+        _player = GameManager.Instance.player;
+        _userData = GameManager.Instance.UserData;
+        _gameItemData = GameManager.Instance.GameItemData;
+        _characterUpgradeData = GameManager.Instance.CharacterUpgradeData;
+        
+        if (!isEventRegistered)
+        {
+            isEventRegistered = true;
+            _userData.OnCoinChangedEvent += OnCoinChanged;
+        }
+        GameManager.Instance.UserData.SendEventCoinChaged();
+    }
     private void Start()
-    {
-        Player = GameManager.Instance.player;
-        if(Player) PlayerRefGUIManager.SendRef(Player);
-        
-        Initialized();
-    }
-    private void Update()
-    {
-        if (!Input.GetKeyDown(KeyCode.Escape)) return;
-        
-        isOpenMenu = !isOpenMenu;
-        if(isOpenMenu) OpenMenu();
-        else           CloseMenu();
-    }
-    
-
-    private void Initialized()
     {
         isOpenMenu = false;
         Cursor.lockState = CursorLockMode.Locked;
+        GUI_Manager.SendRef(_userData, _characterUpgradeData, _gameItemData, _player);
+        _userData.SendEventCoinChaged();
     }
+    private void Update() => HandleInput();
+    private void OnDisable()
+    {
+        if(!isEventRegistered) return;
+        _userData.OnCoinChangedEvent -= OnCoinChanged;
+    }
+
+    
+    private void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isOpenMenu = !isOpenMenu;
+            if(isOpenMenu)
+            {
+                OnClickEscOpenMenuEvent?.Invoke();
+                OpenMenu();
+            }
+            else
+            {
+                CloseMenu();
+            }
+        }
+
+        if (!Input.GetKeyDown(KeyCode.B)) return;
+        isOpenMenu = true;
+        OnClickBOpenMenuEvent?.Invoke();
+        OpenMenu();
+    }
+    private void OnCoinChanged(int _value) => currencyText.text = $"{_value}";
+
+    
+    
     private void OpenMenu()
     {
-        OnMenuOpenEvent?.Invoke();
         Cursor.lockState = CursorLockMode.None;
+        _player.cinemachineFreeLook.enabled = false;
         Time.timeScale = 0;
-        Player.cinemachineFreeLook.enabled = false;
     }
     public void CloseMenu()
     {
-        OnMenuCloseEvent?.Invoke();
-        Player.cinemachineFreeLook.enabled = true;
-        Player.PlayerData.PlayerRenderTexture.CloseRenderUI();
-        Cursor.lockState = CursorLockMode.Locked;
+        OnCloseMenuEvent?.Invoke();
         Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
+        _player.cinemachineFreeLook.enabled = true;
+        _player.PlayerData.PlayerRenderTexture.CloseRenderUI();
     }
 
 
@@ -59,4 +104,5 @@ public class MenuController : Singleton<MenuController>
     {
         Cursor.lockState = hasFocus && !isOpenMenu ? CursorLockMode.Locked : CursorLockMode.None;
     }
+    
 }

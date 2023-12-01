@@ -1,49 +1,62 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUI_CharacterStats : MonoBehaviour, IPlayerRef
+public class GUI_CharacterStats : MonoBehaviour, IGUI
 {
-    public RawImage rawMesh;
+    
+    [SerializeField] private RawImage rawMainMesh;
+    [SerializeField] private RawImage rawShadowMesh;
     
     [Header("Infor")] 
-    public TextMeshProUGUI charNameText;
-    public TextMeshProUGUI charLevelText;
-    public TextMeshProUGUI charCurrentEXPText;
-    public Image charChapterIcon;
-    
+    [SerializeField] private Image charChapterIcon;
+    [SerializeField] private TextMeshProUGUI charNameText;
+    [SerializeField] private TextMeshProUGUI charLevelText;
+    [SerializeField] private TextMeshProUGUI charCurrentEXPText;
     [Header("BaseStats")]
-    public TextBar maxHPText;
-    public TextBar maxSTText;
-    public TextBar runSpeedText;
-    public TextBar elementalSkillText;
-    public TextBar elementalBurstText;
-    
+    [SerializeField] private TextBar maxHPText;
+    [SerializeField] private TextBar maxSTText;
+    [SerializeField] private TextBar runSpeedText;
+    [SerializeField] private TextBar elementalSkillText;
+    [SerializeField] private TextBar elementalBurstText;
     [Header("Attack")] 
-    public TextBar atkText;
-    
+    [SerializeField] private  TextBar atkText;
     [Header("Defense")] 
-    public TextBar defText;
+    [SerializeField] private  TextBar defText;
 
-    private PlayerController _player;
+    // Variables
+    private SO_CharacterUpgradeData _upgradeData;
+    private SO_PlayerConfiguration _playerConfig;
+    private PlayerRenderTexture _playerRender;
+
+    
+    private void Awake() => GUI_Manager.Add(this);
+    private void OnDestroy() => GUI_Manager.Remove(this);
     
     
-    private void Awake() => PlayerRefGUIManager.Add(this);
-    private void OnDestroy() => PlayerRefGUIManager.Remove(this);
-    
-    
-    public void GetRef(PlayerController player)
+    public void GetRef(UserData userData, SO_CharacterUpgradeData characterUpgradeData, SO_GameItemData gameItemData, PlayerController player)
     {
-        _player = player;
-        UpdateStatsText(_player.PlayerData.PlayerConfig);
+        _playerConfig = player.PlayerConfig;
+        _playerRender = player.PlayerData.PlayerRenderTexture;
+        _upgradeData = characterUpgradeData;
+        
+        UpdateData();
     }
-
-    private void UpdateStatsText(PlayerConfiguration _playerConfig)
+    
+    public void UpdateData()
     {
+        UpdateStatsText();
+        OpenRenderTexture();
+    }
+    
+    private void UpdateStatsText()
+    {
+        if(!_playerConfig) return;
+        
         charNameText.text = $"{_playerConfig.Name}";
         charLevelText.text = $"Lv. {_playerConfig.Level}";
-        charCurrentEXPText.text = $"{_playerConfig.CurrentEXP}";
+        charCurrentEXPText.text = $"{_playerConfig.CurrentEXP} / {_upgradeData.GetNextEXP(_playerConfig.Level)}";
+        charChapterIcon.sprite = _playerConfig.ChapterIcon;
 
         maxHPText.SetValueText($"{_playerConfig.MaxHP}");
         maxSTText.SetValueText($"{_playerConfig.MaxST}");
@@ -54,15 +67,14 @@ public class GUI_CharacterStats : MonoBehaviour, IPlayerRef
         atkText.SetValueText($"{_playerConfig.ATK}");
         defText.SetValueText($"{_playerConfig.DEF}");
     }
-    
-    public void OpenCharacterRenderTexture()
+    private void OpenRenderTexture()
     {
-        if (!MenuController.Instance.Player) return;
-        var _playerRenderTexture = MenuController.Instance.Player.PlayerData.PlayerRenderTexture;
-        _playerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
-        rawMesh.texture = _playerRenderTexture.renderTexture;
+        if (!_playerRender) return;
+        
+        _playerRender.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
+        rawMainMesh.texture = _playerRender.renderTexture;
+        rawShadowMesh.texture = rawMainMesh.texture;
     }
 
 
-    
 }

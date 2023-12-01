@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,12 +11,12 @@ public class OnSelectCharacterManager : MonoBehaviour
     [SerializeField] private GameObject nameChar_01;
     [SerializeField] private RawImage char_01RawImage;
     [SerializeField] private Animator char_01Animator;
-    [SerializeField] private PlayerConfiguration char_01Config;
+    [SerializeField] private SO_PlayerConfiguration char_01Config;
     [Space]
     [SerializeField] private GameObject nameChar_02;
     [SerializeField] private RawImage char_02RawImage;
     [SerializeField] private Animator char_02Animator;
-    [SerializeField] private PlayerConfiguration char_02Config;
+    [SerializeField] private SO_PlayerConfiguration char_02Config;
     [Space] 
     [SerializeField] private GameObject animatedLoadPanel;
     //
@@ -33,7 +34,7 @@ public class OnSelectCharacterManager : MonoBehaviour
 
     private int _selectChar = -1;
     private UserData _userData;
-    private PlayerConfiguration _playerConfig;
+    private SO_PlayerConfiguration _playerConfig;
 
 
     private void OnEnable()
@@ -108,7 +109,8 @@ public class OnSelectCharacterManager : MonoBehaviour
         PlayFabHandleUserData.Instance.PlayerConfig = _playerConfig;
         PlayFabHandleUserData.Instance.SetUserData(PlayFabHandleUserData.PF_Key.UserData_Key);
         PlayFabHandleUserData.Instance.SetUserData(PlayFabHandleUserData.PF_Key.PlayerConfigData_Key);
-        OpenPanelLoad(2.5f);
+        
+        OpenPanelLoad(Random.Range(2f, 2.8f));
     }
 
 

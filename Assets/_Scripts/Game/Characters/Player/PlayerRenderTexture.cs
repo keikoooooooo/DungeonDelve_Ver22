@@ -28,8 +28,7 @@ public class PlayerRenderTexture : MonoBehaviour
         gameObject.SetActive(true);
         camCharRender.gameObject.SetActive(_renderType == RenderType.Character);
         camWeaponRender.gameObject.SetActive(_renderType == RenderType.Weapon);
-        animator.updateMode = _renderType == RenderType.Character ? AnimatorUpdateMode.UnscaledTime
-                                                                  : AnimatorUpdateMode.Normal;
+        animator.updateMode = _renderType == RenderType.Character ? AnimatorUpdateMode.UnscaledTime : AnimatorUpdateMode.Normal;
     }
     public void CloseRenderUI()
     {

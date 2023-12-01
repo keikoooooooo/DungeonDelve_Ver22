@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class EnemyController : MonoBehaviour, IDamageable
 {
     // Ref
-    [field: SerializeField, Required] public EnemyConfiguration EnemyConfig { get; private set; }
+    [field: SerializeField, Required] public SO_EnemyConfiguration EnemyConfig { get; private set; }
     [field: SerializeField, Required] public Blackboard Blackboard { get; private set; }
     
     // Get & Set Property 

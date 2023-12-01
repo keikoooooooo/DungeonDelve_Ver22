@@ -15,26 +15,47 @@ public class Item : MonoBehaviour, IPooled<Item>
     [SerializeField] private Sprite rarityFrameEpic;
     [SerializeField] private Sprite rarityFrameLegendary;
     
-    private ItemNameCode itemNameCode;
+    
     private int value;
+    public Sprite GetSprite => itemIcon.sprite;
+    public bool CheckValue => value > 0; // Check số lượng item
     
     
+    
+    /// <summary>
+    /// Set Item ra UI
+    /// </summary>
+    /// <param name="_itemCustom"> Thông tin Item </param>
+    /// <param name="_value"> Số lượng Item </param>
     public void SetItem(ItemCustom _itemCustom, int _value)
     {
-        itemNameCode = _itemCustom.code;
-        itemIcon.sprite = _itemCustom.sprite;
         value = _value;
-        rarityFrame.sprite = _itemCustom.ratity switch
+        itemIcon.sprite = _itemCustom.sprite;
+        switch (_itemCustom.ratity)
         {
-            ItemRarity.Common => rarityFrameCommon,
-            ItemRarity.Uncommon => rarityFrameUnCommon,
-            ItemRarity.Rare => rarityFrameRare,
-            ItemRarity.Epic => rarityFrameEpic,
-            ItemRarity.Legendary => rarityFrameLegendary,
-        };
-    }
+            case ItemRarity.Common:
+                rarityFrame.sprite = rarityFrameCommon;
+                break;
+            case ItemRarity.Uncommon:
+                rarityFrame.sprite = rarityFrameUnCommon;
+                break;
+            case ItemRarity.Rare:
+                rarityFrame.sprite = rarityFrameRare;
+                break;
+            case ItemRarity.Epic:
+                rarityFrame.sprite = rarityFrameEpic;
+                break;
+            case ItemRarity.Legendary:
+                rarityFrame.sprite = rarityFrameLegendary;
+                break;
+        }
 
+        SetValueText(_value);
+    }
     
+
+    private void SetValueText(int _value) => valueText.text = $"{_value}"; 
+        
     public void Release() => ReleaseCallback?.Invoke(this);
     public Action<Item> ReleaseCallback { get; set; }
 }

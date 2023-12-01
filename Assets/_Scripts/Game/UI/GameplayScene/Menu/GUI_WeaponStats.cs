@@ -2,75 +2,84 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUI_WeaponStats : MonoBehaviour, IPlayerRef
+public class GUI_WeaponStats : MonoBehaviour, IGUI
 {
-    public RawImage rawMesh;
+    
+    [SerializeField] private RawImage rawMesh;
     
     [Header("Infor")]
-    public TextMeshProUGUI weaponNameText;
-    public TextMeshProUGUI weaponLevelText;
-
+    [SerializeField] private TextMeshProUGUI weaponNameText;
+    [SerializeField] private TextMeshProUGUI weaponLevelText;
     [Header("Base")]
-    public TextBar critRateText;
-    public TextBar critDMGText;
+    [SerializeField] private TextBar critRateText;
+    [SerializeField] private TextBar critDMGText;
     [Header("Attack")]
-    public TextBar hit1_DMGText;
-    public TextBar hit2_DMGText;
-    public TextBar hit3_DMGText;
-    public TextBar hit4_DMGText;
-    public TextBar hit5_DMGText;
-    public TextBar chargedAttack_STCostText;
-    public TextBar chargedAttack_DMGText;
-    public TextBar elementalSkill_DMGText;
-    public TextBar elementalBurst_DMGText;
+    [SerializeField] private TextBar hit1_DMGText;
+    [SerializeField] private TextBar hit2_DMGText;
+    [SerializeField] private TextBar hit3_DMGText;
+    [SerializeField] private TextBar hit4_DMGText;
+    [SerializeField] private TextBar hit5_DMGText;
+    [SerializeField] private TextBar chargedAttack_STCostText;
+    [SerializeField] private TextBar chargedAttack_DMGText;
+    [SerializeField] private TextBar elementalSkill_DMGText;
+    [SerializeField] private TextBar elementalBurst_DMGText;
     [Header("Details")] 
-    public TextBar weaponDetailsText;
+    [SerializeField] private TextBar weaponDetailsText;
 
-    private PlayerController _player;
+    
+    // Variables
+    private SO_PlayerConfiguration _playerConfig;
+    private PlayerRenderTexture _playerRender;
     
     
-    private void Awake() => PlayerRefGUIManager.Add(this);
-    private void OnDestroy() => PlayerRefGUIManager.Remove(this);
+    private void Awake() => GUI_Manager.Add(this);
+    private void OnDestroy() => GUI_Manager.Remove(this);
     
     
-    
-    public void GetRef(PlayerController player)
+
+    public void GetRef(UserData userData, SO_CharacterUpgradeData characterUpgradeData, SO_GameItemData gameItemData, PlayerController player)
     {
-        _player = player;
-        UpdateStatsText(_player.PlayerData.PlayerConfig);
+        _playerConfig = player.PlayerConfig;
+        _playerRender = player.PlayerData.PlayerRenderTexture;
+
+        UpdateData();
     }
-    private void UpdateStatsText(PlayerConfiguration _playerConfig)
+    
+    public void UpdateData()
     {
-        weaponNameText.text = $"{_playerConfig.WeaponName}";
+        UpdateStatsText();
+        OpenRenderTexture();
+    }
+    
+    private void UpdateStatsText()
+    {
+        if(!_playerConfig) return;
         
         var weaLv = _playerConfig.WeaponLevel;
         weaponLevelText.text = $"Lv. {weaLv}";
+        weaponNameText.text = $"{_playerConfig.WeaponName}";
 
         critRateText.SetValueText($"{_playerConfig.CRITRate} %");
         critDMGText.SetValueText($"{_playerConfig.CRITDMG} %");
-        
         hit1_DMGText.SetValueText($"{_playerConfig.NormalAttackMultiplier[0].Multiplier[weaLv]} %");
         hit2_DMGText.SetValueText($"{_playerConfig.NormalAttackMultiplier[1].Multiplier[weaLv]} %");
         hit3_DMGText.SetValueText($"{_playerConfig.NormalAttackMultiplier[2].Multiplier[weaLv]} %");
         hit4_DMGText.SetValueText($"{_playerConfig.NormalAttackMultiplier[3].Multiplier[weaLv]} %");
         hit5_DMGText.SetValueText($"{_playerConfig.NormalAttackMultiplier[4].Multiplier[weaLv]} %");
-        
         chargedAttack_STCostText.SetValueText($"{_playerConfig.ChargedAttackStaminaCost}");
         chargedAttack_DMGText.SetValueText($"{_playerConfig.ChargedAttackMultiplier[0].Multiplier[weaLv]} %");
         elementalSkill_DMGText.SetValueText($"{_playerConfig.SkillMultiplier[0].Multiplier[weaLv]} %");
         elementalBurst_DMGText.SetValueText($"{_playerConfig.SpecialMultiplier[0].Multiplier[weaLv]} %");
-        
         weaponDetailsText.SetValueText($"{_playerConfig.WeaponInfo}");
     }
-    
-    
-    public void OpenWeaponRenderTexture()
+    private void OpenRenderTexture()
     {
-        if (!MenuController.Instance.Player) return;
-        var _playerRenderTexture = MenuController.Instance.Player.PlayerData.PlayerRenderTexture;
-        _playerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Weapon);
-        rawMesh.texture = _playerRenderTexture.renderTexture;
+        if (!_playerRender) return;
+        
+        _playerRender.OpenRenderUI(PlayerRenderTexture.RenderType.Weapon);
+        rawMesh.texture = _playerRender.renderTexture;
     }
+
 
 
 }

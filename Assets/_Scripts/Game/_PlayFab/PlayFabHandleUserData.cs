@@ -13,13 +13,14 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     
     private bool _isLogin;
     public UserData UserData;
-    public PlayerConfiguration PlayerConfig;
+    public SO_PlayerConfiguration PlayerConfig;
     
   
     public enum PF_Key : byte // PlayerFab KeyValue
     {
         UserData_Key,
-        PlayerConfigData_Key
+        PlayerConfigData_Key,
+        PlayerSlotEquip_Key,
     }
     
     private void Start()
@@ -104,17 +105,17 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
             return;
         }
         
-        OnLoadUserDataSuccessEvent?.Invoke();
-        Debug.Log("Get Data Success");
-        
         if (_result.Data.TryGetValue($"{PF_Key.UserData_Key}", out var userDataRecord))
         {
             UserData = JsonConvert.DeserializeObject<UserData>(userDataRecord.Value);
         }
         if (_result.Data.TryGetValue($"{PF_Key.PlayerConfigData_Key}", out var playerConfigDataRecord))
         {
-            PlayerConfig = JsonConvert.DeserializeObject<PlayerConfiguration>(playerConfigDataRecord.Value);
+            PlayerConfig = JsonConvert.DeserializeObject<SO_PlayerConfiguration>(playerConfigDataRecord.Value);
         }
+        
+        OnLoadUserDataSuccessEvent?.Invoke();
+        Debug.Log("Get Data Success");
     }
     
     

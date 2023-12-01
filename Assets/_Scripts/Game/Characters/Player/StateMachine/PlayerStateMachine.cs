@@ -15,7 +15,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     
     #region Get & Set Property
     public PlayerDataHandle PlayerData;
-    public PlayerConfiguration PlayerConfig => PlayerData.PlayerConfig;
+    public SO_PlayerConfiguration PlayerConfig => PlayerData.PlayerConfig;
     public StatusHandle Health { get; private set; }
     public StatusHandle Stamina { get; private set; }
     public PlayerBaseState CurrentState { get; set; }

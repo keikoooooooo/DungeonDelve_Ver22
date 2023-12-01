@@ -5,7 +5,7 @@ public class PlayerDataHandle : MonoBehaviour
     /// <summary>
     /// Toàn bộ cấu hình của nhân vật: HP, ST, ATK, .....
     /// </summary>
-    [field: SerializeField] public PlayerConfiguration PlayerConfig { get; private set; }
+    [field: SerializeField] public SO_PlayerConfiguration PlayerConfig { get; private set; }
     
     /// <summary>
     /// RenderTexture(RawImage) -> Render các model của nhân vật lên UI
@@ -17,14 +17,14 @@ public class PlayerDataHandle : MonoBehaviour
     {
         PlayerRenderTexture = Instantiate(playerRenderTexturePrefab, null);
     }
- 
-
     
-    public void SetCharacterData(PlayerConfiguration _playerConfig)
+    
+    /// <summary>
+    /// Cập nhật DataConfig vào nhân vật
+    /// </summary>
+    public void SetData(SO_PlayerConfiguration _playerConfig)
     {
         PlayerConfig = _playerConfig;
     }
-    
-    
     
 }

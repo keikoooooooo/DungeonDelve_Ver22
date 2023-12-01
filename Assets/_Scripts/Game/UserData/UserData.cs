@@ -4,45 +4,83 @@ using UnityEngine;
 
 
 [Serializable]
-public class Inventory
-{
-    public ItemNameCode itemCode;
-    public int value;
-    public Inventory(ItemNameCode _itemCode, int _value)
-    {
-        itemCode = _itemCode;
-        value = _value;
-    }
-}
-
-[Serializable]
 public class UserData
 {
-    [Tooltip("Tên User")]
-    public string username;
+    public string username { get; private set; }
+    public int coin { get; private set; }
     
-    [Tooltip("Gems")] 
-    public int galacticGems;
+    [Tooltip("Các slot đang trang bị item")] 
+    public Dictionary<int, ItemNameCode> slotEquippeds;
+    
+    [Tooltip("Dữ liệu toàn bộ Item của User")]
+    public Dictionary<ItemNameCode, int> inventories;
+    
+    public event Action<int> OnCoinChangedEvent;
+    
+    
+    public UserData() { }
+    public UserData(string _username, int _coin)
+    {
+        username = _username;
+        coin = _coin;
 
-    [Tooltip("Dữ liệu Item của User")]
-    public List<Inventory> inventories;
+        slotEquippeds = new Dictionary<int, ItemNameCode>()
+        {
+            { 1, default },
+            { 2, default },
+            { 3, default },
+            { 4, default }
+        };
+        inventories = new Dictionary<ItemNameCode, int>()
+        {
+            { ItemNameCode.POHealth , 5},
+            { ItemNameCode.POStamina, 5},
+            { ItemNameCode.EXPSmall, 21},
+            { ItemNameCode.EXPMedium, 2},
+            { ItemNameCode.EXPBig, 15},
+        };
+    }
     
     
     /// <summary>
-    /// Tạo một data mới cho user
+    /// Check coin hiện tại có đủ mua vật phẩm không? 
     /// </summary>
-    /// <param name="_username"> Tên của User, có thể lấy username lúc tạo tài khoản. </param>
-    /// <param name="_galacticGems"> Đá quý ban đầu cho User </param>
-    public UserData(string _username, int _galacticGems)
+    /// <param name="_coinNeeded"> Số Coin cần mua </param>
+    /// <returns></returns>
+    public bool IsCoinSufficientForPurchase(int _coinNeeded) => coin >= _coinNeeded;
+
+    
+    /// <summary>
+    /// Check trong inventory của User có vật phẩm theo nameCode không, nếu có trả về số lượng của vật phẩm
+    /// </summary>
+    /// <param name="_itemCode"> NameCode cần tìm </param>
+    /// <param name="_value"> Giá trị trả về </param>
+    /// <returns></returns>
+    public bool HasItemValue(ItemNameCode _itemCode, out int _value)
     {
-        username = _username;
-        galacticGems = _galacticGems;
-        
-        inventories = new List<Inventory>
+        _value = 0;
+        if (inventories.TryGetValue(_itemCode, out var value))
         {
-            new(ItemNameCode.POHealth, 5),
-            new(ItemNameCode.POStamina, 5),
-        };
+            _value = value;
+        }
+        return _value != 0;
     }
+    
+    
+    /// <summary>
+    /// Tăng/Giảm Coin, nếu giá trị truyền vào là âm(-) sẽ DecreaseCoin
+    /// </summary>
+    /// <param name="_amount"> Số lượng tăng/giảm Coin</param>
+    public void IncreaseCoin(int _amount)
+    {
+        coin = Mathf.Clamp(coin + _amount, 0, coin + _amount);
+        SendEventCoinChaged();
+    }
+    
+    
+    /// <summary>
+    /// Gọi Event để gửi giá trị Coin đi
+    /// </summary>
+    public void SendEventCoinChaged() => OnCoinChangedEvent?.Invoke(coin);
     
 }
