@@ -8,6 +8,7 @@ public class DefaultData
 {
     public int Level;
     public int EXP;
+    public long TotalExp;
 }
 
 /// <summary>
@@ -16,13 +17,13 @@ public class DefaultData
 [CreateAssetMenu(fileName = "Upgrade Data", menuName = "Game Configuration/Upgrade Data")]
 public class SO_CharacterUpgradeData : ScriptableObject
 {
-    public TextAsset LevelingTextAsset;
+    [SerializeField] private TextAsset LevelingTextAsset;
     public List<DefaultData> defaultDatas;
 
     private readonly Dictionary<int, int> UpgradeData = new();
-    private readonly int levelMax = 90;
-    
-    
+    public const int levelMax = 90;
+
+
     /// <summary>
     /// Hàm này chỉ lấy dữ liệu 1 lần duy nhất trên EDITOR để cập nhật dự liệu vào list Data để tham chiếu và check trong game
     /// </summary>
@@ -78,38 +79,8 @@ public class SO_CharacterUpgradeData : ScriptableObject
     public int GetNextEXP(int _level)
     {
         if(_level >= levelMax) 
-            return 999999999;
+            return defaultDatas[^1].EXP;
         return !UpgradeData.TryGetValue(_level - 1, out var _exp) ? 0 : _exp;
     }
-
-
-    /// <summary>
-    /// Nhận về level sau khi cộng giá trị exp vào
-    /// </summary>
-    /// <param name="_currenLevel"> Level hiện tại </param>
-    /// <param name="_currentExp"> Điểm kinh nghiệm hiện tại </param>
-    /// <param name="_expCheck"> Giá trị Exp cần cộng vào </param>
-    /// <returns></returns>
-    public int GetLevelDemo(int _currenLevel, int _currentExp, int _expCheck)
-    {
-        var nextExp = GetNextEXP(_currenLevel);
-        var lastExp = nextExp - _currentExp;
-
-        var newLevel = 0;
-        var remainingExp = 0;
-        
-        for (var i = _currenLevel; i < levelMax; i++)
-        {
-            var _nextExp = GetNextEXP(_currenLevel);
-            if (_nextExp < _expCheck)
-            {
-                _expCheck -= nextExp;
-                newLevel++;
-            }
-            
-            
-        }
-
-        return 1;
-    }
+    
 }

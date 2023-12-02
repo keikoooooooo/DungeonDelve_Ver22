@@ -9,7 +9,7 @@ public static class GUI_Manager
     private static readonly List<IGUI> GUIDatas = new();
     
     /// <summary>
-    /// Gửi tất cả RefData tới các GUI_ có đăng kí nhận ref
+    /// Gửi tất cả RefData tới các GUI_ có đăng kí nhận ref, chỉ gọi 1 lần duy nhất mỗi lần scene này được khởi tạo
     /// </summary>
     /// <param name="userData"> Dữ liệu của user </param>
     /// <param name="characterUpgradeData"> Dữ liêu nâng cấp nhân vật trong game </param>

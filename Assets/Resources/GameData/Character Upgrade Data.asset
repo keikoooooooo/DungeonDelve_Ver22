@@ -16,181 +16,271 @@ MonoBehaviour:
   defaultDatas:
   - Level: 1
     EXP: 1000
+    TotalExp: 1000
   - Level: 2
     EXP: 1325
+    TotalExp: 2325
   - Level: 3
     EXP: 1700
+    TotalExp: 4025
   - Level: 4
     EXP: 2150
+    TotalExp: 6175
   - Level: 5
     EXP: 2625
+    TotalExp: 8800
   - Level: 6
     EXP: 3150
+    TotalExp: 11950
   - Level: 7
     EXP: 3725
+    TotalExp: 15675
   - Level: 8
     EXP: 4350
+    TotalExp: 20025
   - Level: 9
     EXP: 5000
+    TotalExp: 25025
   - Level: 10
     EXP: 5700
+    TotalExp: 30725
   - Level: 11
     EXP: 6450
+    TotalExp: 37175
   - Level: 12
     EXP: 7225
+    TotalExp: 44400
   - Level: 13
     EXP: 8050
+    TotalExp: 52450
   - Level: 14
     EXP: 8925
+    TotalExp: 61375
   - Level: 15
     EXP: 9825
+    TotalExp: 71200
   - Level: 16
     EXP: 10750
+    TotalExp: 81950
   - Level: 17
     EXP: 11725
+    TotalExp: 93675
   - Level: 18
     EXP: 12725
+    TotalExp: 106400
   - Level: 19
     EXP: 13775
+    TotalExp: 120175
   - Level: 20
     EXP: 14875
+    TotalExp: 135050
   - Level: 21
     EXP: 16800
+    TotalExp: 151850
   - Level: 22
     EXP: 18000
+    TotalExp: 169850
   - Level: 23
     EXP: 19250
+    TotalExp: 189100
   - Level: 24
     EXP: 20550
+    TotalExp: 209650
   - Level: 25
     EXP: 21875
+    TotalExp: 231525
   - Level: 26
     EXP: 23250
+    TotalExp: 254775
   - Level: 27
     EXP: 24650
+    TotalExp: 279425
   - Level: 28
     EXP: 26100
+    TotalExp: 305525
   - Level: 29
     EXP: 27575
+    TotalExp: 333100
   - Level: 30
     EXP: 29100
+    TotalExp: 362200
   - Level: 31
     EXP: 30650
+    TotalExp: 392850
   - Level: 32
     EXP: 32250
+    TotalExp: 425100
   - Level: 33
     EXP: 33875
+    TotalExp: 458975
   - Level: 34
     EXP: 35550
+    TotalExp: 494525
   - Level: 35
     EXP: 37250
+    TotalExp: 531775
   - Level: 36
     EXP: 38975
+    TotalExp: 570750
   - Level: 37
     EXP: 40750
+    TotalExp: 611500
   - Level: 38
     EXP: 42575
+    TotalExp: 654075
   - Level: 39
     EXP: 44425
+    TotalExp: 698500
   - Level: 40
     EXP: 46300
+    TotalExp: 744800
   - Level: 41
     EXP: 50625
+    TotalExp: 795425
   - Level: 42
     EXP: 52700
+    TotalExp: 848125
   - Level: 43
     EXP: 54775
+    TotalExp: 902900
   - Level: 44
     EXP: 56900
+    TotalExp: 959800
   - Level: 45
     EXP: 59075
+    TotalExp: 1018875
   - Level: 46
     EXP: 61275
+    TotalExp: 1080150
   - Level: 47
     EXP: 63525
+    TotalExp: 1143675
   - Level: 48
     EXP: 65800
+    TotalExp: 1209475
   - Level: 49
     EXP: 68125
+    TotalExp: 1277600
   - Level: 50
     EXP: 70475
+    TotalExp: 1348075
   - Level: 51
     EXP: 76500
+    TotalExp: 1424575
   - Level: 52
     EXP: 79050
+    TotalExp: 1503625
   - Level: 53
     EXP: 81650
+    TotalExp: 1585275
   - Level: 54
     EXP: 84275
+    TotalExp: 1669550
   - Level: 55
     EXP: 86950
+    TotalExp: 1756500
   - Level: 56
     EXP: 89650
+    TotalExp: 1846150
   - Level: 57
     EXP: 92400
+    TotalExp: 1938550
   - Level: 58
     EXP: 95175
+    TotalExp: 2033725
   - Level: 59
     EXP: 98000
+    TotalExp: 2131725
   - Level: 60
     EXP: 100875
+    TotalExp: 2232600
   - Level: 61
     EXP: 108950
+    TotalExp: 2341550
   - Level: 62
     EXP: 112050
+    TotalExp: 2453600
   - Level: 63
     EXP: 115175
+    TotalExp: 2568775
   - Level: 64
     EXP: 118325
+    TotalExp: 2687100
   - Level: 65
     EXP: 121525
+    TotalExp: 2808625
   - Level: 66
     EXP: 124775
+    TotalExp: 2933400
   - Level: 67
     EXP: 128075
+    TotalExp: 3061475
   - Level: 68
     EXP: 131400
+    TotalExp: 3192875
   - Level: 69
     EXP: 134775
+    TotalExp: 3327650
   - Level: 70
     EXP: 138175
+    TotalExp: 3465825
   - Level: 71
     EXP: 148700
+    TotalExp: 3614525
   - Level: 72
     EXP: 152375
+    TotalExp: 3766900
   - Level: 73
     EXP: 156075
+    TotalExp: 3922975
   - Level: 74
     EXP: 159825
+    TotalExp: 4082800
   - Level: 75
     EXP: 163600
+    TotalExp: 4246400
   - Level: 76
     EXP: 167425
+    TotalExp: 4413825
   - Level: 77
     EXP: 171300
+    TotalExp: 4585125
   - Level: 78
     EXP: 175225
+    TotalExp: 4760350
   - Level: 79
     EXP: 179175
+    TotalExp: 4939525
   - Level: 80
     EXP: 183175
+    TotalExp: 5122700
   - Level: 81
     EXP: 216225
+    TotalExp: 5338925
   - Level: 82
     EXP: 243025
+    TotalExp: 5581950
   - Level: 83
     EXP: 273100
+    TotalExp: 5855050
   - Level: 84
     EXP: 306800
+    TotalExp: 6161850
   - Level: 85
     EXP: 344600
+    TotalExp: 6506450
   - Level: 86
     EXP: 386950
+    TotalExp: 6893400
   - Level: 87
     EXP: 434425
+    TotalExp: 7327825
   - Level: 88
     EXP: 487625
+    TotalExp: 7815450
   - Level: 89
     EXP: 547200
+    TotalExp: 8362650
   - Level: 90
-    EXP: 999452800
+    EXP: 999999999
+    TotalExp: 1008362649

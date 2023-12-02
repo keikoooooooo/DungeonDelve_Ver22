@@ -306,24 +306,34 @@ public class GameplayEditorWindow : EditorWindow
         Space(10);
         GUILayout.BeginHorizontal();
         GUILayout.Box("Level", Width(150));
-        GUILayout.Box("To Next", Width(150));
+        GUILayout.Box("EXP Needed", Width(150));
+        GUILayout.Box("Level Next", Width(100));
+        GUILayout.Label("", Width(30));
         GUILayout.Box("Total EXP", Width(150));
         GUILayout.EndHorizontal();
         
         scrollView = GUILayout.BeginScrollView(scrollView);
+        var _lastExp = 0L;
         for (var i = 0; i < _upgradeData.defaultDatas.Count; i++)
         {
-            int totalEXP = i == 0 ? _upgradeData.defaultDatas[i].EXP : _upgradeData.defaultDatas[i].EXP + _upgradeData.defaultDatas[i - 1].EXP;
             GUILayout.BeginHorizontal();
-            _upgradeData.defaultDatas[i].Level = EditorGUILayout.IntField("",_upgradeData.defaultDatas[i].Level, Width(150));
-            _upgradeData.defaultDatas[i].EXP = EditorGUILayout.IntField("",_upgradeData.defaultDatas[i].EXP, Width(150));
-            GUILayout.Box($"{totalEXP}" , Width(150));
+            GUILayout.Box($"{ _upgradeData.defaultDatas[i].Level}", Width(150));
+            
+            GUILayout.Box($"{ _upgradeData.defaultDatas[i].EXP}", BoxColorText(Color.cyan),Width(150));
+            GUILayout.Box(i + 1 >= SO_CharacterUpgradeData.levelMax ? "~" : $"{_upgradeData.defaultDatas[i + 1].Level}", BoxColorText(Color.red), Width(100));
+            
+            GUILayout.Label("  ->  ", Width(30));
+            _upgradeData.defaultDatas[i].TotalExp = i == 0 ? _upgradeData.defaultDatas[i].EXP : _upgradeData.defaultDatas[i].EXP + _lastExp;
+            GUILayout.Box($"{_upgradeData.defaultDatas[i].TotalExp}" , Width(150));
+            
             GUILayout.EndHorizontal();
+            _lastExp =  _upgradeData.defaultDatas[i].TotalExp;
         }
         GUILayout.EndScrollView();
     }
     #endregion
 
+    
     #region ENEMIES
     private readonly string[] _enemiesNames = { "Goblin", "BOSS: Reaper" };
     private int _selectedEnemy = -1;
@@ -653,8 +663,13 @@ public class GameplayEditorWindow : EditorWindow
     }
     #endregion
 
-    
 
+
+    private static GUIStyle BoxColorText(Color _color) => new(GUI.skin.box) { normal = { textColor = _color } };
+    private static GUIStyle LabelColorText(Color _color) => new(GUI.skin.label) { normal = { textColor = _color } };
+    private static GUIStyle TextFieldColorText(Color _color) => new(EditorStyles.textField) { normal = { textColor = _color } };
+    
+    
     private static void Space(float space) => GUILayout.Space(space);
     private static GUILayoutOption Width(float width) => GUILayout.Width(width);
     private static GUILayoutOption Height(float height) => GUILayout.Height(height);

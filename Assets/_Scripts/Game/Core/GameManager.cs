@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// Dữ liệu người dùng
     /// </summary>
-    [field: SerializeField] public UserData UserData { get; private set; }
+    public UserData UserData { get; private set; }
     
     /// <summary>
     /// Dữ liệu tất cả Item trong game
@@ -37,15 +37,16 @@ public class GameManager : Singleton<GameManager>
     {
         if(!PlayFabHandleUserData.Instance)
         {
-            player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            _playerConfig = player.PlayerConfig;
-            UserData = new UserData("Test Editor", 50);
+            UserData = new UserData("Test Editor", 500);
+            player = Instantiate(CharacterData.CharactersData[0].prefab, Vector3.zero, quaternion.identity);
+            _playerConfig = Instantiate(player.PlayerConfig);
+            _playerConfig.ChapterIcon = CharacterData.CharactersData[0].prefab.PlayerConfig.ChapterIcon;
+            player.PlayerData.SetData(_playerConfig);
             return;
         }
         
         UserData = PlayFabHandleUserData.Instance.UserData;
         _playerConfig = PlayFabHandleUserData.Instance.PlayerConfig;
-        
         foreach (var characterCustom in CharacterData.CharactersData.Where(characterCustom => characterCustom.nameCode == _playerConfig.NameCode))
         {
             player = Instantiate(characterCustom.prefab, Vector3.zero, quaternion.identity);
