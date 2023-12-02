@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,7 +49,6 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private UserData _userData;
     private SO_CharacterUpgradeData _upgradeData;
     private SO_PlayerConfiguration _playerConfig;
-
 
     private void Awake()
     {
@@ -209,26 +209,53 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     
     private void DemoProgress(int _expIncrease)
     {
+        // var missingValue = backProgressSliderBar.maxValue - backProgressSliderBar.value;
+        // var remainingValue = _totalExpReceived - missingValue;
+        //
+        // var _totalExpReceivedTemp = _totalExpReceived - _currentExp;
+        //
+        // for (var i = _currentLevel; i < _upgradeData.defaultDatas.Count; i++)
+        // {
+        //     if (backProgressSliderBar.value + _expIncrease >= _upgradeData.defaultDatas[i].EXP)
+        //     {
+        //         _demoLevel++;
+        //         backProgressSliderBar.maxValue = _upgradeData.GetNextEXP(_demoLevel);
+        //         backProgressSliderBar.minValue = 0;
+        //         backProgressSliderBar.value = remainingValue;
+        //     }
+        //     
+        //     _totalExpReceivedTemp -= _expIncrease;
+        //     if (_totalExpReceivedTemp <= 0)
+        //     {
+        //         break;
+        //     }
+        // }
+        
         var missingValue = backProgressSliderBar.maxValue - backProgressSliderBar.value;
         var remainingValue = _totalExpReceived - missingValue;
-        
-        var _totalExpReceivedTemp = _totalExpReceived - _currentExp;
 
-        for (var i = _currentLevel; i < _upgradeData.defaultDatas.Count; i++)
+        var findLv = _currentLevel;
+        
+        // Exp đang có, không tính exp cho lv tiếp theo của level hiện tại
+        var hasExp = _upgradeData.GetTotalEXP(_currentLevel);
+        // tính tổng exp sẽ cộng vào, tính từ lv tiếp theo từ level hiện tại cộng vào
+        var totalIncreaseExp = _upgradeData.UpgradeData[_currentLevel - 1].EXP + _expIncrease;
+        
+        var _totalExpReceivedTemp = _upgradeData.UpgradeData[_currentLevel - 1].TotalExp + _expIncrease;
+        for (var i = _currentLevel; i < _upgradeData.UpgradeData.Count; i++)
         {
-            if (backProgressSliderBar.value + _expIncrease >= _upgradeData.defaultDatas[i].EXP)
+            if (_totalExpReceivedTemp > _upgradeData.UpgradeData[i].TotalExp)
             {
-                _demoLevel++;
-                backProgressSliderBar.maxValue = _upgradeData.GetNextEXP(_demoLevel);
-                backProgressSliderBar.minValue = 0;
-                backProgressSliderBar.value = remainingValue;
+                continue;
             }
+
+            findLv = _upgradeData.UpgradeData[i].Level;
+            break;
+        }
+
+        if (findLv != _currentLevel)
+        {
             
-            _totalExpReceivedTemp -= _expIncrease;
-            if (_totalExpReceivedTemp <= 0)
-            {
-                break;
-            }
         }
     }
 

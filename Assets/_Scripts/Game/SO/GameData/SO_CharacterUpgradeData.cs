@@ -4,11 +4,11 @@ using UnityEngine;
 
 
 [Serializable]
-public class DefaultData
+public class UpgradeCustom
 {
     public int Level;
     public int EXP;
-    public long TotalExp;
+    public int TotalExp;
 }
 
 /// <summary>
@@ -18,9 +18,9 @@ public class DefaultData
 public class SO_CharacterUpgradeData : ScriptableObject
 {
     [SerializeField] private TextAsset LevelingTextAsset;
-    public List<DefaultData> defaultDatas;
+    public List<UpgradeCustom> UpgradeData;
 
-    private readonly Dictionary<int, int> UpgradeData = new();
+    private readonly Dictionary<int, int> _upgradeDataDictionary = new();
     public const int levelMax = 90;
 
 
@@ -29,7 +29,7 @@ public class SO_CharacterUpgradeData : ScriptableObject
     /// </summary>
     public void SetData()
     {
-        if(!LevelingTextAsset || defaultDatas.Count != 0) 
+        if(!LevelingTextAsset || UpgradeData.Count != 0) 
             return;
         
         var strContent = LevelingTextAsset.text;
@@ -38,13 +38,13 @@ public class SO_CharacterUpgradeData : ScriptableObject
         foreach (var VARIABLE in files)
         {
             var part = VARIABLE.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            DefaultData defaultData = new();
+            UpgradeCustom upgradeCustom = new();
             if (part[0].StartsWith("LV:"))
             {
                 var lvStr = part[0].Substring(3);
                 if (int.TryParse(lvStr, out var level))
                 {
-                    defaultData.Level = level;
+                    upgradeCustom.Level = level;
                 }
             }
             if (part[1].StartsWith("EXP:"))
@@ -52,35 +52,44 @@ public class SO_CharacterUpgradeData : ScriptableObject
                 var expStr= part[1].Substring(4);
                 if (int.TryParse(expStr, out var exp))
                 {
-                   defaultData.EXP = exp;
+                   upgradeCustom.EXP = exp;
                 }
             }
 
-            defaultDatas.Add(defaultData);
+            UpgradeData.Add(upgradeCustom);
         }
     }
     private void OnEnable()
     {
-        UpgradeData.Clear();
+        _upgradeDataDictionary.Clear();
 
-        foreach (var data in defaultDatas)
+        foreach (var data in UpgradeData)
         {
-            UpgradeData.Add(data.Level - 1, data.EXP);
+            _upgradeDataDictionary.Add(data.Level - 1, data.EXP);
             Debug.Log("SO: Load uprage data in Lv: " + data.Level + "/Exp: " + data.EXP);
         }
     }
 
 
     /// <summary>
-    /// Trả về điểm kinh nghiệm tối đa của level tiếp theo
+    /// Trả về điểm kinh nghiệm của level tiếp theo
     /// </summary>
     /// <param name="_level"> Level hiện tại của nhân vật </param>
     /// <returns></returns>
     public int GetNextEXP(int _level)
     {
         if(_level >= levelMax) 
-            return defaultDatas[^1].EXP;
-        return !UpgradeData.TryGetValue(_level - 1, out var _exp) ? 0 : _exp;
+            return UpgradeData[^1].EXP;
+        return !_upgradeDataDictionary.TryGetValue(_level - 1, out var _exp) ? 0 : _exp;
     }
+
+    
+    /// <summary>
+    /// Trả về tổng số điểm kinh nghiệm từ Lv1 -> đến (_currentLevel - 1)
+    /// Ví dụ _currentLevel = 3, sẽ trả về tổng điểm kinh nghiệm (Lv1 + Lv2)
+    /// </summary>
+    /// <param name="_currentLevel"> Level hiện tại. </param>
+    /// <returns></returns>
+    public int GetTotalEXP(int _currentLevel) => _currentLevel <= 1 ? 0 : UpgradeData[_currentLevel - 2].TotalExp;
     
 }

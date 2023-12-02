@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Character Upgrade Data
   m_EditorClassIdentifier: 
   LevelingTextAsset: {fileID: 4900000, guid: fbf6d9971e4474b4e86d6d50733e0b69, type: 3}
-  defaultDatas:
+  UpgradeData:
   - Level: 1
     EXP: 1000
     TotalExp: 1000

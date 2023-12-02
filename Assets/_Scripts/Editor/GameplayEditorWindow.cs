@@ -306,28 +306,28 @@ public class GameplayEditorWindow : EditorWindow
         Space(10);
         GUILayout.BeginHorizontal();
         GUILayout.Box("Level", Width(150));
+        GUILayout.Box("Level Next Upgrade", Width(140));
         GUILayout.Box("EXP Needed", Width(150));
-        GUILayout.Box("Level Next", Width(100));
         GUILayout.Label("", Width(30));
-        GUILayout.Box("Total EXP", Width(150));
+        GUILayout.Box("Total EXP Cost", Width(150));
         GUILayout.EndHorizontal();
         
         scrollView = GUILayout.BeginScrollView(scrollView);
-        var _lastExp = 0L;
-        for (var i = 0; i < _upgradeData.defaultDatas.Count; i++)
+        var _lastExp = 0;
+        for (var i = 0; i < _upgradeData.UpgradeData.Count; i++)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Box($"{ _upgradeData.defaultDatas[i].Level}", Width(150));
+            GUILayout.Box($"{ _upgradeData.UpgradeData[i].Level}", Width(150));
             
-            GUILayout.Box($"{ _upgradeData.defaultDatas[i].EXP}", BoxColorText(Color.cyan),Width(150));
-            GUILayout.Box(i + 1 >= SO_CharacterUpgradeData.levelMax ? "~" : $"{_upgradeData.defaultDatas[i + 1].Level}", BoxColorText(Color.red), Width(100));
-            
+            GUILayout.Box(i + 1 >= SO_CharacterUpgradeData.levelMax ?
+                "~" : $"{_upgradeData.UpgradeData[i + 1].Level}", BoxColorText(Color.red), Width(140));
+            GUILayout.Box($"{ _upgradeData.UpgradeData[i].EXP}", BoxColorText(Color.cyan),Width(150));
             GUILayout.Label("  ->  ", Width(30));
-            _upgradeData.defaultDatas[i].TotalExp = i == 0 ? _upgradeData.defaultDatas[i].EXP : _upgradeData.defaultDatas[i].EXP + _lastExp;
-            GUILayout.Box($"{_upgradeData.defaultDatas[i].TotalExp}" , Width(150));
             
+            _upgradeData.UpgradeData[i].TotalExp = i == 0 ? _upgradeData.UpgradeData[i].EXP : _upgradeData.UpgradeData[i].EXP + _lastExp;
+            GUILayout.Box($"{_upgradeData.UpgradeData[i].TotalExp}" , BoxColorText(Color.magenta), Width(150));
             GUILayout.EndHorizontal();
-            _lastExp =  _upgradeData.defaultDatas[i].TotalExp;
+            _lastExp =  _upgradeData.UpgradeData[i].TotalExp;
         }
         GUILayout.EndScrollView();
     }
