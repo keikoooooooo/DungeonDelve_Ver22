@@ -310,24 +310,30 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.Box("EXP Needed", Width(150));
         GUILayout.Label("", Width(30));
         GUILayout.Box("Total EXP Cost", Width(150));
+        
+        GUILayout.Label("", Width(50));
+        if(GUILayout.Button("Renew Value",ButtonColorText(Color.white), Width(120), Height(20)))
+        {
+            _upgradeData.RenewValue();
+        }
         GUILayout.EndHorizontal();
         
         scrollView = GUILayout.BeginScrollView(scrollView);
         var _lastExp = 0;
-        for (var i = 0; i < _upgradeData.UpgradeData.Count; i++)
+        for (var i = 0; i < _upgradeData.DataList.Count; i++)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Box($"{ _upgradeData.UpgradeData[i].Level}", Width(150));
+            GUILayout.Box($"{ _upgradeData.DataList[i].Level}", Width(150));
             
             GUILayout.Box(i + 1 >= SO_CharacterUpgradeData.levelMax ?
-                "~" : $"{_upgradeData.UpgradeData[i + 1].Level}", BoxColorText(Color.red), Width(140));
-            GUILayout.Box($"{ _upgradeData.UpgradeData[i].EXP}", BoxColorText(Color.cyan),Width(150));
+                "~" : $"{_upgradeData.DataList[i + 1].Level}", BoxColorText(Color.red), Width(140));
+            GUILayout.Box($"{ _upgradeData.DataList[i].EXP}", BoxColorText(Color.cyan),Width(150));
             GUILayout.Label("  ->  ", Width(30));
             
-            _upgradeData.UpgradeData[i].TotalExp = i == 0 ? _upgradeData.UpgradeData[i].EXP : _upgradeData.UpgradeData[i].EXP + _lastExp;
-            GUILayout.Box($"{_upgradeData.UpgradeData[i].TotalExp}" , BoxColorText(Color.magenta), Width(150));
+            _upgradeData.DataList[i].TotalExp = i == 0 ? _upgradeData.DataList[i].EXP : _upgradeData.DataList[i].EXP + _lastExp;
+            GUILayout.Box($"{_upgradeData.DataList[i].TotalExp}" , BoxColorText(Color.magenta), Width(150));
             GUILayout.EndHorizontal();
-            _lastExp =  _upgradeData.UpgradeData[i].TotalExp;
+            _lastExp =  _upgradeData.DataList[i].TotalExp;
         }
         GUILayout.EndScrollView();
     }
@@ -667,6 +673,7 @@ public class GameplayEditorWindow : EditorWindow
 
     private static GUIStyle BoxColorText(Color _color) => new(GUI.skin.box) { normal = { textColor = _color } };
     private static GUIStyle LabelColorText(Color _color) => new(GUI.skin.label) { normal = { textColor = _color } };
+    private static GUIStyle ButtonColorText(Color _color) => new(GUI.skin.button) { normal = { textColor = _color } };
     private static GUIStyle TextFieldColorText(Color _color) => new(EditorStyles.textField) { normal = { textColor = _color } };
     
     

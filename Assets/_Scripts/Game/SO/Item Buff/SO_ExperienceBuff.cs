@@ -9,9 +9,6 @@ public class SO_ExperienceBuff : SO_BuffEffect
     
     public override void Apply(PlayerController _player)
     {
-        if(!GameManager.Instance.UserData.IsCoinSufficientForPurchase(UpgradeCost)) return;
-
-        GameManager.Instance.UserData.IncreaseCoin(UpgradeCost);
         _player.PlayerConfig.CurrentEXP += (int)Value;
     }
 }

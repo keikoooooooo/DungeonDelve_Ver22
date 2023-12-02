@@ -76,6 +76,18 @@ public class UserData
         coin = Mathf.Clamp(coin + _amount, 0, coin + _amount);
         SendEventCoinChaged();
     }
+
+    /// <summary>
+    /// Tăng/Giảm value của Item, nếu giá trị truyền vào là âm(-) sẽ Decrease item value
+    /// </summary>
+    /// <param name="_amount"> Số lượng tăng/giảm Coin</param>
+    public void IncreaseItem(ItemNameCode _itemCode, int _amount)
+    {
+        if (inventories.ContainsKey(_itemCode))
+        {
+            inventories[_itemCode] += _amount;
+        }
+    }
     
     
     /// <summary>

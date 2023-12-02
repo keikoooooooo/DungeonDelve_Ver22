@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     [Space]
     [SerializeField] private Button increaseAmountUseBtt;
     [SerializeField] private Button decreaseAmountUseBtt;
+    [SerializeField] private Button upgradeBtt;
 
     // Variables
     private int _coin;               // coin đang sở hữu
@@ -49,7 +51,8 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private UserData _userData;
     private SO_CharacterUpgradeData _upgradeData;
     private SO_PlayerConfiguration _playerConfig;
-
+    
+    
     private void Awake()
     {
         GUI_Manager.Add(this);
@@ -80,6 +83,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         SetCoinText();
         SetEXPText();
         UpdateProgress();
+        SetUpgradeStateButton();
     }
     
     
@@ -110,6 +114,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         SetCoinText();
         SetEXPText();
         SetLevelText();
+        SetUpgradeStateButton();
     }
     
     private void GetStats()
@@ -173,7 +178,6 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     public void OnIncreaseAmountItemButton(int _value)
     {
         _amountUse += _value;
-        GetStats();
         
         decreaseAmountUseBtt.interactable = _amountUse > 0;
         switch (_selectItem)
@@ -182,85 +186,78 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
                 increaseAmountUseBtt.interactable = _amountUse < _smallExpValue;
                 _totalCoinCost = _amountUse * expSmallBuff.UpgradeCost;
                 _totalExpReceived = Mathf.FloorToInt(_amountUse * expSmallBuff.Value);
-                DemoProgress((int)expSmallBuff.Value * _value);
                 break;
             
             case 2:
                 increaseAmountUseBtt.interactable = _amountUse < _mediumExpValue;
                 _totalCoinCost = _amountUse * expMediumBuff.UpgradeCost;
                 _totalExpReceived = Mathf.FloorToInt(_amountUse * expMediumBuff.Value);
-                DemoProgress((int)expMediumBuff.Value * _value);
                 break;
             
             case 3:
                 increaseAmountUseBtt.interactable = _amountUse < _bigExpValue;
                 _totalCoinCost = _amountUse * expBigBuff.UpgradeCost;
                 _totalExpReceived = Mathf.FloorToInt(_amountUse * expBigBuff.Value);
-                DemoProgress((int)expBigBuff.Value * _value);
                 break;
         }
         
+        GetStats();
+        DemoProgress();
         SetAmountUseText();
         SetLevelText();
         SetCoinText();
         SetEXPText();
+        SetUpgradeStateButton();
     }
-
     
-    private void DemoProgress(int _expIncrease)
+    public void OnClickUpgradeButton()
     {
-        // var missingValue = backProgressSliderBar.maxValue - backProgressSliderBar.value;
-        // var remainingValue = _totalExpReceived - missingValue;
-        //
-        // var _totalExpReceivedTemp = _totalExpReceived - _currentExp;
-        //
-        // for (var i = _currentLevel; i < _upgradeData.defaultDatas.Count; i++)
-        // {
-        //     if (backProgressSliderBar.value + _expIncrease >= _upgradeData.defaultDatas[i].EXP)
-        //     {
-        //         _demoLevel++;
-        //         backProgressSliderBar.maxValue = _upgradeData.GetNextEXP(_demoLevel);
-        //         backProgressSliderBar.minValue = 0;
-        //         backProgressSliderBar.value = remainingValue;
-        //     }
-        //     
-        //     _totalExpReceivedTemp -= _expIncrease;
-        //     if (_totalExpReceivedTemp <= 0)
-        //     {
-        //         break;
-        //     }
-        // }
-        
-        var missingValue = backProgressSliderBar.maxValue - backProgressSliderBar.value;
-        var remainingValue = _totalExpReceived - missingValue;
+        _userData.IncreaseCoin(-_totalCoinCost); 
+        _playerConfig.Level += _demoLevel;
 
-        var findLv = _currentLevel;
-        
-        // Exp đang có, không tính exp cho lv tiếp theo của level hiện tại
-        var hasExp = _upgradeData.GetTotalEXP(_currentLevel);
-        // tính tổng exp sẽ cộng vào, tính từ lv tiếp theo từ level hiện tại cộng vào
-        var totalIncreaseExp = _upgradeData.UpgradeData[_currentLevel - 1].EXP + _expIncrease;
-        
-        var _totalExpReceivedTemp = _upgradeData.UpgradeData[_currentLevel - 1].TotalExp + _expIncrease;
-        for (var i = _currentLevel; i < _upgradeData.UpgradeData.Count; i++)
+        switch (_selectItem)
         {
-            if (_totalExpReceivedTemp > _upgradeData.UpgradeData[i].TotalExp)
-            {
-                continue;
-            }
+            case 1: _userData.IncreaseItem(ItemNameCode.EXPSmall, -_amountUse); break;
+            case 2: _userData.IncreaseItem(ItemNameCode.EXPMedium, -_amountUse); break;
+            case 3: _userData.IncreaseItem(ItemNameCode.EXPBig, -_amountUse); break;
+        }
+        
+        _amountUse = 0;
+        SetAmountUseText();
+        UpdateData();
+    }
+    
 
-            findLv = _upgradeData.UpgradeData[i].Level;
+    private void DemoProgress()
+    {
+        var hasExp = _upgradeData.GetTotalEXP(_currentLevel);
+        var totalIncreaseExp = hasExp + _currentExp + _totalExpReceived;
+        
+        for (var i = _currentLevel - 1; i < _upgradeData.DataList.Count; i++)
+        {
+            if (i >= 1)
+            {
+                backProgressSliderBar.minValue = 0;
+                backProgressSliderBar.maxValue = _upgradeData.DataList[i].TotalExp;
+                backProgressSliderBar.value = totalIncreaseExp;
+            }
+            
+            if (totalIncreaseExp >= _upgradeData.DataList[i].TotalExp) continue;
+            _demoLevel = _amountUse != 0 ? _upgradeData.DataList[i].Level - 1 : 0;
             break;
         }
+        
+        Debug.Log("Level new upgrade +" + _demoLevel);
 
-        if (findLv != _currentLevel)
+        if (_amountUse == 0)
         {
-            
+            UpdateProgress();
         }
     }
 
-    
-    
+
+
+    private void SetUpgradeStateButton() => upgradeBtt.interactable = _amountUse != 0 && _coin >= _totalCoinCost;
     // Set UGUI Text
     private void SetSmallExpValueText() => expSmallValueText.text = $"{_smallExpValue}";
     private void SetMeidumExpValueText() => expMediumValueText.text = $"{_mediumExpValue}";

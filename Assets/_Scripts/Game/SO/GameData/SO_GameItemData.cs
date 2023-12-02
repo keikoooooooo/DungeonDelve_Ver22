@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Danh sách NameCode phân biệt Items
+/// Danh sách NameCode để phân biệt/tìm thông tin của Item
 /// </summary>
 public enum ItemNameCode 
 {

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class SO_BuffEffect : ScriptableObject
 {
-    [Tooltip("Cấu hình Item: Type, Sprite, ...")]
-    public ItemCustom ItemCustom;
+    [Tooltip("Namecode của item")]
+    public ItemNameCode NameCode;
     
     [Tooltip("Mô tả Buff")]
     public string Description;
