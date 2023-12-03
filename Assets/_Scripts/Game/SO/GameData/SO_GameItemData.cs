@@ -89,7 +89,7 @@ public class ItemCustom
 public class SO_GameItemData : ScriptableObject
 {
     public List<ItemCustom> GameItemDatas = new ();
-    public readonly Dictionary<ItemNameCode, ItemCustom> ItemData = new();
+    private readonly Dictionary<ItemNameCode, ItemCustom> ItemData = new();
 
     
     /// <summary>

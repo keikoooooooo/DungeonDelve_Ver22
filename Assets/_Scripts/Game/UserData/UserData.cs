@@ -37,6 +37,7 @@ public class UserData
             { ItemNameCode.POStamina, 5},
             { ItemNameCode.EXPSmall, 100},
             { ItemNameCode.EXPMedium, 200},
+            { ItemNameCode.JASliver1, 200},
             { ItemNameCode.EXPBig, 500},
         };
     }

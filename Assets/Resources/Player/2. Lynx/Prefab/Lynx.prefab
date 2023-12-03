@@ -509,6 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444c015705f9caa479fab8cdcdaf6aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <WeaponUpgradeConfig>k__BackingField: {fileID: 11400000, guid: 622161541303eb3449f017f4956f63f1, type: 2}
   <PlayerConfig>k__BackingField: {fileID: 11400000, guid: 3eb99b407cbd0f14eaf9e6a5382c19ac, type: 2}
   playerRenderTexturePrefab: {fileID: 312982174483145544, guid: 59d3f81435f5fcc4f8fd6b9aa589b9bb, type: 3}
 --- !u!1 &989025859288015984
@@ -5623,15 +5624,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0048766164
+      value: 0.004876614
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000027056728
+      value: 5.183708e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.31946875e-11
+      value: -2.527927e-12
       objectReference: {fileID: 0}
     - target: {fileID: 5822535128316044608, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour, IPooled<Item>
 {
     [SerializeField] private Image rarityFrame;
-    [SerializeField] private Image itemIcon;
+    [SerializeField] private Image iconItem;
     [SerializeField] private TextMeshProUGUI valueText;
     [Space]
     [SerializeField] private Sprite rarityFrameCommon;
@@ -17,7 +17,7 @@ public class Item : MonoBehaviour, IPooled<Item>
     
     
     private int value;
-    public Sprite GetSprite => itemIcon.sprite;
+    public Sprite GetSprite => iconItem.sprite;
     public bool CheckValue => value > 0; // Check số lượng item
     
     
@@ -30,7 +30,7 @@ public class Item : MonoBehaviour, IPooled<Item>
     public void SetItem(ItemCustom _itemCustom, int _value)
     {
         value = _value;
-        itemIcon.sprite = _itemCustom.sprite;
+        iconItem.sprite = _itemCustom.sprite;
         switch (_itemCustom.ratity)
         {
             case ItemRarity.Common:
@@ -49,12 +49,12 @@ public class Item : MonoBehaviour, IPooled<Item>
                 rarityFrame.sprite = rarityFrameLegendary;
                 break;
         }
-
-        SetValueText(_value);
     }
     
 
-    private void SetValueText(int _value) => valueText.text = $"{_value}"; 
+    public void SetValueText(int _value) => valueText.text = $"{_value}";
+    public void SetValueText(string _textValue) => valueText.text = _textValue;
+    
         
     public void Release() => ReleaseCallback?.Invoke(this);
     public Action<Item> ReleaseCallback { get; set; }

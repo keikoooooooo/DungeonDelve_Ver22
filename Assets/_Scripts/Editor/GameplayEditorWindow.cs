@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -44,9 +43,11 @@ public class GameplayEditorWindow : EditorWindow
     private int _selectedPlayer = -1;
     private readonly string[] _playerNames = { "Arlan", "Lynx" };
     
-    private SO_PlayerConfiguration arlanConfig;
-    private SO_PlayerConfiguration lynxConfig;
+    private SO_PlayerConfiguration _arlanConfig;
+    private SO_PlayerConfiguration _lynxConfig;
     private SO_CharacterUpgradeData _characterUpgradeData;
+    private SO_RequiresWeaponUpgradeConfiguration _requiresWeaponUpgrade;
+
     
     private void HandlePanelPlayers()
     {
@@ -59,13 +60,15 @@ public class GameplayEditorWindow : EditorWindow
                 switch (_selectedPlayer)
                 {
                     case 0:
-                        arlanConfig = EditorGUIUtility.Load("Assets/Resources/Player/1. Arlan/Prefab/Arlan Config.asset") as SO_PlayerConfiguration;
-                        ShowPlayerConfig(arlanConfig);
+                        _arlanConfig = EditorGUIUtility.Load("Assets/Resources/Player/1. Arlan/Prefab/Arlan Config.asset") as SO_PlayerConfiguration;
+                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/Resources/Player/1. Arlan/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
+                        ShowPlayerConfig(_arlanConfig);
                         break;
                     
                     case 1:
-                        lynxConfig = EditorGUIUtility.Load("Assets/Resources/Player/2. Lynx/Prefab/Lynx Config.asset") as SO_PlayerConfiguration;
-                        ShowPlayerConfig(lynxConfig);
+                        _lynxConfig = EditorGUIUtility.Load("Assets/Resources/Player/2. Lynx/Prefab/Lynx Config.asset") as SO_PlayerConfiguration;
+                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/Resources/Player/2. Lynx/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
+                        ShowPlayerConfig(_lynxConfig);
                         break;
                 }
                 break;
@@ -87,12 +90,9 @@ public class GameplayEditorWindow : EditorWindow
         scrollView = GUILayout.BeginScrollView(scrollView);
         EditorGUI.BeginChangeCheck();
         
-        Space(30);
-        GUILayout.Label("CODE ---------------------------------", EditorStyles.boldLabel);
-        GUILayout.BeginHorizontal();
-        _playerConfig.NameCode = (CharacterNameCode)EditorGUILayout.EnumPopup("Name Code", _playerConfig.NameCode, Width(500));
-        _playerConfig.ChapterIcon = (Sprite)EditorGUILayout.ObjectField(_playerConfig.ChapterIcon, typeof(Sprite), false, Width(50), Height(50));
-        GUILayout.EndHorizontal();
+        Space(25);
+        GUILayout.Label("NAME CODE -----------------------------", EditorStyles.boldLabel);
+        _playerConfig.NameCode = (CharacterNameCode)EditorGUILayout.EnumPopup("Code", _playerConfig.NameCode, Width(500));
         
         Space(30);
         GUILayout.Label("INFORMATION ------------------------", EditorStyles.boldLabel);
@@ -100,6 +100,10 @@ public class GameplayEditorWindow : EditorWindow
         _playerConfig.Level = EditorGUILayout.IntField("Level", _playerConfig.Level, Width(500));
         _playerConfig.CurrentEXP = EditorGUILayout.IntField("Current EXP", _playerConfig.CurrentEXP, Width(500));
         _playerConfig.Infor = EditorGUILayout.TextField("Infor", _playerConfig.Infor, Width(500));
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Chapter Icon", Width(148));
+        _playerConfig.ChapterIcon = (Sprite)EditorGUILayout.ObjectField(_playerConfig.ChapterIcon, typeof(Sprite), false, Width(50), Height(50));
+        GUILayout.EndHorizontal();
         
         Space(30);
         GUILayout.Label("CHARACTER STATS ----------------------", EditorStyles.boldLabel);
@@ -294,8 +298,77 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
         #endregion
         
+        ShowRequiesWeaponUpgrade(_requiresWeaponUpgrade);
+
         if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_playerConfig);
         GUILayout.EndScrollView();
+    }
+    private void ShowRequiesWeaponUpgrade(SO_RequiresWeaponUpgradeConfiguration _requiresData)
+    {
+        Space(30);
+        GUILayout.Label("REQUIRES WEAPON UPGRADE -----------", EditorStyles.boldLabel);
+        Space(5);
+        
+        if(_requiresData == null) return;
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Box("Level Upgrade", Width(100));
+        GUILayout.Box("Coin Upgrade Cost", Width(120));
+        GUILayout.Box("Item Code", Width(150));
+        GUILayout.Box("Item Value", Width(75));
+        GUILayout.EndHorizontal();
+        
+        EditorGUI.BeginChangeCheck();
+        for (var i = 0; i < _requiresData.RequiresDatas.Count; i++)
+        {
+            GUILayout.BeginVertical(GUI.skin.box);
+            GUILayout.BeginHorizontal();
+            var _data = _requiresData.RequiresDatas[i];
+            _data.levelUpgrade = i + 2;
+            GUILayout.Box($"{i + 1} -> {i + 2}",BoxColorText(Color.red) , Width(100));
+            _data.coinCost = EditorGUILayout.IntField("", _data.coinCost, TextFieldColorText(Color.cyan) , Width(120));
+            
+            GUILayout.BeginVertical();
+            foreach (var _item in _data.requiresItem)
+            {
+                GUILayout.BeginHorizontal();
+                _item.code = (ItemNameCode)EditorGUILayout.EnumPopup("", _item.code, Width(150));
+                _item.value = EditorGUILayout.IntField("", _item.value, Width(75));
+                GUILayout.EndHorizontal();
+            }
+            
+            #region Button
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("+", Width(45), Height(20)) && _data.requiresItem.Count < 9)
+            {
+                _data.requiresItem.Add(new SO_RequiresWeaponUpgradeConfiguration.UpgradeItem());
+            }
+            if(GUILayout.Button("-", Width(45), Height(20)) && _data.requiresItem.Count != 0)
+            {
+                _data.requiresItem.Remove(_data.requiresItem[^1]);
+            }
+            GUILayout.EndHorizontal();
+            Space(10);
+            #endregion
+            GUILayout.EndVertical();
+            GUILayout.EndVertical();
+            
+            GUILayout.EndHorizontal();
+        }
+        
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
+        {
+            _requiresData.RequiresDatas.Add(new SO_RequiresWeaponUpgradeConfiguration.RequiresData());
+        }
+        if(GUILayout.Button("-", Width(45), Height(25)) && _requiresData.RequiresDatas.Count != 0)
+        {
+            _requiresData.RequiresDatas.Remove(_requiresData.RequiresDatas[^1]);
+        }
+        GUILayout.EndHorizontal();
+        Space(30);        
+        
+        if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_requiresData);
     }
     private void ShowUpgradeDetails(SO_CharacterUpgradeData _upgradeData)
     {

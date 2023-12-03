@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class PlayerDataHandle : MonoBehaviour
 {
+    
+    /// <summary>
+    /// Dữ liệu khi nâng cấp vũ khí: số lượng/type item, coin,... cần để nâng cấp
+    /// </summary>
+    [field: SerializeField] public SO_RequiresWeaponUpgradeConfiguration WeaponUpgradeConfig { get; private set; }
+    
+    
     /// <summary>
     /// Toàn bộ cấu hình của nhân vật: HP, ST, ATK, .....
     /// </summary>

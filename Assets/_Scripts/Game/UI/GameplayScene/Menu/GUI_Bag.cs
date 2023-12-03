@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GUI_Bag : MonoBehaviour, IGUI
@@ -48,13 +49,18 @@ public class GUI_Bag : MonoBehaviour, IGUI
 
     public void UpdateData()
     {
-        _items.ForEach(x => x.Release());
-        foreach (var inventory in _userData.inventories)
+        foreach (var item in _items.Where(item => item.gameObject.activeSelf))
         {
-            if (!_gameItemData.GetItemCustom(inventory.Key, out var itemCustom)) continue;
-            var _item = _poolItem.Get();
-            _item.SetItem(itemCustom, inventory.Value);
+            item.Release();
         }
+        foreach (var (key, value) in _userData.inventories)
+        {
+            if (!_gameItemData.GetItemCustom(key, out var itemCustom)) continue;
+            var _item = _poolItem.Get();
+            _item.SetItem(itemCustom, value);
+            _item.SetValueText(value);
+        }
+        
     }
     
 }
