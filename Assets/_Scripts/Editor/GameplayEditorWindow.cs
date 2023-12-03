@@ -325,7 +325,7 @@ public class GameplayEditorWindow : EditorWindow
             GUILayout.BeginHorizontal();
             GUILayout.Box($"{ _upgradeData.DataList[i].Level}", Width(150));
             
-            GUILayout.Box(i + 1 >= SO_CharacterUpgradeData.levelMax ?
+            GUILayout.Box(i + 1 >= _upgradeData.levelMax ?
                 "~" : $"{_upgradeData.DataList[i + 1].Level}", BoxColorText(Color.red), Width(140));
             GUILayout.Box($"{ _upgradeData.DataList[i].EXP}", BoxColorText(Color.cyan),Width(150));
             GUILayout.Label("  ->  ", Width(30));

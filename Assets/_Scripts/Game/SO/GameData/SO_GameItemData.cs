@@ -104,7 +104,6 @@ public class SO_GameItemData : ScriptableObject
         ItemData.Clear();
         foreach (var item in GameItemDatas)
         {
-            Debug.Log("SO: Load data item: " + item.code);
             ItemData.Add(item.code, item);
         }
     }

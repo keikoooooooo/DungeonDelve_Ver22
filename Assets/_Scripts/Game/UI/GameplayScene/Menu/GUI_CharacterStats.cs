@@ -39,23 +39,16 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
         _playerConfig = _gameManager.Player.PlayerConfig;
         _playerRender = _gameManager.Player.PlayerData.PlayerRenderTexture;
         _upgradeData = _gameManager.CharacterUpgradeData;
+        rawMainMesh.texture = _playerRender.renderTexture;
+        rawShadowMesh.texture = rawMainMesh.texture;
         
         UpdateData();
     }
-    
     public void UpdateData()
     {
         UpdateStatsText();
-        OpenRenderTexture();
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P)) 
-        {
-            UpdateData();
-        }
-    }
+    
 
     private void UpdateStatsText()
     {
@@ -75,13 +68,11 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
         atkText.SetValueText($"{_playerConfig.ATK}");
         defText.SetValueText($"{_playerConfig.DEF}");
     }
-    private void OpenRenderTexture()
+    public void OpenRenderTexture()
     {
         if (!_playerRender) return;
         
         _playerRender.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
-        rawMainMesh.texture = _playerRender.renderTexture;
-        rawShadowMesh.texture = rawMainMesh.texture;
     }
 
 

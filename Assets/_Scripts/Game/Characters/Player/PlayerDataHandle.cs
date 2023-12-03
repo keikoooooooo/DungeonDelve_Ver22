@@ -13,7 +13,7 @@ public class PlayerDataHandle : MonoBehaviour
     public PlayerRenderTexture PlayerRenderTexture { get; private set; }
     [SerializeField] private PlayerRenderTexture playerRenderTexturePrefab;
     
-    private void Start()
+    private void OnEnable()
     {
         PlayerRenderTexture = Instantiate(playerRenderTexturePrefab, null);
     }

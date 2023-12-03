@@ -41,14 +41,13 @@ public class GUI_WeaponStats : MonoBehaviour, IGUI
     {
         _playerConfig = _gameManager.Player.PlayerConfig;
         _playerRender = _gameManager.Player.PlayerData.PlayerRenderTexture;
-
+        rawMesh.texture = _playerRender.renderTexture;
+        
         UpdateData();
     }
-    
     public void UpdateData()
     {
         UpdateStatsText();
-        OpenRenderTexture();
     }
     
     private void UpdateStatsText()
@@ -72,12 +71,11 @@ public class GUI_WeaponStats : MonoBehaviour, IGUI
         elementalBurst_DMGText.SetValueText($"{_playerConfig.SpecialMultiplier[0].Multiplier[weaLv]} %");
         weaponDetailsText.SetValueText($"{_playerConfig.WeaponInfo}");
     }
-    private void OpenRenderTexture()
+    public void OpenRenderTexture()
     {
         if (!_playerRender) return;
         
         _playerRender.OpenRenderUI(PlayerRenderTexture.RenderType.Weapon);
-        rawMesh.texture = _playerRender.renderTexture;
     }
 
 

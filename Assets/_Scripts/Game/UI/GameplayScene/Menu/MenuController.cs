@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class MenuController : Singleton<MenuController>
 {
+    [SerializeField] private GameObject menuPanel;
     [SerializeField] private TextMeshProUGUI currencyText;
     
     [Space]
@@ -55,8 +56,9 @@ public class MenuController : Singleton<MenuController>
             isOpenMenu = !isOpenMenu;
             if(isOpenMenu)
             {
-                OnClickEscOpenMenuEvent?.Invoke();
                 OpenMenu();
+                OnClickEscOpenMenuEvent?.Invoke(); 
+               
             }
             else
             {
@@ -66,9 +68,10 @@ public class MenuController : Singleton<MenuController>
 
         if (!Input.GetKeyDown(KeyCode.B)) return;
         isOpenMenu = true;
-        OnClickBOpenMenuEvent?.Invoke();
         OpenMenu();
+        OnClickBOpenMenuEvent?.Invoke();
     }
+    
     private void OnCoinChanged(int _value) => currencyText.text = $"{_value}";
 
     
@@ -76,18 +79,23 @@ public class MenuController : Singleton<MenuController>
     private void OpenMenu()
     {
         GUI_Manager.UpdateGUIData();
+        Time.timeScale = 0;
+        menuPanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         _player.cinemachineFreeLook.enabled = false;
-        Time.timeScale = 0;
+        _player.PlayerData.PlayerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
     }
     public void CloseMenu()
     {
-        OnCloseMenuEvent?.Invoke();
         Time.timeScale = 1;
+        OnCloseMenuEvent?.Invoke();
+        menuPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         _player.cinemachineFreeLook.enabled = true;
         _player.PlayerData.PlayerRenderTexture.CloseRenderUI();
     }
+
+ 
 
 
     public void ExitToLoginScene(string _sceneName)

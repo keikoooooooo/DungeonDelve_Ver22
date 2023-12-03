@@ -28,7 +28,8 @@ public class SO_CharacterUpgradeData : ScriptableObject
     public List<UpgradeCustom> DataList;
 
     private readonly Dictionary<int, int> _upgradeDataDictionary = new();
-    public const int levelMax = 90;
+    public readonly int levelMax  = 90;
+
 
 
     /// <summary>
@@ -70,11 +71,9 @@ public class SO_CharacterUpgradeData : ScriptableObject
     private void OnEnable()
     {
         _upgradeDataDictionary.Clear();
-
         foreach (var data in DataList)
         {
             _upgradeDataDictionary.TryAdd(data.Level - 1, data.EXP);
-            Debug.Log("SO: Load uprage data in Lv: " + data.Level + "/Exp: " + data.EXP);
         }
     }
     public void RenewValue()

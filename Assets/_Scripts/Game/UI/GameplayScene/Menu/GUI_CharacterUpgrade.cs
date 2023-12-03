@@ -21,9 +21,8 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     [SerializeField] private TextMeshProUGUI expSmallValueText;
     [SerializeField] private TextMeshProUGUI expMediumValueText;
     [SerializeField] private TextMeshProUGUI expBigValueText;
-    [SerializeField] private GameObject panelActivity_1;
-    [SerializeField] private GameObject panelActivity_2;
-    [SerializeField] private GameObject panelActivity_3;
+    [SerializeField] private Transform itemSlots;
+    [SerializeField] private Image gradientItem;
     
     [Space, Header("Handler Button")]
     [SerializeField] private Button increaseAmountUseBtt;
@@ -52,6 +51,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private UserData _userData;
     private SO_CharacterUpgradeData _upgradeData;
     private SO_PlayerConfiguration _playerConfig;
+
     
     
     private void Awake()
@@ -63,7 +63,6 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         cancelBtt.onClick.AddListener(InitValue);
         cancelBtt.onClick.AddListener(UpdateData);
         upgradeBtt.onClick.AddListener(OnClickUpgradeButton);
-        
         InitValue();
     }
     private void OnDisable()
@@ -80,7 +79,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         _userData.OnCoinChangedEvent -= OnCoinChanged;
     }
     
-    
+
     public void InitValue()
     {
         _increaseLevel = 0;
@@ -88,11 +87,9 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         _selectItem = 0;
         _totalCoinCost = 0;
         _totalExpReceived = 0;
-        panelActivity_1.SetActive(false);
-        panelActivity_2.SetActive(false);
-        panelActivity_3.SetActive(false);
         increaseAmountUseBtt.interactable = false;
         decreaseAmountUseBtt.interactable = false;
+        gradientItem.gameObject.SetActive(false);
     }
     
     public void GetRef(GameManager _gameManager)
@@ -170,9 +167,10 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         InitValue();
         
         _selectItem = _value;
-        panelActivity_1.SetActive(_value == 1);
-        panelActivity_2.SetActive(_value == 2);
-        panelActivity_3.SetActive(_value == 3);
+        
+        gradientItem.transform.SetParent(itemSlots.GetChild(_value - 1));
+        gradientItem.transform.localPosition = Vector3.zero;
+        gradientItem.gameObject.SetActive(true);
         
         OnIncreaseAmountItemButton(0);
     }
@@ -188,7 +186,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         switch (_selectItem)
         {
             case 1:
-                increaseAmountUseBtt.interactable = _amountUse < _smallExpValue;
+                increaseAmountUseBtt.interactable = _amountUse < _smallExpValue && _currentLevel <= _upgradeData.levelMax;
                 _totalCoinCost = _amountUse * expSmallBuff.UpgradeCost;
                 _increaseEXP = (int)expSmallBuff.Value;
                 break;
@@ -268,7 +266,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
 
 
 
-
+  
     private void SetUpgradeStateButton() => upgradeBtt.interactable = _amountUse != 0 && _coin >= _totalCoinCost;
     // Set UGUI Text
     private void SetSmallExpValueText() => expSmallValueText.text = $"{_smallExpValue}";
