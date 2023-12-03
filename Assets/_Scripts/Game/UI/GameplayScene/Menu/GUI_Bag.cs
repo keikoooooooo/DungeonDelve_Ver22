@@ -23,10 +23,10 @@ public class GUI_Bag : MonoBehaviour, IGUI
     
 
     
-    public void GetRef(UserData userData, SO_CharacterUpgradeData characterUpgradeData, SO_GameItemData gameItemData, PlayerController player)
+    public void GetRef(GameManager _gameManager)
     {
-        _userData = userData;
-        _gameItemData = gameItemData;
+        _userData = _gameManager.UserData;
+        _gameItemData = _gameManager.GameItemData;
 
         Init();
         UpdateData();

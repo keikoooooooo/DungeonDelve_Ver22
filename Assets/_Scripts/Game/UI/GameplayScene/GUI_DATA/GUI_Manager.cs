@@ -8,15 +8,12 @@ public static class GUI_Manager
 {
     private static readonly List<IGUI> GUIDatas = new();
     
+    
     /// <summary>
-    /// Gửi tất cả RefData tới các GUI_ có đăng kí nhận ref, chỉ gọi 1 lần duy nhất mỗi lần scene này được khởi tạo
+    /// Gửi RefData tới các GUI có đăng kí nhận ref, chỉ gọi 1 lần duy nhất mỗi lần scene này được khởi tạo
     /// </summary>
-    /// <param name="userData"> Dữ liệu của user </param>
-    /// <param name="characterUpgradeData"> Dữ liêu nâng cấp nhân vật trong game </param>
-    /// <param name="gameItemData"> Dữ liệu tất cả Item trong game </param>
-    /// <param name="player"> Dữ liệu của Player </param>
-    public static void SendRef(UserData _userData, SO_CharacterUpgradeData _characterUpgradeData, SO_GameItemData _gameItemData, PlayerController _player)
-        => GUIDatas.ForEach(item => item.GetRef(_userData, _characterUpgradeData, _gameItemData, _player));
+    /// <param name="_gameManager"> Dữ liệu của user </param>
+    public static void SendRef(GameManager _gameManager) => GUIDatas.ForEach(item => item.GetRef(_gameManager));
 
     
     /// <summary>

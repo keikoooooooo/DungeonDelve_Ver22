@@ -1,12 +1,11 @@
-using System.Collections.Generic;
-using DG.Tweening;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
 {
-    [Header("Infor")]
+    [Header("Stats Character")]
     [SerializeField] private TextMeshProUGUI charLevelText;
     [SerializeField] private TextMeshProUGUI charEXPText;
     [SerializeField] private TextMeshProUGUI currencyText;
@@ -14,11 +13,11 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     [Space]
     [SerializeField] private Slider mainProgressSliderBar;
     [SerializeField] private Slider backProgressSliderBar;
-    [Space]
+    [Space, Header("Item Buff")]
     [SerializeField] private SO_ExperienceBuff expSmallBuff;
     [SerializeField] private SO_ExperienceBuff expMediumBuff;
     [SerializeField] private SO_ExperienceBuff expBigBuff;
-    [Space]
+    [Space, Header("Item View")]
     [SerializeField] private TextMeshProUGUI expSmallValueText;
     [SerializeField] private TextMeshProUGUI expMediumValueText;
     [SerializeField] private TextMeshProUGUI expBigValueText;
@@ -26,9 +25,10 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     [SerializeField] private GameObject panelActivity_2;
     [SerializeField] private GameObject panelActivity_3;
     
-    [Space]
+    [Space, Header("Handler Button")]
     [SerializeField] private Button increaseAmountUseBtt;
     [SerializeField] private Button decreaseAmountUseBtt;
+    [SerializeField] private Button cancelBtt;
     [SerializeField] private Button upgradeBtt;
 
     // Variables
@@ -42,9 +42,10 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private int _mediumExpValue;    
     private int _bigExpValue;
 
-    private int _demoLevel;          // hiển thị lv mới(demo) sau khi upgrade
-    private int _currentLevel;       // lv hiện tại của nv
-    private int _currentExp;         // kinh nghiệm hiện tại của nv
+    private int _currentLevel;       // lv hiện tại
+    private int _currentExp;         // kinh nghiệm
+    private int _increaseLevel;      // lv cộng thêm vào
+    private int _increaseEXP;        // giá trị exp cộng vào của item
     private int _nextExp;            // kinh nghiệm tối đa để nâng cấp lên lv tiếp theo
     
     private bool _isEventRegistered;
@@ -57,17 +58,32 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     {
         GUI_Manager.Add(this);
     }
-    private void OnEnable() => InitValue();
+    private void OnEnable()
+    {
+        cancelBtt.onClick.AddListener(InitValue);
+        cancelBtt.onClick.AddListener(UpdateData);
+        upgradeBtt.onClick.AddListener(OnClickUpgradeButton);
+        
+        InitValue();
+    }
+    private void OnDisable()
+    {
+        cancelBtt.onClick.RemoveListener(InitValue);
+        cancelBtt.onClick.RemoveListener(UpdateData);
+        upgradeBtt.onClick.RemoveListener(OnClickUpgradeButton);
+    }
     private void OnDestroy()
     {
         GUI_Manager.Remove(this);
+        
         if(!_isEventRegistered) return;
         _userData.OnCoinChangedEvent -= OnCoinChanged;
     }
     
+    
     public void InitValue()
     {
-        _demoLevel = 0;
+        _increaseLevel = 0;
         _amountUse = 0;
         _selectItem = 0;
         _totalCoinCost = 0;
@@ -77,21 +93,13 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         panelActivity_3.SetActive(false);
         increaseAmountUseBtt.interactable = false;
         decreaseAmountUseBtt.interactable = false;
-        
-        SetLevelText();
-        SetAmountUseText();
-        SetCoinText();
-        SetEXPText();
-        UpdateProgress();
-        SetUpgradeStateButton();
     }
     
-    
-    public void GetRef(UserData userData, SO_CharacterUpgradeData characterUpgradeData, SO_GameItemData gameItemData, PlayerController player)
+    public void GetRef(GameManager _gameManager)
     {
-        _userData = userData;
-        _upgradeData = characterUpgradeData;
-        _playerConfig = player.PlayerConfig;
+        _userData = _gameManager.UserData;
+        _upgradeData = _gameManager.CharacterUpgradeData;
+        _playerConfig = _gameManager.Player.PlayerConfig;
         
         UpdateData();
 
@@ -108,12 +116,12 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     public void UpdateData()
     {
         GetStats();
-        UpdateProgress();
         SetItemQuantity();
         
         SetCoinText();
         SetEXPText();
         SetLevelText();
+        SetAmountUseText();
         SetUpgradeStateButton();
     }
     
@@ -123,9 +131,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         _currentLevel = _playerConfig.Level;
         _currentExp = _playerConfig.CurrentEXP;
         _nextExp = _upgradeData.GetNextEXP(_currentLevel);
-    }
-    private void UpdateProgress()
-    {
+        
         mainProgressSliderBar.maxValue = _nextExp;
         mainProgressSliderBar.minValue = 0;
         mainProgressSliderBar.value = _currentExp;
@@ -178,30 +184,30 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     public void OnIncreaseAmountItemButton(int _value)
     {
         _amountUse += _value;
-        
         decreaseAmountUseBtt.interactable = _amountUse > 0;
         switch (_selectItem)
         {
             case 1:
                 increaseAmountUseBtt.interactable = _amountUse < _smallExpValue;
                 _totalCoinCost = _amountUse * expSmallBuff.UpgradeCost;
-                _totalExpReceived = Mathf.FloorToInt(_amountUse * expSmallBuff.Value);
+                _increaseEXP = (int)expSmallBuff.Value;
                 break;
             
             case 2:
                 increaseAmountUseBtt.interactable = _amountUse < _mediumExpValue;
                 _totalCoinCost = _amountUse * expMediumBuff.UpgradeCost;
-                _totalExpReceived = Mathf.FloorToInt(_amountUse * expMediumBuff.Value);
+                _increaseEXP = (int)expMediumBuff.Value;
                 break;
             
             case 3:
                 increaseAmountUseBtt.interactable = _amountUse < _bigExpValue;
                 _totalCoinCost = _amountUse * expBigBuff.UpgradeCost;
-                _totalExpReceived = Mathf.FloorToInt(_amountUse * expBigBuff.Value);
+                _increaseEXP = (int)expBigBuff.Value;
                 break;
         }
         
-        GetStats();
+        _totalExpReceived = Mathf.FloorToInt(_amountUse * _increaseEXP);
+        
         DemoProgress();
         SetAmountUseText();
         SetLevelText();
@@ -213,47 +219,53 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     public void OnClickUpgradeButton()
     {
         _userData.IncreaseCoin(-_totalCoinCost); 
-        _playerConfig.Level += _demoLevel;
+        _playerConfig.Level += _increaseLevel;
+        _playerConfig.CurrentEXP = (int)backProgressSliderBar.value;
 
         switch (_selectItem)
         {
-            case 1: _userData.IncreaseItem(ItemNameCode.EXPSmall, -_amountUse); break;
+            case 1: _userData.IncreaseItem(ItemNameCode.EXPSmall, -_amountUse);  break;
             case 2: _userData.IncreaseItem(ItemNameCode.EXPMedium, -_amountUse); break;
-            case 3: _userData.IncreaseItem(ItemNameCode.EXPBig, -_amountUse); break;
+            case 3: _userData.IncreaseItem(ItemNameCode.EXPBig, -_amountUse);    break;
         }
         
-        _amountUse = 0;
-        SetAmountUseText();
+        InitValue();
         UpdateData();
     }
     
 
     private void DemoProgress()
     {
+        _increaseLevel = 0;
+        if (_amountUse == 0)
+        {
+            backProgressSliderBar.maxValue = mainProgressSliderBar.maxValue;
+            backProgressSliderBar.value = mainProgressSliderBar.value;
+            return;
+        }
+        
         var hasExp = _upgradeData.GetTotalEXP(_currentLevel);
+        // Từ tổng điểm kn vừa tìm + thêm kn hiện tại đang có + thêm kn của lượng item cấp
         var totalIncreaseExp = hasExp + _currentExp + _totalExpReceived;
         
         for (var i = _currentLevel - 1; i < _upgradeData.DataList.Count; i++)
         {
-            if (i >= 1)
+            // Check tổng exp sẽ có và exp của từng mốc lv và chạy fill của slider để biết tiến trình
+            if (totalIncreaseExp >= _upgradeData.DataList[i].TotalExp) 
             {
-                backProgressSliderBar.minValue = 0;
-                backProgressSliderBar.maxValue = _upgradeData.DataList[i].TotalExp;
-                backProgressSliderBar.value = totalIncreaseExp;
+                _increaseLevel++;
+                backProgressSliderBar.maxValue = _upgradeData.DataList[i + 1].EXP;
+                backProgressSliderBar.value = _currentExp + (_totalExpReceived - _upgradeData.DataList[i].TotalExp);
+                continue;
             }
-            
-            if (totalIncreaseExp >= _upgradeData.DataList[i].TotalExp) continue;
-            _demoLevel = _amountUse != 0 ? _upgradeData.DataList[i].Level - 1 : 0;
+
+            // Nếu chạy xuống tới đây, tìm giá trị exp dư ra và kết thúc vòng for
+            var _remainingExp = _upgradeData.DataList[i].TotalExp - totalIncreaseExp;
+            backProgressSliderBar.value = _upgradeData.GetNextEXP(_increaseLevel + _currentLevel) - _remainingExp;
             break;
         }
-        
-        Debug.Log("Level new upgrade +" + _demoLevel);
-
-        if (_amountUse == 0)
-        {
-            UpdateProgress();
-        }
     }
+
 
 
 
@@ -266,13 +278,13 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private void SetCoinText() => currencyText.text = $"{_coin}/{_totalCoinCost}";
     private void SetLevelText()
     {
-        var _demoLvToStr = _demoLevel == 0 ? "" : $"+ {_demoLevel}";
-        charLevelText.text = $"Lv. {_currentLevel}   <color=green> {_demoLvToStr} </color>";
+        var _demoLvToStr = _increaseLevel == 0 ? "" : $"+ {_increaseLevel}";
+        charLevelText.text = $"Lv. {_currentLevel}  <size=35><color=#FFD900> {_demoLvToStr}</color></size>";
     }
     private void SetEXPText()
     {
         var _totalExpReceivedToStr = _totalExpReceived == 0 ? "" : $"+ {_totalExpReceived}";
-        charEXPText.text = $"<size=29.5><color=green> {_totalExpReceivedToStr} </color></size>     {_currentExp}/{_nextExp}";
+        charEXPText.text = $"<size=29.5><color=#FFD900> {_totalExpReceivedToStr} </color></size>  {_currentExp}/{_nextExp}";
     }
 
 }

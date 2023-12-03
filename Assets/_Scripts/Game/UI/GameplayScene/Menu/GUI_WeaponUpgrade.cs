@@ -25,10 +25,10 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     private void OnDestroy() => GUI_Manager.Remove(this);
 
     
-    public void GetRef(UserData userData, SO_CharacterUpgradeData characterUpgradeData, SO_GameItemData gameItemData, PlayerController player)
+    public void GetRef(GameManager _gameManager)
     {
-        _userData = userData;
-        _playerConfig = player.PlayerConfig;
+        _userData = _gameManager.UserData;
+        _playerConfig = _gameManager.Player.PlayerConfig;
 
         UpdateData();
         

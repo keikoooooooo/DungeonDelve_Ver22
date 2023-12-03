@@ -34,11 +34,11 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
     private void OnDestroy() => GUI_Manager.Remove(this);
     
     
-    public void GetRef(UserData userData, SO_CharacterUpgradeData characterUpgradeData, SO_GameItemData gameItemData, PlayerController player)
+    public void GetRef(GameManager _gameManager)
     {
-        _playerConfig = player.PlayerConfig;
-        _playerRender = player.PlayerData.PlayerRenderTexture;
-        _upgradeData = characterUpgradeData;
+        _playerConfig = _gameManager.Player.PlayerConfig;
+        _playerRender = _gameManager.Player.PlayerData.PlayerRenderTexture;
+        _upgradeData = _gameManager.CharacterUpgradeData;
         
         UpdateData();
     }
@@ -48,7 +48,15 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
         UpdateStatsText();
         OpenRenderTexture();
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P)) 
+        {
+            UpdateData();
+        }
+    }
+
     private void UpdateStatsText()
     {
         if(!_playerConfig) return;

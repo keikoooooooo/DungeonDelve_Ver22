@@ -17,33 +17,28 @@ public class MenuController : Singleton<MenuController>
     
     private PlayerController _player;
     private UserData _userData;
-    private SO_GameItemData _gameItemData;
-    private SO_CharacterUpgradeData _characterUpgradeData;
     
     
     
     private void OnEnable()
     {
         if(!GameManager.Instance) return;
+        GUI_Manager.SendRef(GameManager.Instance);
 
-        _player = GameManager.Instance.player;
+        _player = GameManager.Instance.Player;
         _userData = GameManager.Instance.UserData;
-        _gameItemData = GameManager.Instance.GameItemData;
-        _characterUpgradeData = GameManager.Instance.CharacterUpgradeData;
-        
         if (!isEventRegistered)
         {
             isEventRegistered = true;
             _userData.OnCoinChangedEvent += OnCoinChanged;
         }
-        GameManager.Instance.UserData.SendEventCoinChaged();
+        
+        _userData.SendEventCoinChaged();
     }
     private void Start()
     {
         isOpenMenu = false;
         Cursor.lockState = CursorLockMode.Locked;
-        GUI_Manager.SendRef(_userData, _characterUpgradeData, _gameItemData, _player);
-        _userData.SendEventCoinChaged();
     }
     private void Update() => HandleInput();
     private void OnDisable()
@@ -80,6 +75,7 @@ public class MenuController : Singleton<MenuController>
     
     private void OpenMenu()
     {
+        GUI_Manager.UpdateGUIData();
         Cursor.lockState = CursorLockMode.None;
         _player.cinemachineFreeLook.enabled = false;
         Time.timeScale = 0;

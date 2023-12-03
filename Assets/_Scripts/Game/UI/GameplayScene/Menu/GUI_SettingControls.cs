@@ -20,24 +20,21 @@ public class GUI_SettingControls : MonoBehaviour, IGUI
     private void OnDestroy() => GUI_Manager.Remove(this);
     
     
-    public void GetRef(UserData userData, SO_CharacterUpgradeData characterUpgradeData, SO_GameItemData gameItemData, PlayerController player)
+    public void GetRef(GameManager _gameManager)
     {
-        _cinemachineFreeLook = player.cinemachineFreeLook;
-
-        UpdateData();
-    }
-    
-    public void UpdateData()
-    {
+        _cinemachineFreeLook = _gameManager.Player.cinemachineFreeLook;
+        
         var sensitivityValue = PlayerPrefs.GetFloat(PP_SensitivityIndex, 150);
         SetCameraSensitivity(sensitivityValue);
     }
+    public void UpdateData() { }
+    
     
     public void SetCameraSensitivity(float _value)
     {
-        PlayerPrefs.SetFloat(PP_SensitivityIndex, _value);
-        
         if (!_cinemachineFreeLook) return;
+        
+        PlayerPrefs.SetFloat(PP_SensitivityIndex, _value);
         _cinemachineFreeLook.m_XAxis.m_MaxSpeed = _value;
     }
     

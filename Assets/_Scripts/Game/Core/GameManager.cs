@@ -1,5 +1,4 @@
 using System.Linq;
-using NaughtyAttributes;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -29,7 +28,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     [field: SerializeField] public SO_GameItemData GameItemData { get; private set; }
     
-    public PlayerController player { get; private set; }
+    public PlayerController Player { get; private set; }
     private SO_PlayerConfiguration _playerConfig;
     
     
@@ -37,11 +36,11 @@ public class GameManager : Singleton<GameManager>
     {
         if(!PlayFabHandleUserData.Instance)
         {
-            UserData = new UserData("Test Editor", 500);
-            player = Instantiate(CharacterData.CharactersData[0].prefab, Vector3.zero, quaternion.identity);
-            _playerConfig = Instantiate(player.PlayerConfig);
+            UserData = new UserData("Test Editor", 500000);
+            Player = Instantiate(CharacterData.CharactersData[0].prefab, Vector3.zero, quaternion.identity);
+            _playerConfig = Instantiate(Player.PlayerConfig);
             _playerConfig.ChapterIcon = CharacterData.CharactersData[0].prefab.PlayerConfig.ChapterIcon;
-            player.PlayerData.SetData(_playerConfig);
+            Player.PlayerData.SetData(_playerConfig);
             return;
         }
         
@@ -49,9 +48,9 @@ public class GameManager : Singleton<GameManager>
         _playerConfig = PlayFabHandleUserData.Instance.PlayerConfig;
         foreach (var characterCustom in CharacterData.CharactersData.Where(characterCustom => characterCustom.nameCode == _playerConfig.NameCode))
         {
-            player = Instantiate(characterCustom.prefab, Vector3.zero, quaternion.identity);
+            Player = Instantiate(characterCustom.prefab, Vector3.zero, quaternion.identity);
             _playerConfig.ChapterIcon = characterCustom.prefab.PlayerConfig.ChapterIcon;
-            player.PlayerData.SetData(_playerConfig);
+            Player.PlayerData.SetData(_playerConfig);
             break;
         }
     }

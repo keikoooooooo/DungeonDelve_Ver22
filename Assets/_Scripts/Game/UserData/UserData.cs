@@ -35,9 +35,9 @@ public class UserData
         {
             { ItemNameCode.POHealth , 5},
             { ItemNameCode.POStamina, 5},
-            { ItemNameCode.EXPSmall, 21},
-            { ItemNameCode.EXPMedium, 2},
-            { ItemNameCode.EXPBig, 15},
+            { ItemNameCode.EXPSmall, 100},
+            { ItemNameCode.EXPMedium, 200},
+            { ItemNameCode.EXPBig, 500},
         };
     }
     
@@ -76,9 +76,10 @@ public class UserData
         coin = Mathf.Clamp(coin + _amount, 0, coin + _amount);
         SendEventCoinChaged();
     }
+    
 
     /// <summary>
-    /// Tăng/Giảm value của Item, nếu giá trị truyền vào là âm(-) sẽ Decrease item value
+    /// Tăng/Giảm value của Item, nếu giá trị truyền vào là âm(-) sẽ Decrease value của Item
     /// </summary>
     /// <param name="_amount"> Số lượng tăng/giảm Coin</param>
     public void IncreaseItem(ItemNameCode _itemCode, int _amount)
