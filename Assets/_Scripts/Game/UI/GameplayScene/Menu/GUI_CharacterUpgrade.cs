@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,7 +53,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private SO_CharacterUpgradeData _upgradeData;
     private SO_PlayerConfiguration _playerConfig;
 
-    
+    public TextMeshProUGUI testText;
     
     private void Awake()
     {
@@ -78,7 +79,6 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         if(!_isEventRegistered) return;
         _userData.OnCoinChangedEvent -= OnCoinChanged;
     }
-    
 
     public void InitValue()
     {
@@ -187,19 +187,19 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         switch (_selectItem)
         {
             case 1:
-                increaseAmountUseBtt.interactable = _amountUse < _smallExpValue && _currentLevel <= _upgradeData.levelMax;
+                increaseAmountUseBtt.interactable = _amountUse < _smallExpValue && _currentLevel <= SO_CharacterUpgradeData.levelMax;
                 _totalCoinCost = _amountUse * expSmallBuff.UpgradeCost;
                 _increaseEXP = (int)expSmallBuff.Value;
                 break;
             
             case 2:
-                increaseAmountUseBtt.interactable = _amountUse < _mediumExpValue;
+                increaseAmountUseBtt.interactable = _amountUse < _mediumExpValue && _currentLevel <= SO_CharacterUpgradeData.levelMax;
                 _totalCoinCost = _amountUse * expMediumBuff.UpgradeCost;
                 _increaseEXP = (int)expMediumBuff.Value;
                 break;
             
             case 3:
-                increaseAmountUseBtt.interactable = _amountUse < _bigExpValue;
+                increaseAmountUseBtt.interactable = _amountUse < _bigExpValue && _currentLevel <= SO_CharacterUpgradeData.levelMax;
                 _totalCoinCost = _amountUse * expBigBuff.UpgradeCost;
                 _increaseEXP = (int)expBigBuff.Value;
                 break;
@@ -213,6 +213,30 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         SetCoinText();
         SetEXPText();
         SetUpgradeStateButton();
+
+        Test();
+    }
+
+
+    private int value;
+    private void Test()
+    {
+        testText.text = $"{value}\n" +
+                        $"Amount: {_amountUse}\n" +
+                        $"Level: {_currentLevel}\n" +
+                        $"Increase Lv: {_increaseLevel}\n" +
+                        $"CurrentEx: {_currentExp}\n" +
+                        $"Increase Ex: {_increaseEXP}\n" +
+                        $"BackSliderValue: {backProgressSliderBar.value}\n" +
+                        $"MainSliderMaxValue: {backProgressSliderBar.maxValue}\n" +
+                        $"Current Coin: {_coin}\n" +
+                        $"Total Coin Cost: {_totalCoinCost}\n" +
+                        $"Total EXP: {_totalExpReceived}\n\n" +
+                        $"GET UPGDARE DATA EXP = {_upgradeData.GetNextEXP(_currentLevel + _increaseLevel)}\n" +
+                        $"HAS TOTAL EXP = {_upgradeData.GetTotalEXP(_currentLevel + _increaseLevel)}";
+
+        value++;
+        if (value == 10) value = 0;
     }
     
     public void OnClickUpgradeButton()
@@ -243,29 +267,30 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
             backProgressSliderBar.value = mainProgressSliderBar.value;
             return;
         }
-        
+
         var hasExp = _upgradeData.GetTotalEXP(_currentLevel);
         // Từ tổng điểm kn vừa tìm + thêm kn hiện tại đang có + thêm kn của lượng item cấp
         var totalIncreaseExp = hasExp + _currentExp + _totalExpReceived;
         
-        for (var i = _currentLevel - 1; i < _upgradeData.DataList.Count; i++)
+        for (var i = _currentLevel - 1; i < _upgradeData.Data.Count; i++)
         {
             // Check tổng exp sẽ có và exp của từng mốc lv và chạy fill của slider để biết tiến trình
-            if (totalIncreaseExp >= _upgradeData.DataList[i].TotalExp) 
+            if (totalIncreaseExp >= _upgradeData.Data[i].TotalExp) 
             {
                 _increaseLevel++;
-                backProgressSliderBar.maxValue = _upgradeData.DataList[i + 1].EXP;
-                backProgressSliderBar.value = _currentExp + (_totalExpReceived - _upgradeData.DataList[i].TotalExp);
+                backProgressSliderBar.maxValue = _upgradeData.Data[i + 1].EXP;
+                backProgressSliderBar.value = _currentExp + (_totalExpReceived - _upgradeData.Data[i].TotalExp);
                 continue;
             }
 
             // Nếu chạy xuống tới đây, tìm giá trị exp dư ra và kết thúc vòng for
-            var _remainingExp = _upgradeData.DataList[i].TotalExp - totalIncreaseExp;
+            var _remainingExp = _upgradeData.Data[i].TotalExp - totalIncreaseExp;
             backProgressSliderBar.value = _upgradeData.GetNextEXP(_increaseLevel + _currentLevel) - _remainingExp;
             break;
         }
     }
 
+    
 
 
   

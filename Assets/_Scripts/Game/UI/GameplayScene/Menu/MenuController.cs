@@ -18,7 +18,8 @@ public class MenuController : Singleton<MenuController>
     
     private PlayerController _player;
     private UserData _userData;
-    
+
+    public TextMeshProUGUI testText;
     
     
     private void OnEnable()
@@ -48,9 +49,24 @@ public class MenuController : Singleton<MenuController>
         _userData.OnCoinChangedEvent -= OnCoinChanged;
     }
 
+    private string strTest = "";
     
     private void HandleInput()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            foreach (var upgradeCustom in GameManager.Instance.CharacterUpgradeData.Data)
+            {
+                strTest += $"Level = {upgradeCustom.Level} / Exp = {upgradeCustom.EXP} / Total Cost = {upgradeCustom.TotalExp}\n";
+            }
+
+            testText.text = strTest;
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            testText.text = "";
+        }
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isOpenMenu = !isOpenMenu;

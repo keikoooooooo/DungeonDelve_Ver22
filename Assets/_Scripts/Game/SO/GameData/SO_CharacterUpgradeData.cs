@@ -6,14 +6,20 @@ using UnityEngine;
 [Serializable]
 public class UpgradeCustom
 {
-    public int Level { get; private set; }
-    public int EXP { get; private set; }
-    public int TotalExp;
+    private int _level;
+    private int _exp;
+    private int _totalExp;
 
-    public UpgradeCustom(int _level, int _exp)
+    public int Level { get => _level; private set => _level = value; }
+    public int EXP { get => _exp; private set => _exp = value; }
+    public int TotalExp { get => _totalExp; private set => _totalExp = value; }
+    
+    public UpgradeCustom() { }
+    public UpgradeCustom(int _level, int _exp, int _totalExp)
     {
         Level = _level;
         EXP = _exp;
+        TotalExp = _totalExp;
     }
 }
 
@@ -24,51 +30,33 @@ public class UpgradeCustom
 public class SO_CharacterUpgradeData : ScriptableObject
 {
     [SerializeField] private TextAsset LevelingTextAsset;
-    public List<UpgradeCustom> DataList;
-
-    private Dictionary<int, int> _upgradeDataDictionary;
-    public readonly int levelMax  = 90;
-
-
+    public List<UpgradeCustom> Data { get; } = new(levelMax);
+    public const int levelMax = 90;
+    private string _strData;
+    
 
     /// <summary>
     /// Hàm này chỉ lấy dữ liệu 1 lần duy nhất trên EDITOR để cập nhật dự liệu vào list Data để tham chiếu và check trong game
     /// </summary>
     public void SetData()
     {
-        if(!LevelingTextAsset || DataList.Count != 0) 
-            return;
+        _strData = LevelingTextAsset.text;
+        if(string.IsNullOrEmpty(_strData) || Data.Count == levelMax) return;
         
-        var strContent = LevelingTextAsset.text;
-        var files = strContent.Split('\n');
-        foreach (var VARIABLE in files)
+        var files = _strData.Split('\n');
+        var _lastTotalExp = 0;
+        foreach (var _line in files)
         {
-            var part = VARIABLE.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            
-            var _level = 0;
-            if (part[0].StartsWith("LV:"))
-            {
-                var lvStr = part[0].Substring(3);
-                if (int.TryParse(lvStr, out var level))
-                {
-                    _level = level;
-                }
-            }
-
-            var _exp = 0;
-            if (part[1].StartsWith("EXP:"))
-            {
-                var expStr= part[1].Substring(4);
-                if (int.TryParse(expStr, out var exp))
-                {
-                   _exp = exp;
-                }
-            }
-            DataList.Add(new UpgradeCustom(_level, _exp));
+            var part = _line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (!part[0].StartsWith("LV:")  || !int.TryParse(part[0][3..], out var _lv) || 
+                !part[1].StartsWith("EXP:") || !int.TryParse(part[1][4..], out var _exp) ) 
+                continue;
+            var _upgradeData = new UpgradeCustom(_lv, _exp, _exp + _lastTotalExp);
+            Data.Add(_upgradeData);
+            _lastTotalExp = _upgradeData.TotalExp;
         }
     }
-
-    public void RenewValue() => DataList.Clear();
+    public void RenewValue() => Data.Clear();
 
     
     /// <summary>
@@ -79,9 +67,9 @@ public class SO_CharacterUpgradeData : ScriptableObject
     public int GetNextEXP(int _level)
     {
         if(_level >= levelMax) 
-            return DataList[^1].EXP;
+            return Data[^1].EXP;
 
-        return _level <= 1 ? DataList[0].EXP : DataList[_level - 1].EXP;
+        return _level <= 1 ? Data[0].EXP : Data[_level - 1].EXP;
     }
 
     
@@ -91,6 +79,6 @@ public class SO_CharacterUpgradeData : ScriptableObject
     /// </summary>
     /// <param name="_currentLevel"> Level hiện tại. </param>
     /// <returns></returns>
-    public int GetTotalEXP(int _currentLevel) => _currentLevel <= 1 ? 0 : DataList[_currentLevel - 2].TotalExp;
+    public int GetTotalEXP(int _currentLevel) => _currentLevel <= 1 ? 0 : Data[_currentLevel - 2].TotalExp;
     
 }

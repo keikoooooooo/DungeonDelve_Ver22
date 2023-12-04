@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
         if(!PlayFabHandleUserData.Instance)
         {
             UserData = new UserData("Test Editor", 500000);
-            Player = Instantiate(CharacterData.CharactersData[0].prefab, Vector3.zero, quaternion.identity);
+            Player = Instantiate(CharacterData.CharactersData[1].prefab, Vector3.zero, quaternion.identity);
             _playerConfig = Instantiate(Player.PlayerConfig);
             _playerConfig.ChapterIcon = CharacterData.CharactersData[0].prefab.PlayerConfig.ChapterIcon;
             Player.PlayerData.SetData(_playerConfig);

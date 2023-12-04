@@ -375,10 +375,11 @@ public class GameplayEditorWindow : EditorWindow
     }
     private void ShowUpgradeDetails(SO_CharacterUpgradeData _upgradeData)
     {
+
+        
         if(_upgradeData == null) 
             return;
-        _upgradeData.SetData();   
-        
+        _upgradeData.SetData();
         Space(10);
         GUILayout.BeginHorizontal();
         GUILayout.Box("Level", Width(150));
@@ -386,30 +387,31 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.Box("EXP Needed", Width(150));
         GUILayout.Label("", Width(30));
         GUILayout.Box("Total EXP Cost", Width(150));
-        
         GUILayout.Label("", Width(50));
         if(GUILayout.Button("Renew Value",ButtonColorText(Color.white), Width(120), Height(20)))
         {
+            Debug.Log("Reset Value Success!");
             _upgradeData.RenewValue();
+        }
+        if (GUILayout.Button("Show ConsoleLog", ButtonColorText(Color.white), Width(120), Height(20)))
+        {
+            foreach (var upgradeCustom in _upgradeData.Data)
+            {
+                Debug.Log($"Level: {upgradeCustom.Level}/EXP: {upgradeCustom.EXP}/Total EXP Cost: {upgradeCustom.TotalExp}");
+            }
         }
         GUILayout.EndHorizontal();
         
         scrollView = GUILayout.BeginScrollView(scrollView);
-        var _lastExp = 0;
-        for (var i = 0; i < _upgradeData.DataList.Count; i++)
+        for (var i = 0; i < _upgradeData.Data.Count; i++)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Box($"{ _upgradeData.DataList[i].Level}", Width(150));
-            
-            GUILayout.Box(i + 1 >= _upgradeData.levelMax ?
-                "~" : $"{_upgradeData.DataList[i + 1].Level}", BoxColorText(Color.red), Width(140));
-            GUILayout.Box($"{ _upgradeData.DataList[i].EXP}", BoxColorText(Color.cyan),Width(150));
+            GUILayout.Box($"{ _upgradeData.Data[i].Level}", Width(150));
+            GUILayout.Box(i + 1 >= SO_CharacterUpgradeData.levelMax ? "~" : $"{_upgradeData.Data[i + 1].Level}", BoxColorText(Color.red), Width(140));
+            GUILayout.Box($"{ _upgradeData.Data[i].EXP}", BoxColorText(Color.cyan),Width(150));
             GUILayout.Label("  ->  ", Width(30));
-            
-            _upgradeData.DataList[i].TotalExp = i == 0 ? _upgradeData.DataList[i].EXP : _upgradeData.DataList[i].EXP + _lastExp;
-            GUILayout.Box($"{_upgradeData.DataList[i].TotalExp}" , BoxColorText(Color.magenta), Width(150));
+            GUILayout.Box($"{_upgradeData.Data[i].TotalExp}" , BoxColorText(Color.magenta), Width(150));
             GUILayout.EndHorizontal();
-            _lastExp =  _upgradeData.DataList[i].TotalExp;
         }
         GUILayout.EndScrollView();
     }

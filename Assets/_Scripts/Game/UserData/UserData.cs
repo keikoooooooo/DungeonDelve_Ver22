@@ -7,9 +7,9 @@ using UnityEngine;
 [Serializable]
 public class UserData
 {
-    [JsonProperty]
+    [SerializeField, JsonProperty]
     private string _username;
-    [JsonProperty]
+    [SerializeField, JsonProperty]
     private int _coin;
 
     public string username
