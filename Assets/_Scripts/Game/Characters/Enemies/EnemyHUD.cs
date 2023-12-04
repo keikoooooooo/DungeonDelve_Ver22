@@ -10,11 +10,11 @@ public class EnemyHUD : MonoBehaviour
     
     private void Start()
     {
-        nameAndLevelText.ChangeNameText(enemy.EnemyConfig.Name);
-        nameAndLevelText.ChangeLevelText(enemy.EnemyConfig.Level);
+        nameAndLevelText.ChangeNameText(enemy.EnemyConfig.GetName());
+        nameAndLevelText.ChangeLevelText(enemy.EnemyConfig.GetLevel());
         
         enemy.Health.E_OnValueChanged += healthBar.ChangedValue;
-        healthBar.Init(enemy.EnemyConfig.MaxHP);
+        healthBar.Init(enemy.EnemyConfig.GetHP());
     }
     private void OnDestroy()
     {

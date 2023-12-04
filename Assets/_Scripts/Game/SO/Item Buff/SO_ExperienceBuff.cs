@@ -9,6 +9,6 @@ public class SO_ExperienceBuff : SO_BuffEffect
     
     public override void Apply(PlayerController _player)
     {
-        _player.PlayerConfig.CurrentEXP += (int)Value;
+        _player.PlayerConfig.SetCurrentEXP(_player.PlayerConfig.GetCurrentEXP() + (int)Value);
     }
 }

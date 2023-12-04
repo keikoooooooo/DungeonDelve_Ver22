@@ -21,10 +21,10 @@ public class PlayerHUD : MonoBehaviour
         player.E_SkillCD += skillCooldownTime.StartCd;
         player.E_SpecialCD += specialCooldownTime.StartCd;
         
-        nameAndLevelText.ChangeNameText(player.PlayerConfig.Name);
-        nameAndLevelText.ChangeLevelText(player.PlayerConfig.Level);
-        healthBar.Init(player.PlayerConfig.MaxHP);
-        staminaBar.Init(player.PlayerConfig.MaxST);
+        nameAndLevelText.ChangeNameText(player.PlayerConfig.GetName());
+        nameAndLevelText.ChangeLevelText(player.PlayerConfig.GetLevel());
+        healthBar.Init(player.PlayerConfig.GetHP());
+        staminaBar.Init(player.PlayerConfig.GetST());
     }
     private void OnDestroy()
     {

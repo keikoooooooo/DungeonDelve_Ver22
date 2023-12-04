@@ -19,8 +19,7 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     public enum PF_Key : byte // PlayerFab KeyValue
     {
         UserData_Key,
-        PlayerConfigData_Key,
-        PlayerSlotEquip_Key,
+        PlayerConfigData_Key
     }
     
     private void Start()
@@ -53,10 +52,6 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
                 break;
             case PF_Key.PlayerConfigData_Key:
                 jsonText = JsonConvert.SerializeObject(PlayerConfig, Formatting.Indented);
-                
-                break;
-            default:
-                Debug.LogWarning("Non save data to playFab");
                 break;
         }
 
@@ -64,30 +59,10 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
         {
             Data = new Dictionary<string, string>
             {
-                {
-                    _keySave.ToString(),
-                    jsonText
-                }
+                { _keySave.ToString(), jsonText }
             }
         };
         PlayFabClientAPI.UpdateUserData(request, _resul => { Debug.Log("Player Update User Data Success"); }, ErrorCallback);
-    }
-    public void SetUserData<T> (T _data, PF_Key _keySave)
-    {
-        if(!_isLogin) return;
-
-        var jsonText = JsonUtility.ToJson(_data, true);
-        var request = new UpdateUserDataRequest
-        {
-            Data = new Dictionary<string, string>
-            {
-                {
-                    _keySave.ToString(),
-                    jsonText
-                }
-            }
-        };
-        PlayFabClientAPI.UpdateUserData(request, _result => { Debug.Log("Player Update User Data Success"); }, ErrorCallback);
     }
     
     private void GetUserData()
@@ -100,7 +75,7 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
         if (_result.Data == null || !_result.Data.ContainsKey($"{PF_Key.UserData_Key}")) 
         {
             Debug.Log("Get Data Failure.\nCreate new Userdata");
-
+            UserData = new UserData(PlayFabController.Instance.username, 100000);
             OnLoadUserDataFailureEvent?.Invoke();
             return;
         }
@@ -120,11 +95,4 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     
     
     private static void ErrorCallback(PlayFabError _error) => Debug.LogWarning(_error.Error);
-    
-    private void OnApplicationQuit()
-    {
-        SetUserData(PF_Key.UserData_Key);
-        SetUserData(PF_Key.PlayerConfigData_Key);
-    }
-    
 }

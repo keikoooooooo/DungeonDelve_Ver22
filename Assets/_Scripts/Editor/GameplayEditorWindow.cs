@@ -79,6 +79,7 @@ public class GameplayEditorWindow : EditorWindow
 
         }
     }
+
     private void ShowPlayerConfig(SO_PlayerConfiguration _playerConfig) 
     {
         if (_playerConfig == null)
@@ -89,17 +90,18 @@ public class GameplayEditorWindow : EditorWindow
 
         scrollView = GUILayout.BeginScrollView(scrollView);
         EditorGUI.BeginChangeCheck();
-        
+
+        #region Stats
         Space(25);
         GUILayout.Label("NAME CODE -----------------------------", EditorStyles.boldLabel);
         _playerConfig.NameCode = (CharacterNameCode)EditorGUILayout.EnumPopup("Code", _playerConfig.NameCode, Width(500));
         
         Space(30);
         GUILayout.Label("INFORMATION ------------------------", EditorStyles.boldLabel);
-        _playerConfig.Name = EditorGUILayout.TextField("Name", $"{_playerConfig.NameCode}", Width(500));
-        _playerConfig.Level = EditorGUILayout.IntField("Level", _playerConfig.Level, Width(500));
-        _playerConfig.CurrentEXP = EditorGUILayout.IntField("Current EXP", _playerConfig.CurrentEXP, Width(500));
-        _playerConfig.Infor = EditorGUILayout.TextField("Infor", _playerConfig.Infor, Width(500));
+        _playerConfig.SetName(EditorGUILayout.TextField("Name", $"{_playerConfig.NameCode}", Width(500)));
+        _playerConfig.SetLevel(EditorGUILayout.IntField("Level", _playerConfig.GetLevel(), Width(500)));
+        _playerConfig.SetCurrentEXP(EditorGUILayout.IntField("Current EXP", _playerConfig.GetCurrentEXP(), Width(500)));
+        _playerConfig.SetInfor(EditorGUILayout.TextField("Infor", _playerConfig.GetInfor(), Width(500)));
         GUILayout.BeginHorizontal();
         GUILayout.Label("Chapter Icon", Width(148));
         _playerConfig.ChapterIcon = (Sprite)EditorGUILayout.ObjectField(_playerConfig.ChapterIcon, typeof(Sprite), false, Width(50), Height(50));
@@ -107,31 +109,33 @@ public class GameplayEditorWindow : EditorWindow
         
         Space(30);
         GUILayout.Label("CHARACTER STATS ----------------------", EditorStyles.boldLabel);
-        _playerConfig.MaxHP = EditorGUILayout.IntField("Max HP", _playerConfig.MaxHP, Width(500));
-        _playerConfig.MaxST = EditorGUILayout.IntField("Max ST", _playerConfig.MaxST, Width(500));
-        _playerConfig.ATK = EditorGUILayout.IntField("ATK", _playerConfig.ATK, Width(500));
-        _playerConfig.CRITRate = EditorGUILayout.FloatField("CRIT Rate(%)", _playerConfig.CRITRate, Width(500));
-        _playerConfig.CRITDMG = EditorGUILayout.IntField("CRIT DMG(%)", _playerConfig.CRITDMG, Width(500));
-        _playerConfig.DEF = EditorGUILayout.IntField("DEF", _playerConfig.DEF, Width(500));
-        _playerConfig.ChargedAttackStaminaCost = EditorGUILayout.IntField("Charged Attack ST Cost", _playerConfig.ChargedAttackStaminaCost, Width(500));
-        _playerConfig.WalkSpeed = EditorGUILayout.FloatField("Walk Speed", _playerConfig.WalkSpeed, Width(500));
-        _playerConfig.RunSpeed = EditorGUILayout.FloatField("Run Speed", _playerConfig.RunSpeed, Width(500));
-        _playerConfig.RunFastSpeed = EditorGUILayout.FloatField("Run Fast Speed", _playerConfig.RunFastSpeed, Width(500));
-        _playerConfig.DashEnergy = EditorGUILayout.IntField("Dash Energy", _playerConfig.DashEnergy, Width(500));
-        _playerConfig.JumpHeight = EditorGUILayout.FloatField("Jump Height", _playerConfig.JumpHeight, Width(500));
+        _playerConfig.SetHP(EditorGUILayout.IntField("Max HP", _playerConfig.GetHP(), Width(500)));
+        _playerConfig.SetST(EditorGUILayout.IntField("Max ST", _playerConfig.GetST(), Width(500)));
+        _playerConfig.SetATK(EditorGUILayout.IntField("ATK", _playerConfig.GetATK(), Width(500)));
+        
+        _playerConfig.SetCRITRate(EditorGUILayout.FloatField("CRIT Rate(%)", _playerConfig.GetCRITRate(), Width(500)));
+        _playerConfig.SetCRITDMG(EditorGUILayout.IntField("CRIT DMG(%)", _playerConfig.GetCRITDMG(), Width(500)));
+        _playerConfig.SetDEF(EditorGUILayout.IntField("DEF", _playerConfig.GetDEF(), Width(500)));
+        _playerConfig.SetChargedAttackSTCost(EditorGUILayout.IntField("Charged Attack ST Cost", _playerConfig.GetChargedAttackSTCost(), Width(500)));
+        _playerConfig.SetWalkSpeed(EditorGUILayout.FloatField("Walk Speed", _playerConfig.GetWalkSpeed(), Width(500)));
+        _playerConfig.SetRunSpeed(EditorGUILayout.FloatField("Walk Speed", _playerConfig.GetRunSpeed(), Width(500)));
+        _playerConfig.SetRunFastSpeed(EditorGUILayout.FloatField("Run Fast Speed", _playerConfig.GetRunFastSpeed(), Width(500)));
+        _playerConfig.SetDashSTCost(EditorGUILayout.IntField("Dash ST Cost", _playerConfig.GetDashSTCost(), Width(500)));
+        _playerConfig.SetJumpHeight(EditorGUILayout.FloatField("Jump Height", _playerConfig.GetJumpHeight(), Width(500)));
 
         Space(30);
         GUILayout.Label("WEAPON -------------------------", EditorStyles.boldLabel);
-        _playerConfig.WeaponName = EditorGUILayout.TextField("Weapon Name", _playerConfig.WeaponName, Width(500));
-        _playerConfig.WeaponInfo = EditorGUILayout.TextField("Weapon Info", _playerConfig.WeaponInfo, Width(500));
-        _playerConfig.WeaponLevel = EditorGUILayout.IntSlider("Weapon Level", _playerConfig.WeaponLevel, 1, 10, Width(500));
+        _playerConfig.SetWeaponName(EditorGUILayout.TextField("Weapon Name", _playerConfig.GetWeaponName(), Width(500)));
+        _playerConfig.SetWeaponInfo(EditorGUILayout.TextField("Weapon Info", _playerConfig.GetWeaponInfo(), Width(500)));
+        _playerConfig.SetWeaponLevel(EditorGUILayout.IntSlider("Weapon Level", _playerConfig.GetWeaponLevel(), 1, 10, Width(500)));
         
         Space(30);
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);
-        _playerConfig.JumpCD = EditorGUILayout.FloatField("Jump CD(s)", _playerConfig.JumpCD, Width(500));
-        _playerConfig.ElementalSkillCD = EditorGUILayout.FloatField("Elemental Skill CD(s)", _playerConfig.ElementalSkillCD, Width(500));
-        _playerConfig.ElementalBurstlCD = EditorGUILayout.FloatField("Elemental Burst CD(s)", _playerConfig.ElementalBurstlCD, Width(500));
-        
+        _playerConfig.SetJumpCD(EditorGUILayout.FloatField("Jump CD(s)", _playerConfig.GetJumpCD(), Width(500)));
+        _playerConfig.SetElementalSkillCD(EditorGUILayout.FloatField("Elemental Skill CD(s)", _playerConfig.GetElementalSkillCD(), Width(500)));
+        _playerConfig.SetElementalBurstCD(EditorGUILayout.FloatField("Elemental Burst CD(s)", _playerConfig.GetElementalBurstCD(), Width(500)));
+        #endregion
+
         Space(30);
         GUILayout.Label("MULTIPLIER -------------------------", EditorStyles.boldLabel);
         
@@ -145,17 +149,17 @@ public class GameplayEditorWindow : EditorWindow
         }
         GUILayout.EndHorizontal();
         
-        for (var i = 0; i < _playerConfig.NormalAttackMultiplier.Count; i++)
+        for (var i = 0; i < _playerConfig.GetNormalAttackMultiplier().Count; i++)
         {
             GUILayout.BeginHorizontal();
-            _playerConfig.NormalAttackMultiplier[i].MultiplierTypeName = $"{i + 1} - Hit DMG (%)";
-            GUILayout.Box($"{i + 1} - Hit DMG (%)" ,Width(200), Height(27));
-            for (var j = 0; j < _playerConfig.NormalAttackMultiplier[i].Multiplier.Count; j++)
-            {
-                _playerConfig.NormalAttackMultiplier[i].Multiplier[j] = 
-                    EditorGUILayout.FloatField("", _playerConfig.NormalAttackMultiplier[i].Multiplier[j], EditorStyles.numberField, Width(65), Height(27));
-                Space(1);
-            }
+             _playerConfig.NormalAttackMultiplier[i].MultiplierTypeName = $"{i + 1} - Hit DMG (%)";
+             GUILayout.Box($"{i + 1} - Hit DMG (%)" ,Width(200), Height(27));
+             for (var j = 0; j < _playerConfig.NormalAttackMultiplier[i].Multiplier.Count; j++)
+             {
+                 _playerConfig.NormalAttackMultiplier[i].Multiplier[j] = 
+                     EditorGUILayout.FloatField("", _playerConfig.NormalAttackMultiplier[i].Multiplier[j], EditorStyles.numberField, Width(65), Height(27));
+                 Space(1);
+             }
             GUILayout.EndHorizontal();
         }
 
@@ -176,7 +180,7 @@ public class GameplayEditorWindow : EditorWindow
         #endregion
         
         #region Charged Attack
-        Space(10);
+        Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Label("CHARGED ATTACK MULTIPLIER", Width(200), Height(25));
         for (var i = 1; i <= 10; i++)
@@ -184,7 +188,6 @@ public class GameplayEditorWindow : EditorWindow
             GUILayout.Box($"Wea Lv{i}", Width(65), Height(25));
         }
         GUILayout.EndHorizontal();
-        
         for (var i = 0; i < _playerConfig.ChargedAttackMultiplier.Count; i++)
         {
             GUILayout.BeginHorizontal();
@@ -469,19 +472,19 @@ public class GameplayEditorWindow : EditorWindow
         
         Space(30);
         GUILayout.Label("INFORMATION ------------------------", EditorStyles.boldLabel);
-        _enemyConfig.Name = EditorGUILayout.TextField("Name", _enemyConfig.Name, Width(500));
-        _enemyConfig.Level = EditorGUILayout.IntField("Level", _enemyConfig.Level, Width(500));
-        _enemyConfig.Infor = EditorGUILayout.TextField("Infor", _enemyConfig.Infor, Width(500));
+        _enemyConfig.SetName(EditorGUILayout.TextField("Name", _enemyConfig.GetName(), Width(500)));
+        _enemyConfig.SetLevel(EditorGUILayout.IntField("Level", _enemyConfig.GetLevel(), Width(500)));
+        _enemyConfig.SetInfor(EditorGUILayout.TextField("Infor", _enemyConfig.GetInfor(), Width(500)));
         
         Space(30);
         GUILayout.Label("STATS -------------------------------", EditorStyles.boldLabel);
-        _enemyConfig.MaxHP = EditorGUILayout.IntField("Max HP", _enemyConfig.MaxHP, Width(500));
-        _enemyConfig.ATK = EditorGUILayout.IntField("ATK", _enemyConfig.ATK, Width(500));
-        _enemyConfig.CRITRate = EditorGUILayout.FloatField("CRIT Rate(%)", _enemyConfig.CRITRate, Width(500));
-        _enemyConfig.CRITDMG = EditorGUILayout.IntField("CRIT DMG(%)", _enemyConfig.CRITDMG, Width(500));
-        _enemyConfig.DEF = EditorGUILayout.IntField("DEF", _enemyConfig.DEF, Width(500));
-        _enemyConfig.WalkSpeed = EditorGUILayout.FloatField("Walk Speed", _enemyConfig.WalkSpeed, Width(500));
-        _enemyConfig.RunSpeed = EditorGUILayout.FloatField("Run Speed", _enemyConfig.RunSpeed, Width(500));
+        _enemyConfig.SetHP(EditorGUILayout.IntField("Max HP", _enemyConfig.GetHP(), Width(500)));
+        _enemyConfig.SetATK(EditorGUILayout.IntField("ATK", _enemyConfig.GetATK(), Width(500)));
+        _enemyConfig.SetCRITRate(EditorGUILayout.FloatField("CRIT Rate(%)", _enemyConfig.GetCRITRate(), Width(500)));
+        _enemyConfig.SetCRITDMG(EditorGUILayout.IntField("CRIT DMG(%)", _enemyConfig.GetCRITDMG(), Width(500)));
+        _enemyConfig.SetDEF(EditorGUILayout.IntField("DEF", _enemyConfig.GetDEF(), Width(500)));
+        _enemyConfig.SetWalkSpeed(EditorGUILayout.FloatField("Walk Speed", _enemyConfig.GetWalkSpeed(), Width(500)));
+        _enemyConfig.SetRunSpeed(EditorGUILayout.FloatField("Run Speed", _enemyConfig.GetRunSpeed(), Width(500)));
         
         Space(30);
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);

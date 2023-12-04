@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     private void Awake()
     {
-        Health = new StatusHandle(EnemyConfig.MaxHP);
+        Health = new StatusHandle(EnemyConfig.GetHP());
     }
     private void OnEnable()
     {
@@ -32,8 +32,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         _player = GameManager.Instance.Player.gameObject;
         if(_player) SetRefPlayer(_player);
-        SetRunSpeed(EnemyConfig.RunSpeed);
-        SetWalkSpeed(EnemyConfig.WalkSpeed);
+        SetRunSpeed(EnemyConfig.GetRunSpeed());
+        SetWalkSpeed(EnemyConfig.GetWalkSpeed());
         SetCDNormalAttack(EnemyConfig.NormalAttackCD);
         SetCDSkillAttack(EnemyConfig.SkillAttackCD);
         SetCDSpecialAttack(EnemyConfig.SpecialAttackCD);
@@ -67,9 +67,9 @@ public class EnemyController : MonoBehaviour, IDamageable
         // Có kích CRIT không ?
         var critRateRandom = Random.value;
         var _isCrit = false;
-        if (critRateRandom <= EnemyConfig.CRITRate / 100)
+        if (critRateRandom <= EnemyConfig.GetCRITRate() / 100)
         {
-            var critDMG = (EnemyConfig.CRITDMG + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
+            var critDMG = (EnemyConfig.GetCRITDMG() + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
             
             CalculatedDamage = Mathf.CeilToInt(CalculatedDamage * critDMG);
             _isCrit = true;
@@ -80,7 +80,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     public void TakeDMG(int _damage, bool _isCRIT)
     {   
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
-        var _valueDef = _isCRIT ? Random.Range(0, EnemyConfig.DEF * 0.5f) : EnemyConfig.DEF;
+        var _valueDef = _isCRIT ? Random.Range(0, EnemyConfig.GetDEF() * 0.5f) : EnemyConfig.GetDEF();
         
         // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
         var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
@@ -110,7 +110,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         var _level = 0;
         for (var i = 0; i < _enemyLevel.Count; i++)
         {
-            if (EnemyConfig.Level >= _enemyLevel[i]) continue;
+            if (EnemyConfig.GetLevel() >= _enemyLevel[i]) continue;
             _level = i;
             break;
         }
@@ -121,6 +121,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     /// Chuyển đổi phần trăm (%) vừa tính thành sát thương đầu ra của Enemy
     /// </summary>
     /// <param name="_percent"> Phần trăm sát thương. </param>
-    public void ConvertDMG(float _percent) => CalculatedDamage = Mathf.CeilToInt(EnemyConfig.ATK * (_percent / 100.0f));
+    public void ConvertDMG(float _percent) => CalculatedDamage = Mathf.CeilToInt(EnemyConfig.GetATK() * (_percent / 100.0f));
 
 }

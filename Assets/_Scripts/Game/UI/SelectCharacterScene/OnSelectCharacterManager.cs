@@ -33,7 +33,6 @@ public class OnSelectCharacterManager : MonoBehaviour
     private Coroutine _loadPanelCoroutine;
 
     private int _selectChar = -1;
-    private UserData _userData;
     private SO_PlayerConfiguration _playerConfig;
 
 
@@ -48,6 +47,7 @@ public class OnSelectCharacterManager : MonoBehaviour
         char_02RawImage.color = _unSelectColor;
         textChar_01Tween = nameChar_02.transform.DOScale(Vector3.one, _durationTween);
         textChar_02Tween = nameChar_02.transform.DOScale(Vector3.one, _durationTween);
+        
     }
     private void Update()
     {
@@ -102,14 +102,11 @@ public class OnSelectCharacterManager : MonoBehaviour
     {
         if (!PlayFabHandleUserData.Instance || _selectChar <= 0) return;
         
-        _userData = new UserData(PlayFabController.Instance.username, 1000);
         _playerConfig = Instantiate(_selectChar == 1 ? char_01Config : char_02Config);
         
-        PlayFabHandleUserData.Instance.UserData = _userData;
         PlayFabHandleUserData.Instance.PlayerConfig = _playerConfig;
         PlayFabHandleUserData.Instance.SetUserData(PlayFabHandleUserData.PF_Key.UserData_Key);
         PlayFabHandleUserData.Instance.SetUserData(PlayFabHandleUserData.PF_Key.PlayerConfigData_Key);
-        
         OpenPanelLoad(Random.Range(2f, 2.8f));
     }
 

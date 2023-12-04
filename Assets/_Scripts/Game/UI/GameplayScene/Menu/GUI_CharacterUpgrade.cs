@@ -83,6 +83,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     public void InitValue()
     {
         _increaseLevel = 0;
+        _increaseEXP = 0;
         _amountUse = 0;
         _selectItem = 0;
         _totalCoinCost = 0;
@@ -125,8 +126,8 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private void GetStats()
     {
         if(!_playerConfig) return;
-        _currentLevel = _playerConfig.Level;
-        _currentExp = _playerConfig.CurrentEXP;
+        _currentLevel = _playerConfig.GetLevel();
+        _currentExp = _playerConfig.GetCurrentEXP();
         _nextExp = _upgradeData.GetNextEXP(_currentLevel);
         
         mainProgressSliderBar.maxValue = _nextExp;
@@ -216,15 +217,16 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     
     public void OnClickUpgradeButton()
     {
-        _userData.IncreaseCoin(-_totalCoinCost); 
-        _playerConfig.Level += _increaseLevel;
-        _playerConfig.CurrentEXP = (int)backProgressSliderBar.value;
+        _userData.IncreaseCoin(-_totalCoinCost);
+        _playerConfig.SetLevel(_playerConfig.GetLevel() + _increaseLevel);
+        _playerConfig.SetCurrentEXP((int)backProgressSliderBar.value);
+
 
         switch (_selectItem)
         {
-            case 1: _userData.IncreaseItem(ItemNameCode.EXPSmall, -_amountUse);  break;
-            case 2: _userData.IncreaseItem(ItemNameCode.EXPMedium, -_amountUse); break;
-            case 3: _userData.IncreaseItem(ItemNameCode.EXPBig, -_amountUse);    break;
+            case 1: _userData.IncreaseItemValue(ItemNameCode.EXPSmall, -_amountUse);  break;
+            case 2: _userData.IncreaseItemValue(ItemNameCode.EXPMedium, -_amountUse); break;
+            case 3: _userData.IncreaseItemValue(ItemNameCode.EXPBig, -_amountUse);    break;
         }
         
         InitValue();

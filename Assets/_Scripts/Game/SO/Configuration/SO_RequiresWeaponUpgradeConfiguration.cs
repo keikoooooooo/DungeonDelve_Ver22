@@ -25,5 +25,5 @@ public class SO_RequiresWeaponUpgradeConfiguration : ScriptableObject
     }
     
     [Tooltip("Danh sách các Item cần trên từng mốc khi nâng cấp vũ khí")]
-    public List<RequiresData> RequiresDatas = new();
+    public List<RequiresData> RequiresDatas;
 }

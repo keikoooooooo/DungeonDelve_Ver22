@@ -45,10 +45,10 @@ public class GUI_SettingGraphics : MonoBehaviour
          }
          
          var resolutionIdx = PlayerPrefs.GetInt(PP_CurrentResolutionIndex, 2);  // tìm độ phân giải trước đó đã lưu (nếu có)
-         var fpsIdx = PlayerPrefs.GetInt(PP_CurrentResolutionIndex, 3);
+         var fpsIdx = PlayerPrefs.GetInt(PP_CurrentFPSIndex, 3);
 
-         displayModeDropdown.InitValue(_options, resolutionIdx);
-         fpsDropdown.InitValue(_fps, fpsIdx);
+         if (displayModeDropdown) displayModeDropdown.InitValue(_options, resolutionIdx);
+         if (fpsDropdown) fpsDropdown.InitValue(_fps, fpsIdx);
          
          OnValueDisplayModeChanged(resolutionIdx);
          OnValueFPSChanged(fpsIdx);

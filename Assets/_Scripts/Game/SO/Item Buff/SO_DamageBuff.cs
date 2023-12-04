@@ -20,7 +20,7 @@ public class SO_DamageBuff : SO_BuffEffect
         }
         else
         {
-            _player.PlayerConfig.ATK += _value;
+            _player.PlayerConfig.SetST(_player.PlayerConfig.GetST() + _value);
         }
         _buffCoroutine = _player.StartCoroutine(CooldownDeBuff(_player));
     }
@@ -28,7 +28,7 @@ public class SO_DamageBuff : SO_BuffEffect
     private IEnumerator CooldownDeBuff(PlayerStateMachine _player)
     {
         yield return new WaitForSeconds(buffTimeOut);
-        _player.PlayerConfig.ATK -= _value;
+        _player.PlayerConfig.SetST(_player.PlayerConfig.GetST() - _value);
         _buffCoroutine = null;
     }
     

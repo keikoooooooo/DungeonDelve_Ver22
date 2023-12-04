@@ -1,13 +1,27 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 
 [Serializable]
 public class UserData
 {
-    public string username { get; private set; }
-    public int coin { get; private set; }
+    [JsonProperty]
+    private string _username;
+    [JsonProperty]
+    private int _coin;
+
+    public string username
+    {
+        get => _username;
+        private set => _username = value;
+    }
+    public int coin
+    {
+        get => _coin;
+        private set => _coin = value;
+    }
     
     [Tooltip("Các slot đang trang bị item")] 
     public Dictionary<int, ItemNameCode> slotEquippeds;
@@ -23,7 +37,6 @@ public class UserData
     {
         username = _username;
         coin = _coin;
-
         slotEquippeds = new Dictionary<int, ItemNameCode>()
         {
             { 1, default },
@@ -48,7 +61,7 @@ public class UserData
     /// </summary>
     /// <param name="_coinNeeded"> Số Coin cần mua </param>
     /// <returns></returns>
-    public bool IsCoinSufficientForPurchase(int _coinNeeded) => coin >= _coinNeeded;
+    public bool IsCoinSufficientForPurchase(int _coinNeeded) => _coin >= _coinNeeded;
 
     
     /// <summary>
@@ -74,7 +87,7 @@ public class UserData
     /// <param name="_amount"> Số lượng tăng/giảm Coin</param>
     public void IncreaseCoin(int _amount)
     {
-        coin = Mathf.Clamp(coin + _amount, 0, coin + _amount);
+        _coin = Mathf.Clamp(_coin + _amount, 0, _coin + _amount);
         SendEventCoinChaged();
     }
     
@@ -83,7 +96,7 @@ public class UserData
     /// Tăng/Giảm value của Item, nếu giá trị truyền vào là âm(-) sẽ Decrease value của Item
     /// </summary>
     /// <param name="_amount"> Số lượng tăng/giảm Coin</param>
-    public void IncreaseItem(ItemNameCode _itemCode, int _amount)
+    public void IncreaseItemValue(ItemNameCode _itemCode, int _amount)
     {
         if (inventories.ContainsKey(_itemCode))
         {
@@ -95,6 +108,6 @@ public class UserData
     /// <summary>
     /// Gọi Event để gửi giá trị Coin đi
     /// </summary>
-    public void SendEventCoinChaged() => OnCoinChangedEvent?.Invoke(coin);
+    public void SendEventCoinChaged() => OnCoinChangedEvent?.Invoke(_coin);
     
 }

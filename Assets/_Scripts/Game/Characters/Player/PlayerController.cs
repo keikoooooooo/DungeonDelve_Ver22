@@ -134,7 +134,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanAttack = false;
         CanMove = false;
         CanRotation = false;
-        _skillCD_Temp = PlayerConfig.ElementalSkillCD;
+        _skillCD_Temp = PlayerConfig.GetElementalSkillCD();
         
         CalculateDMG_EK();
         OnSkillCooldownEvent();
@@ -146,13 +146,13 @@ public abstract class PlayerController : PlayerStateMachine
         CanAttack = false;
         CanMove = false;
         CanRotation = false;
-        _specialCD_Temp = PlayerConfig.ElementalBurstlCD;
+        _specialCD_Temp = PlayerConfig.GetElementalBurstCD();
 
         CalculateDMG_EB();
         OnSpecialCooldownEvent();
     }
-    protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.ElementalSkillCD);
-    protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.ElementalBurstlCD);
+    protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.GetElementalSkillCD());
+    protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.GetElementalBurstCD());
     
 
     public void SetAttackCounter(int count) => _attackCounter = count; // gọi trên event animaiton
@@ -224,22 +224,22 @@ public abstract class PlayerController : PlayerStateMachine
     public override void CalculateDMG_NA()
     {
         // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ n
-        var _percent = PlayerConfig.NormalAttackMultiplier[_attackCounter].Multiplier[PlayerConfig.WeaponLevel - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
+        var _percent = PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].Multiplier[PlayerConfig.GetWeaponLevel() - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
         _calculatedDamage = Calculation(_percent); 
     }
     public override void CalculateDMG_CA()
     {
-        var _percent = PlayerConfig.ChargedAttackMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
+        var _percent = PlayerConfig.GetChargedAttackMultiplier()[0].Multiplier[PlayerConfig.GetWeaponLevel() - 1];
         _calculatedDamage = Calculation(_percent);
     }
     public override void CalculateDMG_EK()
      {
-         var _percent = PlayerConfig.SkillMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1]; 
+         var _percent = PlayerConfig.GetElementalSkillMultiplier()[0].Multiplier[PlayerConfig.GetWeaponLevel() - 1]; 
          _calculatedDamage = Calculation(_percent); 
      }   
     public override void CalculateDMG_EB()
     {
-        var _percent = PlayerConfig.SpecialMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
+        var _percent = PlayerConfig.GetElementalBurstMultiplier()[0].Multiplier[PlayerConfig.GetWeaponLevel() - 1];
         _calculatedDamage = Calculation(_percent); 
     }
     
@@ -249,7 +249,7 @@ public abstract class PlayerController : PlayerStateMachine
     /// </summary>
     /// <param name="_percent"> Phần trăm sát thương. </param>
     /// <returns></returns>
-    protected int Calculation(float _percent) => Mathf.CeilToInt(PlayerConfig.ATK * (_percent / 100.0f)); 
+    protected int Calculation(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
     #endregion
 
     

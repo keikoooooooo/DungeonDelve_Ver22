@@ -54,19 +54,19 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
     {
         if(!_playerConfig) return;
         
-        charNameText.text = $"{_playerConfig.Name}";
-        charLevelText.text = $"Lv. {_playerConfig.Level}";
-        charCurrentEXPText.text = $"{_playerConfig.CurrentEXP} / {_upgradeData.GetNextEXP(_playerConfig.Level)}";
+        charNameText.text = $"{_playerConfig.GetName()}";
+        charLevelText.text = $"Lv. {_playerConfig.GetLevel()}";
+        charCurrentEXPText.text = $"{_playerConfig.GetCurrentEXP()} / {_upgradeData.GetNextEXP(_playerConfig.GetLevel())}";
         charChapterIcon.sprite = _playerConfig.ChapterIcon;
 
-        maxHPText.SetValueText($"{_playerConfig.MaxHP}");
-        maxSTText.SetValueText($"{_playerConfig.MaxST}");
-        runSpeedText.SetValueText($"{_playerConfig.RunSpeed}");
-        elementalSkillText.SetValueText($"{_playerConfig.ElementalSkillCD}");
-        elementalBurstText.SetValueText($"{_playerConfig.ElementalBurstlCD}");
+        maxHPText.SetValueText($"{_playerConfig.GetHP()}");
+        maxSTText.SetValueText($"{_playerConfig.GetST()}");
+        runSpeedText.SetValueText($"{_playerConfig.GetRunSpeed()}");
+        elementalSkillText.SetValueText($"{_playerConfig.GetElementalSkillCD()}");
+        elementalBurstText.SetValueText($"{_playerConfig.GetElementalBurstCD()}");
         
-        atkText.SetValueText($"{_playerConfig.ATK}");
-        defText.SetValueText($"{_playerConfig.DEF}");
+        atkText.SetValueText($"{_playerConfig.GetATK()}");
+        defText.SetValueText($"{_playerConfig.GetDEF()}");
     }
     public void OpenRenderTexture()
     {

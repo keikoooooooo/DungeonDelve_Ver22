@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 
@@ -27,7 +26,7 @@ public class SO_CharacterUpgradeData : ScriptableObject
     [SerializeField] private TextAsset LevelingTextAsset;
     public List<UpgradeCustom> DataList;
 
-    private readonly Dictionary<int, int> _upgradeDataDictionary = new();
+    private Dictionary<int, int> _upgradeDataDictionary;
     public readonly int levelMax  = 90;
 
 
@@ -68,23 +67,12 @@ public class SO_CharacterUpgradeData : ScriptableObject
             DataList.Add(new UpgradeCustom(_level, _exp));
         }
     }
-    private void OnEnable()
-    {
-        _upgradeDataDictionary.Clear();
-        foreach (var data in DataList)
-        {
-            _upgradeDataDictionary.TryAdd(data.Level - 1, data.EXP);
-        }
-    }
-    public void RenewValue()
-    {
-        DataList.Clear();
-        _upgradeDataDictionary.Clear();
-    }
+
+    public void RenewValue() => DataList.Clear();
 
     
     /// <summary>
-    /// Trả về điểm kinh nghiệm của level tiếp theo
+    /// Trả về điểm kinh nghiệm của level tiếp theo từ level hiện tại
     /// </summary>
     /// <param name="_level"> Level hiện tại của nhân vật </param>
     /// <returns></returns>
@@ -92,7 +80,8 @@ public class SO_CharacterUpgradeData : ScriptableObject
     {
         if(_level >= levelMax) 
             return DataList[^1].EXP;
-        return !_upgradeDataDictionary.TryGetValue(_level - 1, out var _exp) ? 0 : _exp;
+
+        return _level <= 1 ? DataList[0].EXP : DataList[_level - 1].EXP;
     }
 
     

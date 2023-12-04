@@ -31,7 +31,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     public bool IsJump => CanControl && inputs.space && !inputs.leftShift && !animator.IsTag(1, "Damage");
     public bool IsWalk => CanControl && !IsIdle && _movementState == MovementState.StateWalk;
     public bool IsRun => CanControl && !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
-    public bool IsDash => CanControl && inputs.leftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.DashEnergy;
+    public bool IsDash => CanControl && inputs.leftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
 
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
@@ -118,8 +118,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         _mainCamera = Camera.main;
         _state = new PlayerStateFactory(this);
-        Health = new StatusHandle(PlayerConfig.MaxHP);
-        Stamina = new StatusHandle(PlayerConfig.MaxST);
+        Health = new StatusHandle(PlayerConfig.GetHP());
+        Stamina = new StatusHandle(PlayerConfig.GetST());
     }
 
     /// <summary>
@@ -189,13 +189,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
                 inputs.leftMouse = false;
                 animator.SetBool(IDJump, true);
                 animator.SetBool(IDFall, false);
-                _jumpVelocity = Mathf.Sqrt(PlayerConfig.JumpHeight * -2f * _gravity);
+                _jumpVelocity = Mathf.Sqrt(PlayerConfig.GetJumpHeight() * -2f * _gravity);
                 ReleaseAction();
                 break;
         }
         if (!IsGrounded)
         {
-            _jumpCD_Temp = PlayerConfig.JumpCD;
+            _jumpCD_Temp = PlayerConfig.GetJumpCD();
             inputs.leftMouse = false;
             inputs.space = false;
             _pressedJump = true;
@@ -212,7 +212,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     }
     private void HandleStamina()
     {
-        if(!CanIncreaseST || Stamina.CurrentValue >= PlayerConfig.MaxST) return;
+        if(!CanIncreaseST || Stamina.CurrentValue >= PlayerConfig.GetST()) return;
 
         if (_delayIncreaseST > 0)
         {
@@ -233,9 +233,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         // Có kích CRIT không ?
         var critRateRandom = Random.value;
         var _isCrit = false;
-        if (critRateRandom <= PlayerConfig.CRITRate / 100)
+        if (critRateRandom <= PlayerConfig.GetCRITRate() / 100)
         {
-            var critDMG = (PlayerConfig.CRITDMG + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
+            var critDMG = (PlayerConfig.GetCRITDMG() + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
             _calculatedDamage = Mathf.CeilToInt(_calculatedDamage * critDMG);
             _isCrit = true;
         } 
@@ -245,7 +245,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     public void TakeDMG(int _damage, bool _isCRIT) 
     {
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
-        var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.DEF * 0.5f) : PlayerConfig.DEF;
+        var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.GetDEF() * 0.5f) : PlayerConfig.GetDEF();
         
         // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
         var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));

@@ -13,6 +13,9 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     [SerializeField] private Item itemPrefab;
     [SerializeField] private Transform slotItems;
 
+    [Space]
+    [SerializeField] private Button upgradeBtt;
+
     private ObjectPooler<Item> _poolItem;
     private List<Item> _items = new();
     private UserData _userData;
@@ -22,6 +25,7 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     private bool isEventRegistered;
     private int _coin;
     private int _weaponLevel;
+    private bool _canUpgrade;
     
     
     private void Awake() => GUI_Manager.Add(this);
@@ -72,13 +76,14 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
         SetItemRequires();
         
         SetWeaponLevelText();
+        SetUpgradeStateButton();
     }
 
     private void GetStats()
     {
         if (!_playerConfig) return;
 
-        _weaponLevel = _playerConfig.WeaponLevel;
+        _weaponLevel = _playerConfig.GetWeaponLevel();
         progressSlider.maxValue = 1;
         progressSlider.minValue = 0;
         progressSlider.value = 0;
@@ -102,12 +107,15 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
             item.SetValueText(_userData.HasItemValue(_itemCustom.code, out var _value)
                 ? $"{_value} / {_requiresItem.value}"
                 : $"{0} / {_requiresItem.value}");
+
+            if (_value < _requiresItem.value) _canUpgrade = false;
         }
         
     }
-    
-    
 
+
+
+    private void SetUpgradeStateButton() => upgradeBtt.interactable = _canUpgrade;
     private void SetWeaponLevelText() => weaLevelText.text = $"Lv. {_weaponLevel}";
     private void SetCoinText() => currencyText.text = $"{_coin}/{_weaponUpgradeConfig.RequiresDatas[_weaponLevel - 1].coinCost}";
     

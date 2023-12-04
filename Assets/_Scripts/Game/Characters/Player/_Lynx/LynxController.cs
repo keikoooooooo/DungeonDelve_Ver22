@@ -101,7 +101,7 @@ public class LynxController : PlayerController
             animator.SetBool(ID4Direction, IsAttackPressed);
 
             ChargedAttackTime += Time.deltaTime;
-            _damageBonus = Mathf.MoveTowards(_damageBonus, PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1], 15f * Time.deltaTime);
+            _damageBonus = Mathf.MoveTowards(_damageBonus, PlayerConfig.GetChargedAttackMultiplier()[1].Multiplier[PlayerConfig.GetWeaponLevel() - 1], 15f * Time.deltaTime);
             yield return null;
         }
         CalculateDMG_CA();
@@ -136,7 +136,7 @@ public class LynxController : PlayerController
         
         // DMG
         ChargedAttackTime = 0;
-        _damageBonus = PlayerConfig.ChargedAttackMultiplier[0].Multiplier[PlayerConfig.WeaponLevel - 1];
+        _damageBonus = PlayerConfig.GetChargedAttackMultiplier()[0].Multiplier[PlayerConfig.GetWeaponLevel() - 1];
     }
     private void BlendAnimationValue()
     {
@@ -198,7 +198,7 @@ public class LynxController : PlayerController
                 model.rotation = Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0);
                 animator.SetTrigger(IDSpecial);
                 
-                _specialCD_Temp = PlayerConfig.ElementalBurstlCD;
+                _specialCD_Temp = PlayerConfig.GetElementalBurstCD();
                 OnSpecialCooldownEvent();
                 yield break;
             }

@@ -21,7 +21,7 @@ public class SO_DefenseBuff : SO_BuffEffect
         }
         else
         {
-            _player.PlayerConfig.DEF += _value;
+            _player.PlayerConfig.SetDEF(_player.PlayerConfig.GetDEF() + _value);
         }
         _buffCoroutine = _player.StartCoroutine(CooldownDeBuff(_player));
     }
@@ -29,7 +29,7 @@ public class SO_DefenseBuff : SO_BuffEffect
     private IEnumerator CooldownDeBuff(PlayerStateMachine _player)
     {
         yield return new WaitForSeconds(buffTimeOut);
-        _player.PlayerConfig.DEF -= _value;
+        _player.PlayerConfig.SetDEF(_player.PlayerConfig.GetDEF() - _value);
         _buffCoroutine = null;
     }
     

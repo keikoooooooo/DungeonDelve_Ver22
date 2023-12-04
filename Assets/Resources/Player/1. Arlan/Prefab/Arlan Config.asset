@@ -16,21 +16,21 @@ MonoBehaviour:
   Level: 1
   CurrentEXP: 0
   Infor: 
-  MaxHP: 5000
+  MaxHP: 10000
   ATK: 47
   CRITRate: 5
   CRITDMG: 50
   DEF: 50
   WalkSpeed: 1.65
   RunSpeed: 5.2
-  MaxST: 100
+  MaxST: 1001
   ChargedAttackStaminaCost: 20
   RunFastSpeed: 8
-  DashEnergy: 25
+  DashStaminaCost: 25
   JumpHeight: 1.4
   JumpCD: 0.37
   ElementalSkillCD: 20
-  ElementalBurstlCD: 12
+  ElementalBurstCD: 17
   WeaponName: Fillet Blade
   WeaponInfo: Normal attack DMG is increased by 33% DEF. The effect will be activated
     no more than once every 7 seconds and will be removed after the normal attack
@@ -42,7 +42,7 @@ MonoBehaviour:
     - 33.18
     - 36.02
     - 39.84
-    - 42.94
+    - 42.95
     - 46.37
     - 49.99
     - 53.15
@@ -54,7 +54,7 @@ MonoBehaviour:
     - 33.18
     - 36.02
     - 39.84
-    - 42.94
+    - 42.95
     - 46.37
     - 49.99
     - 53.15
@@ -63,14 +63,14 @@ MonoBehaviour:
     - 64.12
   - MultiplierTypeName: 3 - Hit DMG (%)
     Multiplier:
-    - 40.9
+    - 40.09
     - 44.18
     - 49.75
     - 54.18
     - 59.54
-    - 63.01
+    - 63.03
     - 68.45
-    - 72.62
+    - 72.63
     - 77.38
     - 84.02
   - MultiplierTypeName: 4 - Hit DMG (%)
@@ -81,7 +81,7 @@ MonoBehaviour:
     - 58.19
     - 63.71
     - 68.93
-    - 72.4
+    - 72.04
     - 76.19
     - 83.52
     - 89.65
@@ -96,7 +96,7 @@ MonoBehaviour:
     - 81.05
     - 87.39
     - 95.91
-    - 102.04
+    - 103.05
   ChargedAttackMultiplier:
   - MultiplierTypeName: Charged Attack DMG (%)
     Multiplier:
