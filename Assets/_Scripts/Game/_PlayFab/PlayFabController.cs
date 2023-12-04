@@ -35,9 +35,8 @@ public class PlayFabController : Singleton<PlayFabController>
         }
 
         LoadAccount();
-        OnLogin();
     }
-    
+
     public void OnLogin()
     {
         var request = new LoginWithEmailAddressRequest { Email = userEmail, Password = userPassword };

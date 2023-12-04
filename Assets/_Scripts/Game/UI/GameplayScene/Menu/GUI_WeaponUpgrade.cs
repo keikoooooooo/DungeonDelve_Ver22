@@ -97,18 +97,21 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
         {
             item.Release();
         }
+        
         var _requiresConfig = _weaponUpgradeConfig.RequiresDatas[_weaponLevel - 1];
         foreach (var _requiresItem in _requiresConfig.requiresItem)
         {
             if (!_gameItemData.GetItemCustom(_requiresItem.code, out var _itemCustom)) continue;
             
+            var hasItemValue = _userData.HasItemValue(_itemCustom.code);
+            var itemValueToStr = hasItemValue < _requiresItem.value ? $"<color=red>{hasItemValue}</color> / {_requiresItem.value}" :
+                                                                           $"<color=white>{hasItemValue}</color> / {_requiresItem.value}";
             var item = _poolItem.Get();
             item.SetItem(_itemCustom, _requiresItem.value);
-            item.SetValueText(_userData.HasItemValue(_itemCustom.code, out var _value)
-                ? $"{_value} / {_requiresItem.value}"
-                : $"{0} / {_requiresItem.value}");
+            item.SetValueText(itemValueToStr);
 
-            if (_value < _requiresItem.value) _canUpgrade = false;
+            if (hasItemValue < _requiresItem.value) 
+                _canUpgrade = false;
         }
         
     }

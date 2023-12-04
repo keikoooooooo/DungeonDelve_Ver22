@@ -60,15 +60,15 @@ public class GUI_WeaponStats : MonoBehaviour, IGUI
 
         critRateText.SetValueText($"{_playerConfig.GetCRITRate()} %");
         critDMGText.SetValueText($"{_playerConfig.GetCRITDMG()} %");
-        hit1_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[0].Multiplier[weaLv]} %");
-        hit2_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[1].Multiplier[weaLv]} %");
-        hit3_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[2].Multiplier[weaLv]} %");
-        hit4_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[3].Multiplier[weaLv]} %");
-        hit5_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[4].Multiplier[weaLv]} %");
+        hit1_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[0].GetMultiplier()[weaLv - 1]} %");
+        hit2_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[1].GetMultiplier()[weaLv - 1]} %");
+        hit3_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[2].GetMultiplier()[weaLv - 1]} %");
+        hit4_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[3].GetMultiplier()[weaLv - 1]} %");
+        hit5_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[4].GetMultiplier()[weaLv - 1]} %");
         chargedAttack_STCostText.SetValueText($"{_playerConfig.GetChargedAttackSTCost()}");
-        chargedAttack_DMGText.SetValueText($"{_playerConfig.ChargedAttackMultiplier[0].Multiplier[weaLv]} %");
-        elementalSkill_DMGText.SetValueText($"{_playerConfig.SkillMultiplier[0].Multiplier[weaLv]} %");
-        elementalBurst_DMGText.SetValueText($"{_playerConfig.SpecialMultiplier[0].Multiplier[weaLv]} %");
+        chargedAttack_DMGText.SetValueText($"{_playerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[weaLv - 1]} %");
+        elementalSkill_DMGText.SetValueText($"{_playerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[weaLv - 1]} %");
+        elementalBurst_DMGText.SetValueText($"{_playerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[weaLv - 1]} %");
         weaponDetailsText.SetValueText($"{_playerConfig.GetWeaponInfo()}");
     }
     public void OpenRenderTexture()

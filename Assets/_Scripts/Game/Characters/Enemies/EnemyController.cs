@@ -34,9 +34,9 @@ public class EnemyController : MonoBehaviour, IDamageable
         if(_player) SetRefPlayer(_player);
         SetRunSpeed(EnemyConfig.GetRunSpeed());
         SetWalkSpeed(EnemyConfig.GetWalkSpeed());
-        SetCDNormalAttack(EnemyConfig.NormalAttackCD);
-        SetCDSkillAttack(EnemyConfig.SkillAttackCD);
-        SetCDSpecialAttack(EnemyConfig.SpecialAttackCD);
+        SetCDNormalAttack(EnemyConfig.GetNormalAttackCD());
+        SetCDSkillAttack(EnemyConfig.GetSkillAttackCD());
+        SetCDSpecialAttack(EnemyConfig.GetSpecialAttackCD());
     }
     private void OnDisable()
     {

@@ -79,6 +79,7 @@ public class UserData
         }
         return _value != 0;
     }
+    public int HasItemValue(ItemNameCode _itemCode) => inventories.TryGetValue(_itemCode, out var value) ? value : 0;
     
     
     /// <summary>

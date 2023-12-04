@@ -19,15 +19,24 @@ public class GUI_AccountManager : MonoBehaviour
     
     private void OnEnable()
     {
-        panelAnimatedLoading.SetActive(true);
-        loadSceneButton.gameObject.SetActive(false);
         logoutBtt.onClick.AddListener(LogoutAccount);
         accountBtt.onClick.AddListener(OpenPanelLogin);
+        
+        panelAnimatedLoading.SetActive(true);
         accountBtt.gameObject.SetActive(true);
         logoutBtt.gameObject.SetActive(false);
+        loadSceneButton.gameObject.SetActive(false);
+        
+        
+        if(PlayFabHandleUserData.Instance)
+        {
+            #region Loading Data
+            PlayFabHandleUserData.Instance.OnLoadUserDataSuccessEvent.AddListener(OnLoadUserDataSuccess);
+            PlayFabHandleUserData.Instance.OnLoadUserDataFailureEvent.AddListener(OnLoadUserDataFailure);
+            #endregion
+        }
         
         if(!PlayFabController.Instance) return;
-        
         #region Login
         guiLogin.StartgameBtt.onClick.AddListener(PlayFabController.Instance.OnLogin);
         guiLogin.EnterEmailField.onEndEdit.AddListener(PlayFabController.Instance.GetUserEmail);
@@ -53,17 +62,20 @@ public class GUI_AccountManager : MonoBehaviour
         PlayFabController.Instance.OnAccountHandleFailureEvent.AddListener(guiForgotPw.SetErrorText);
         #endregion
 
-        if(!PlayFabHandleUserData.Instance) return;
-        
-        #region Loading Data
-        PlayFabHandleUserData.Instance.OnLoadUserDataSuccessEvent.AddListener(OnLoadUserDataSuccess);
-        PlayFabHandleUserData.Instance.OnLoadUserDataFailureEvent.AddListener(OnLoadUserDataFailure);
-        #endregion
+        PlayFabController.Instance.OnLogin();
     }
     private void OnDisable()
     {
         logoutBtt.onClick.RemoveListener(LogoutAccount);
         accountBtt.onClick.RemoveListener(OpenPanelLogin);
+        
+        if (PlayFabHandleUserData.Instance)
+        {
+            #region Loading Data
+            PlayFabHandleUserData.Instance.OnLoadUserDataSuccessEvent.RemoveListener(OnLoadUserDataSuccess);
+            PlayFabHandleUserData.Instance.OnLoadUserDataFailureEvent.RemoveListener(OnLoadUserDataFailure);
+            #endregion
+        }
         
         if(!PlayFabController.Instance) return;
         
@@ -91,13 +103,6 @@ public class GUI_AccountManager : MonoBehaviour
         PlayFabController.Instance.OnMailSendForgotPWSuccessEvent.RemoveListener(HandleRegisterSuccess);
         PlayFabController.Instance.OnAccountHandleFailureEvent.RemoveListener(guiForgotPw.SetErrorText);
         #endregion
-        
-        if(!PlayFabHandleUserData.Instance) return;
-        
-        #region Loading Data
-        PlayFabHandleUserData.Instance.OnLoadUserDataSuccessEvent.RemoveListener(OnLoadUserDataSuccess);
-        PlayFabHandleUserData.Instance.OnLoadUserDataFailureEvent.RemoveListener(OnLoadUserDataFailure);
-        #endregion
     }
 
 
@@ -119,7 +124,6 @@ public class GUI_AccountManager : MonoBehaviour
         panelAnimatedLoading.SetActive(false);
         OpenPanelLogin();
     }
-    
     private void HandleLoginSuccess()
     {
         if(_handleCoroutine != null) StopCoroutine(_handleCoroutine);
@@ -165,7 +169,6 @@ public class GUI_AccountManager : MonoBehaviour
     {
         loadSceneButton.SceneName = "NewSelectCharacterScene";
     }
-    
     
     
 

@@ -78,7 +78,7 @@ public class GoblinSword_Effects : MonoBehaviour, ICalculateDMG
     public void CalculateDMG_NA()
     {
         var _level = enemyController.FindLevelIndex();
-        var _percent = enemyController.EnemyConfig.NormalAttackMultiplier[_attackCounter].Multiplier[_level];
+        var _percent = enemyController.EnemyConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[_level];
         enemyController.ConvertDMG(_percent);
     }
     public void CalculateDMG_CA() { }

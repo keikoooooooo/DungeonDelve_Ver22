@@ -7,20 +7,20 @@ using Newtonsoft.Json;
 public class FloatMultiplier
 {
     public string MultiplierTypeName;
-    public List<float> Multiplier;
-
+    [SerializeField, JsonProperty] private List<float> Multiplier;
+    
     public FloatMultiplier() { }
-    public FloatMultiplier(string _multiplierTypeName)
+    public FloatMultiplier(string _multiplierTypeName, List<float> _multiplier)
     {
         MultiplierTypeName = _multiplierTypeName;
-        Multiplier = new List<float>();
-    }
-    public FloatMultiplier(List<float> _multiplier)
-    {
-        MultiplierTypeName = "";
         Multiplier = _multiplier;
     }
+    
+    
+    public List<float> GetMultiplier() => Multiplier;
+    public void SetMultiplier(List<float> _value) => Multiplier = _value;
 }
+
 
 [Serializable]
 public class SO_CharacterConfiguration : ScriptableObject

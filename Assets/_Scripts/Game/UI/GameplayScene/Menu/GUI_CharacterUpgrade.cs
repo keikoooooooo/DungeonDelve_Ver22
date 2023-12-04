@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,7 +51,6 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private SO_CharacterUpgradeData _upgradeData;
     private SO_PlayerConfiguration _playerConfig;
 
-    public TextMeshProUGUI testText;
     
     private void Awake()
     {
@@ -79,6 +76,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         if(!_isEventRegistered) return;
         _userData.OnCoinChangedEvent -= OnCoinChanged;
     }
+    
 
     public void InitValue()
     {
@@ -111,6 +109,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         SetCoinText();
     }
     
+    
     public void UpdateData()
     {
         GetStats();
@@ -122,7 +121,6 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         SetAmountUseText();
         SetUpgradeStateButton();
     }
-    
     private void GetStats()
     {
         if(!_playerConfig) return;
@@ -213,30 +211,6 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         SetCoinText();
         SetEXPText();
         SetUpgradeStateButton();
-
-        Test();
-    }
-
-
-    private int value;
-    private void Test()
-    {
-        testText.text = $"{value}\n" +
-                        $"Amount: {_amountUse}\n" +
-                        $"Level: {_currentLevel}\n" +
-                        $"Increase Lv: {_increaseLevel}\n" +
-                        $"CurrentEx: {_currentExp}\n" +
-                        $"Increase Ex: {_increaseEXP}\n" +
-                        $"BackSliderValue: {backProgressSliderBar.value}\n" +
-                        $"MainSliderMaxValue: {backProgressSliderBar.maxValue}\n" +
-                        $"Current Coin: {_coin}\n" +
-                        $"Total Coin Cost: {_totalCoinCost}\n" +
-                        $"Total EXP: {_totalExpReceived}\n\n" +
-                        $"GET UPGDARE DATA EXP = {_upgradeData.GetNextEXP(_currentLevel + _increaseLevel)}\n" +
-                        $"HAS TOTAL EXP = {_upgradeData.GetTotalEXP(_currentLevel + _increaseLevel)}";
-
-        value++;
-        if (value == 10) value = 0;
     }
     
     public void OnClickUpgradeButton()
@@ -257,7 +231,6 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         UpdateData();
     }
     
-
     private void DemoProgress()
     {
         _increaseLevel = 0;

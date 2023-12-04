@@ -1,5 +1,4 @@
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 
 
@@ -34,27 +33,29 @@ public class GameManager : Singleton<GameManager>
     
     private void OnEnable()
     {
+        CharacterUpgradeData.RenewValue();
+
+        PlayerController _playerPrefab;
         if(!PlayFabHandleUserData.Instance)
         {
             UserData = new UserData("Test Editor", 500000);
-            Player = Instantiate(CharacterData.CharactersData[1].prefab, Vector3.zero, quaternion.identity);
-            _playerConfig = Instantiate(Player.PlayerConfig);
-            _playerConfig.ChapterIcon = CharacterData.CharactersData[0].prefab.PlayerConfig.ChapterIcon;
-            Player.PlayerData.SetData(_playerConfig);
-            return;
+            _playerPrefab = CharacterData.CharactersData[1].prefab;
+            _playerConfig = Instantiate(_playerPrefab.PlayerConfig);
+        }
+        else
+        {
+            UserData = PlayFabHandleUserData.Instance.UserData;
+            _playerConfig = PlayFabHandleUserData.Instance.PlayerConfig;
+            _playerPrefab = GetPlayerPrefab(_playerConfig.NameCode);
         }
         
-        UserData = PlayFabHandleUserData.Instance.UserData;
-        _playerConfig = PlayFabHandleUserData.Instance.PlayerConfig;
-        foreach (var characterCustom in CharacterData.CharactersData.Where(characterCustom => characterCustom.nameCode == _playerConfig.NameCode))
-        {
-            Player = Instantiate(characterCustom.prefab, Vector3.zero, quaternion.identity);
-            _playerConfig.ChapterIcon = characterCustom.prefab.PlayerConfig.ChapterIcon;
-            Player.PlayerData.SetData(_playerConfig);
-            break;
-        }
+        Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
+        _playerConfig.ChapterIcon = _playerPrefab.PlayerConfig.ChapterIcon;
+        Player.PlayerData.SetData(_playerConfig);
     }
-    
-    
+
+    private PlayerController GetPlayerPrefab(CharacterNameCode _characterNameCode)
+    => CharacterData.CharactersData.Where(characterCustom => characterCustom.prefab.PlayerConfig.NameCode == _characterNameCode)
+        .Select(characterCustom => characterCustom.prefab).FirstOrDefault();
     
 }

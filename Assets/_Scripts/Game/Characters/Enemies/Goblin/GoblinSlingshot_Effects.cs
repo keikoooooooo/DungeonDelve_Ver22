@@ -61,7 +61,7 @@ public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
     public void CalculateDMG_NA()
     {
         var _level = enemyController.FindLevelIndex();
-        var _percent = enemyController.EnemyConfig.NormalAttackMultiplier[0].Multiplier[_level];
+        var _percent = enemyController.EnemyConfig.GetNormalAttackMultiplier()[0].GetMultiplier()[_level];
         enemyController.ConvertDMG(_percent);
     }
     public void CalculateDMG_CA() { }

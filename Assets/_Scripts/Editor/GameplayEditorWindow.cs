@@ -60,20 +60,20 @@ public class GameplayEditorWindow : EditorWindow
                 switch (_selectedPlayer)
                 {
                     case 0:
-                        _arlanConfig = EditorGUIUtility.Load("Assets/Resources/Player/1. Arlan/Prefab/Arlan Config.asset") as SO_PlayerConfiguration;
-                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/Resources/Player/1. Arlan/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
+                        _arlanConfig = EditorGUIUtility.Load("Assets/FantasyProject/Player/1. Arlan/Prefab/Arlan Config.asset") as SO_PlayerConfiguration;
+                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/FantasyProject/Player/1. Arlan/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
                         ShowPlayerConfig(_arlanConfig);
                         break;
                     
                     case 1:
-                        _lynxConfig = EditorGUIUtility.Load("Assets/Resources/Player/2. Lynx/Prefab/Lynx Config.asset") as SO_PlayerConfiguration;
-                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/Resources/Player/2. Lynx/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
+                        _lynxConfig = EditorGUIUtility.Load("Assets/FantasyProject/Player/2. Lynx/Prefab/Lynx Config.asset") as SO_PlayerConfiguration;
+                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/FantasyProject/Player/2. Lynx/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
                         ShowPlayerConfig(_lynxConfig);
                         break;
                 }
                 break;
             case 1:
-                _characterUpgradeData = EditorGUIUtility.Load("Assets/Resources/GameData/Character Upgrade Data.asset") as SO_CharacterUpgradeData;
+                _characterUpgradeData = EditorGUIUtility.Load("Assets/FantasyProject/GameData/Character Upgrade Data.asset") as SO_CharacterUpgradeData;
                 ShowUpgradeDetails(_characterUpgradeData);
                 break;
 
@@ -138,9 +138,8 @@ public class GameplayEditorWindow : EditorWindow
 
         Space(30);
         GUILayout.Label("MULTIPLIER -------------------------", EditorStyles.boldLabel);
-        
         #region Normal Attack
-        Space(5);
+        Space(10);
         GUILayout.BeginHorizontal();
         GUILayout.Label("NORMAL ATTACK MULTIPLIER", Width(200), Height(25));
         for (var i = 1; i <= 10; i++)
@@ -148,39 +147,31 @@ public class GameplayEditorWindow : EditorWindow
             GUILayout.Box($"Wea Lv{i}", Width(65), Height(25));
         }
         GUILayout.EndHorizontal();
-        
-        for (var i = 0; i < _playerConfig.GetNormalAttackMultiplier().Count; i++)
+        for (var j = 0; j < _playerConfig.GetNormalAttackMultiplier().Count; j++)
         {
             GUILayout.BeginHorizontal();
-             _playerConfig.NormalAttackMultiplier[i].MultiplierTypeName = $"{i + 1} - Hit DMG (%)";
-             GUILayout.Box($"{i + 1} - Hit DMG (%)" ,Width(200), Height(27));
-             for (var j = 0; j < _playerConfig.NormalAttackMultiplier[i].Multiplier.Count; j++)
-             {
-                 _playerConfig.NormalAttackMultiplier[i].Multiplier[j] = 
-                     EditorGUILayout.FloatField("", _playerConfig.NormalAttackMultiplier[i].Multiplier[j], EditorStyles.numberField, Width(65), Height(27));
-                 Space(1);
-             }
+            _playerConfig.GetNormalAttackMultiplier()[j].MultiplierTypeName = EditorGUILayout.TextField($"", _playerConfig.GetNormalAttackMultiplier()[j].MultiplierTypeName ,Width(202), Height(27));
+            for (var i = 0; i < _playerConfig.GetNormalAttackMultiplier()[j].GetMultiplier().Count; i++)
+            {
+                _playerConfig.GetNormalAttackMultiplier()[j].GetMultiplier()[i] = EditorGUILayout.FloatField("", _playerConfig.GetNormalAttackMultiplier()[j].GetMultiplier()[i], EditorStyles.numberField, Width(65), Height(27));
+            }
             GUILayout.EndHorizontal();
         }
-
+        
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
-            var FloatMultiplier = new FloatMultiplier
-            {
-                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
-            };
-            _playerConfig.NormalAttackMultiplier.Add(FloatMultiplier);
+            _playerConfig.AddNormalAttackMultiplier();
         }
-        if(GUILayout.Button("-", Width(45), Height(25)) && _playerConfig.NormalAttackMultiplier.Count != 0)
+        if(GUILayout.Button("-", Width(45), Height(25)) && _playerConfig.GetNormalAttackMultiplier().Count != 0)
         {
-            _playerConfig.NormalAttackMultiplier.Remove(_playerConfig.NormalAttackMultiplier[^1]);
+            _playerConfig.RemoveNormalAttackMultiplier();
         }
         GUILayout.EndHorizontal();
         #endregion
         
         #region Charged Attack
-        Space(5);
+        Space(10);
         GUILayout.BeginHorizontal();
         GUILayout.Label("CHARGED ATTACK MULTIPLIER", Width(200), Height(25));
         for (var i = 1; i <= 10; i++)
@@ -188,33 +179,25 @@ public class GameplayEditorWindow : EditorWindow
             GUILayout.Box($"Wea Lv{i}", Width(65), Height(25));
         }
         GUILayout.EndHorizontal();
-        for (var i = 0; i < _playerConfig.ChargedAttackMultiplier.Count; i++)
+        for (var j = 0; j < _playerConfig.GetChargedAttackMultiplier().Count; j++)
         {
             GUILayout.BeginHorizontal();
-            _playerConfig.ChargedAttackMultiplier[i].MultiplierTypeName = 
-                EditorGUILayout.TextField($"", _playerConfig.ChargedAttackMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
-            for (var j = 0; j < _playerConfig.ChargedAttackMultiplier[i].Multiplier.Count; j++)
+            _playerConfig.GetChargedAttackMultiplier()[j].MultiplierTypeName = EditorGUILayout.TextField($"", _playerConfig.GetChargedAttackMultiplier()[j].MultiplierTypeName ,Width(202), Height(27));
+            for (var i = 0; i < _playerConfig.GetChargedAttackMultiplier()[j].GetMultiplier().Count; i++)
             {
-                _playerConfig.ChargedAttackMultiplier[i].Multiplier[j] = 
-                    EditorGUILayout.FloatField("", _playerConfig.ChargedAttackMultiplier[i].Multiplier[j],
-                        EditorStyles.numberField, Width(65), Height(27));
-                Space(1);
+                _playerConfig.GetChargedAttackMultiplier()[j].GetMultiplier()[i] = EditorGUILayout.FloatField("", _playerConfig.GetChargedAttackMultiplier()[j].GetMultiplier()[i], EditorStyles.numberField, Width(65), Height(27));
             }
             GUILayout.EndHorizontal();
         }
-
+        
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
-            var FloatMultiplier = new FloatMultiplier
-            {
-                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
-            };
-            _playerConfig.ChargedAttackMultiplier.Add(FloatMultiplier);
+            _playerConfig.AddChargedAttackMultiplier();
         }
-        if(GUILayout.Button("-", Width(45), Height(25)) && _playerConfig.ChargedAttackMultiplier.Count != 0)
+        if(GUILayout.Button("-", Width(45), Height(25)) && _playerConfig.GetChargedAttackMultiplier().Count != 0)
         {
-            _playerConfig.ChargedAttackMultiplier.Remove(_playerConfig.ChargedAttackMultiplier[^1]);
+            _playerConfig.RemoveChargedAttackMultiplier();
         }
         GUILayout.EndHorizontal();
         #endregion
@@ -228,34 +211,25 @@ public class GameplayEditorWindow : EditorWindow
             GUILayout.Box($"Wea Lv{i}", Width(65), Height(25));
         }
         GUILayout.EndHorizontal();
-        
-        for (var i = 0; i < _playerConfig.SkillMultiplier.Count; i++)
+        for (var j = 0; j < _playerConfig.GetElementalSkillMultiplier().Count; j++)
         {
             GUILayout.BeginHorizontal();
-            _playerConfig.SkillMultiplier[i].MultiplierTypeName = 
-                EditorGUILayout.TextField($"", _playerConfig.SkillMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
-            for (var j = 0; j < _playerConfig.SkillMultiplier[i].Multiplier.Count; j++)
+            _playerConfig.GetElementalSkillMultiplier()[j].MultiplierTypeName = EditorGUILayout.TextField($"", _playerConfig.GetElementalSkillMultiplier()[j].MultiplierTypeName ,Width(202), Height(27));
+            for (var i = 0; i < _playerConfig.GetElementalSkillMultiplier()[j].GetMultiplier().Count; i++)
             {
-                _playerConfig.SkillMultiplier[i].Multiplier[j] = 
-                    EditorGUILayout.FloatField("", _playerConfig.SkillMultiplier[i].Multiplier[j],
-                        EditorStyles.numberField, Width(65), Height(27));
-                Space(1);
+                _playerConfig.GetElementalSkillMultiplier()[j].GetMultiplier()[i] = EditorGUILayout.FloatField("", _playerConfig.GetElementalSkillMultiplier()[j].GetMultiplier()[i], EditorStyles.numberField, Width(65), Height(27));
             }
             GUILayout.EndHorizontal();
         }
-
+        
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
-            var FloatMultiplier = new FloatMultiplier
-            {
-                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
-            };
-            _playerConfig.SkillMultiplier.Add(FloatMultiplier);
+            _playerConfig.AddElementalSkillMultiplier();
         }
-        if(GUILayout.Button("-", Width(45), Height(25)) && _playerConfig.SkillMultiplier.Count != 0)
+        if(GUILayout.Button("-", Width(45), Height(25)) && _playerConfig.GetElementalSkillMultiplier().Count != 0)
         {
-            _playerConfig.SkillMultiplier.Remove(_playerConfig.SkillMultiplier[^1]);
+            _playerConfig.RemoveElementalSkillMultiplier();
         }
         GUILayout.EndHorizontal();
         #endregion
@@ -269,34 +243,27 @@ public class GameplayEditorWindow : EditorWindow
             GUILayout.Box($"Wea Lv{i}", Width(65), Height(25));
         }
         GUILayout.EndHorizontal();
-        
-        for (var i = 0; i < _playerConfig.SpecialMultiplier.Count; i++)
+        for (var j = 0; j < _playerConfig.GetElementalBurstMultiplier().Count; j++)
         {
             GUILayout.BeginHorizontal();
-            _playerConfig.SpecialMultiplier[i].MultiplierTypeName = 
-                EditorGUILayout.TextField($"", _playerConfig.SpecialMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
-            for (var j = 0; j < _playerConfig.SpecialMultiplier[i].Multiplier.Count; j++)
+            _playerConfig.GetElementalBurstMultiplier()[j].MultiplierTypeName = EditorGUILayout.TextField($"", _playerConfig.GetElementalBurstMultiplier()[j].MultiplierTypeName ,Width(202), Height(27));
+            for (var i = 0; i < _playerConfig.GetElementalBurstMultiplier()[j].GetMultiplier().Count; i++)
             {
-                _playerConfig.SpecialMultiplier[i].Multiplier[j] = 
-                    EditorGUILayout.FloatField("", _playerConfig.SpecialMultiplier[i].Multiplier[j],
-                        EditorStyles.numberField, Width(65), Height(27));
-                Space(1);
+                _playerConfig.GetElementalBurstMultiplier()[j].GetMultiplier()[i] = 
+                    EditorGUILayout.FloatField("", _playerConfig.GetElementalBurstMultiplier()[j].GetMultiplier()[i],
+                    EditorStyles.numberField, Width(65), Height(27));
             }
             GUILayout.EndHorizontal();
         }
-
+        
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
-            var FloatMultiplier = new FloatMultiplier
-            {
-                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
-            };
-            _playerConfig.SpecialMultiplier.Add(FloatMultiplier);
+            _playerConfig.AddElementalBurstMultiplier();
         }
-        if(GUILayout.Button("-", Width(45), Height(25)) && _playerConfig.SpecialMultiplier.Count != 0)
+        if(GUILayout.Button("-", Width(45), Height(25)) && _playerConfig.GetElementalBurstMultiplier().Count != 0)
         {
-            _playerConfig.SpecialMultiplier.Remove(_playerConfig.SpecialMultiplier[^1]);
+            _playerConfig.RemoveElementalBurstMultiplier();
         }
         GUILayout.EndHorizontal();
         #endregion
@@ -375,11 +342,9 @@ public class GameplayEditorWindow : EditorWindow
     }
     private void ShowUpgradeDetails(SO_CharacterUpgradeData _upgradeData)
     {
-
-        
         if(_upgradeData == null) 
             return;
-        _upgradeData.SetData();
+       
         Space(10);
         GUILayout.BeginHorizontal();
         GUILayout.Box("Level", Width(150));
@@ -390,8 +355,8 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.Label("", Width(50));
         if(GUILayout.Button("Renew Value",ButtonColorText(Color.white), Width(120), Height(20)))
         {
-            Debug.Log("Reset Value Success!");
             _upgradeData.RenewValue();
+            Debug.Log("Reset Value Success!");
         }
         if (GUILayout.Button("Show ConsoleLog", ButtonColorText(Color.white), Width(120), Height(20)))
         {
@@ -441,22 +406,22 @@ public class GameplayEditorWindow : EditorWindow
                 switch (_selectedTypeEnemy)
                 {
                     case 0:
-                        goblin_SwordConfig = EditorGUIUtility.Load("Assets/Resources/Enemies/Goblin/Sword/Prefab/Goblin_Sword Config.asset") as SO_EnemyConfiguration;
+                        goblin_SwordConfig = EditorGUIUtility.Load("Assets/FantasyProject/Enemies/Goblin/Sword/Prefab/Goblin_Sword Config.asset") as SO_EnemyConfiguration;
                         ShowEnemyConfig(goblin_SwordConfig);
                         break;
                     case 1: 
-                        goblin_SlingshotConfig = EditorGUIUtility.Load("Assets/Resources/Enemies/Goblin/Slingshot/Prefab/Goblin_Slingshot Config.asset") as SO_EnemyConfiguration;
+                        goblin_SlingshotConfig = EditorGUIUtility.Load("Assets/FantasyProject/Enemies/Goblin/Slingshot/Prefab/Goblin_Slingshot Config.asset") as SO_EnemyConfiguration;
                         ShowEnemyConfig(goblin_SlingshotConfig);
                         break;
                     case 2: 
-                        goblin_DaggersConfig = EditorGUIUtility.Load("Assets/Resources/Enemies/Goblin/Daggers/Prefab/Goblin_Daggers Config.asset") as SO_EnemyConfiguration;
+                        goblin_DaggersConfig = EditorGUIUtility.Load("Assets/FantasyProject/Enemies/Goblin/Daggers/Prefab/Goblin_Daggers Config.asset") as SO_EnemyConfiguration;
                         ShowEnemyConfig(goblin_DaggersConfig);
                         break;
                 }
                 break;
             
             case 1: 
-                BOReaperCongfig = EditorGUIUtility.Load("Assets/Resources/Enemies/Reaper/Prefab/BOReaper Config.asset") as SO_EnemyConfiguration;
+                BOReaperCongfig = EditorGUIUtility.Load("Assets/FantasyProject/Enemies/Reaper/Prefab/BOReaper Config.asset") as SO_EnemyConfiguration;
                 ShowEnemyConfig(BOReaperCongfig);
                 break;
         }
@@ -471,7 +436,8 @@ public class GameplayEditorWindow : EditorWindow
 
         scrollView = GUILayout.BeginScrollView(scrollView);
         EditorGUI.BeginChangeCheck();
-        
+
+        #region Stats
         Space(30);
         GUILayout.Label("INFORMATION ------------------------", EditorStyles.boldLabel);
         _enemyConfig.SetName(EditorGUILayout.TextField("Name", _enemyConfig.GetName(), Width(500)));
@@ -490,14 +456,16 @@ public class GameplayEditorWindow : EditorWindow
         
         Space(30);
         GUILayout.Label("COOLDOWN -------------------------", EditorStyles.boldLabel);
-        _enemyConfig.NormalAttackCD = EditorGUILayout.FloatField("Normal Attack CD(s)", _enemyConfig.NormalAttackCD, Width(500));
-        _enemyConfig.SkillAttackCD = EditorGUILayout.FloatField("Skill Attack CD(s)", _enemyConfig.SkillAttackCD, Width(500));
-        _enemyConfig.SpecialAttackCD = EditorGUILayout.FloatField("Special Attack CD(s)", _enemyConfig.SpecialAttackCD, Width(500));
-        
+        _enemyConfig.SetNormalAttackCD(EditorGUILayout.FloatField("Normal Attack CD(s)", _enemyConfig.GetNormalAttackCD(), Width(500)));
+        _enemyConfig.SetSkillAttackCD(EditorGUILayout.FloatField("Skill Attack CD(s)", _enemyConfig.GetSkillAttackCD(), Width(500)));
+        _enemyConfig.SetSpecialAttackCD(EditorGUILayout.FloatField("Special Attack CD(s)", _enemyConfig.GetSpecialAttackCD(), Width(500)));
+        #endregion
+
         Space(30);
         GUILayout.Label("MULTIPLIER -------------------------", EditorStyles.boldLabel);
+        
         #region Normal Attack
-        Space(5);
+        Space(10);
         GUILayout.BeginHorizontal();
         GUILayout.Label("NORMAL ATTACK MULTIPLIER", Width(200), Height(25));
         for (var i = 1; i <= 100; i++)
@@ -506,16 +474,15 @@ public class GameplayEditorWindow : EditorWindow
             i += 9;
         }
         GUILayout.EndHorizontal();
-        
-        for (var i = 0; i < _enemyConfig.NormalAttackMultiplier.Count; i++)
+        for (var j = 0; j < _enemyConfig.GetNormalAttackMultiplier().Count; j++)
         {
             GUILayout.BeginHorizontal();
-            _enemyConfig.NormalAttackMultiplier[i].MultiplierTypeName = 
-                EditorGUILayout.TextField($"", _enemyConfig.NormalAttackMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
-            for (var j = 0; j < _enemyConfig.NormalAttackMultiplier[i].Multiplier.Count; j++)
+            _enemyConfig.GetNormalAttackMultiplier()[j].MultiplierTypeName = EditorGUILayout.TextField($"", _enemyConfig.GetNormalAttackMultiplier()[j].MultiplierTypeName ,Width(202), Height(27));
+            for (var i = 0; i < _enemyConfig.GetNormalAttackMultiplier()[j].GetMultiplier().Count; i++)
             {
-                _enemyConfig.NormalAttackMultiplier[i].Multiplier[j] = 
-                    EditorGUILayout.FloatField("", _enemyConfig.NormalAttackMultiplier[i].Multiplier[j], EditorStyles.numberField, Width(80), Height(27));
+                _enemyConfig.GetNormalAttackMultiplier()[j].GetMultiplier()[i] = 
+                    EditorGUILayout.FloatField("", _enemyConfig.GetNormalAttackMultiplier()[j].GetMultiplier()[i],
+                        EditorStyles.numberField, Width(80), Height(27));
                 Space(1);
             }
             GUILayout.EndHorizontal();
@@ -524,15 +491,11 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
-            var FloatMultiplier = new FloatMultiplier
-            {
-                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
-            };
-            _enemyConfig.NormalAttackMultiplier.Add(FloatMultiplier);
+            _enemyConfig.AddNormalAttackMultiplier();
         }
-        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfig.NormalAttackMultiplier.Count != 0)
+        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfig.GetNormalAttackMultiplier().Count != 0)
         {
-            _enemyConfig.NormalAttackMultiplier.Remove(_enemyConfig.NormalAttackMultiplier[^1]);
+            _enemyConfig.RemoveNormalAttackMultiplier();
         }
         GUILayout.EndHorizontal();
         #endregion
@@ -547,34 +510,28 @@ public class GameplayEditorWindow : EditorWindow
             i += 9;
         }
         GUILayout.EndHorizontal();
-        
-        for (var i = 0; i < _enemyConfig.SkillMultiplier.Count; i++)
+        for (var j = 0; j < _enemyConfig.GetElementalSkillMultiplier().Count; j++)
         {
             GUILayout.BeginHorizontal();
-            _enemyConfig.SkillMultiplier[i].MultiplierTypeName = 
-                EditorGUILayout.TextField($"", _enemyConfig.SkillMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
-            for (var j = 0; j < _enemyConfig.SkillMultiplier[i].Multiplier.Count; j++)
+            _enemyConfig.GetElementalSkillMultiplier()[j].MultiplierTypeName = EditorGUILayout.TextField($"", _enemyConfig.GetElementalSkillMultiplier()[j].MultiplierTypeName ,Width(202), Height(27));
+            for (var i = 0; i < _enemyConfig.GetElementalSkillMultiplier()[j].GetMultiplier().Count; i++)
             {
-                _enemyConfig.SkillMultiplier[i].Multiplier[j] = 
-                    EditorGUILayout.FloatField("", _enemyConfig.SkillMultiplier[i].Multiplier[j],
+                _enemyConfig.GetElementalSkillMultiplier()[j].GetMultiplier()[i] = 
+                    EditorGUILayout.FloatField("", _enemyConfig.GetElementalSkillMultiplier()[j].GetMultiplier()[i],
                         EditorStyles.numberField, Width(80), Height(27));
                 Space(1);
             }
             GUILayout.EndHorizontal();
         }
-
+        
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
-            var FloatMultiplier = new FloatMultiplier
-            {
-                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
-            };
-            _enemyConfig.SkillMultiplier.Add(FloatMultiplier);
+            _enemyConfig.AddElementalSkillMultiplier();
         }
-        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfig.SkillMultiplier.Count != 0)
+        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfig.GetElementalSkillMultiplier().Count != 0)
         {
-            _enemyConfig.SkillMultiplier.Remove(_enemyConfig.SkillMultiplier[^1]);
+            _enemyConfig.RemoveElementalSkillMultiplier();
         }
         GUILayout.EndHorizontal();
         #endregion
@@ -589,34 +546,28 @@ public class GameplayEditorWindow : EditorWindow
             i += 9;
         }
         GUILayout.EndHorizontal();
-        
-        for (var i = 0; i < _enemyConfig.SpecialMultiplier.Count; i++)
+        for (var j = 0; j < _enemyConfig.GetElementalBurstMultiplier().Count; j++)
         {
             GUILayout.BeginHorizontal();
-            _enemyConfig.SpecialMultiplier[i].MultiplierTypeName = 
-                EditorGUILayout.TextField($"", _enemyConfig.SpecialMultiplier[i].MultiplierTypeName ,Width(202), Height(27));
-            for (var j = 0; j < _enemyConfig.SpecialMultiplier[i].Multiplier.Count; j++)
+            _enemyConfig.GetElementalBurstMultiplier()[j].MultiplierTypeName = EditorGUILayout.TextField($"", _enemyConfig.GetElementalBurstMultiplier()[j].MultiplierTypeName ,Width(202), Height(27));
+            for (var i = 0; i < _enemyConfig.GetElementalBurstMultiplier()[j].GetMultiplier().Count; i++)
             {
-                _enemyConfig.SpecialMultiplier[i].Multiplier[j] = 
-                    EditorGUILayout.FloatField("", _enemyConfig.SpecialMultiplier[i].Multiplier[j],
+                _enemyConfig.GetElementalBurstMultiplier()[j].GetMultiplier()[i] = 
+                    EditorGUILayout.FloatField("", _enemyConfig.GetElementalBurstMultiplier()[j].GetMultiplier()[i],
                         EditorStyles.numberField, Width(80), Height(27));
                 Space(1);
             }
             GUILayout.EndHorizontal();
         }
-
+        
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
-            var FloatMultiplier = new FloatMultiplier
-            {
-                Multiplier = new List<float> { 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0}
-            };
-            _enemyConfig.SpecialMultiplier.Add(FloatMultiplier);
+            _enemyConfig.AddElementalBurstMultiplier();
         }
-        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfig.SpecialMultiplier.Count != 0)
+        if(GUILayout.Button("-", Width(45), Height(25)) && _enemyConfig.GetElementalBurstMultiplier().Count != 0)
         {
-            _enemyConfig.SpecialMultiplier.Remove(_enemyConfig.SpecialMultiplier[^1]);
+            _enemyConfig.RemoveElementalBurstMultiplier();
         }
         GUILayout.EndHorizontal();
         #endregion
@@ -641,11 +592,11 @@ public class GameplayEditorWindow : EditorWindow
         switch (_selectedPanelGameCustomType)
         {
             case 0:
-                _soGameItemData= EditorGUIUtility.Load("Assets/Resources/GameData/Game Item Data.asset") as SO_GameItemData;
+                _soGameItemData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Game Item Data.asset") as SO_GameItemData;
                 ShowItemsDetails(_soGameItemData);
                 break;
             case 1:
-                _soCharacterData= EditorGUIUtility.Load("Assets/Resources/GameData/Character Data.asset") as SO_CharacterData;
+                _soCharacterData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Character Data.asset") as SO_CharacterData;
                 ShowCharacterData(_soCharacterData);
                 break;
         }

@@ -6,9 +6,9 @@ using UnityEngine;
 [Serializable]
 public class UpgradeCustom
 {
-    private int _level;
-    private int _exp;
-    private int _totalExp;
+    [SerializeField] private int _level;
+    [SerializeField] private int _exp;
+    [SerializeField] private int _totalExp;
 
     public int Level { get => _level; private set => _level = value; }
     public int EXP { get => _exp; private set => _exp = value; }
@@ -30,7 +30,7 @@ public class UpgradeCustom
 public class SO_CharacterUpgradeData : ScriptableObject
 {
     [SerializeField] private TextAsset LevelingTextAsset;
-    public List<UpgradeCustom> Data { get; } = new(levelMax);
+    public List<UpgradeCustom> Data;
     public const int levelMax = 90;
     private string _strData;
     
@@ -41,7 +41,7 @@ public class SO_CharacterUpgradeData : ScriptableObject
     public void SetData()
     {
         _strData = LevelingTextAsset.text;
-        if(string.IsNullOrEmpty(_strData) || Data.Count == levelMax) return;
+        if(string.IsNullOrEmpty(_strData)) return;
         
         var files = _strData.Split('\n');
         var _lastTotalExp = 0;
@@ -56,7 +56,11 @@ public class SO_CharacterUpgradeData : ScriptableObject
             _lastTotalExp = _upgradeData.TotalExp;
         }
     }
-    public void RenewValue() => Data.Clear();
+    public void RenewValue()
+    {
+        Data.Clear();
+        SetData();
+    }
 
     
     /// <summary>

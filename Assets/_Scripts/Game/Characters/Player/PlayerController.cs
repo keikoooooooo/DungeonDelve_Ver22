@@ -224,22 +224,22 @@ public abstract class PlayerController : PlayerStateMachine
     public override void CalculateDMG_NA()
     {
         // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ n
-        var _percent = PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].Multiplier[PlayerConfig.GetWeaponLevel() - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
+        var _percent = PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
         _calculatedDamage = Calculation(_percent); 
     }
     public override void CalculateDMG_CA()
     {
-        var _percent = PlayerConfig.GetChargedAttackMultiplier()[0].Multiplier[PlayerConfig.GetWeaponLevel() - 1];
+        var _percent = PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
         _calculatedDamage = Calculation(_percent);
     }
     public override void CalculateDMG_EK()
      {
-         var _percent = PlayerConfig.GetElementalSkillMultiplier()[0].Multiplier[PlayerConfig.GetWeaponLevel() - 1]; 
+         var _percent = PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
          _calculatedDamage = Calculation(_percent); 
      }   
     public override void CalculateDMG_EB()
     {
-        var _percent = PlayerConfig.GetElementalBurstMultiplier()[0].Multiplier[PlayerConfig.GetWeaponLevel() - 1];
+        var _percent = PlayerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
         _calculatedDamage = Calculation(_percent); 
     }
     

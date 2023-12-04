@@ -101,7 +101,7 @@ public class LynxController : PlayerController
             animator.SetBool(ID4Direction, IsAttackPressed);
 
             ChargedAttackTime += Time.deltaTime;
-            _damageBonus = Mathf.MoveTowards(_damageBonus, PlayerConfig.GetChargedAttackMultiplier()[1].Multiplier[PlayerConfig.GetWeaponLevel() - 1], 15f * Time.deltaTime);
+            _damageBonus = Mathf.MoveTowards(_damageBonus, PlayerConfig.GetChargedAttackMultiplier()[1].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1], 15f * Time.deltaTime);
             yield return null;
         }
         CalculateDMG_CA();
@@ -136,7 +136,7 @@ public class LynxController : PlayerController
         
         // DMG
         ChargedAttackTime = 0;
-        _damageBonus = PlayerConfig.GetChargedAttackMultiplier()[0].Multiplier[PlayerConfig.GetWeaponLevel() - 1];
+        _damageBonus = PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
     }
     private void BlendAnimationValue()
     {
