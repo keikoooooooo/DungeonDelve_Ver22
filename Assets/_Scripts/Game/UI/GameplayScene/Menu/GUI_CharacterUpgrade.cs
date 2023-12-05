@@ -49,16 +49,15 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private int _increaseLevel;      
     private int _increaseEXP;       
     private int _increaseHP => 200 * _increaseLevel;
-    private int _increasATK => 20 * _increaseLevel;        
+    private int _increasATK => 15 * _increaseLevel;        
     private int _increasDEF => 3 * _increaseLevel;         
     
     
     private bool _isEventRegistered;
     private UserData _userData;
+    private PlayerController _player;
     private SO_CharacterUpgradeData _upgradeData;
     private SO_PlayerConfiguration _playerConfig;
-    private readonly List<string> _textNotice = new ();
-
 
     
     private void Awake()
@@ -103,6 +102,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     public void GetRef(GameManager _gameManager)
     {
         _userData = _gameManager.UserData;
+        _player = _gameManager.Player;
         _upgradeData = _gameManager.CharacterUpgradeData;
         _playerConfig = _gameManager.Player.PlayerConfig;
         
@@ -225,6 +225,34 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     }
     
     
+    private void SetStats()
+    {
+        var currentLevel = _playerConfig.GetLevel() + _increaseLevel;
+        var currentHP = _playerConfig.GetHP() + _increaseHP;
+        var currentATK = _playerConfig.GetATK() + _increasATK;
+        var currentDEF = _playerConfig.GetDEF() + _increasDEF;
+        
+        UpgradeNoticeManager.Instance.SetLevelText($"Lv. {currentLevel}");
+        CreateTextNotice("Max HP",$"{_playerConfig.GetHP()}", $"{currentHP}");
+        CreateTextNotice("ATK",$"{_playerConfig.GetATK()}", $"{currentATK}");
+        CreateTextNotice("DEF",$"{_playerConfig.GetDEF()}", $"{currentDEF}");
+        UpgradeNoticeManager.Instance.EnableNotice();
+        
+        _userData.IncreaseCoin(-_totalCoinCost);
+        _playerConfig.SetLevel(currentLevel);
+        _playerConfig.SetCurrentEXP((int)backProgressSliderBar.value);
+        _playerConfig.SetHP(currentHP);
+        _playerConfig.SetATK(currentATK);
+        _playerConfig.SetDEF(currentDEF);
+        _player.InitStatus();
+        
+        switch (_selectItem)
+        {
+            case 1: _userData.IncreaseItemValue(ItemNameCode.EXPSmall, -_amountUse);  break;
+            case 2: _userData.IncreaseItemValue(ItemNameCode.EXPMedium, -_amountUse); break;
+            case 3: _userData.IncreaseItemValue(ItemNameCode.EXPBig, -_amountUse);    break;
+        }
+    }
     private void DemoProgress()
     {
         _increaseLevel = 0;
@@ -256,35 +284,14 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
             break;
         }
     }
-    private void SetStats()
-    {
-        _textNotice.Clear();
-        _textNotice.Add(  $"HP {_playerConfig.GetHP()}    ->    HP {_playerConfig.GetHP() + _increaseHP}");
-        _textNotice.Add(  $"ATK {_playerConfig.GetATK()}    ->    ATK {_playerConfig.GetATK() + _increasATK}");
-        _textNotice.Add(  $"DEF {_playerConfig.GetDEF()}    ->    DEF {_playerConfig.GetDEF() + _increasDEF}");
-        UpgradeNoticeManager.Instance.SetLevelText($"Lv. {_playerConfig.GetLevel() + _increaseLevel}");
-        UpgradeNoticeManager.Instance.EnableNotice(_textNotice);
+    
 
-        
-        _userData.IncreaseCoin(-_totalCoinCost);
-        _playerConfig.SetLevel(_playerConfig.GetLevel() + _increaseLevel);
-        _playerConfig.SetCurrentEXP((int)backProgressSliderBar.value);
-        
-        switch (_selectItem)
-        {
-            case 1: _userData.IncreaseItemValue(ItemNameCode.EXPSmall, -_amountUse);  break;
-            case 2: _userData.IncreaseItemValue(ItemNameCode.EXPMedium, -_amountUse); break;
-            case 3: _userData.IncreaseItemValue(ItemNameCode.EXPBig, -_amountUse);    break;
-        }
-    }
-
-
-  
+    private static void CreateTextNotice(string _title, string _oldValue, string _newValue) => UpgradeNoticeManager.Instance.CreateTextNotice(_title, _oldValue, _newValue);
     private void SetUpgradeStateButton() => upgradeBtt.interactable = _amountUse != 0 && _coin >= _totalCoinCost;
     // Set UGUI Text
-    private void SetSmallExpValueText() => expSmallValueText.text = $"{_smallExpValue}";
-    private void SetMeidumExpValueText() => expMediumValueText.text = $"{_mediumExpValue}";
-    private void SetBigExpValueText() => expBigValueText.text = $"{_bigExpValue}";
+    private void SetSmallExpValueText() => expSmallValueText.text = _smallExpValue == 0 ? $"<color=red>{_smallExpValue}</color>" : $"<color=white>{_smallExpValue}</color>";
+    private void SetMeidumExpValueText() => expMediumValueText.text = _mediumExpValue == 0 ? $"<color=red>{_mediumExpValue}</color>" : $"<color=white>{_mediumExpValue}</color>";
+    private void SetBigExpValueText() => expBigValueText.text  = _bigExpValue == 0 ? $"<color=red>{_bigExpValue}</color>" : $"<color=white>{_bigExpValue}</color>";
     private void SetAmountUseText() => itemQuantityText.text = $"{_amountUse}"; 
     private void SetCoinText() => currencyText.text = $"{_coin}/{_totalCoinCost}";
     private void SetLevelText()

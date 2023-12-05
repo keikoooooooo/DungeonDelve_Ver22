@@ -83,12 +83,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         var _valueDef = _isCRIT ? Random.Range(0, EnemyConfig.GetDEF() * 0.5f) : EnemyConfig.GetDEF();
         
         // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
-        var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
-        _damage -= _def;
+        var _finalDmg = (int)Mathf.Max(0, _damage - Mathf.Max(0, _valueDef));
         
-        Health.Decreases(_damage);
-        DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, true);
-
+        Health.Decreases(_finalDmg);
+        DMGPopUpGenerator.Instance.Create(transform.position, _finalDmg, _isCRIT, true);
+        
         if (Health.CurrentValue <= 0)
         {
             SetDie(true);

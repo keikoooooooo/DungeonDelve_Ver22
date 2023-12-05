@@ -23,7 +23,7 @@ MonoBehaviour:
   DEF: 36
   WalkSpeed: 1.7
   RunSpeed: 5.7
-  MaxST: 900
+  MaxST: 200
   ChargedAttackStaminaCost: 20
   RunFastSpeed: 8
   DashStaminaCost: 25

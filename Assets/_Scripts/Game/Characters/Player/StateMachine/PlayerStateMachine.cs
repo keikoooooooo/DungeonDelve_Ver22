@@ -64,6 +64,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     
     // Events
     public event Action E_Dash;
+    public event Action E_OnChangePlayerConfig;
     
     // Player Config
     private PlayerStateFactory _state;
@@ -118,6 +119,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         _mainCamera = Camera.main;
         _state = new PlayerStateFactory(this);
+        Health = new StatusHandle();
+        Stamina = new StatusHandle();
     }
 
     /// <summary>
@@ -144,8 +147,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     }
     public void InitStatus()
     {
-        Health = new StatusHandle(PlayerConfig.GetHP());
-        Stamina = new StatusHandle(PlayerConfig.GetST());
+        Health.InitValue(PlayerConfig.GetHP());
+        Stamina.InitValue(PlayerConfig.GetST());
+        E_OnChangePlayerConfig?.Invoke();
     }
 
 
@@ -252,11 +256,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.GetDEF() * 0.5f) : PlayerConfig.GetDEF();
         
         // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
-        var _def = Mathf.CeilToInt(_damage * (_valueDef / 100.0f));
-        _damage -= _def;
+        var _finalDmg = (int)Mathf.Max(0, _damage - Mathf.Max(0, _valueDef));
         
-        Health.Decreases(_damage);
-        DMGPopUpGenerator.Instance.Create(transform.position, _damage, _isCRIT, false);
+        Health.Decreases(_finalDmg);
+        DMGPopUpGenerator.Instance.Create(transform.position, _finalDmg, _isCRIT, false);
 
         animator.ResetTrigger(IDDamageStand);
         animator.ResetTrigger(IDDamageFall);

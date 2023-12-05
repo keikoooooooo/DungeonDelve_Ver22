@@ -234,7 +234,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1805035048995101867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,8 +277,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
-  nameAndLevelText: {fileID: 0}
   healthBar: {fileID: 5245929153213528056}
+  nameText: {fileID: 0}
+  levelText: {fileID: 221768346954876164}
 --- !u!1 &5836335044298250185
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +672,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4152887904827222661}
-  - component: {fileID: 5984115092143377802}
   m_Layer: 12
   m_Name: Name & Level
   m_TagString: Untagged
@@ -699,20 +699,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 98.5}
   m_SizeDelta: {x: 0, y: 16.410004}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5984115092143377802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8308410166524180878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39b2800aca34df2489adb15022a9520f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
-  levelText: {fileID: 221768346954876164}
 --- !u!1 &8659843009320509014
 GameObject:
   m_ObjectHideFlags: 0

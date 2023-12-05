@@ -1,9 +1,9 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public class StatusHandle
 {
+   public StatusHandle() { }
    public StatusHandle(int maxValue)
    {
       _maxValue = maxValue;
@@ -13,24 +13,30 @@ public class StatusHandle
 
    private int _maxValue;
    public int CurrentValue { get; private set; }
-   
 
 
+   public void InitValue(int maxValue)
+   {
+      _maxValue = maxValue;
+      CurrentValue = maxValue;
+      CallValueChangeEvent();
+   }
    public void Increases(int _amount)
    {
       CurrentValue += _amount;
       if (CurrentValue >= _maxValue)
          CurrentValue = _maxValue;
       
-      E_OnValueChanged?.Invoke(CurrentValue);
+      CallValueChangeEvent();
    }
    public void Decreases(int _amount)
    {
       CurrentValue -= _amount;
       if (CurrentValue <= 0)
          CurrentValue = 0;
-      
-      E_OnValueChanged?.Invoke(CurrentValue);
+
+      CallValueChangeEvent();
    }
+   public void CallValueChangeEvent() => E_OnValueChanged?.Invoke(CurrentValue);
    
 }
