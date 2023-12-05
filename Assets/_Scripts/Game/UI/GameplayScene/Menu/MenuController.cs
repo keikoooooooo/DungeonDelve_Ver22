@@ -54,7 +54,6 @@ public class MenuController : Singleton<MenuController>
             {
                 OpenMenu();
                 OnClickEscOpenMenuEvent?.Invoke(); 
-               
             }
             else
             {
@@ -73,11 +72,11 @@ public class MenuController : Singleton<MenuController>
     private void OpenMenu()
     {
         GUI_Manager.UpdateGUIData();
-        Time.timeScale = 0;
         menuPanel.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
         _player.cinemachineFreeLook.enabled = false;
         _player.PlayerData.PlayerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
     }
     public void CloseMenu()
     {

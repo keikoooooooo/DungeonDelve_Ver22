@@ -6,10 +6,8 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField, Required] private PlayerController player;
 
     [SerializeField] private NameAndLevelText nameAndLevelText;
-    
     [SerializeField] private ProgressBar healthBar;
     [SerializeField] private ProgressBar staminaBar;
-    
     [SerializeField] private CooldownTime skillCooldownTime;
     [SerializeField] private CooldownTime specialCooldownTime;
     

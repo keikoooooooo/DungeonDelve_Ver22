@@ -14,16 +14,14 @@ public class PlayerDataHandle : MonoBehaviour
     /// </summary>
     [field: SerializeField] public SO_PlayerConfiguration PlayerConfig { get; private set; }
     
+    
     /// <summary>
     /// RenderTexture(RawImage) -> Render các model của nhân vật lên UI
     /// </summary>
-    public PlayerRenderTexture PlayerRenderTexture { get; private set; }
-    [SerializeField] private PlayerRenderTexture playerRenderTexturePrefab;
+    [field: SerializeField] public PlayerRenderTexture PlayerRenderTexture { get; private set; }
+   
     
-    private void OnEnable()
-    {
-        PlayerRenderTexture = Instantiate(playerRenderTexturePrefab, null);
-    }
+    private void OnEnable() => PlayerRenderTexture.CloseRenderUI();
     
     
     /// <summary>

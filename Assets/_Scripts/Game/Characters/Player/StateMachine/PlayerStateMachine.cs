@@ -118,8 +118,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         _mainCamera = Camera.main;
         _state = new PlayerStateFactory(this);
-        Health = new StatusHandle(PlayerConfig.GetHP());
-        Stamina = new StatusHandle(PlayerConfig.GetST());
     }
 
     /// <summary>
@@ -139,9 +137,15 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         CanIncreaseST = true;
         _movementState = MovementState.StateRun;
         characterController.enabled = true;
+        InitStatus();
         
         // Event
         DamageableData.Add(gameObject, this);
+    }
+    public void InitStatus()
+    {
+        Health = new StatusHandle(PlayerConfig.GetHP());
+        Stamina = new StatusHandle(PlayerConfig.GetST());
     }
 
 

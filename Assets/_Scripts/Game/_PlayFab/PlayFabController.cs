@@ -27,18 +27,12 @@ public class PlayFabController : Singleton<PlayFabController>
         {
             PlayFabSettings.TitleId = TitleID;
         }
-
-        if (!PlayerPrefs.HasKey(EMAIL_Key))
-        {
-            OnAccountHandleFailureEvent?.Invoke("Please to login");
-            return;
-        }
-
-        LoadAccount();
     }
 
     public void OnLogin()
     {
+        LoadAccount();
+        
         var request = new LoginWithEmailAddressRequest { Email = userEmail, Password = userPassword };
         PlayFabClientAPI.LoginWithEmailAddress(request, 
             result =>
@@ -122,6 +116,12 @@ public class PlayFabController : Singleton<PlayFabController>
     /// </summary>
     private void LoadAccount()
     {
+        if (!PlayerPrefs.HasKey(EMAIL_Key))
+        {
+            OnAccountHandleFailureEvent?.Invoke("Please to login");
+            return;
+        }
+        
         username = PlayerPrefs.GetString(USERNAME_Key);
         userEmail = PlayerPrefs.GetString(EMAIL_Key);
         userPassword = PlayerPrefs.GetString(PW_Key);

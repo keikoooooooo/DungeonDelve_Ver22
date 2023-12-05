@@ -52,6 +52,7 @@ public class GameManager : Singleton<GameManager>
         Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
         _playerConfig.ChapterIcon = _playerPrefab.PlayerConfig.ChapterIcon;
         Player.PlayerData.SetData(_playerConfig);
+        Player.InitStatus();
     }
 
     private PlayerController GetPlayerPrefab(CharacterNameCode _characterNameCode)

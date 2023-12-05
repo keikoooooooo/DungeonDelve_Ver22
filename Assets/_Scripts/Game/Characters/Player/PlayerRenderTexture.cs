@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerRenderTexture : MonoBehaviour
@@ -8,14 +7,6 @@ public class PlayerRenderTexture : MonoBehaviour
     [SerializeField] private Camera camCharRender;
     [SerializeField] private Camera camWeaponRender;
     
-    private void Start()
-    {
-        transform.SetParent(null);
-        camCharRender.gameObject.SetActive(false);
-        camWeaponRender.gameObject.SetActive(false);
-        gameObject.SetActive(false);
-    }
-
     
     public enum RenderType
     {
