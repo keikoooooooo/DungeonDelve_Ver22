@@ -97,7 +97,7 @@ public class ReaperEffects : MonoBehaviour, ICalculateDMG
 
     private void RegisterEvents()
     {
-        foreach (var VARIABLE in _poolSpecial.Pool)
+        foreach (var VARIABLE in _poolSpecial.List)
         {
             VARIABLE.CollisionEnterEvent.AddListener(enemyController.CauseDMG);
             VARIABLE.PositionEnterEvent.AddListener(EffectHit);
@@ -105,7 +105,7 @@ public class ReaperEffects : MonoBehaviour, ICalculateDMG
     }
     private void UnRegisterEvents()
     {
-        foreach (var VARIABLE in _poolSpecial.Pool)
+        foreach (var VARIABLE in _poolSpecial.List)
         {
             VARIABLE.CollisionEnterEvent.RemoveListener(enemyController.CauseDMG);
             VARIABLE.PositionEnterEvent.RemoveListener(EffectHit);

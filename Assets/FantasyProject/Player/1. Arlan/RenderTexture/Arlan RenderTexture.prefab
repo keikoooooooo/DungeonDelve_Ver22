@@ -171,7 +171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360633169440109502}
   - component: {fileID: 641733981381204686}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Arlan RenderTexture
   m_TagString: Untagged
   m_Icon: {fileID: 0}

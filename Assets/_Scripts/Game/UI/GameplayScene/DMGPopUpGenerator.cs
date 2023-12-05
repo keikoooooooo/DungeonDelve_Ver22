@@ -12,7 +12,7 @@ public class DMGPopUpGenerator : Singleton<DMGPopUpGenerator>
     {
         _mainCamera = Camera.main;
         _poolDMGPopUp = new ObjectPooler<DMGPopUp>(dmgPopUpPrefab, transform, 25);
-        foreach (var VARIABLE in _poolDMGPopUp.Pool)
+        foreach (var VARIABLE in _poolDMGPopUp.List)
         {
             VARIABLE.mainCamera = _mainCamera;
         }

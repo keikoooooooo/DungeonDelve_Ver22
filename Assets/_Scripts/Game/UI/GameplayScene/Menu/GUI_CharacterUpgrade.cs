@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,14 +43,22 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
 
     private int _currentLevel;       // lv hiện tại
     private int _currentExp;         // kinh nghiệm
-    private int _increaseLevel;      // lv cộng thêm vào
-    private int _increaseEXP;        // giá trị exp cộng vào của item
     private int _nextExp;            // kinh nghiệm tối đa để nâng cấp lên lv tiếp theo
+    
+    // giá trị cộng thêm khi upgrade
+    private int _increaseLevel;      
+    private int _increaseEXP;       
+    private int _increaseHP => 200 * _increaseLevel;
+    private int _increasATK => 20 * _increaseLevel;        
+    private int _increasDEF => 3 * _increaseLevel;         
+    
     
     private bool _isEventRegistered;
     private UserData _userData;
     private SO_CharacterUpgradeData _upgradeData;
     private SO_PlayerConfiguration _playerConfig;
+    private readonly List<string> _textNotice = new ();
+
 
     
     private void Awake()
@@ -138,21 +147,13 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     }
     private void SetItemQuantity()
     {
-        if (_userData.HasItemValue(ItemNameCode.EXPSmall, out var _value1))
-        {
-            _smallExpValue = _value1;
-            SetSmallExpValueText();
-        }
-        if (_userData.HasItemValue(ItemNameCode.EXPMedium, out var _value2))
-        {
-            _mediumExpValue = _value2;
-            SetMeidumExpValueText();
-        }
-        if (_userData.HasItemValue(ItemNameCode.EXPBig, out var _value3))
-        {
-            _bigExpValue = _value3;
-            SetBigExpValueText();
-        }
+        _smallExpValue = _userData.HasItemValue(ItemNameCode.EXPSmall);
+        _mediumExpValue = _userData.HasItemValue(ItemNameCode.EXPMedium);
+        _bigExpValue = _userData.HasItemValue(ItemNameCode.EXPBig);
+        
+        SetSmallExpValueText();
+        SetMeidumExpValueText();
+        SetBigExpValueText();
     }
     
 
@@ -215,21 +216,14 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     
     public void OnClickUpgradeButton()
     {
-        _userData.IncreaseCoin(-_totalCoinCost);
-        _playerConfig.SetLevel(_playerConfig.GetLevel() + _increaseLevel);
-        _playerConfig.SetCurrentEXP((int)backProgressSliderBar.value);
-
-
-        switch (_selectItem)
-        {
-            case 1: _userData.IncreaseItemValue(ItemNameCode.EXPSmall, -_amountUse);  break;
-            case 2: _userData.IncreaseItemValue(ItemNameCode.EXPMedium, -_amountUse); break;
-            case 3: _userData.IncreaseItemValue(ItemNameCode.EXPBig, -_amountUse);    break;
-        }
+        SetStats();
         
         InitValue();
         UpdateData();
+        
+        GUI_Manager.UpdateGUIData();
     }
+    
     
     private void DemoProgress()
     {
@@ -262,8 +256,27 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
             break;
         }
     }
+    private void SetStats()
+    {
+        _textNotice.Clear();
+        _textNotice.Add(  $"HP {_playerConfig.GetHP()}    ->    HP {_playerConfig.GetHP() + _increaseHP}");
+        _textNotice.Add(  $"ATK {_playerConfig.GetATK()}    ->    ATK {_playerConfig.GetATK() + _increasATK}");
+        _textNotice.Add(  $"DEF {_playerConfig.GetDEF()}    ->    DEF {_playerConfig.GetDEF() + _increasDEF}");
+        UpgradeNoticeManager.Instance.SetLevelText($"Lv. {_playerConfig.GetLevel() + _increaseLevel}");
+        UpgradeNoticeManager.Instance.EnableNotice(_textNotice);
 
-    
+        
+        _userData.IncreaseCoin(-_totalCoinCost);
+        _playerConfig.SetLevel(_playerConfig.GetLevel() + _increaseLevel);
+        _playerConfig.SetCurrentEXP((int)backProgressSliderBar.value);
+        
+        switch (_selectItem)
+        {
+            case 1: _userData.IncreaseItemValue(ItemNameCode.EXPSmall, -_amountUse);  break;
+            case 2: _userData.IncreaseItemValue(ItemNameCode.EXPMedium, -_amountUse); break;
+            case 3: _userData.IncreaseItemValue(ItemNameCode.EXPBig, -_amountUse);    break;
+        }
+    }
 
 
   

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -6,10 +7,11 @@ using UnityEngine;
 /// <typeparam name="T"> phải là các class có kế thừa từ Monobehaviour và Interface: IObjectPool </typeparam>
 public class ObjectPooler<T> where T : MonoBehaviour, IPooled<T>
 {
-    public readonly Queue<T> Pool;
+    private readonly Queue<T> Pool;
     private readonly T _prefab;
     private readonly Transform _parent;
-    
+
+    public readonly List<T> List = new ();
     
     /// <summary>
     /// Khởi tạo 1 pool với type T
@@ -49,6 +51,7 @@ public class ObjectPooler<T> where T : MonoBehaviour, IPooled<T>
         var newObj = Object.Instantiate(_prefab, _parent);
         newObj.ReleaseCallback = Release;
         newObj.gameObject.SetActive(false);
+        List.Add(newObj);
         return newObj;
     }
     private void Release(T _object)

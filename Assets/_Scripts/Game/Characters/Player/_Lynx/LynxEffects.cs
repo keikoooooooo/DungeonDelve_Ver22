@@ -61,30 +61,30 @@ public class LynxEffects : MonoBehaviour
     }
     private void RegisterEvents()
     {
-        foreach (var VARIABLE in _poolNormalArrow.Pool)
+        foreach (var VARIABLE in _poolNormalArrow.List)
         {
             VARIABLE.detectionType.CollisionEnterEvent.AddListener(lynxController.CauseDMG);
         }
-        foreach (var VARIABLE in _poolChargedArrow.Pool)
+        foreach (var VARIABLE in _poolChargedArrow.List)
         {
             VARIABLE.detectionType.CollisionEnterEvent.AddListener(lynxController.CauseDMG);
         }
-        foreach (var VARIABLE in _poolChargedNoFullyArrow.Pool)
+        foreach (var VARIABLE in _poolChargedNoFullyArrow.List)
         {
             VARIABLE.detectionType.CollisionEnterEvent.AddListener(lynxController.CauseDMG);
         }
     }
     private void UnRegisterEvents()
     {
-        foreach (var VARIABLE in _poolNormalArrow.Pool)
+        foreach (var VARIABLE in _poolNormalArrow.List)
         {
             VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(lynxController.CauseDMG);
         }
-        foreach (var VARIABLE in _poolChargedArrow.Pool)
+        foreach (var VARIABLE in _poolChargedArrow.List)
         {
             VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(lynxController.CauseDMG);
         }
-        foreach (var VARIABLE in _poolChargedNoFullyArrow.Pool)
+        foreach (var VARIABLE in _poolChargedNoFullyArrow.List)
         {
             VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(lynxController.CauseDMG);
         }

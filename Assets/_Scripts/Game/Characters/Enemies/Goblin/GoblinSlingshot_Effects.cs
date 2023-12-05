@@ -35,14 +35,14 @@ public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
     }
     private void RegisterEvents()
     {
-        foreach (var VARIABLE in _poolProjectile.Pool)
+        foreach (var VARIABLE in _poolProjectile.List)
         {
             VARIABLE.detectionType.CollisionEnterEvent.AddListener(enemyController.CauseDMG);
         }
     }
     private void UnRegisterEvents()
     {
-        foreach (var VARIABLE in _poolProjectile.Pool)
+        foreach (var VARIABLE in _poolProjectile.List)
         {
             VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(enemyController.CauseDMG);
         }

@@ -48,10 +48,10 @@ public class UserData
         {
             { ItemNameCode.POHealth , 5},
             { ItemNameCode.POStamina, 5},
-            { ItemNameCode.EXPSmall, 100},
-            { ItemNameCode.EXPMedium, 200},
+            { ItemNameCode.EXPSmall, 10},
+            { ItemNameCode.EXPMedium, 20},
+            { ItemNameCode.EXPBig, 30},
             { ItemNameCode.JASliver1, 200},
-            { ItemNameCode.EXPBig, 500},
         };
     }
     
@@ -70,15 +70,6 @@ public class UserData
     /// <param name="_itemCode"> NameCode cần tìm </param>
     /// <param name="_value"> Giá trị trả về </param>
     /// <returns></returns>
-    public bool HasItemValue(ItemNameCode _itemCode, out int _value)
-    {
-        _value = 0;
-        if (inventories.TryGetValue(_itemCode, out var value))
-        {
-            _value = value;
-        }
-        return _value != 0;
-    }
     public int HasItemValue(ItemNameCode _itemCode) => inventories.TryGetValue(_itemCode, out var value) ? value : 0;
     
     
@@ -99,10 +90,15 @@ public class UserData
     /// <param name="_amount"> Số lượng tăng/giảm Coin</param>
     public void IncreaseItemValue(ItemNameCode _itemCode, int _amount)
     {
-        if (inventories.ContainsKey(_itemCode))
+        if (!inventories.ContainsKey(_itemCode))
         {
-            inventories[_itemCode] += _amount;
+            inventories.Add(_itemCode, _amount);
+            return;
         }
+        
+        inventories[_itemCode] += _amount;
+        if (inventories[_itemCode] > 0) return;
+        inventories.Remove(_itemCode);
     }
     
     

@@ -1,7 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
 
-public class TextBar : MonoBehaviour
+public class TextBar : MonoBehaviour, IPooled<TextBar>
 {
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI valueText;
@@ -20,6 +21,7 @@ public class TextBar : MonoBehaviour
     /// <param name="_value"> Giá trị cập nhật vào text </param>
     public void SetValueText(string _value) => valueText.text = _value;
 
-    
 
+    public void Release() => ReleaseCallback?.Invoke(this);
+    public Action<TextBar> ReleaseCallback { get; set; }
 }

@@ -171,7 +171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1830353561503296178}
   - component: {fileID: 312982174483145544}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Lynx RenderTexture
   m_TagString: Untagged
   m_Icon: {fileID: 0}

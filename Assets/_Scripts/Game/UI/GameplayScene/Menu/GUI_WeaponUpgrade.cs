@@ -17,7 +17,6 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     [SerializeField] private Button upgradeBtt;
 
     private ObjectPooler<Item> _poolItem;
-    private List<Item> _items = new();
     private UserData _userData;
     private SO_PlayerConfiguration _playerConfig;
     private SO_RequiresWeaponUpgradeConfiguration _weaponUpgradeConfig;
@@ -63,10 +62,6 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     private void Init()
     {
         _poolItem = new ObjectPooler<Item>(itemPrefab, slotItems, _gameItemData.GameItemDatas.Count);
-        foreach (var item in _poolItem.Pool)
-        {
-            _items.Add(item);
-        }
     }
     
     
@@ -93,7 +88,7 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     {
         if(!_weaponUpgradeConfig) return;
         
-        foreach (var item in _items.Where(x => x.gameObject.activeSelf))
+        foreach (var item in _poolItem.List.Where(x => x.gameObject.activeSelf))
         {
             item.Release();
         }

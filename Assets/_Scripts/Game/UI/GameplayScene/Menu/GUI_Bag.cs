@@ -15,7 +15,6 @@ public class GUI_Bag : MonoBehaviour, IGUI
     private SO_GameItemData _gameItemData;
     private ObjectPooler<Item> _poolItem;
     private List<Slot> _slots = new();
-    private readonly List<Item> _items = new();
 
     private void Awake() => GUI_Manager.Add(this);
     private void OnDestroy() => GUI_Manager.Remove(this);
@@ -35,10 +34,6 @@ public class GUI_Bag : MonoBehaviour, IGUI
     private void Init()
     {
         _poolItem = new ObjectPooler<Item>(itemPrefab, itemContent, _gameItemData.GameItemDatas.Count);
-        foreach (var item in _poolItem.Pool)
-        {
-            _items.Add(item);
-        }
         for (var i = 0; i < 4; i++)
         {
             var slot = Instantiate(slotPrefab, slotContent);
@@ -49,7 +44,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
 
     public void UpdateData()
     {
-        foreach (var item in _items.Where(item => item.gameObject.activeSelf))
+        foreach (var item in _poolItem.List.Where(item => item.gameObject.activeSelf))
         {
             item.Release();
         }

@@ -511,7 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <WeaponUpgradeConfig>k__BackingField: {fileID: 11400000, guid: 622161541303eb3449f017f4956f63f1, type: 2}
   <PlayerConfig>k__BackingField: {fileID: 11400000, guid: 3eb99b407cbd0f14eaf9e6a5382c19ac, type: 2}
-  <PlayerRenderTexture>k__BackingField: {fileID: 312982174483145544, guid: 59d3f81435f5fcc4f8fd6b9aa589b9bb, type: 3}
+  playerRenderTexturePrefab: {fileID: 312982174483145544, guid: 59d3f81435f5fcc4f8fd6b9aa589b9bb, type: 3}
 --- !u!1 &989025859288015984
 GameObject:
   m_ObjectHideFlags: 0
@@ -5552,11 +5552,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1861811642122463954, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017326762
+      value: -0.000000017326762
       objectReference: {fileID: 0}
     - target: {fileID: 1861811642122463954, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -6.846184e-10
+      value: 6.846184e-10
       objectReference: {fileID: 0}
     - target: {fileID: 2465486299230599108, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y
@@ -5624,15 +5624,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.004876615
+      value: 0.004876617
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000023232445
+      value: 0.000000003027659
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.13297045e-11
+      value: -1.4764908e-11
       objectReference: {fileID: 0}
     - target: {fileID: 5822535128316044608, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y
@@ -5732,15 +5732,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07437624
+      value: 0.07437622
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017158728
+      value: 0.00000001715872
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000012797462
+      value: -0.0000000012797454
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_RootOrder

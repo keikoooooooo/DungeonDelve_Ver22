@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerDataHandle : MonoBehaviour
@@ -13,15 +14,21 @@ public class PlayerDataHandle : MonoBehaviour
     /// Toàn bộ cấu hình của nhân vật: HP, ST, ATK, .....
     /// </summary>
     [field: SerializeField] public SO_PlayerConfiguration PlayerConfig { get; private set; }
-    
-    
+
+
     /// <summary>
     /// RenderTexture(RawImage) -> Render các model của nhân vật lên UI
     /// </summary>
-    [field: SerializeField] public PlayerRenderTexture PlayerRenderTexture { get; private set; }
-   
-    
-    private void OnEnable() => PlayerRenderTexture.CloseRenderUI();
+    public PlayerRenderTexture PlayerRenderTexture { get; private set; }
+
+    [SerializeField] private PlayerRenderTexture playerRenderTexturePrefab;
+
+
+    private void OnEnable()
+    {
+        PlayerRenderTexture = Instantiate(playerRenderTexturePrefab, null);
+        PlayerRenderTexture.CloseRenderUI();
+    }
     
     
     /// <summary>
