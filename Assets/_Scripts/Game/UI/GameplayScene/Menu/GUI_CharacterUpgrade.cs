@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +40,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private int _mediumExpValue;    
     private int _bigExpValue;
 
+    private int _characterLevelMax;  // lv tối đa
     private int _currentLevel;       // lv hiện tại
     private int _currentExp;         // kinh nghiệm
     private int _nextExp;            // kinh nghiệm tối đa để nâng cấp lên lv tiếp theo
@@ -60,29 +60,23 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private SO_PlayerConfiguration _playerConfig;
 
     
-    private void Awake()
-    {
-        GUI_Manager.Add(this);
-    }
     private void OnEnable()
     {
-        cancelBtt.onClick.AddListener(InitValue);
-        cancelBtt.onClick.AddListener(UpdateData);
+        GUI_Manager.Add(this);
+        cancelBtt.onClick.AddListener(OnClickCancelButton);
         upgradeBtt.onClick.AddListener(OnClickUpgradeButton);
+        
         InitValue();
     }
     private void OnDisable()
     {
-        cancelBtt.onClick.RemoveListener(InitValue);
-        cancelBtt.onClick.RemoveListener(UpdateData);
-        upgradeBtt.onClick.RemoveListener(OnClickUpgradeButton);
-    }
-    private void OnDestroy()
-    {
         GUI_Manager.Remove(this);
+        cancelBtt.onClick.RemoveListener(OnClickCancelButton);
+        upgradeBtt.onClick.RemoveListener(OnClickUpgradeButton);
         
         if(!_isEventRegistered) return;
         _userData.OnCoinChangedEvent -= OnCoinChanged;
+        _isEventRegistered = false;
     }
     
 
@@ -105,6 +99,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         _player = _gameManager.Player;
         _upgradeData = _gameManager.CharacterUpgradeData;
         _playerConfig = _gameManager.Player.PlayerConfig;
+        _characterLevelMax = SO_CharacterUpgradeData.levelMax;
         
         UpdateData();
 
@@ -126,9 +121,11 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         
         SetCoinText();
         SetEXPText();
-        SetLevelText();
         SetAmountUseText();
         SetUpgradeStateButton();
+        SetLevelText();
+        
+        CheckLevelMax();
     }
     private void GetStats()
     {
@@ -164,15 +161,15 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     /// <param name="_value"> Giá trị tương ứng 1, 2, 3 <=> Small, Medium, Big </param>
     public void OnSelectItemButton(int _value)
     {
-        InitValue();
-        
-        _selectItem = _value;
-        
         gradientItem.transform.SetParent(itemSlots.GetChild(_value - 1));
         gradientItem.transform.localPosition = Vector3.zero;
         gradientItem.gameObject.SetActive(true);
         
+        if(_currentLevel >= _characterLevelMax) return;
+        
+        InitValue();
         OnIncreaseAmountItemButton(0);
+        _selectItem = _value;
     }
     
     /// <summary>
@@ -186,24 +183,24 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         switch (_selectItem)
         {
             case 1:
-                increaseAmountUseBtt.interactable = _amountUse < _smallExpValue && _currentLevel <= SO_CharacterUpgradeData.levelMax;
+                increaseAmountUseBtt.interactable = _amountUse < _smallExpValue;
                 _totalCoinCost = _amountUse * expSmallBuff.UpgradeCost;
                 _increaseEXP = (int)expSmallBuff.Value;
                 break;
             
             case 2:
-                increaseAmountUseBtt.interactable = _amountUse < _mediumExpValue && _currentLevel <= SO_CharacterUpgradeData.levelMax;
+                increaseAmountUseBtt.interactable = _amountUse < _mediumExpValue;
                 _totalCoinCost = _amountUse * expMediumBuff.UpgradeCost;
                 _increaseEXP = (int)expMediumBuff.Value;
                 break;
             
             case 3:
-                increaseAmountUseBtt.interactable = _amountUse < _bigExpValue && _currentLevel <= SO_CharacterUpgradeData.levelMax;
+                increaseAmountUseBtt.interactable = _amountUse < _bigExpValue;
                 _totalCoinCost = _amountUse * expBigBuff.UpgradeCost;
                 _increaseEXP = (int)expBigBuff.Value;
                 break;
         }
-        
+        increaseAmountUseBtt.interactable = _currentLevel < _characterLevelMax;
         _totalExpReceived = Mathf.FloorToInt(_amountUse * _increaseEXP);
         
         DemoProgress();
@@ -213,14 +210,23 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         SetEXPText();
         SetUpgradeStateButton();
     }
-    
+
+    private void OnClickCancelButton()
+    {
+        if (_amountUse != 0)
+        {
+            InitValue();
+            UpdateData();
+            return;
+        }   
+        MenuController.Instance.CloseMenu();
+    }
     public void OnClickUpgradeButton()
     {
         SetStats();
         
         InitValue();
         UpdateData();
-        
         GUI_Manager.UpdateGUIData();
     }
     
@@ -233,9 +239,9 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         var currentDEF = _playerConfig.GetDEF() + _increasDEF;
         
         UpgradeNoticeManager.Instance.SetLevelText($"Lv. {currentLevel}");
-        CreateTextNotice("Max HP",$"{_playerConfig.GetHP()}", $"{currentHP}");
-        CreateTextNotice("ATK",$"{_playerConfig.GetATK()}", $"{currentATK}");
-        CreateTextNotice("DEF",$"{_playerConfig.GetDEF()}", $"{currentDEF}");
+        UpgradeNoticeManager.CreateText("Max HP",$"{_playerConfig.GetHP()}", $"{currentHP}");
+        UpgradeNoticeManager.CreateText("ATK",$"{_playerConfig.GetATK()}", $"{currentATK}");
+        UpgradeNoticeManager.CreateText("DEF",$"{_playerConfig.GetDEF()}", $"{currentDEF}");
         UpgradeNoticeManager.Instance.EnableNotice();
         
         _userData.IncreaseCoin(-_totalCoinCost);
@@ -284,10 +290,17 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
             break;
         }
     }
-    
 
-    private static void CreateTextNotice(string _title, string _oldValue, string _newValue) => UpgradeNoticeManager.Instance.CreateTextNotice(_title, _oldValue, _newValue);
-    private void SetUpgradeStateButton() => upgradeBtt.interactable = _amountUse != 0 && _coin >= _totalCoinCost;
+
+    private void CheckLevelMax()
+    {
+        if (_currentLevel < _characterLevelMax) return;
+
+        _currentExp = 0;
+        mainProgressSliderBar.value = mainProgressSliderBar.maxValue;
+        charEXPText.text = $"~/{_nextExp}";
+    }
+    private void SetUpgradeStateButton() => upgradeBtt.interactable = _amountUse != 0 && _coin >= _totalCoinCost && _currentLevel < _characterLevelMax;
     // Set UGUI Text
     private void SetSmallExpValueText() => expSmallValueText.text = _smallExpValue == 0 ? $"<color=red>{_smallExpValue}</color>" : $"<color=white>{_smallExpValue}</color>";
     private void SetMeidumExpValueText() => expMediumValueText.text = _mediumExpValue == 0 ? $"<color=red>{_mediumExpValue}</color>" : $"<color=white>{_mediumExpValue}</color>";
@@ -296,8 +309,14 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private void SetCoinText() => currencyText.text = $"{_coin}/{_totalCoinCost}";
     private void SetLevelText()
     {
-        var _demoLvToStr = _increaseLevel == 0 ? "" : $"+ {_increaseLevel}";
-        charLevelText.text = $"Lv. {_currentLevel}  <size=35><color=#FFD900> {_demoLvToStr}</color></size>";
+        string _demoLvToStr;
+        if (_currentLevel >= _characterLevelMax) 
+            _demoLvToStr = "MAX";
+        else    
+            _demoLvToStr = _increaseLevel == 0 ? "" : $"+ {_increaseLevel}";
+
+        
+        charLevelText.text = $"Lv. {_currentLevel}  <size=35><color=#FFD900> {_demoLvToStr} </color></size>";
     }
     private void SetEXPText()
     {

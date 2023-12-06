@@ -99,7 +99,7 @@ public class GameplayEditorWindow : EditorWindow
         Space(30);
         GUILayout.Label("INFORMATION ------------------------", EditorStyles.boldLabel);
         _playerConfig.SetName(EditorGUILayout.TextField("Name", $"{_playerConfig.NameCode}", Width(500)));
-        _playerConfig.SetLevel(EditorGUILayout.IntField("Level", _playerConfig.GetLevel(), Width(500)));
+        _playerConfig.SetLevel(EditorGUILayout.IntSlider("Weapon Level", _playerConfig.GetLevel(), 1, SO_CharacterUpgradeData.levelMax, Width(500)));
         _playerConfig.SetCurrentEXP(EditorGUILayout.IntField("Current EXP", _playerConfig.GetCurrentEXP(), Width(500)));
         _playerConfig.SetInfor(EditorGUILayout.TextField("Infor", _playerConfig.GetInfor(), Width(500)));
         GUILayout.BeginHorizontal();
@@ -277,15 +277,17 @@ public class GameplayEditorWindow : EditorWindow
     {
         Space(30);
         GUILayout.Label("REQUIRES WEAPON UPGRADE -----------", EditorStyles.boldLabel);
-        Space(5);
         
         if(_requiresData == null) return;
-
+        
+        Space(8);
         GUILayout.BeginHorizontal();
         GUILayout.Box("Level Upgrade", Width(100));
         GUILayout.Box("Coin Upgrade Cost", Width(120));
         GUILayout.Box("Item Code", Width(150));
         GUILayout.Box("Item Value", Width(75));
+        GUILayout.Label("", Width(50));
+        _requiresData.maxLevelUpgrade = EditorGUILayout.IntField("Max Level Upgrade", _requiresData.maxLevelUpgrade, Width(200));
         GUILayout.EndHorizontal();
         
         EditorGUI.BeginChangeCheck();
@@ -293,8 +295,8 @@ public class GameplayEditorWindow : EditorWindow
         {
             GUILayout.BeginVertical(GUI.skin.box);
             GUILayout.BeginHorizontal();
+            
             var _data = _requiresData.RequiresDatas[i];
-            _data.levelUpgrade = i + 2;
             GUILayout.Box($"{i + 1} -> {i + 2}",BoxColorText(Color.red) , Width(100));
             _data.coinCost = EditorGUILayout.IntField("", _data.coinCost, TextFieldColorText(Color.cyan) , Width(120));
             
@@ -327,7 +329,7 @@ public class GameplayEditorWindow : EditorWindow
         }
         
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("+", Width(45), Height(25)))
+        if (GUILayout.Button("+", Width(45), Height(25)) && _requiresData.RequiresDatas.Count < _requiresData.maxLevelUpgrade - 1)
         {
             _requiresData.RequiresDatas.Add(new SO_RequiresWeaponUpgradeConfiguration.RequiresData());
         }

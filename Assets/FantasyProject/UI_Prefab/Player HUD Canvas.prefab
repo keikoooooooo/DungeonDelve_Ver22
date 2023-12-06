@@ -3841,7 +3841,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1739650772945783989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3871,7 +3871,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903f26c6c41f439498ea5f466118b0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   healthBar: {fileID: 1210821417497883206}
   staminaBar: {fileID: 4165775507836117422}
   skillCooldownTime: {fileID: 1650299049}

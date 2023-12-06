@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class GUI_WeaponStats : MonoBehaviour, IGUI
 {
-    
     [SerializeField] private RawImage rawMesh;
     
     [Header("Infor")]
@@ -32,8 +31,8 @@ public class GUI_WeaponStats : MonoBehaviour, IGUI
     private PlayerRenderTexture _playerRender;
     
     
-    private void Awake() => GUI_Manager.Add(this);
-    private void OnDestroy() => GUI_Manager.Remove(this);
+    private void OnEnable() => GUI_Manager.Add(this);
+    private void OnDisable() => GUI_Manager.Remove(this);
     
     
 
@@ -58,17 +57,18 @@ public class GUI_WeaponStats : MonoBehaviour, IGUI
         weaponLevelText.text = $"Lv. {weaLv}";
         weaponNameText.text = $"{_playerConfig.GetWeaponName()}";
 
-        critRateText.SetValueText($"{_playerConfig.GetCRITRate()} %");
-        critDMGText.SetValueText($"{_playerConfig.GetCRITDMG()} %");
-        hit1_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[0].GetMultiplier()[weaLv - 1]} %");
-        hit2_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[1].GetMultiplier()[weaLv - 1]} %");
-        hit3_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[2].GetMultiplier()[weaLv - 1]} %");
-        hit4_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[3].GetMultiplier()[weaLv - 1]} %");
-        hit5_DMGText.SetValueText($"{_playerConfig.GetNormalAttackMultiplier()[4].GetMultiplier()[weaLv - 1]} %");
+        critRateText.SetValueText(_playerConfig.GetCRITRate().ToString("F") + " %");
+        critDMGText.SetValueText(_playerConfig.GetCRITDMG().ToString("F") + " %");
+        hit1_DMGText.SetValueText(_playerConfig.GetNormalAttackMultiplier()[0].GetMultiplier()[weaLv - 1].ToString("F") + " %");
+        hit2_DMGText.SetValueText(_playerConfig.GetNormalAttackMultiplier()[1].GetMultiplier()[weaLv - 1].ToString("F") + " %");
+        hit3_DMGText.SetValueText(_playerConfig.GetNormalAttackMultiplier()[2].GetMultiplier()[weaLv - 1].ToString("F") + " %");
+        hit4_DMGText.SetValueText(_playerConfig.GetNormalAttackMultiplier()[3].GetMultiplier()[weaLv - 1].ToString("F") + " %");
+        hit5_DMGText.SetValueText(_playerConfig.GetNormalAttackMultiplier()[4].GetMultiplier()[weaLv - 1].ToString("F") + " %");
+        
         chargedAttack_STCostText.SetValueText($"{_playerConfig.GetChargedAttackSTCost()}");
-        chargedAttack_DMGText.SetValueText($"{_playerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[weaLv - 1]} %");
-        elementalSkill_DMGText.SetValueText($"{_playerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[weaLv - 1]} %");
-        elementalBurst_DMGText.SetValueText($"{_playerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[weaLv - 1]} %");
+        chargedAttack_DMGText.SetValueText(_playerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[weaLv - 1].ToString("F") + " %");
+        elementalSkill_DMGText.SetValueText(_playerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[weaLv - 1].ToString("F") + " %");
+        elementalBurst_DMGText.SetValueText(_playerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[weaLv - 1].ToString("F") + " %");
         weaponDetailsText.SetValueText($"{_playerConfig.GetWeaponInfo()}");
     }
     public void OpenRenderTexture()

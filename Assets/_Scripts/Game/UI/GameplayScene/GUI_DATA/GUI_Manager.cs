@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 
-
 /// <summary>
-///  Gọi func SendRef để gửi tham chiếu của Player đến tất cả interface IGUIData có trong danh sách GUIDatas để cập nhật data của _player ra UI của từng thành phần
+/// Danh sách Instance IGUI có trong danh sách GUIDatas để xử lí data game trên UI.
 /// </summary>
 public static class GUI_Manager
 {
     private static readonly List<IGUI> GUIDatas = new();
-    
     
     /// <summary>
     /// Gửi RefData tới các GUI có đăng kí nhận ref, chỉ gọi 1 lần duy nhất mỗi lần scene này được khởi tạo
@@ -31,6 +29,5 @@ public static class GUI_Manager
         if(!GUIDatas.Contains(iGui)) return;
         GUIDatas.Remove(iGui);
     }
-    
-    
+
 }

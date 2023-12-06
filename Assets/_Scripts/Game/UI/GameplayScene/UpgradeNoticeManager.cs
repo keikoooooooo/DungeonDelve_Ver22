@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,11 +7,11 @@ public class UpgradeNoticeManager : Singleton<UpgradeNoticeManager>
     [SerializeField] private Animator animator;
     [SerializeField] private Button confirmBtt;
     [SerializeField] private TextMeshProUGUI levelText;
-    
+    [Space]
     [SerializeField] private TextBar_2 textBarPrefab;
     [SerializeField] private Transform textContent;
 
-    private ObjectPooler<TextBar_2> _poolTextBar;
+    private static ObjectPooler<TextBar_2> _poolTextBar;
 
     
     private void Start()
@@ -39,7 +38,7 @@ public class UpgradeNoticeManager : Singleton<UpgradeNoticeManager>
     /// <param name="_title"> Tiêu đề textBar </param>
     /// <param name="_value1"> Giá trị cũ </param>
     /// <param name="_value2"> Giá trị mới </param>
-    public void CreateTextNotice(string _title, string _value1, string _value2)
+    public static void CreateText(string _title, string _value1, string _value2)
     {
         var textBar = _poolTextBar.Get();
         textBar.SetTitleText(_title);

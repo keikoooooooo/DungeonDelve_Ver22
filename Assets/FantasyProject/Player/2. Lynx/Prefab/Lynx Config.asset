@@ -16,9 +16,9 @@ MonoBehaviour:
   Level: 1
   CurrentEXP: 0
   Infor: 
-  MaxHP: 15000
+  MaxHP: 1000
   ATK: 70
-  CRITRate: 5
+  CRITRate: 5.4352
   CRITDMG: 50
   DEF: 36
   WalkSpeed: 1.7
@@ -33,7 +33,7 @@ MonoBehaviour:
   ElementalBurstCD: 15
   WeaponName: Twilight
   WeaponInfo: Increases Elemental Skill and Elemental Burst DMG by 36%
-  WeaponLevel: 3
+  WeaponLevel: 1
   NormalAttackMultiplier:
   - MultiplierTypeName: 1 - Hit DMG (%)
     Multiplier:

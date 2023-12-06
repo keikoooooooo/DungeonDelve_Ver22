@@ -12,44 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e1c5ca713159a04297d5aa2b0bdb06d, type: 3}
   m_Name: Weapon Upgrade Config
   m_EditorClassIdentifier: 
+  maxLevelUpgrade: 10
   RequiresDatas:
-  - levelUpgrade: 2
-    coinCost: 12500
+  - coinCost: 12500
     requiresItem:
     - code: 200
       value: 3
     - code: 112
       value: 4
-  - levelUpgrade: 3
-    coinCost: 30000
+  - coinCost: 30000
     requiresItem:
     - code: 201
       value: 3
     - code: 113
       value: 2
-  - levelUpgrade: 4
-    coinCost: 55000
+  - coinCost: 55000
     requiresItem:
     - code: 201
       value: 4
     - code: 113
       value: 3
-  - levelUpgrade: 5
-    coinCost: 85000
+  - coinCost: 85000
     requiresItem:
     - code: 201
       value: 6
     - code: 113
       value: 5
-  - levelUpgrade: 6
-    coinCost: 122500
+  - coinCost: 122500
     requiresItem:
     - code: 201
       value: 9
     - code: 113
       value: 7
-  - levelUpgrade: 7
-    coinCost: 242500
+  - coinCost: 242500
     requiresItem:
     - code: 202
       value: 5
@@ -57,8 +52,7 @@ MonoBehaviour:
       value: 5
     - code: 203
       value: 1
-  - levelUpgrade: 8
-    coinCost: 502500
+  - coinCost: 502500
     requiresItem:
     - code: 202
       value: 7
@@ -66,8 +60,7 @@ MonoBehaviour:
       value: 7
     - code: 203
       value: 2
-  - levelUpgrade: 9
-    coinCost: 952500
+  - coinCost: 952500
     requiresItem:
     - code: 202
       value: 9
@@ -75,8 +68,7 @@ MonoBehaviour:
       value: 9
     - code: 203
       value: 3
-  - levelUpgrade: 10
-    coinCost: 1652500
+  - coinCost: 1652500
     requiresItem:
     - code: 202
       value: 15

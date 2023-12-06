@@ -28,10 +28,10 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
     private SO_CharacterUpgradeData _upgradeData;
     private SO_PlayerConfiguration _playerConfig;
     private PlayerRenderTexture _playerRender;
-
+    private int _characterLevelMax;
     
-    private void Awake() => GUI_Manager.Add(this);
-    private void OnDestroy() => GUI_Manager.Remove(this);
+    private void OnEnable() => GUI_Manager.Add(this);
+    private void OnDisable() => GUI_Manager.Remove(this);
     
     
     public void GetRef(GameManager _gameManager)
@@ -41,6 +41,7 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
         _upgradeData = _gameManager.CharacterUpgradeData;
         rawMainMesh.texture = _playerRender.renderTexture;
         rawShadowMesh.texture = rawMainMesh.texture;
+        _characterLevelMax = SO_CharacterUpgradeData.levelMax;
         
         UpdateData();
     }
@@ -55,10 +56,11 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
         if(!_playerConfig) return;
         
         charNameText.text = $"{_playerConfig.GetName()}";
-        charLevelText.text = $"Lv. {_playerConfig.GetLevel()}";
-        charCurrentEXPText.text = $"{_playerConfig.GetCurrentEXP()} / {_upgradeData.GetNextEXP(_playerConfig.GetLevel())}";
         charChapterIcon.sprite = _playerConfig.ChapterIcon;
 
+        var _currentLv = _playerConfig.GetLevel();
+        charLevelText.text = $"Lv. {_currentLv}";
+        charCurrentEXPText.text = _currentLv >= _characterLevelMax ? $"~ / {_upgradeData.GetNextEXP(_currentLv)}": $"{_playerConfig.GetCurrentEXP()} / {_upgradeData.GetNextEXP(_currentLv)}";
         maxHPText.SetValueText($"{_playerConfig.GetHP()}");
         maxSTText.SetValueText($"{_playerConfig.GetST()}");
         runSpeedText.SetValueText($"{_playerConfig.GetRunSpeed()}");

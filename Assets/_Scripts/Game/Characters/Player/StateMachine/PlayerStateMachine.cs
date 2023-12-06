@@ -28,7 +28,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     protected bool CanRotation { get; set; }
     protected bool CanAttack { get; set; }
     public bool IsIdle => inputs.move.magnitude == 0;
-    public bool IsJump => CanControl && inputs.space && !inputs.leftShift && !animator.IsTag(1, "Damage");
+    protected bool IsJump => CanControl && inputs.space && !inputs.leftShift && !animator.IsTag(1, "Damage");
     public bool IsWalk => CanControl && !IsIdle && _movementState == MovementState.StateWalk;
     public bool IsRun => CanControl && !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
     public bool IsDash => CanControl && inputs.leftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
@@ -238,16 +238,20 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
         
-        // Có kích CRIT không ?
-        var critRateRandom = Random.value;
-        var _isCrit = false;
-        if (critRateRandom <= PlayerConfig.GetCRITRate() / 100)
+        /*  NOTE:
+         *  - 1. calculatedDamage: đã được tính mỗi khi attack theo type bằng animationEvent
+         *  - 2. còn phía dưới là sẽ cộng thêm chỉ số phụ như: %CritDMG, ....
+         */
+        
+        var _isCrit = false;  // Có kích CRIT không ?
+        if (Random.value <= PlayerConfig.GetCRITRate() / 100)
         {
             var critDMG = (PlayerConfig.GetCRITDMG() + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
             _calculatedDamage = Mathf.CeilToInt(_calculatedDamage * critDMG);
             _isCrit = true;
         } 
         
+        // Gọi takeDMG trên đối tượng vừa va chạm
         iDamageable.TakeDMG(_calculatedDamage, _isCrit);
     }
     public void TakeDMG(int _damage, bool _isCRIT) 

@@ -12,8 +12,8 @@ public class MenuController : Singleton<MenuController>
     public UnityEvent OnClickBOpenMenuEvent;
     public UnityEvent OnCloseMenuEvent;
     
-    private bool isOpenMenu;
-    private bool isEventRegistered;
+    private bool _isOpenMenu;
+    private bool _isEventRegistered;
     private PlayerController _player;
     private UserData _userData;
 
@@ -25,9 +25,9 @@ public class MenuController : Singleton<MenuController>
 
         _player = GameManager.Instance.Player;
         _userData = GameManager.Instance.UserData;
-        if (!isEventRegistered)
+        if (!_isEventRegistered)
         {
-            isEventRegistered = true;
+            _isEventRegistered = true;
             _userData.OnCoinChangedEvent += OnCoinChanged;
         }
         
@@ -35,22 +35,23 @@ public class MenuController : Singleton<MenuController>
     }
     private void Start()
     {
-        isOpenMenu = false;
+        _isOpenMenu = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update() => HandleInput();
     private void OnDisable()
     {
-        if(!isEventRegistered) return;
+        if(!_isEventRegistered) return;
         _userData.OnCoinChangedEvent -= OnCoinChanged;
+        _isEventRegistered = false;
     }
     
     private void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            isOpenMenu = !isOpenMenu;
-            if(isOpenMenu)
+            _isOpenMenu = !_isOpenMenu;
+            if(_isOpenMenu)
             {
                 OpenMenu();
                 OnClickEscOpenMenuEvent?.Invoke(); 
@@ -61,8 +62,8 @@ public class MenuController : Singleton<MenuController>
             }
         }
 
-        if (!Input.GetKeyDown(KeyCode.B)) return;
-        isOpenMenu = true;
+        if (!Input.GetKeyDown(KeyCode.B) || _isOpenMenu) return;
+        _isOpenMenu = true;
         OpenMenu();
         OnClickBOpenMenuEvent?.Invoke();
     }
@@ -86,6 +87,7 @@ public class MenuController : Singleton<MenuController>
         Cursor.lockState = CursorLockMode.Locked;
         _player.cinemachineFreeLook.enabled = true;
         _player.PlayerData.PlayerRenderTexture.CloseRenderUI();
+        _isOpenMenu = false;
     }
 
     
@@ -98,7 +100,7 @@ public class MenuController : Singleton<MenuController>
     }
     private void OnApplicationFocus(bool hasFocus)
     {
-        Cursor.lockState = hasFocus && !isOpenMenu ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.lockState = hasFocus && !_isOpenMenu ? CursorLockMode.Locked : CursorLockMode.None;
     }
     
 }

@@ -51,7 +51,15 @@ public class UserData
             { ItemNameCode.EXPSmall, 10},
             { ItemNameCode.EXPMedium, 20},
             { ItemNameCode.EXPBig, 30},
-            { ItemNameCode.JASliver1, 200},
+            { ItemNameCode.UPSpearhead1, 20},
+            { ItemNameCode.JASliver1, 20},
+            { ItemNameCode.UPSpearhead2, 20},
+            { ItemNameCode.JASliver2, 20},
+            { ItemNameCode.UPSpearhead3, 20},
+            { ItemNameCode.JASliver3, 20},
+            { ItemNameCode.UPForgedBow, 20},
+            { ItemNameCode.UPForgedSword, 20},
+            
         };
     }
     

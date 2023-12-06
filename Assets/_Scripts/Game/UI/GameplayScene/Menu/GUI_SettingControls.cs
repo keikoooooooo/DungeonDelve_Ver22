@@ -11,13 +11,12 @@ public class GUI_SettingControls : MonoBehaviour, IGUI
     // Key PlayerPrefs
     private readonly string PP_SensitivityIndex = "SensitivityIndex";
     
-
-    private void Awake() => GUI_Manager.Add(this);
     private void OnEnable()
     {
+        GUI_Manager.Add(this);
         cameraSensitivity.InitValue(100, 500, PlayerPrefs.GetFloat(PP_SensitivityIndex, 150));
     }
-    private void OnDestroy() => GUI_Manager.Remove(this);
+    private void OnDisable() => GUI_Manager.Remove(this);
     
     
     public void GetRef(GameManager _gameManager)
