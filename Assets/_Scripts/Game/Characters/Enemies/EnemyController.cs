@@ -1,9 +1,11 @@
+using System;
 using NaughtyAttributes;
 using NodeCanvas.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
-public class EnemyController : MonoBehaviour, IDamageable
+public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyController>
 {
     // Ref
     [field: SerializeField, Required] public SO_EnemyConfiguration EnemyConfig { get; private set; }
@@ -27,11 +29,15 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         DamageableData.Add(gameObject, this);
+        Health.InitValue(EnemyConfig.GetHP());
+        SetTakeDMG(false);
+        SetDie(false);
     }
     private void Start()
     {
         _player = GameManager.Instance.Player.gameObject;
         if(_player) SetRefPlayer(_player);
+        SetRootPosition(transform.localPosition);
         SetRunSpeed(EnemyConfig.GetRunSpeed());
         SetWalkSpeed(EnemyConfig.GetWalkSpeed());
         SetCDNormalAttack(EnemyConfig.GetNormalAttackCD());
@@ -46,6 +52,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     // Set BehaviorTrees Variables    
     private void SetRefPlayer(GameObject _value) => Blackboard.SetVariableValue("Player", _value);
+    private void SetRootPosition(Vector3 _value) => Blackboard.SetVariableValue("RootPosition", _value);
     private void SetWalkSpeed(float _value) => Blackboard.SetVariableValue("WalkSpeed", _value);
     private void SetRunSpeed(float _value) => Blackboard.SetVariableValue("RunSpeed", _value);
     private void SetCDNormalAttack(float _value) => Blackboard.SetVariableValue("NormalAttackCD", _value);
@@ -122,4 +129,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     /// <param name="_percent"> Phần trăm sát thương. </param>
     public void ConvertDMG(float _percent) => CalculatedDamage = Mathf.CeilToInt(EnemyConfig.GetATK() * (_percent / 100.0f));
 
+    
+    public void Release() => ReleaseCallback?.Invoke(this);
+    public Action<EnemyController> ReleaseCallback { get; set; }
 }

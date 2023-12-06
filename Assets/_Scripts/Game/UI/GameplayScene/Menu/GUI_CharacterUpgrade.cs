@@ -50,7 +50,8 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private int _increaseEXP;       
     private int _increaseHP => 200 * _increaseLevel;
     private int _increasATK => 15 * _increaseLevel;        
-    private int _increasDEF => 3 * _increaseLevel;         
+    private int _increasDEF => 3 * _increaseLevel;
+    private bool _canUpgrade => _currentLevel < _characterLevelMax;
     
     
     private bool _isEventRegistered;
@@ -161,15 +162,17 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     /// <param name="_value"> Giá trị tương ứng 1, 2, 3 <=> Small, Medium, Big </param>
     public void OnSelectItemButton(int _value)
     {
+        InitValue();
+        _selectItem = _value;
+        OnIncreaseAmountItemButton(0);
+        
+        if (!_canUpgrade)
+        { 
+            return;
+        }
         gradientItem.transform.SetParent(itemSlots.GetChild(_value - 1));
         gradientItem.transform.localPosition = Vector3.zero;
         gradientItem.gameObject.SetActive(true);
-        
-        if(_currentLevel >= _characterLevelMax) return;
-        
-        InitValue();
-        OnIncreaseAmountItemButton(0);
-        _selectItem = _value;
     }
     
     /// <summary>
@@ -183,24 +186,23 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         switch (_selectItem)
         {
             case 1:
-                increaseAmountUseBtt.interactable = _amountUse < _smallExpValue;
+                increaseAmountUseBtt.interactable = _amountUse < _smallExpValue && _canUpgrade;
                 _totalCoinCost = _amountUse * expSmallBuff.UpgradeCost;
                 _increaseEXP = (int)expSmallBuff.Value;
                 break;
             
             case 2:
-                increaseAmountUseBtt.interactable = _amountUse < _mediumExpValue;
+                increaseAmountUseBtt.interactable = _amountUse < _mediumExpValue && _canUpgrade;
                 _totalCoinCost = _amountUse * expMediumBuff.UpgradeCost;
                 _increaseEXP = (int)expMediumBuff.Value;
                 break;
             
             case 3:
-                increaseAmountUseBtt.interactable = _amountUse < _bigExpValue;
+                increaseAmountUseBtt.interactable = _amountUse < _bigExpValue && _canUpgrade;
                 _totalCoinCost = _amountUse * expBigBuff.UpgradeCost;
                 _increaseEXP = (int)expBigBuff.Value;
                 break;
         }
-        increaseAmountUseBtt.interactable = _currentLevel < _characterLevelMax;
         _totalExpReceived = Mathf.FloorToInt(_amountUse * _increaseEXP);
         
         DemoProgress();
@@ -300,7 +302,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         mainProgressSliderBar.value = mainProgressSliderBar.maxValue;
         charEXPText.text = $"~/{_nextExp}";
     }
-    private void SetUpgradeStateButton() => upgradeBtt.interactable = _amountUse != 0 && _coin >= _totalCoinCost && _currentLevel < _characterLevelMax;
+    private void SetUpgradeStateButton() => upgradeBtt.interactable = _amountUse != 0 && _coin >= _totalCoinCost && _canUpgrade;
     // Set UGUI Text
     private void SetSmallExpValueText() => expSmallValueText.text = _smallExpValue == 0 ? $"<color=red>{_smallExpValue}</color>" : $"<color=white>{_smallExpValue}</color>";
     private void SetMeidumExpValueText() => expMediumValueText.text = _mediumExpValue == 0 ? $"<color=red>{_mediumExpValue}</color>" : $"<color=white>{_mediumExpValue}</color>";
@@ -310,7 +312,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private void SetLevelText()
     {
         string _demoLvToStr;
-        if (_currentLevel >= _characterLevelMax) 
+        if (!_canUpgrade) 
             _demoLvToStr = "MAX";
         else    
             _demoLvToStr = _increaseLevel == 0 ? "" : $"+ {_increaseLevel}";

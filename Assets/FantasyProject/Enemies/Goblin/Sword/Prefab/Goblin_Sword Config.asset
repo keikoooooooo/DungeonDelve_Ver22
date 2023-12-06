@@ -16,11 +16,11 @@ MonoBehaviour:
   Level: 2
   CurrentEXP: 0
   Infor: 
-  MaxHP: 200
+  MaxHP: 300
   ATK: 40
-  CRITRate: 90
+  CRITRate: 5
   CRITDMG: 50
-  DEF: 50
+  DEF: 7
   WalkSpeed: 2.5
   RunSpeed: 4.5
   NormalAttackCD: 6

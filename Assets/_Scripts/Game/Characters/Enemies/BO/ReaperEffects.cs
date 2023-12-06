@@ -26,12 +26,7 @@ public class ReaperEffects : MonoBehaviour, ICalculateDMG
 
     [Header("Visual Effect")]
     public ParticleSystem skillEffect;
-
-    [Space, Header("Set Material")]
-    public M_SetFloat edgeWidth;
-    public M_SetFloat noiseScale;
-    public M_SetFloat dissolve;
-
+    
     private ObjectPooler<Reference> _poolIndicator;
     private ObjectPooler<Reference> _poolSlash;
     private ObjectPooler<PhysicsDetection> _poolSpecial;
@@ -43,11 +38,7 @@ public class ReaperEffects : MonoBehaviour, ICalculateDMG
     private Quaternion _rotEffect;
     private Coroutine _enableDissolve;
 
-    private void OnEnable()
-    {
-        if(_enableDissolve != null) StopCoroutine(_enableDissolve);
-        _enableDissolve = StartCoroutine(EnableDissolveCoroutine());
-    }
+
     private void Start()
     {
         Initialized();
@@ -59,28 +50,6 @@ public class ReaperEffects : MonoBehaviour, ICalculateDMG
     }
     
 
-    private IEnumerator EnableDissolveCoroutine()
-    {
-        // hòa tan: tắt
-        edgeWidth.ChangeValueSet(.4f);
-        edgeWidth.Apply();
-        
-        noiseScale.ChangeValueSet(22);
-        noiseScale.Apply();
-        
-        dissolve.ChangeCurrentValue(0);
-        dissolve.ChangeValueSet(1);
-        dissolve.ChangeDurationApply(0);
-        dissolve.Apply();
-
-        yield return new WaitForSeconds(2.85f);
-        
-        // hòa tan: mở
-        dissolve.ChangeCurrentValue(1);
-        dissolve.ChangeValueSet(0);
-        dissolve.ChangeDurationApply(3f);
-        dissolve.Apply();
-    }
     private void Initialized()
     {
         slotVFX = GameObject.FindGameObjectWithTag("SlotsVFX").transform;

@@ -17,10 +17,10 @@ MonoBehaviour:
   CurrentEXP: 0
   Infor: 
   MaxHP: 1000
-  ATK: 70
+  ATK: 86
   CRITRate: 5.4352
   CRITDMG: 50
-  DEF: 36
+  DEF: 16
   WalkSpeed: 1.7
   RunSpeed: 5.7
   MaxST: 200

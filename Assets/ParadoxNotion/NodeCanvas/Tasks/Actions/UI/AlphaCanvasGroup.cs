@@ -16,9 +16,6 @@ namespace NodeCanvas.Tasks.Actions
         public BBParameter<float> setTo;
         [SliderField(0, 1)]
         public float transitTime = 0.25f;
-
-        [Tooltip("Có cập nhật giá trị mỗi Frame")]
-        public BBParameter<bool> updateFrameByFrame;
         
         private float currentValue;
         
@@ -39,11 +36,11 @@ namespace NodeCanvas.Tasks.Actions
         protected override void OnUpdate()
         {
             Set(Mathf.Lerp(currentValue, setTo.value, elapsedTime / transitTime));
-            if (elapsedTime >= transitTime && !updateFrameByFrame.value)
+            if (elapsedTime >= transitTime)
             {
                 EndAction(true);
             }
-                
+            
         }
 
         private float Get() => canvasGroup.value.alpha;
