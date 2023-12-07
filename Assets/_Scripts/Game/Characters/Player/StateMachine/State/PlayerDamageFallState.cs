@@ -16,12 +16,11 @@ public class PlayerDamageFallState : PlayerBaseState
     {
         _timePush = .35f;
         _machine.animator.SetTrigger(_machine.IDDamageFall);
-        _machine.ReleaseAction();
     }
     public override void UpdateState()
     {
         CheckSwitchState();
-        _machine.AppliedMovement = _machine.InputMovement.normalized * 0f;
+        _machine.InputMovement = Vector3.zero;
         
         if(_timePush <= 0)
             return;

@@ -5,19 +5,19 @@ public class PlayerDashState : PlayerBaseState
 {
     public PlayerDashState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
         : base(currentContext, playerStateFactory) {}
-    
-    
+
+    private int stCost => _machine.PlayerConfig.GetDashSTCost();
     private readonly float dashSpeed = 14f;
     private float speedPushDash;
     private Vector3 direction;
     
     public override void EnterState()
     {
-        _machine.OnDashEvent();
-        _machine.Stamina.Decreases(_machine.PlayerConfig.GetDashSTCost());
+        _machine.animator.Rebind();
         _machine.animator.SetTrigger(_machine.IDDash);
-        _machine.animator.SetBool(_machine.IDJump, false);
+        _machine.Stamina.Decreases(stCost);
         _machine.ReleaseAction();
+        _machine.OnDashEvent();
         
         speedPushDash = .3f;
         direction = Vector3.zero;

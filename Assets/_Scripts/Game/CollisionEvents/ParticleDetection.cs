@@ -10,12 +10,13 @@ public class ParticleDetection : DetectionBase
     
     private void OnParticleCollision(GameObject other)
     {
+        CollisionEnterEvent?.Invoke(other);
+        
         _particleEvent.Clear();
         var nums = particle.GetCollisionEvents(other, _particleEvent);
         if(nums <= 0) 
             return;
         
-        CollisionEnterEvent?.Invoke(other);
         PositionEnterEvent?.Invoke(_particleEvent[0].intersection);
     }
 

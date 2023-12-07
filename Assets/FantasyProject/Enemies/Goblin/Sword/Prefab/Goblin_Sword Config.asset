@@ -23,8 +23,8 @@ MonoBehaviour:
   DEF: 7
   WalkSpeed: 2.5
   RunSpeed: 4.5
-  NormalAttackCD: 6
-  SkillAttackCD: 8
+  NormalAttackCD: 4.5
+  SkillAttackCD: 6.5
   SpecialAttackCD: 10
   NormalAttackMultiplier:
   - MultiplierTypeName: Attack 0

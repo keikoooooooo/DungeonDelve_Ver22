@@ -18,14 +18,14 @@ MonoBehaviour:
   Infor: 
   MaxHP: 250
   ATK: 28
-  CRITRate: 5
+  CRITRate: 50
   CRITDMG: 50
   DEF: 5
   WalkSpeed: 2.5
   RunSpeed: 3.5
-  NormalAttackCD: 4
-  SkillAttackCD: 6
-  SpecialAttackCD: 12
+  NormalAttackCD: 3
+  SkillAttackCD: 5
+  SpecialAttackCD: 10
   NormalAttackMultiplier:
   - MultiplierTypeName: Attack 0
     Multiplier:

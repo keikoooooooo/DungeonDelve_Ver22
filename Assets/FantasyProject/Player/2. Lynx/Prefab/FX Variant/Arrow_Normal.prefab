@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98cfa91a33c9a474a9f314ff0105fc53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionType: {fileID: 2780897064271303166}
+  detectionType: {fileID: 6427837937895899554}
   flash: {fileID: 6654510630607391548}
   projectile: {fileID: 118883632821677789}
   hit: {fileID: 5491099951011846736}
@@ -245,67 +245,8 @@ PrefabInstance:
     - {fileID: 1654510265178733698, guid: 7f67f5c06b935c042bc988c2f2499476, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 97140737723702518, guid: 7f67f5c06b935c042bc988c2f2499476, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4615811445405238481}
-    - targetCorrespondingSourceObject: {fileID: 97140737723702518, guid: 7f67f5c06b935c042bc988c2f2499476, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2780897064271303166}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f67f5c06b935c042bc988c2f2499476, type: 3}
---- !u!1 &3369253948253309987 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 97140737723702518, guid: 7f67f5c06b935c042bc988c2f2499476, type: 3}
-  m_PrefabInstance: {fileID: 3429740022927266005}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &4615811445405238481
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3369253948253309987}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.35
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2780897064271303166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3369253948253309987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cc9b52fb92c5de41b8da139f9fde2cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionEnterEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  CollisionExitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  PositionEnterEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  PositionExitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  layerToCheck:
-    serializedVersion: 2
-    m_Bits: 1052680
 --- !u!198 &5491099951011846736 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7182304823289367173, guid: 7f67f5c06b935c042bc988c2f2499476, type: 3}
@@ -507,3 +448,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8497637602894813001, guid: 01a005058297909478beb7ce15cb2803, type: 3}
   m_PrefabInstance: {fileID: 5350918179762334130}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6427837937895899554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1402311871095728144, guid: 01a005058297909478beb7ce15cb2803, type: 3}
+  m_PrefabInstance: {fileID: 5350918179762334130}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e43c06f6ae82f4fb284d09edbe66ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -39,7 +39,7 @@ public class GameManager : Singleton<GameManager>
         if(!PlayFabHandleUserData.Instance)
         {
             UserData = new UserData("Test Editor", 50000000);
-            _playerPrefab = CharacterData.CharactersData[0].prefab;
+            _playerPrefab = CharacterData.CharactersData[1].prefab;
             _playerConfig = Instantiate(_playerPrefab.PlayerConfig);
         }
         else

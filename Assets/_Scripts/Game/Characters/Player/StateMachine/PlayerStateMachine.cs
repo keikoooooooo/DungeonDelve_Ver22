@@ -64,7 +64,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     
     // Events
     public event Action E_Dash;
-    public event Action E_OnChangePlayerConfig;
     
     // Player Config
     private PlayerStateFactory _state;
@@ -92,6 +91,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     private void OnEnable()
     {
         SetVariables();
+        DamageableData.Add(gameObject, this);
     }
     protected virtual void Update()
     {
@@ -141,17 +141,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         _movementState = MovementState.StateRun;
         characterController.enabled = true;
         InitStatus();
-        
-        // Event
-        DamageableData.Add(gameObject, this);
     }
     public void InitStatus()
     {
         Health.InitValue(PlayerConfig.GetHP());
         Stamina.InitValue(PlayerConfig.GetST());
-        E_OnChangePlayerConfig?.Invoke();
     }
-
 
     private void HandleInput()
     {
@@ -214,13 +209,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         if (InputMovement == Vector3.zero || !CanRotation) 
             return;
-
         var rotation = Quaternion.LookRotation(InputMovement, Vector3.up);
         model.rotation = Quaternion.RotateTowards(model.rotation, rotation, 1000 * Time.deltaTime);
     }
     private void HandleStamina()
     {
-        if(!CanIncreaseST || Stamina.CurrentValue >= PlayerConfig.GetST()) return;
+        if(!CanIncreaseST || Stamina.CurrentValue >= Stamina.MaxValue) return;
 
         if (_delayIncreaseST > 0)
         {
@@ -250,12 +244,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
             _calculatedDamage = Mathf.CeilToInt(_calculatedDamage * critDMG);
             _isCrit = true;
         } 
-        
         // Gọi takeDMG trên đối tượng vừa va chạm
         iDamageable.TakeDMG(_calculatedDamage, _isCrit);
     }
     public void TakeDMG(int _damage, bool _isCRIT) 
     {
+        ReleaseAction();
+        
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.GetDEF() * 0.5f) : PlayerConfig.GetDEF();
         
@@ -271,28 +266,37 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         if (Health.CurrentValue <= 0)
         {
             CurrentState.SwitchState(_state.Dead());
+            CanControl = false;
             return;
         }
-
+        
         HandleDamage();
         CurrentState.SwitchState(_isCRIT ? _state.DamageFall() : _state.DamageStand());
-        CanMove = false;
-        CanAttack = false;
-        CanRotation = false;
     }
-    public void SwitchIdleState() => CurrentState.SwitchState(_state.Idle());    // gọi trên animationEvent để player được di chuyển sau khi TakeDMG
+    public void ReleaseDamageState() // gọi trên animationEvent để giải phóng trạng thái TakeDamages
+    {
+        CanMove = true;
+        CanRotation = true;
+        CanAttack = true;
+        CurrentState.SwitchState(_state.Idle());
+    }
     #endregion
 
     
     #region Event Callback
     public void OnDashEvent() => E_Dash?.Invoke();
     #endregion
-    
+
 
     /// <summary>
     /// Khi nhận sát thương, nếu nhân vật cần thực hiện hành vi thì Override lại
     /// </summary>
-    protected virtual void HandleDamage() { }
+    protected virtual void HandleDamage()
+    {
+        CanMove = false;
+        CanRotation = false;
+        CanAttack = false;
+    }
     
     /// <summary>
     /// Giải phóng tất cả trạng thái khi nhảy, lướt,

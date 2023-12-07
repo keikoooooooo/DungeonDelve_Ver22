@@ -39,13 +39,16 @@ public class LynxEffects : MonoBehaviour
     private Coroutine _specialCoroutine;
 
     
-
-    private void Start()
+    private void OnEnable()
+    {
+        RegisterEvents();
+        effectSpecial.transform.SetParent(slotsVFX);
+    }
+    private void Awake()
     {
         InitValue();
-        RegisterEvents();
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
         UnRegisterEvents();
     }
@@ -57,7 +60,6 @@ public class LynxEffects : MonoBehaviour
         _poolNormalArrow = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsVFX, 25);
         _poolChargedArrow = new ObjectPooler<EffectBase>(chargedPrefab, slotsVFX, 8);
         _poolChargedNoFullyArrow = new ObjectPooler<EffectBase>(chargedNoFullyPrefab, slotsVFX, 8);
-        effectSpecial.transform.SetParent(slotsVFX);
     }
     private void RegisterEvents()
     {
@@ -89,7 +91,6 @@ public class LynxEffects : MonoBehaviour
             VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(lynxController.CauseDMG);
         }
     }
-    
     
     private void EffectArrowCombo(AnimationEvent eEvent)
     {

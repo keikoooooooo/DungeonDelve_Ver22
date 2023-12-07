@@ -6,26 +6,26 @@ public class StatusHandle
    public StatusHandle() { }
    public StatusHandle(int maxValue)
    {
-      _maxValue = maxValue;
+      MaxValue = maxValue;
       CurrentValue = maxValue;
    } 
    public event Action<int> E_OnValueChanged;
 
-   private int _maxValue;
+   public int MaxValue { get; private set; }
    public int CurrentValue { get; private set; }
 
 
    public void InitValue(int maxValue)
    {
-      _maxValue = maxValue;
+      MaxValue = maxValue;
       CurrentValue = maxValue;
       CallValueChangeEvent();
    }
    public void Increases(int _amount)
    {
       CurrentValue += _amount;
-      if (CurrentValue >= _maxValue)
-         CurrentValue = _maxValue;
+      if (CurrentValue >= MaxValue)
+         CurrentValue = MaxValue;
       
       CallValueChangeEvent();
    }

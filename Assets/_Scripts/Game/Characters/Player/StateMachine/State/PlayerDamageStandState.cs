@@ -15,16 +15,15 @@ public class PlayerDamageStandState : PlayerBaseState
     {
         _timePush = .125f;
         _machine.animator.SetTrigger(_machine.IDDamageStand);   
-        _machine.ReleaseAction();
     }
     public override void UpdateState()
     {
         CheckSwitchState();
-        _machine.AppliedMovement = _machine.InputMovement.normalized * 0f;
-
+        _machine.InputMovement = Vector3.zero;
+        
         if(_timePush <= 0) 
             return;
-
+        
         _pushVelocity = -_machine.model.forward * _force;
         _machine.characterController.Move(_pushVelocity * Time.deltaTime + _gravity * Time.deltaTime);
         _timePush -= Time.deltaTime;
