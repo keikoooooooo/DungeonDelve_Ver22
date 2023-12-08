@@ -12,14 +12,14 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     [SerializeField] private Slider progressSlider;
     [SerializeField] private TextMeshProUGUI currencyText;
     [Space]
-    [SerializeField] private Item itemPrefab;
+    [SerializeField] private GUI_Item itemPrefab;
     [SerializeField] private Transform slotItems;
 
     [Space]
     [SerializeField] private Button cancelBtt;
     [SerializeField] private Button upgradeBtt;
     
-    private ObjectPooler<Item> _poolItem;
+    private ObjectPooler<GUI_Item> _poolItem;
     private UserData _userData;
     private SO_PlayerConfiguration _playerConfig;
     private PlayerRenderTexture _playerRenderTexture;
@@ -79,7 +79,7 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     }
     private void Init()
     {
-        _poolItem = new ObjectPooler<Item>(itemPrefab, slotItems, _gameItemData.GameItemDatas.Count);
+        _poolItem = new ObjectPooler<GUI_Item>(itemPrefab, slotItems, _gameItemData.GameItemDatas.Count);
         progressSlider.maxValue = 1;
         progressSlider.minValue = 0;
         progressSlider.value = 0;
@@ -130,7 +130,7 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
             var itemValueToStr = hasItemValue < _requiresItem.value ? $"<color=red>{hasItemValue}</color> / {_requiresItem.value}" :
                                                                             $"<color=white>{hasItemValue}</color> / {_requiresItem.value}" ;
             var item = _poolItem.Get();
-            item.SetItem(_itemCustom, _requiresItem.value);
+            item.SetItem(_itemCustom);
             item.SetValueText(itemValueToStr);
             
             if (hasItemValue < _requiresItem.value) 
@@ -161,8 +161,8 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
         var currentCRITDMG = _playerConfig.GetCRITDMG() + Mathf.CeilToInt(_increaseCRITDMG);
         
         UpgradeNoticeManager.Instance.SetLevelText($"Lv. {currentLevel}");
-        UpgradeNoticeManager.CreateText("CRIT Rate", _playerConfig.GetCRITRate().ToString("F2") + " %",   currentCRITRate.ToString("F2") + " %");
-        UpgradeNoticeManager.CreateText("CRIT DMG", _playerConfig.GetCRITDMG().ToString("F2") + " %", currentCRITDMG.ToString("F2") + " %");
+        UpgradeNoticeManager.CreateNoticeBar("CRIT Rate", _playerConfig.GetCRITRate().ToString("F2") + " %",   currentCRITRate.ToString("F2") + " %");
+        UpgradeNoticeManager.CreateNoticeBar("CRIT DMG", _playerConfig.GetCRITDMG().ToString("F2") + " %", currentCRITDMG.ToString("F2") + " %");
         UpgradeNoticeManager.Instance.EnableNotice();
         
         _userData.IncreaseCoin(-_coinUpgrdeCost);

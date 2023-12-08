@@ -1,3 +1,4 @@
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -39,12 +40,10 @@ public class M_SetEmission : SetMaterials
     }
     private void Set(float _value)
     {
-        foreach(var _renderer in Renderers)
+        var _materials = Renderers.SelectMany(_mate => _mate.materials);
+        foreach (var _material in _materials)
         {
-            foreach (var _material in _renderer.materials)
-            {
-                _material.SetColor(nameID, colorSetTo *_value); 
-            }
+            _material.SetColor(nameID, colorSetTo *_value); 
         }
     }
     

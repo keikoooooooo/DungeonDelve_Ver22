@@ -22,6 +22,10 @@ public enum ItemNameCode
     EXPBig,
         
     
+    // Consume (CO)
+    COCoin = 20,
+    
+    
     // Jade (JA)
     JARed1 = 100,
     JARed2,
@@ -49,6 +53,7 @@ public enum ItemNameCode
     UPForgedBow,
     UPForgedSword
 }
+
 
 /// <summary>
 /// Độ hiếm của Item
@@ -104,7 +109,7 @@ public class SO_GameItemData : ScriptableObject
         ItemData.Clear();
         foreach (var item in GameItemDatas)
         {
-            ItemData.Add(item.code, item);
+            ItemData.TryAdd(item.code, item);
         }
     }
 }

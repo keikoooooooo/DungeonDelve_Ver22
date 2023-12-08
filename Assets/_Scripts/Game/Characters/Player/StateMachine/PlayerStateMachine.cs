@@ -12,6 +12,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     public Animator animator;
     public CharacterController characterController;
     public CinemachineFreeLook cinemachineFreeLook;
+    public ParticleSystem enableEffect;
     
     #region Get & Set Property
     public PlayerDataHandle PlayerData;
@@ -92,6 +93,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         SetVariables();
         DamageableData.Add(gameObject, this);
+
+        HandleEnable();
     }
     protected virtual void Update()
     {
@@ -148,6 +151,16 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         Stamina.InitValue(PlayerConfig.GetST());
     }
 
+
+    private void HandleEnable()
+    {
+        setDissolve.ChangeDurationApply(1f);
+        setDissolve.ChangeCurrentValue(1f);
+        setDissolve.ChangeValueSet(0f);
+        setDissolve.Apply();
+        enableEffect.Play();
+    }
+    
     private void HandleInput()
     {
         // Giá trị di chuyển

@@ -241,9 +241,9 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         var currentDEF = _playerConfig.GetDEF() + _increasDEF;
         
         UpgradeNoticeManager.Instance.SetLevelText($"Lv. {currentLevel}");
-        UpgradeNoticeManager.CreateText("Max HP",$"{_playerConfig.GetHP()}", $"{currentHP}");
-        UpgradeNoticeManager.CreateText("ATK",$"{_playerConfig.GetATK()}", $"{currentATK}");
-        UpgradeNoticeManager.CreateText("DEF",$"{_playerConfig.GetDEF()}", $"{currentDEF}");
+        UpgradeNoticeManager.CreateNoticeBar("Max HP",$"{_playerConfig.GetHP()}", $"{currentHP}");
+        UpgradeNoticeManager.CreateNoticeBar("ATK",$"{_playerConfig.GetATK()}", $"{currentATK}");
+        UpgradeNoticeManager.CreateNoticeBar("DEF",$"{_playerConfig.GetDEF()}", $"{currentDEF}");
         UpgradeNoticeManager.Instance.EnableNotice();
         
         _userData.IncreaseCoin(-_totalCoinCost);

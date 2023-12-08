@@ -6,7 +6,8 @@ public class TextBar_2 : MonoBehaviour, IPooled<TextBar_2>
 {
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI valueText;
-
+    [SerializeField] private TextMeshProUGUI valueText2;
+    
     
     /// <summary>
     /// Cập nhật giá trị của component Title Text
@@ -31,7 +32,6 @@ public class TextBar_2 : MonoBehaviour, IPooled<TextBar_2>
     
     public void Release() => ReleaseCallback?.Invoke(this);
     public Action<TextBar_2> ReleaseCallback { get; set; }
-    [SerializeField] private TextMeshProUGUI valueText2;
     
 
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -13,11 +14,12 @@ public class Renderers
 
 public abstract class SetMaterials : MonoBehaviour
 {
-    [Tooltip("Danh sách Renderer")]
-    public List<Renderer> Renderers;
+    [Tooltip("Danh sách Renderer"), SerializeField]
+    protected List<Renderer> Renderers;
 
-    [Space, Tooltip("Tên property cần set trong Shader")] 
-    public string propertyToID = "";
+    [Space, Tooltip("Tên property cần set trong Shader"), SerializeField]
+    private string propertyToID = "";
+    
     [Tooltip("Thời gian set từ giá trị hiện tại đến giá trị cần set"), SerializeField]
     protected float durationApply;
     
@@ -25,9 +27,15 @@ public abstract class SetMaterials : MonoBehaviour
     protected int nameID;
     protected Tween _applyTween;
     
+    
     private void Start()
     {
         nameID = Shader.PropertyToID(propertyToID);
+        Init();
+    }
+    
+    public void Init()
+    {
         _copiesRenderer = new List<Renderers>(Renderers.Count); // tạo 1 danh sách RendererCopy 
         
         for (var i = 0; i < Renderers.Count; i++)
@@ -46,6 +54,7 @@ public abstract class SetMaterials : MonoBehaviour
             Renderers[i].materials = _copiesRenderer[i].materials; // gán bản Material Copy vào renderer
         }
     }
+    
     
     /// <summary>
     /// Thay đổi thời gian áp dụng

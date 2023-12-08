@@ -76,9 +76,19 @@ public class ArlanController : PlayerController
     {
         base.SetVariables();
         
-        _conversionTimeTemp = conversionTime;
+        _conversionTimeTemp = 0;
         if(_weaponUnEquippedCoroutine !=null) StopCoroutine(_weaponUnEquippedCoroutine);
         _weaponUnEquippedCoroutine = StartCoroutine(WeaponUnEquippedCoroutine());
+    }
+
+    public override void ReleaseAction()
+    {
+        base.ReleaseAction();
+        
+        if(sword.activeSelf) 
+            WeaponEquipped();
+        else if (swordOnShoulder.activeSelf)
+            WeaponUnEquipped();
     }
 
     protected override void HandleDamage()

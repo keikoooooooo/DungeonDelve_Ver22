@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GUI_Bag : MonoBehaviour, IGUI
 {
-    [SerializeField] private Item itemPrefab;
+    [SerializeField] private GUI_Item itemPrefab;
     [SerializeField] private Transform itemContent;
     [Space]
     [SerializeField] private Slot slotPrefab;
@@ -13,7 +13,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
     // Variables
     private UserData _userData;
     private SO_GameItemData _gameItemData;
-    private ObjectPooler<Item> _poolItem;
+    private ObjectPooler<GUI_Item> _poolItem;
     private List<Slot> _slots = new();
 
     private void Awake() => GUI_Manager.Add(this);
@@ -33,7 +33,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
     }
     private void Init()
     {
-        _poolItem = new ObjectPooler<Item>(itemPrefab, itemContent, _gameItemData.GameItemDatas.Count);
+        _poolItem = new ObjectPooler<GUI_Item>(itemPrefab, itemContent, _gameItemData.GameItemDatas.Count);
         for (var i = 0; i < 4; i++)
         {
             var slot = Instantiate(slotPrefab, slotContent);
@@ -52,8 +52,8 @@ public class GUI_Bag : MonoBehaviour, IGUI
         {
             if (!_gameItemData.GetItemCustom(key, out var itemCustom)) continue;
             var _item = _poolItem.Get();
-            _item.SetItem(itemCustom, value);
-            _item.SetValueText(value);
+            _item.SetItem(itemCustom);
+            _item.SetValueText($"{value}");
         }
         
     }

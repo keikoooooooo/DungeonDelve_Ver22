@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -29,12 +30,10 @@ public class M_SetFloat : SetMaterials
     }    
     private void Set(float _value)
     {
-        foreach(var _renderer in Renderers)
+        var _materials = Renderers.SelectMany(_mate => _mate.materials);
+        foreach (var material in _materials)
         {
-            foreach (var material in _renderer.materials)
-            {
-                material.SetFloat(nameID, _value);
-            }
+            material.SetFloat(nameID, _value);
         }
     }
     

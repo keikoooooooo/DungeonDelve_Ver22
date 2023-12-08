@@ -6,14 +6,14 @@ public class Slot : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI keyText;
     [SerializeField] private Image iconItem;
-    private Item item;
+    private GUI_Item _guiItem;
 
     
-    public void SetSlot(Item _item)
+    public void SetSlot(GUI_Item guiItem)
     {
-        item = _item;
+        _guiItem = guiItem;
         
-        iconItem.sprite = item.GetSprite;
+        iconItem.sprite = _guiItem.GetSprite;
     }
     
     /// <summary>

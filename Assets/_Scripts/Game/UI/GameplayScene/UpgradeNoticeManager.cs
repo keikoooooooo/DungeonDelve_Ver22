@@ -33,12 +33,12 @@ public class UpgradeNoticeManager : Singleton<UpgradeNoticeManager>
     public void SetLevelText(string _value) => levelText.text = _value;
     
     /// <summary>
-    /// Tạo 1 textBar với tiêu đề và 2 giá trị value tương ứng giá trị cũ và mới của stats sau khi upgrade
+    /// Tạo 1 text thông báo với tiêu đề và 2 giá trị value tương ứng giá trị cũ và mới của stats sau khi upgrade
     /// </summary>
     /// <param name="_title"> Tiêu đề textBar </param>
     /// <param name="_value1"> Giá trị cũ </param>
     /// <param name="_value2"> Giá trị mới </param>
-    public static void CreateText(string _title, string _value1, string _value2)
+    public static void CreateNoticeBar(string _title, string _value1, string _value2)
     {
         var textBar = _poolTextBar.Get();
         textBar.SetTitleText(_title);

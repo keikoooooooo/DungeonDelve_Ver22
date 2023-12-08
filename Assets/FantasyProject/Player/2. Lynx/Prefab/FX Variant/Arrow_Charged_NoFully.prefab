@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1921769441364118677}
-  - component: {fileID: 2289704342432793511}
+  - component: {fileID: 1882638460419820743}
   - component: {fileID: 7415065502757500317}
   - component: {fileID: 3723554165989274676}
   - component: {fileID: 1378209784863275921}
@@ -39,7 +39,7 @@ Transform:
   - {fileID: 2203584162877185313}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &2289704342432793511
+--- !u!54 &1882638460419820743
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   flash: {fileID: 1304969849365611535}
   projectile: {fileID: 2469587222971860068}
   hit: {fileID: 2350038760423214343}
-  rb: {fileID: 2289704342432793511}
+  rb: {fileID: 1882638460419820743}
   sphereCollider: {fileID: 7415065502757500317}
   force: 25
   delayGravity: 5

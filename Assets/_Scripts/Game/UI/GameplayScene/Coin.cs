@@ -9,12 +9,15 @@ public class Coin : MonoBehaviour, IPooled<Coin>
     [SerializeField] private AnimationCurve moveCurve;
     [SerializeField] private float moveSpeed = 15f;
     [SerializeField] private float rorationSpeed = 360;
+    public event Action<Coin> OnMoveCompleteEvent;
+    public bool IsPlayer => _player != null;
     
     private PlayerController _player;
     private Tween _moveTween;
     private Tween _rotateTween;
     private float _duration;
     private bool _canMove;
+    
     
     private void OnEnable()
     {
@@ -58,6 +61,7 @@ public class Coin : MonoBehaviour, IPooled<Coin>
     public void SetPlayer(PlayerController player) => _player = player;
     public void Release()
     {
+        OnMoveCompleteEvent?.Invoke(this);
         _canMove = false;
         coinTrail.Clear();
         _moveTween?.Kill();

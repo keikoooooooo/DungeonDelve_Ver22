@@ -97,3 +97,6 @@ MonoBehaviour:
   - code: 114
     sprite: {fileID: 21300000, guid: 083e92a0f6449994c872ecdecefa4933, type: 3}
     ratity: 3
+  - code: 20
+    sprite: {fileID: 21300000, guid: 0a94ac480aa4311438f56715d6398b6c, type: 3}
+    ratity: 0
