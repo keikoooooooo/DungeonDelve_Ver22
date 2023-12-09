@@ -39,12 +39,10 @@ public abstract class PlayerController : PlayerStateMachine
     public event Action<float> E_SkillCD; 
     public event Action<float> E_SpecialCD;
     
-    protected bool IsAttackPressed => inputs.leftMouse;
-    protected bool IsSkillPressed => inputs.e && _skillCD_Temp <= 0;
-    protected bool IsSpecialPressed => inputs.q && _specialCD_Temp <= 0;
+    protected bool IsAttackPressed => inputs.LeftMouse;
+    protected bool IsSkillPressed => inputs.E && _skillCD_Temp <= 0;
+    protected bool IsSpecialPressed => inputs.Q && _specialCD_Temp <= 0;
     public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding
-    public bool DetectionEnemy => _enemies.Count > 0;
-    
     
     // Player
     [HideInInspector] private Vector3 _pushVelocity;       // vận tốc đẩy 
@@ -52,7 +50,6 @@ public abstract class PlayerController : PlayerStateMachine
     [HideInInspector] protected int _attackCounter;        // số lần attackCombo
     [HideInInspector] protected bool _isAttackPressed;     // có nhấn attack k ?
     
-    private readonly List<GameObject> _enemies = new();
     private Coroutine _pushVelocityCoroutine;
     private Coroutine _pushMoveCoroutine;
     private Coroutine _rotateToTargetCoroutine;
@@ -81,7 +78,7 @@ public abstract class PlayerController : PlayerStateMachine
             AttackEnd();
         }
         
-        if(!CanAttack || !IsGrounded || !CanControl) return;
+        if(!CanAttack || !IsGrounded || !CanControl || animator.IsTag("Damage", 1)) return;
         
         Attack();
         ElementalSkill();
@@ -175,25 +172,18 @@ public abstract class PlayerController : PlayerStateMachine
     
     
     #region Xử lí xoay nhân vật về phía Enemy mỗi khi Attack
-    public Transform FindClosestEnemy()
-    {
-        _enemies.Sort((a, b)
-            => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-        return _enemies[0].transform;
-    }
     private void RotateToEnemy()
     {
-        if(!DetectionEnemy) 
-            return;
-        
-        if (_rotateToTargetCoroutine != null) StopCoroutine(RotateToTargetCoroutine());
+        if (_rotateToTargetCoroutine != null)
+            StopCoroutine(RotateToTargetCoroutine());
         _rotateToTargetCoroutine = StartCoroutine(RotateToTargetCoroutine());
     }
     private IEnumerator RotateToTargetCoroutine()
     {
-        var target = FindClosestEnemy();
-        var direction = Quaternion.LookRotation(target.position - transform.position);
+        if (!EnemyTracker.DetectEnemy) yield break;
 
+        var target = EnemyTracker.FindClosestEnemy(transform);
+        var direction = Quaternion.LookRotation(target.position - transform.position);
         var directionLocal = Mathf.Floor(transform.eulerAngles.y);
         var directionTaget = Mathf.Floor(direction.eulerAngles.y);
 
@@ -205,18 +195,8 @@ public abstract class PlayerController : PlayerStateMachine
             yield return null;
         }
     }
-    public void AddEnemy(GameObject _gameObject)
-    {
-        if(_enemies.Contains(_gameObject)) 
-            return;
-        _enemies.Add(_gameObject);
-    }
-    public void RemoveEnemy(GameObject _gameObject)
-    {
-        if(!_enemies.Contains(_gameObject)) 
-            return;
-        _enemies.Remove(_gameObject);
-    }
+    public void AddEnemy(GameObject _enemy) => EnemyTracker.Add(_enemy.transform);
+    public void RemoveEnemy(GameObject _enemy) => EnemyTracker.Remove(_enemy.transform);
     #endregion
 
     
@@ -262,21 +242,21 @@ public abstract class PlayerController : PlayerStateMachine
     }
     protected virtual void SkillEnd()
     {
-        inputs.e = false;
+        inputs.E = false;
         
         AttackEnd();
     }
     protected virtual void SpecialEnd()
     {
-        inputs.q = false;
+        inputs.Q = false;
         
         AttackEnd();
     }
     public override void ReleaseAction()
     {
-        inputs.leftMouse = false;
-        inputs.e = false;
-        inputs.q = false;
+        inputs.LeftMouse = false;
+        inputs.E = false;
+        inputs.Q = false;
         AttackEnd();
     }
     

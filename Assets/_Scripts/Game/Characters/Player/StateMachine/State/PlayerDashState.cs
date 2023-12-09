@@ -31,14 +31,14 @@ public class PlayerDashState : PlayerBaseState
             CheckSwitchState();
             return;
         }
-        _machine.inputs.leftMouse = false;
+        _machine.inputs.LeftMouse = false;
         direction = _machine.model.forward.normalized * dashSpeed;
         _machine.characterController.Move(direction * Time.deltaTime);
     }
 
     protected override void ExitState()
     {
-        _machine.inputs.leftMouse = false;
+        _machine.inputs.LeftMouse = false;
         _machine.ReleaseAction();
     }
     public override void CheckSwitchState()

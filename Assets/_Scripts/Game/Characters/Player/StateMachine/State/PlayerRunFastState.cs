@@ -32,7 +32,7 @@ public class PlayerRunFastState : PlayerBaseState
     }
     protected override void ExitState()
     {
-        _machine.inputs.leftShift = false;
+        _machine.inputs.LeftShift = false;
         _machine.animator.speed = 1f;
         _machine.CanIncreaseST = true;
         

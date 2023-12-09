@@ -48,8 +48,9 @@ public class MenuController : Singleton<MenuController>
     
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (GUIInputs.Esc)
         {
+            GUIInputs.Esc = false;
             _isOpenMenu = !_isOpenMenu;
             if(_isOpenMenu)
             {
@@ -62,7 +63,8 @@ public class MenuController : Singleton<MenuController>
             }
         }
 
-        if (!Input.GetKeyDown(KeyCode.B) || _isOpenMenu) return;
+        if (!GUIInputs.B || _isOpenMenu) return;
+        GUIInputs.B = false;
         _isOpenMenu = true;
         OpenMenu();
         OnClickBOpenMenuEvent?.Invoke();

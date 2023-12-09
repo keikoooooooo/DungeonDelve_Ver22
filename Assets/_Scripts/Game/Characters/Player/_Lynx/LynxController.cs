@@ -140,8 +140,8 @@ public class LynxController : PlayerController
     }
     private void BlendAnimationValue()
     {
-        _horizontalBlend = Mathf.MoveTowards(_horizontalBlend, inputs.move.x, 5 * Time.deltaTime);
-        _verticalBlend = Mathf.MoveTowards(_verticalBlend, inputs.move.y, 5 * Time.deltaTime);
+        _horizontalBlend = Mathf.MoveTowards(_horizontalBlend, inputs.Move.x, 5 * Time.deltaTime);
+        _verticalBlend = Mathf.MoveTowards(_verticalBlend, inputs.Move.y, 5 * Time.deltaTime);
 
         animator.SetFloat(IDHorizontal, _horizontalBlend);
         animator.SetFloat(IDVertical, _verticalBlend);
@@ -168,7 +168,7 @@ public class LynxController : PlayerController
         indicatorQ.SetActive(true);
         
         // Variables
-        inputs.q = false;
+        inputs.Q = false;
         CanAttack = false;
         
         while (true)
@@ -190,7 +190,7 @@ public class LynxController : PlayerController
                 yield break;
             }
             
-            if (inputs.q || inputs.leftMouse)
+            if (inputs.Q || inputs.LeftMouse)
             {
                 CanMove = false;
                 CanRotation = false;

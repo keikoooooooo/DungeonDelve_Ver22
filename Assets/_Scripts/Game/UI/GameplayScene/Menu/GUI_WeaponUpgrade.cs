@@ -127,10 +127,9 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
                 continue;
             
             var hasItemValue = _userData.HasItemValue(_itemCustom.code);
-            var itemValueToStr = hasItemValue < _requiresItem.value ? $"<color=red>{hasItemValue}</color> / {_requiresItem.value}" :
-                                                                            $"<color=white>{hasItemValue}</color> / {_requiresItem.value}" ;
+            var itemValueToStr = hasItemValue < _requiresItem.value ? $"<color=red>{hasItemValue}</color> / {_requiresItem.value}" : $"<color=white>{hasItemValue}</color> / {_requiresItem.value}" ;
             var item = _poolItem.Get();
-            item.SetItem(_itemCustom);
+            item.SetItem(_itemCustom, hasItemValue);
             item.SetValueText(itemValueToStr);
             
             if (hasItemValue < _requiresItem.value) 

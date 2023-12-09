@@ -92,12 +92,14 @@ public class TimelineBOReaper : MonoBehaviour
         if (!_player) 
             return;
         _player.CanControl = true;
+        GUIInputs.CanInput = true;
     }
     public void DeActiveControlPlayer()
     {
         if (!_player) 
             return;
         _player.CanControl = false;
+        GUIInputs.CanInput = false;
     }
 
 

@@ -1,11 +1,6 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// Class nhận tất cả giá trị đầu vào của user
-/// </summary>
-[RequireComponent(typeof(PlayerInput))]
 public class PlayerInputs : MonoBehaviour
 {
     /*
@@ -13,58 +8,63 @@ public class PlayerInputs : MonoBehaviour
         + Ví dụ: Action: Move -> Function: OnMove
      */
     
-    private PlayerControl _playerControl;
-
+    private Inputs _playerInput;
 
     private void Awake()
     {
-        _playerControl = new PlayerControl();
+        _playerInput = new Inputs();
     }
 
     private void OnEnable()
     {
-        _playerControl.PlayerControls.Enable();
+        _playerInput.Player.Enable();
         
-        _playerControl.PlayerControls.SwitchMode.started  += OnChangeStatePressed;
-        _playerControl.PlayerControls.SwitchMode.canceled += OnChangeStatePressed;
+        _playerInput.Player.Move.performed  += OnMovePressed;
+        _playerInput.Player.Move.canceled += OnMovePressed;
         
-        _playerControl.PlayerControls.Jump.started  += OnJumpPressed;
-        _playerControl.PlayerControls.Jump.canceled += OnJumpPressed;
+        _playerInput.Player.SwitchMode.started  += OnChangeStatePressed;
+        _playerInput.Player.SwitchMode.canceled += OnChangeStatePressed;
         
-        _playerControl.PlayerControls.Dash.started  += OnDashPressed;
-        _playerControl.PlayerControls.Dash.canceled += OnDashPressed;
+        _playerInput.Player.Jump.started  += OnJumpPressed;
+        _playerInput.Player.Jump.canceled += OnJumpPressed;
         
-        _playerControl.PlayerControls.Attack.started += OnAttackPressed;
-        _playerControl.PlayerControls.Attack.canceled += OnAttackPressed;
+        _playerInput.Player.Dash.started  += OnDashPressed;
+        _playerInput.Player.Dash.canceled += OnDashPressed;
         
-        _playerControl.PlayerControls.Skill.started += OnSkillPressed;
-        _playerControl.PlayerControls.Skill.canceled += OnSkillPressed;
+        _playerInput.Player.Attack.started += OnAttackPressed;
+        _playerInput.Player.Attack.canceled += OnAttackPressed;
         
-        _playerControl.PlayerControls.SkillSpecial.started += OnSkillSpecialPressed;
-        _playerControl.PlayerControls.SkillSpecial.canceled += OnSkillSpecialPressed;
+        _playerInput.Player.Skill.started += OnSkillPressed;
+        _playerInput.Player.Skill.canceled += OnSkillPressed;
+        
+        _playerInput.Player.SkillSpecial.started += OnSkillSpecialPressed;
+        _playerInput.Player.SkillSpecial.canceled += OnSkillSpecialPressed;
         
     }
     private void OnDisable()
     {
-        _playerControl.PlayerControls.SwitchMode.started  -= OnChangeStatePressed;
-        _playerControl.PlayerControls.SwitchMode.canceled -= OnChangeStatePressed;
+        _playerInput.Player.Move.performed  -= OnMovePressed;
+        _playerInput.Player.Move.canceled -= OnMovePressed;
         
-        _playerControl.PlayerControls.Jump.started  -= OnJumpPressed;
-        _playerControl.PlayerControls.Jump.canceled -= OnJumpPressed;
+        _playerInput.Player.SwitchMode.started  -= OnChangeStatePressed;
+        _playerInput.Player.SwitchMode.canceled -= OnChangeStatePressed;
         
-        _playerControl.PlayerControls.Dash.started  -= OnDashPressed;
-        _playerControl.PlayerControls.Dash.canceled -= OnDashPressed;
+        _playerInput.Player.Jump.started  -= OnJumpPressed;
+        _playerInput.Player.Jump.canceled -= OnJumpPressed;
         
-        _playerControl.PlayerControls.Attack.started -= OnAttackPressed;
-        _playerControl.PlayerControls.Attack.canceled -= OnAttackPressed;
+        _playerInput.Player.Dash.started  -= OnDashPressed;
+        _playerInput.Player.Dash.canceled -= OnDashPressed;
         
-        _playerControl.PlayerControls.Skill.started -= OnSkillPressed;
-        _playerControl.PlayerControls.Skill.canceled -= OnSkillPressed;
+        _playerInput.Player.Attack.started -= OnAttackPressed;
+        _playerInput.Player.Attack.canceled -= OnAttackPressed;
         
-        _playerControl.PlayerControls.SkillSpecial.started -= OnSkillSpecialPressed;
-        _playerControl.PlayerControls.SkillSpecial.canceled -= OnSkillSpecialPressed;
+        _playerInput.Player.Skill.started -= OnSkillPressed;
+        _playerInput.Player.Skill.canceled -= OnSkillPressed;
         
-        _playerControl.PlayerControls.Disable();
+        _playerInput.Player.SkillSpecial.started -= OnSkillSpecialPressed;
+        _playerInput.Player.SkillSpecial.canceled -= OnSkillSpecialPressed;
+        
+        _playerInput.Player.Disable();
     }
 
 
@@ -72,50 +72,50 @@ public class PlayerInputs : MonoBehaviour
     /// <summary>
     /// Nhận giá trị của 4 phím: A W S D
     /// </summary>
-    public Vector2 move;
-    private void OnMove(InputValue value) => move = value.Get<Vector2>();
+    public Vector2 Move;
+    private void OnMovePressed(InputAction.CallbackContext context) => Move = context.ReadValue<Vector2>();
 
 
     /// <summary>
     /// Chuyển đổi giữa Walk và Run
     /// </summary>
-    public bool changeState;
-    private void OnChangeStatePressed(InputAction.CallbackContext context) =>  changeState = context.ReadValueAsButton();
+    public bool ChangeState;
+    private void OnChangeStatePressed(InputAction.CallbackContext context) =>  ChangeState = context.ReadValueAsButton();
 
     
     /// <summary>
     /// Trả về TRUE nếu nhấn phím: ShiftLeft or RightMouseButton
     /// </summary>
-    public bool leftShift;
-    private void OnDashPressed(InputAction.CallbackContext context) => leftShift = context.ReadValueAsButton();
+    public bool LeftShift;
+    private void OnDashPressed(InputAction.CallbackContext context) => LeftShift = context.ReadValueAsButton();
     
     
     /// <summary>
     /// Trả về TRUE nếu nhấn phím: Space
     /// </summary>
-    public bool space;
-    private void OnJumpPressed(InputAction.CallbackContext context) => space = context.ReadValueAsButton();
+    public bool Space;
+    private void OnJumpPressed(InputAction.CallbackContext context) => Space = context.ReadValueAsButton();
 
     
     /// <summary>
     /// Trả về TRUE nếu nhấn phím: LeftMouseButton
     /// </summary>
-    public bool leftMouse;
-    private void OnAttackPressed(InputAction.CallbackContext context) => leftMouse = context.ReadValueAsButton();
+    public bool LeftMouse;
+    private void OnAttackPressed(InputAction.CallbackContext context) => LeftMouse = context.ReadValueAsButton();
 
     
     /// <summary>
     /// Trả về TRUE nếu nhấn phím: E
     /// </summary>
-    public bool e;
-    private void OnSkillPressed(InputAction.CallbackContext context) => e = context.ReadValueAsButton();
+    public bool E;
+    private void OnSkillPressed(InputAction.CallbackContext context) => E = context.ReadValueAsButton();
 
     
     /// <summary>
     /// Trả về TRUE nếu nhấn phím: Q
     /// </summary>
-    public bool q;
-    private void OnSkillSpecialPressed(InputAction.CallbackContext context) => q = context.ReadValueAsButton();
+    public bool Q;
+    private void OnSkillSpecialPressed(InputAction.CallbackContext context) => Q = context.ReadValueAsButton();
 
 
 }

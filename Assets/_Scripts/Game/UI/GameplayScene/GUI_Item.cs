@@ -14,37 +14,40 @@ public class GUI_Item : MonoBehaviour, IPooled<GUI_Item>
     [SerializeField] private Sprite rarityFrameRare;
     [SerializeField] private Sprite rarityFrameEpic;
     [SerializeField] private Sprite rarityFrameLegendary;
-    
+
+    public ItemNameCode GetNameCode { get; private set; }
+    public ItemRarity GetRarity { get; private set; }
+    public int GetItemValue { get; private set; }
     public Sprite GetSprite => iconItem.sprite;
-    
-    
-    
+    public ItemCustom GetItemCustom { get; private set; }
+
     /// <summary>
     /// Set Item ra UI
     /// </summary>
     /// <param name="_itemCustom"> Thông tin Item </param>
     /// <param name="_value"> Số lượng Item </param>
-    public void SetItem(ItemCustom _itemCustom)
+    public void SetItem(ItemCustom _itemCustom, int _itemValue)
     {
+        GetItemCustom = _itemCustom;
         iconItem.sprite = _itemCustom.sprite;
-        switch (_itemCustom.ratity)
+        GetNameCode = _itemCustom.code;
+        GetItemValue = _itemValue;
+        GetRarity = _itemCustom.ratity;
+        SetRarityFrame(GetRarity);
+    }
+    
+
+    private void SetRarityFrame(ItemRarity _itemRarity)
+    {
+        rarityFrame.sprite = _itemRarity switch
         {
-            case ItemRarity.Common:
-                rarityFrame.sprite = rarityFrameCommon;
-                break;
-            case ItemRarity.Uncommon:
-                rarityFrame.sprite = rarityFrameUnCommon;
-                break;
-            case ItemRarity.Rare:
-                rarityFrame.sprite = rarityFrameRare;
-                break;
-            case ItemRarity.Epic:
-                rarityFrame.sprite = rarityFrameEpic;
-                break;
-            case ItemRarity.Legendary:
-                rarityFrame.sprite = rarityFrameLegendary;
-                break;
-        }
+            ItemRarity.Common => rarityFrameCommon,
+            ItemRarity.Uncommon => rarityFrameUnCommon,
+            ItemRarity.Rare => rarityFrameRare,
+            ItemRarity.Epic => rarityFrameEpic,
+            ItemRarity.Legendary => rarityFrameLegendary,
+            _ => rarityFrame.sprite
+        };
     }
     public void SetValueText(string _textValue) => valueText.text = _textValue;
     

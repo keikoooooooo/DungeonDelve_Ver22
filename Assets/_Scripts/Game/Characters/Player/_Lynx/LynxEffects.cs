@@ -32,8 +32,7 @@ public class LynxEffects : MonoBehaviour
     
     
     private float angleYAttack => lynxController.model.eulerAngles.y;
-    private bool isEnemy => lynxController.DetectionEnemy;
-    
+
     
     // Coroutine
     private Coroutine _specialCoroutine;
@@ -94,7 +93,7 @@ public class LynxEffects : MonoBehaviour
     
     private void EffectArrowCombo(AnimationEvent eEvent)
     {
-        var _quaternion = isEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
+        var _quaternion = EnemyTracker.DetectEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
         var arrow = _poolNormalArrow.Get(attackPoint.position, _quaternion);
         arrow.FIRE();
         
@@ -122,7 +121,7 @@ public class LynxEffects : MonoBehaviour
     private void Effect_Skill(AnimationEvent eEvent)
     {
         var position = attackPoint.position;
-        var rotation = Quaternion.Euler(isEnemy ? -6f : angleXAttack, attackPoint.eulerAngles.y + eEvent.intParameter, attackPoint.eulerAngles.z);
+        var rotation = Quaternion.Euler(EnemyTracker.DetectEnemy ? -6f : angleXAttack, attackPoint.eulerAngles.y + eEvent.intParameter, attackPoint.eulerAngles.z);
         var arrow = _poolNormalArrow.Get(position, rotation);
         arrow.FIRE();
     }
@@ -164,7 +163,7 @@ public class LynxEffects : MonoBehaviour
     
     private Quaternion RandomDirection()
     {
-        var posTarget = lynxController.FindClosestEnemy().position;
+        var posTarget = EnemyTracker.FindClosestEnemy(lynxController.transform).position;
         posTarget.y += 1.3f;
         
         var randRotX = Random.Range(-2f, 2f);

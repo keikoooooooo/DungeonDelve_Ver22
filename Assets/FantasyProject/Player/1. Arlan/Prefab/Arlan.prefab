@@ -2872,13 +2872,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5471503419370806153}
-  - component: {fileID: 1802613745807339804}
-  - component: {fileID: 1802613745807339805}
-  - component: {fileID: 1802613745807339874}
   - component: {fileID: 1787091444842432457}
-  - component: {fileID: 5471503419370806156}
-  - component: {fileID: 1787091444842432454}
+  - component: {fileID: 1802613745807339804}
+  - component: {fileID: 1802613745807339874}
   - component: {fileID: 5139688112690164920}
+  - component: {fileID: 1787091444842432454}
+  - component: {fileID: 5471503419370806156}
   m_Layer: 7
   m_Name: Arlan
   m_TagString: Player
@@ -2907,6 +2906,27 @@ Transform:
   - {fileID: 8943290371958408126}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1787091444842432457
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5471503419370806157}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b04406949810a0a46b21e74416b63350, type: 3}
+  m_Controller: {fileID: 9100000, guid: a10cf9fdcafe20d419b3f168b859b84e, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!143 &1802613745807339804
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2933,36 +2953,6 @@ CharacterController:
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.785, z: 0}
---- !u!114 &1802613745807339805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471503419370806157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 939c2407ab7aad045ab7d6a9c19680f4, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: PlayerControls
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &1802613745807339874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2975,35 +2965,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29093509f24219b4dbba78130fc62f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: {x: 0, y: 0}
-  changeState: 0
-  leftShift: 0
-  space: 0
-  leftMouse: 0
-  e: 0
-  q: 0
---- !u!95 &1787091444842432457
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471503419370806157}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b04406949810a0a46b21e74416b63350, type: 3}
-  m_Controller: {fileID: 9100000, guid: a10cf9fdcafe20d419b3f168b859b84e, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5471503419370806156
+  Move: {x: 0, y: 0}
+  ChangeState: 0
+  LeftShift: 0
+  Space: 0
+  LeftMouse: 0
+  E: 0
+  Q: 0
+--- !u!114 &5139688112690164920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3012,25 +2981,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5471503419370806157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6592afa65b7b1446b4309e3aef74311, type: 3}
+  m_Script: {fileID: 11500000, guid: 444c015705f9caa479fab8cdcdaf6aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arlanController: {fileID: 1787091444842432454}
-  physicsDetection: {fileID: 955968114}
-  shieldCooldownTime: {fileID: 171163998106066415}
-  effectPoint: {fileID: 1741749529}
-  effectAngle:
-  - {x: -71, y: -116, z: -51}
-  - {x: 69, y: 71, z: 80}
-  - {x: 70, y: 369, z: 20}
-  - {x: -64, y: -127, z: -47}
-  - {x: 0, y: 0, z: 0}
-  swordSlashPrefab: {fileID: 6366116380576709828, guid: f1db0bd1983bc664d97458c63c349115, type: 3}
-  swordPrickPrefab: {fileID: 7292523551820244182, guid: 6e0a23cfcf9a8a342a439fc8b36bab41, type: 3}
-  swordHoldingPrefab: {fileID: 7752165641218346586, guid: 87c36cd07f7c0bc4a9c8404934b4efcb, type: 3}
-  hitPrefab: {fileID: 2229371650459790285, guid: 0551eed0709451d4a9efba4f2bb3f200, type: 3}
-  skill: {fileID: 8314172896865196697}
-  special: {fileID: 1568717584526766420}
+  <WeaponUpgradeConfig>k__BackingField: {fileID: 11400000, guid: 05f3e31907e4a5842af0420f7e7925e5, type: 2}
+  <PlayerConfig>k__BackingField: {fileID: 11400000, guid: b3465f53ee6eef34b95cff80710768c8, type: 2}
+  playerRenderTexturePrefab: {fileID: 641733981381204686, guid: 6237d0ccdf9e8f246bbf88c4785ae61d, type: 3}
 --- !u!114 &1787091444842432454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3080,7 +3036,7 @@ MonoBehaviour:
   conversionTime: 20
   swordOnShoulder: {fileID: 1802613745006003178}
   sword: {fileID: 668992469876404971}
---- !u!114 &5139688112690164920
+--- !u!114 &5471503419370806156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3089,12 +3045,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5471503419370806157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 444c015705f9caa479fab8cdcdaf6aba, type: 3}
+  m_Script: {fileID: 11500000, guid: b6592afa65b7b1446b4309e3aef74311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <WeaponUpgradeConfig>k__BackingField: {fileID: 11400000, guid: 05f3e31907e4a5842af0420f7e7925e5, type: 2}
-  <PlayerConfig>k__BackingField: {fileID: 11400000, guid: b3465f53ee6eef34b95cff80710768c8, type: 2}
-  playerRenderTexturePrefab: {fileID: 641733981381204686, guid: 6237d0ccdf9e8f246bbf88c4785ae61d, type: 3}
+  arlanController: {fileID: 1787091444842432454}
+  physicsDetection: {fileID: 955968114}
+  shieldCooldownTime: {fileID: 171163998106066415}
+  effectPoint: {fileID: 1741749529}
+  effectAngle:
+  - {x: -71, y: -116, z: -51}
+  - {x: 69, y: 71, z: 80}
+  - {x: 70, y: 369, z: 20}
+  - {x: -64, y: -127, z: -47}
+  - {x: 0, y: 0, z: 0}
+  swordSlashPrefab: {fileID: 6366116380576709828, guid: f1db0bd1983bc664d97458c63c349115, type: 3}
+  swordPrickPrefab: {fileID: 7292523551820244182, guid: 6e0a23cfcf9a8a342a439fc8b36bab41, type: 3}
+  swordHoldingPrefab: {fileID: 7752165641218346586, guid: 87c36cd07f7c0bc4a9c8404934b4efcb, type: 3}
+  hitPrefab: {fileID: 2229371650459790285, guid: 0551eed0709451d4a9efba4f2bb3f200, type: 3}
+  skill: {fileID: 8314172896865196697}
+  special: {fileID: 1568717584526766420}
 --- !u!1 &5621947119810528533
 GameObject:
   m_ObjectHideFlags: 0
@@ -4875,15 +4844,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1861811642122463954, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.039481428
+      value: 0.039481383
       objectReference: {fileID: 0}
     - target: {fileID: 1861811642122463954, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000021491204
+      value: 0.000000017326762
       objectReference: {fileID: 0}
     - target: {fileID: 1861811642122463954, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 8.491656e-11
+      value: -6.846184e-10
       objectReference: {fileID: 0}
     - target: {fileID: 2465486299230599108, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y
@@ -4915,15 +4884,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.004876661
+      value: 0.0048766136
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000027007097
+      value: 5.270684e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.31706035e-11
+      value: -2.570341e-12
       objectReference: {fileID: 0}
     - target: {fileID: 5822535128316044608, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y
@@ -4967,15 +4936,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07437629
+      value: 0.07437622
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000024092643
+      value: -0.00000001715872
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000017968984
+      value: 0.0000000012797454
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_RootOrder
@@ -4987,11 +4956,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7200012
+      value: 1.72
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.9900055
+      value: -3.99
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.w

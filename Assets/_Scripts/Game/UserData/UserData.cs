@@ -23,11 +23,11 @@ public class UserData
         private set => _coin = value;
     }
     
-    [Tooltip("Các slot đang trang bị item")] 
-    public Dictionary<int, ItemNameCode> slotEquippeds;
+    [Tooltip("Các slot đang trang bị item"), SerializeField, JsonProperty] 
+    private Dictionary<int, ItemNameCode> slotEquippeds;
     
-    [Tooltip("Dữ liệu toàn bộ Item của User")]
-    public Dictionary<ItemNameCode, int> inventories;
+    [Tooltip("Dữ liệu item mà người dùng sở hữu"), SerializeField, JsonProperty] 
+    private Dictionary<ItemNameCode, int> _itemInventory;
     
     public event Action<int> OnCoinChangedEvent;
     
@@ -44,7 +44,7 @@ public class UserData
             { 3, default },
             { 4, default }
         };
-        inventories = new Dictionary<ItemNameCode, int>()
+        _itemInventory = new Dictionary<ItemNameCode, int>()
         {
             { ItemNameCode.POHealth , 5},
             { ItemNameCode.POStamina, 5},
@@ -59,9 +59,15 @@ public class UserData
             { ItemNameCode.JASliver3, 20},
             { ItemNameCode.UPForgedBow, 20},
             { ItemNameCode.UPForgedSword, 20},
-            
         };
     }
+
+    
+    /// <summary>
+    /// Trả về danh sách các Item mà người dùng đang có
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<ItemNameCode, int> GetItemInInventory() => _itemInventory;
     
     
     /// <summary>
@@ -78,7 +84,7 @@ public class UserData
     /// <param name="_itemCode"> NameCode cần tìm </param>
     /// <param name="_value"> Giá trị trả về </param>
     /// <returns></returns>
-    public int HasItemValue(ItemNameCode _itemCode) => inventories.TryGetValue(_itemCode, out var value) ? value : 0;
+    public int HasItemValue(ItemNameCode _itemCode) => _itemInventory.TryGetValue(_itemCode, out var value) ? value : 0;
     
     
     /// <summary>
@@ -98,15 +104,15 @@ public class UserData
     /// <param name="_amount"> Số lượng tăng/giảm Coin</param>
     public void IncreaseItemValue(ItemNameCode _itemCode, int _amount)
     {
-        if (!inventories.ContainsKey(_itemCode))
+        if (!_itemInventory.ContainsKey(_itemCode))
         {
-            inventories.Add(_itemCode, _amount);
+            _itemInventory.Add(_itemCode, _amount);
             return;
         }
         
-        inventories[_itemCode] += _amount;
-        if (inventories[_itemCode] > 0) return;
-        inventories.Remove(_itemCode);
+        _itemInventory[_itemCode] += _amount;
+        if (_itemInventory[_itemCode] > 0) return;
+        _itemInventory.Remove(_itemCode);
     }
     
     

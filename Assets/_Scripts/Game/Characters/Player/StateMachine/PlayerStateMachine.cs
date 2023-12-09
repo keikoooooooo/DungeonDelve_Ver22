@@ -28,11 +28,11 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     protected bool CanMove { get; set; }
     protected bool CanRotation { get; set; }
     protected bool CanAttack { get; set; }
-    public bool IsIdle => inputs.move.magnitude == 0;
-    protected bool IsJump => CanControl && inputs.space && !inputs.leftShift && !animator.IsTag(1, "Damage");
+    public bool IsIdle => inputs.Move.magnitude == 0;
+    protected bool IsJump => CanControl && inputs.Space && !inputs.LeftShift && !animator.IsTag("Damage", 1);
     public bool IsWalk => CanControl && !IsIdle && _movementState == MovementState.StateWalk;
-    public bool IsRun => CanControl && !IsIdle && IsGrounded && !inputs.leftShift && _movementState == MovementState.StateRun;
-    public bool IsDash => CanControl && inputs.leftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
+    public bool IsRun => CanControl && !IsIdle && IsGrounded && !inputs.LeftShift && _movementState == MovementState.StateRun;
+    public bool IsDash => CanControl && inputs.LeftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
 
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
@@ -165,15 +165,15 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         // Giá trị di chuyển
         var trans = transform;
-        InputMovement = trans.right * inputs.move.x + trans.forward * inputs.move.y;
+        InputMovement = trans.right * inputs.Move.x + trans.forward * inputs.Move.y;
         InputMovement = Quaternion.AngleAxis(_mainCamera.transform.rotation.eulerAngles.y, Vector3.up) * InputMovement;
         
         // Thời gian hồi chiêu
         _skillCD_Temp = _skillCD_Temp > 0 ? _skillCD_Temp - Time.deltaTime : 0;
         _specialCD_Temp = _specialCD_Temp > 0 ? _specialCD_Temp - Time.deltaTime : 0;
         
-        if (!inputs.changeState) return; // Chuyển mode: Walk <=> Run
-        inputs.changeState = false;
+        if (!inputs.ChangeState) return; // Chuyển mode: Walk <=> Run
+        inputs.ChangeState = false;
         _movementState = _movementState == MovementState.StateRun ? MovementState.StateWalk : MovementState.StateRun;
     }
     private void HandleMovement()
@@ -202,7 +202,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
                 break;
             
             case true when _jumpCD_Temp <= 0 && IsJump:
-                inputs.leftMouse = false;
+                inputs.LeftMouse = false;
                 animator.SetBool(IDJump, true);
                 animator.SetBool(IDFall, false);
                 _jumpVelocity = Mathf.Sqrt(PlayerConfig.GetJumpHeight() * -2f * _gravity);
@@ -212,8 +212,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         if (!IsGrounded)
         {
             _jumpCD_Temp = PlayerConfig.GetJumpCD();
-            inputs.leftMouse = false;
-            inputs.space = false;
+            inputs.LeftMouse = false;
+            inputs.Space = false;
             _pressedJump = true;
         }
         _jumpVelocity += _gravity * Time.deltaTime;
@@ -263,6 +263,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     public void TakeDMG(int _damage, bool _isCRIT) 
     {
         ReleaseAction();
+        inputs.Move =Vector3.zero;
+        AppliedMovement = Vector3.zero;
+        InputMovement = Vector3.zero;
         
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.GetDEF() * 0.5f) : PlayerConfig.GetDEF();

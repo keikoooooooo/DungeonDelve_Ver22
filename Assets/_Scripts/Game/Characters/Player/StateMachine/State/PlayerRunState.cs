@@ -39,23 +39,23 @@ public class PlayerRunState : PlayerBaseState
             SwitchState(_factory.Walk());
         }
 
-        if (_machine.inputs.leftShift)
+        if (_machine.inputs.LeftShift)
         {
             isLeftShiftPressed = true;
             lastInputLeftShift += Time.deltaTime;
         }
         switch (isLeftShiftPressed)
         {
-            case true when !_machine.inputs.leftShift && lastInputLeftShift <= .2f:
+            case true when !_machine.inputs.LeftShift && lastInputLeftShift <= .2f:
                 if(_machine.Stamina.CurrentValue >= _machine.PlayerConfig.GetDashSTCost()) 
                     SwitchState(_factory.Dash());
                 
                 lastInputLeftShift = 0;
                 isLeftShiftPressed = false;
-                _machine.inputs.leftShift = false;
+                _machine.inputs.LeftShift = false;
                 break;
             
-            case true when _machine.inputs.leftShift && lastInputLeftShift >= .4f:
+            case true when _machine.inputs.LeftShift && lastInputLeftShift >= .4f:
                 SwitchState(_factory.RunFast());
                 
                 lastInputLeftShift = 0;

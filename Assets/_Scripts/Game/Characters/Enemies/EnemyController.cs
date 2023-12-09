@@ -105,6 +105,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         
         if (Health.CurrentValue <= 0)
         {
+            EnemyTracker.Remove(transform);
             SetDie(true);
             OnDieEvent?.Invoke();
         }

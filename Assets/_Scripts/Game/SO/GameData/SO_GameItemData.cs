@@ -60,11 +60,11 @@ public enum ItemNameCode
 /// </summary>
 public enum ItemRarity
 {
-    Common,
-    Uncommon,
-    Rare,
-    Epic,
-    Legendary
+    Common = 0,
+    Uncommon = 1,
+    Rare = 2,
+    Epic = 3,
+    Legendary = 4
 }
 
 

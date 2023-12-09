@@ -27,8 +27,8 @@ public class ItemDrop : MonoBehaviour, IPooled<ItemDrop>
     }
     
     
-    public void OnTriggerEnterPlayer() => RewardManager.Instance.AddNoticeReward(_itemReward);
-    public void OnTriggerExitPlayer() => RewardManager.Instance.RemoveNoticeReward(_itemReward);
+    public void OnTriggerEnterPlayer() => RewardManager.Instance.AddNoticeReward(this, _itemReward);
+    public void OnTriggerExitPlayer() => RewardManager.Instance.RemoveNoticeReward(this);
     
     
     public void Release() => ReleaseCallback?.Invoke(this);
