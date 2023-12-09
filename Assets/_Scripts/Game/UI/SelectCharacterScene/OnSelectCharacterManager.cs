@@ -103,10 +103,9 @@ public class OnSelectCharacterManager : MonoBehaviour
         if (!PlayFabHandleUserData.Instance || _selectChar <= 0) return;
         
         _playerConfig = Instantiate(_selectChar == 1 ? char_01Config : char_02Config);
-        
         PlayFabHandleUserData.Instance.PlayerConfig = _playerConfig;
-        PlayFabHandleUserData.Instance.SetUserData(PlayFabHandleUserData.PF_Key.UserData_Key);
-        PlayFabHandleUserData.Instance.SetUserData(PlayFabHandleUserData.PF_Key.PlayerConfigData_Key);
+        PlayFabHandleUserData.Instance.SaveData();
+        
         OpenPanelLoad(Random.Range(2f, 2.8f));
     }
 

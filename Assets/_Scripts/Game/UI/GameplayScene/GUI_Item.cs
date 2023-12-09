@@ -15,11 +15,9 @@ public class GUI_Item : MonoBehaviour, IPooled<GUI_Item>
     [SerializeField] private Sprite rarityFrameEpic;
     [SerializeField] private Sprite rarityFrameLegendary;
 
-    public ItemNameCode GetNameCode { get; private set; }
-    public ItemRarity GetRarity { get; private set; }
     public int GetItemValue { get; private set; }
-    public Sprite GetSprite => iconItem.sprite;
     public ItemCustom GetItemCustom { get; private set; }
+    
 
     /// <summary>
     /// Set Item ra UI
@@ -30,13 +28,10 @@ public class GUI_Item : MonoBehaviour, IPooled<GUI_Item>
     {
         GetItemCustom = _itemCustom;
         iconItem.sprite = _itemCustom.sprite;
-        GetNameCode = _itemCustom.code;
         GetItemValue = _itemValue;
-        GetRarity = _itemCustom.ratity;
-        SetRarityFrame(GetRarity);
+        SetRarityFrame(_itemCustom.ratity);
     }
     
-
     private void SetRarityFrame(ItemRarity _itemRarity)
     {
         rarityFrame.sprite = _itemRarity switch

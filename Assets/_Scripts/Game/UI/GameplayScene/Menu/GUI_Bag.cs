@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class GUI_Bag : MonoBehaviour, IGUI
@@ -19,8 +17,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
     private SO_GameItemData _gameItemData;
     
     private ObjectPooler<GUI_Item> _poolItem;
-    private readonly List<GUI_Item> _guiItems = new ();
-    private readonly Dictionary<ItemCustom, int> _guiItemsTemp = new ();
+    private readonly Dictionary<ItemCustom, int> _itemData = new();
     
     private List<Slot> _slots = new();
     
@@ -47,10 +44,10 @@ public class GUI_Bag : MonoBehaviour, IGUI
         }
     }
 
+    
     public void UpdateData()
     {
-        ReleaseAllGUIItem();
-        _guiItems.Clear();
+        _poolItem.List.Where(item => item.gameObject.activeSelf).ToList().ForEach(x => x.Release());
         
         foreach (var (key, value) in _userData.GetItemInInventory())
         {
@@ -58,76 +55,81 @@ public class GUI_Bag : MonoBehaviour, IGUI
             var _item = _poolItem.Get();
             _item.SetItem(itemCustom, value);
             _item.SetValueText($"{value}");
-            _guiItems.Add(_item);
         }
+        
+        OnSelectSortOption(0);
     }
-    
-    private void ReleaseAllGUIItem() => _poolItem.List.Where(item => item.gameObject.activeSelf).ToList().ForEach(x => x.Release());
-
     public void OnSelectSortOption(int _value)
     {
+        sortDropdown.Dropdown.value = _value;
+        sortDropdown.Dropdown.RefreshShownValue();
+        
+        var _guiItems = _poolItem.List.Where(item => item.gameObject.activeSelf).ToList();
         switch (_value)
         {
-            case 0:
-            case 1: 
-                SortedByName(_value == 1); break;
+            case 0: case 1: 
+                _guiItems = SortedByName(_guiItems, _value == 1);
+                break;
             
-            case 2: 
-            case 3: 
-                SortedByRarity(_value == 3); break;
+            case 2: case 3: 
+                _guiItems = SortedByRarity(_guiItems, _value == 3);
+                break;
             
-            case 4:
-            case 5:
-                SortedByQuantity(_value == 5); break;
+            case 4: case 5:
+                _guiItems = SortedByQuantity(_guiItems, _value == 5);
+                break;
         }
+
+        _itemData.Clear();
+        foreach (var guiItem in _guiItems)
+        {
+            var itemCustom = new ItemCustom
+            {
+                code = guiItem.GetItemCustom.code,
+                ratity = guiItem.GetItemCustom.ratity,
+                sprite = guiItem.GetItemCustom.sprite
+            };
+            _itemData.Add(itemCustom, guiItem.GetItemValue);
+        }
+        
+        UpdateDataItem(_itemData);
     }
-    private void SortedByName(bool _reverse)
+    private static List<GUI_Item> SortedByName(List<GUI_Item> _guiItems, bool _reverse)
     {
-        _guiItems.Sort((item, guiItem) => item.GetNameCode.CompareTo(guiItem.GetNameCode));
+        _guiItems.Sort((item1, item2) => item1.GetItemCustom.code.CompareTo(item2.GetItemCustom.code));
         if (_reverse) 
             _guiItems.Reverse();
         
-        SaveItemTemp();
-        CreateItem();
+        return _guiItems;
     }
-    private void SortedByRarity(bool _reverse)
-    { 
-        _guiItems.Sort((item, guiItem) => item.GetRarity.CompareTo(guiItem.GetRarity));
-        if (_reverse) 
-            _guiItems.Reverse();
-        
-        SaveItemTemp();
-        CreateItem();
-    }
-    private void SortedByQuantity(bool _reverse)
-    {        
-        _guiItems.Sort((item, guiItem) => item.GetItemValue.CompareTo(guiItem.GetItemValue));
+    private static List<GUI_Item> SortedByRarity(List<GUI_Item> _guiItems, bool _reverse)
+    {
+        _guiItems.Sort((item1, item2) => item1.GetItemCustom.ratity.CompareTo(item2.GetItemCustom.ratity));
         if (_reverse)
             _guiItems.Reverse();
         
-        SaveItemTemp();
-        CreateItem();
+        return _guiItems;
     }
-
-    private void SaveItemTemp()
-    {
-        _guiItemsTemp.Clear();
-        foreach (var guiItem in _guiItems)
-        {
-            _guiItemsTemp.Add(guiItem.GetItemCustom, guiItem.GetItemValue);
-        }
+    private static List<GUI_Item> SortedByQuantity(List<GUI_Item> _guiItems, bool _reverse)
+    {        
+        _guiItems.Sort((item1, item2) => item1.GetItemValue.CompareTo(item2.GetItemValue));
+        if (_reverse)
+            _guiItems.Reverse();
+        
+        return _guiItems;
     }
-    private void CreateItem()
+    
+    private void UpdateDataItem(IDictionary<ItemCustom, int> _data)
     {
-        _guiItems.Clear();
-        ReleaseAllGUIItem();
-        foreach (var keyValuePair in _guiItemsTemp)
+        foreach (var guiItem in _poolItem.List.Where(item => item.gameObject.activeSelf))
         {
-            var _item = _poolItem.Get();
-            _item.SetItem(keyValuePair.Key, keyValuePair.Value);
-            _item.SetValueText($"{keyValuePair.Value}");
-            _guiItems.Add(_item);
+            if(!_data.Any()) return;
+            var keyValuePair = _data.First();
+            guiItem.SetItem(keyValuePair.Key, keyValuePair.Value);
+            guiItem.SetValueText($"{keyValuePair.Value}");
+            _data.Remove(keyValuePair.Key);
         }
+        
     }
     
     

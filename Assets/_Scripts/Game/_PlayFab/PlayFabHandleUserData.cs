@@ -38,9 +38,17 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
         _isLogin = true;
         GetUserData();
     }
-    
-    
-    public void SetUserData(PF_Key _keySave)
+
+
+    /// <summary>
+    /// Lưu dữ liệu người dùng
+    /// </summary>
+    public void SaveData()
+    {
+        SetUserData(PF_Key.UserData_Key);
+        SetUserData(PF_Key.PlayerConfigData_Key);
+    }
+    private void SetUserData(PF_Key _keySave)
     {
         if(!_isLogin) return;
 

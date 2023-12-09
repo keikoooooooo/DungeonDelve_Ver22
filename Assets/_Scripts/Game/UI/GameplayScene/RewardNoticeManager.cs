@@ -77,6 +77,9 @@ public class RewardNoticeManager : Singleton<RewardNoticeManager>
         yield return _yieldInstruction;
         _titleTween?.Kill();
         _titleTween = titleText.DOColor(new Color(1, 1, 1, 0), _tweenDuration);
+        
+        if(PlayFabHandleUserData.Instance)
+            PlayFabHandleUserData.Instance.SaveData();
     }
     
     

@@ -13,7 +13,7 @@ public class Slot : MonoBehaviour
     {
         _guiItem = guiItem;
         
-        iconItem.sprite = _guiItem.GetSprite;
+        //iconItem.sprite = _guiItem.GetSprite;
     }
     
     /// <summary>

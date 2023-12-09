@@ -230,6 +230,8 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         InitValue();
         UpdateData();
         GUI_Manager.UpdateGUIData();
+        
+        if(PlayFabHandleUserData.Instance) PlayFabHandleUserData.Instance.SaveData();
     }
     
     
