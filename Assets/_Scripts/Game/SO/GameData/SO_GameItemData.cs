@@ -77,6 +77,9 @@ public class ItemCustom
     public ItemNameCode code;
     public Sprite sprite;
     public ItemRarity ratity;
+    
+    [Tooltip("Item có thuộc loại tiêu hao không ?")]
+    public bool isConsumable;
 
     public ItemCustom() { }
     public ItemCustom(ItemNameCode _itemCode, ItemRarity _itemRarity)
@@ -98,11 +101,22 @@ public class SO_GameItemData : ScriptableObject
 
     
     /// <summary>
-    /// Tìm vả trả về thông tin của Item dựa vào nameCode
+    /// Tìm vả trả về TRUE nếu có thông tin của Item dựa vào nameCode trong Data của game
     /// </summary>
     /// <param name="_nameCode"> Code của item cần tìm </param>
     /// <returns></returns>
     public bool GetItemCustom(ItemNameCode _nameCode, out ItemCustom itemCustom) => ItemData.TryGetValue(_nameCode, out itemCustom);
+    
+    
+    /// <summary>
+    /// Trả về thông tin của Item dựa vào nameCode trong Data của game.
+    /// Chỉ nên lấy khi biết chắc trong Data có nameCode này, nếu không hãy dùng: if (GetItemCustom(ItemNameCode _nameCode, out ItemCustom itemCustom))
+    /// </summary>
+    /// <param name="_nameCode"> Code của item cần tìm </param>
+    /// <returns></returns>
+    public ItemCustom GetItemCustom(ItemNameCode _nameCode) => ItemData[_nameCode];
+    
+    
     
     private void OnEnable()
     {

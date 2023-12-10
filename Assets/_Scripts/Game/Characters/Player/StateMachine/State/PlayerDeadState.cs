@@ -10,7 +10,6 @@ public class PlayerDeadState : PlayerBaseState
     
     public override void EnterState()
     {
-        _machine.CanControl = false;
         _machine.characterController.enabled = false;
 
         if (!_machine.IsGrounded)

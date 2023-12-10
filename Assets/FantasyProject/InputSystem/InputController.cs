@@ -64,7 +64,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""NormalAttack"",
                     ""type"": ""Button"",
                     ""id"": ""c5918dcc-406a-4ee1-8817-9ddfabe2ddbd"",
                     ""expectedControlType"": ""Button"",
@@ -73,7 +73,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Skill"",
+                    ""name"": ""ElementalSkill"",
                     ""type"": ""Button"",
                     ""id"": ""447e42d5-6db5-43ac-b7c7-a0aa6cec0b92"",
                     ""expectedControlType"": ""Button"",
@@ -82,7 +82,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SkillSpecial"",
+                    ""name"": ""ElementalBurst"",
                     ""type"": ""Button"",
                     ""id"": ""da088eb4-35dd-495e-a9cc-8a4aa149a0be"",
                     ""expectedControlType"": ""Button"",
@@ -187,7 +187,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Attack"",
+                    ""action"": ""NormalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -198,7 +198,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Skill"",
+                    ""action"": ""ElementalSkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -209,7 +209,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""SkillSpecial"",
+                    ""action"": ""ElementalBurst"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -300,6 +300,42 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem1"",
+                    ""type"": ""Button"",
+                    ""id"": ""c66c31b4-6ee2-4fb6-9ef9-2752652d86a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Use Item 2"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9a76726-5212-4fd9-9299-17c1a02362fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Use Item 3"",
+                    ""type"": ""Button"",
+                    ""id"": ""65ea2bc3-80bd-4f18-98c8-97825736f1f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Use Item 4"",
+                    ""type"": ""Button"",
+                    ""id"": ""6cc36dda-e272-4e7f-b1b9-7122dd0a0af0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -333,6 +369,50 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""CollectItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76aaded6-3361-4a49-b25b-eccf588759b9"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""UseItem1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""136559bd-e25e-4520-810a-4910a9b85037"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Use Item 2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d4b54ca-0b3b-4d9f-bbb9-b7bf882fd3c8"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Use Item 3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f2e2ea9-de48-4db6-aa76-5ab92d736170"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Use Item 4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -408,14 +488,18 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_Player_SwitchMode = m_Player.FindAction("SwitchMode", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
-        m_Player_SkillSpecial = m_Player.FindAction("SkillSpecial", throwIfNotFound: true);
+        m_Player_NormalAttack = m_Player.FindAction("NormalAttack", throwIfNotFound: true);
+        m_Player_ElementalSkill = m_Player.FindAction("ElementalSkill", throwIfNotFound: true);
+        m_Player_ElementalBurst = m_Player.FindAction("ElementalBurst", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_OpenMenu = m_UI.FindAction("OpenMenu", throwIfNotFound: true);
         m_UI_OpenBag = m_UI.FindAction("OpenBag", throwIfNotFound: true);
         m_UI_CollectItem = m_UI.FindAction("CollectItem", throwIfNotFound: true);
+        m_UI_UseItem1 = m_UI.FindAction("UseItem1", throwIfNotFound: true);
+        m_UI_UseItem2 = m_UI.FindAction("Use Item 2", throwIfNotFound: true);
+        m_UI_UseItem3 = m_UI.FindAction("Use Item 3", throwIfNotFound: true);
+        m_UI_UseItem4 = m_UI.FindAction("Use Item 4", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -481,9 +565,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SwitchMode;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_Skill;
-    private readonly InputAction m_Player_SkillSpecial;
+    private readonly InputAction m_Player_NormalAttack;
+    private readonly InputAction m_Player_ElementalSkill;
+    private readonly InputAction m_Player_ElementalBurst;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
@@ -492,9 +576,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @SwitchMode => m_Wrapper.m_Player_SwitchMode;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
-        public InputAction @Skill => m_Wrapper.m_Player_Skill;
-        public InputAction @SkillSpecial => m_Wrapper.m_Player_SkillSpecial;
+        public InputAction @NormalAttack => m_Wrapper.m_Player_NormalAttack;
+        public InputAction @ElementalSkill => m_Wrapper.m_Player_ElementalSkill;
+        public InputAction @ElementalBurst => m_Wrapper.m_Player_ElementalBurst;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -516,15 +600,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @Skill.started += instance.OnSkill;
-            @Skill.performed += instance.OnSkill;
-            @Skill.canceled += instance.OnSkill;
-            @SkillSpecial.started += instance.OnSkillSpecial;
-            @SkillSpecial.performed += instance.OnSkillSpecial;
-            @SkillSpecial.canceled += instance.OnSkillSpecial;
+            @NormalAttack.started += instance.OnNormalAttack;
+            @NormalAttack.performed += instance.OnNormalAttack;
+            @NormalAttack.canceled += instance.OnNormalAttack;
+            @ElementalSkill.started += instance.OnElementalSkill;
+            @ElementalSkill.performed += instance.OnElementalSkill;
+            @ElementalSkill.canceled += instance.OnElementalSkill;
+            @ElementalBurst.started += instance.OnElementalBurst;
+            @ElementalBurst.performed += instance.OnElementalBurst;
+            @ElementalBurst.canceled += instance.OnElementalBurst;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -541,15 +625,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @Skill.started -= instance.OnSkill;
-            @Skill.performed -= instance.OnSkill;
-            @Skill.canceled -= instance.OnSkill;
-            @SkillSpecial.started -= instance.OnSkillSpecial;
-            @SkillSpecial.performed -= instance.OnSkillSpecial;
-            @SkillSpecial.canceled -= instance.OnSkillSpecial;
+            @NormalAttack.started -= instance.OnNormalAttack;
+            @NormalAttack.performed -= instance.OnNormalAttack;
+            @NormalAttack.canceled -= instance.OnNormalAttack;
+            @ElementalSkill.started -= instance.OnElementalSkill;
+            @ElementalSkill.performed -= instance.OnElementalSkill;
+            @ElementalSkill.canceled -= instance.OnElementalSkill;
+            @ElementalBurst.started -= instance.OnElementalBurst;
+            @ElementalBurst.performed -= instance.OnElementalBurst;
+            @ElementalBurst.canceled -= instance.OnElementalBurst;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -574,6 +658,10 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_OpenMenu;
     private readonly InputAction m_UI_OpenBag;
     private readonly InputAction m_UI_CollectItem;
+    private readonly InputAction m_UI_UseItem1;
+    private readonly InputAction m_UI_UseItem2;
+    private readonly InputAction m_UI_UseItem3;
+    private readonly InputAction m_UI_UseItem4;
     public struct UIActions
     {
         private @Inputs m_Wrapper;
@@ -581,6 +669,10 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @OpenMenu => m_Wrapper.m_UI_OpenMenu;
         public InputAction @OpenBag => m_Wrapper.m_UI_OpenBag;
         public InputAction @CollectItem => m_Wrapper.m_UI_CollectItem;
+        public InputAction @UseItem1 => m_Wrapper.m_UI_UseItem1;
+        public InputAction @UseItem2 => m_Wrapper.m_UI_UseItem2;
+        public InputAction @UseItem3 => m_Wrapper.m_UI_UseItem3;
+        public InputAction @UseItem4 => m_Wrapper.m_UI_UseItem4;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -599,6 +691,18 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @CollectItem.started += instance.OnCollectItem;
             @CollectItem.performed += instance.OnCollectItem;
             @CollectItem.canceled += instance.OnCollectItem;
+            @UseItem1.started += instance.OnUseItem1;
+            @UseItem1.performed += instance.OnUseItem1;
+            @UseItem1.canceled += instance.OnUseItem1;
+            @UseItem2.started += instance.OnUseItem2;
+            @UseItem2.performed += instance.OnUseItem2;
+            @UseItem2.canceled += instance.OnUseItem2;
+            @UseItem3.started += instance.OnUseItem3;
+            @UseItem3.performed += instance.OnUseItem3;
+            @UseItem3.canceled += instance.OnUseItem3;
+            @UseItem4.started += instance.OnUseItem4;
+            @UseItem4.performed += instance.OnUseItem4;
+            @UseItem4.canceled += instance.OnUseItem4;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -612,6 +716,18 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @CollectItem.started -= instance.OnCollectItem;
             @CollectItem.performed -= instance.OnCollectItem;
             @CollectItem.canceled -= instance.OnCollectItem;
+            @UseItem1.started -= instance.OnUseItem1;
+            @UseItem1.performed -= instance.OnUseItem1;
+            @UseItem1.canceled -= instance.OnUseItem1;
+            @UseItem2.started -= instance.OnUseItem2;
+            @UseItem2.performed -= instance.OnUseItem2;
+            @UseItem2.canceled -= instance.OnUseItem2;
+            @UseItem3.started -= instance.OnUseItem3;
+            @UseItem3.performed -= instance.OnUseItem3;
+            @UseItem3.canceled -= instance.OnUseItem3;
+            @UseItem4.started -= instance.OnUseItem4;
+            @UseItem4.performed -= instance.OnUseItem4;
+            @UseItem4.canceled -= instance.OnUseItem4;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -680,14 +796,18 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnSwitchMode(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
-        void OnSkill(InputAction.CallbackContext context);
-        void OnSkillSpecial(InputAction.CallbackContext context);
+        void OnNormalAttack(InputAction.CallbackContext context);
+        void OnElementalSkill(InputAction.CallbackContext context);
+        void OnElementalBurst(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnOpenMenu(InputAction.CallbackContext context);
         void OnOpenBag(InputAction.CallbackContext context);
         void OnCollectItem(InputAction.CallbackContext context);
+        void OnUseItem1(InputAction.CallbackContext context);
+        void OnUseItem2(InputAction.CallbackContext context);
+        void OnUseItem3(InputAction.CallbackContext context);
+        void OnUseItem4(InputAction.CallbackContext context);
     }
 }

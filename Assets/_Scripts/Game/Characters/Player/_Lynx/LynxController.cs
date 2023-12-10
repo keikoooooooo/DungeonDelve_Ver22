@@ -16,6 +16,7 @@ public class LynxController : PlayerController
     [Tooltip("Tâm ngắm"), SerializeField]
     private SkeletonGraphic crosshair;
     
+    
     [Tooltip("Layer kiểm tra va chạm khi giữ tâm ngắm"), SerializeField]
     private LayerMask crosshairMask;
     
@@ -54,7 +55,7 @@ public class LynxController : PlayerController
     protected override void SetVariables()
     {
         base.SetVariables();
-        
+
         _lockCrosshair = false;
         crosshair.gameObject.SetActive(false);
         indicatorQ.transform.SetParent(null);
@@ -80,7 +81,6 @@ public class LynxController : PlayerController
         }
     }
     
- 
     protected override void ChargedAttack()
     {
         if(_attackCoroutine != null) 
@@ -93,12 +93,12 @@ public class LynxController : PlayerController
     {
         InitChargedAttackValue();
         
-        while (IsAttackPressed)
+        while (IsNormalAttack)
         {
             BlendAnimationValue();
             AimCamRotation();
-            _lockCrosshair = IsAttackPressed;
-            animator.SetBool(ID4Direction, IsAttackPressed);
+            _lockCrosshair = IsNormalAttack;
+            animator.SetBool(ID4Direction, IsNormalAttack);
 
             ChargedAttackTime += Time.deltaTime;
             _damageBonus = Mathf.MoveTowards(_damageBonus, PlayerConfig.GetChargedAttackMultiplier()[1].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1], 15f * Time.deltaTime);
@@ -156,7 +156,7 @@ public class LynxController : PlayerController
     }
     protected override void ElementalBurst()
     {
-        if(!IsSpecialPressed) return;
+        if(!IsElementalBurst) return;
         
         if(_attackCoroutine != null) 
             StopCoroutine(_attackCoroutine);
@@ -166,11 +166,10 @@ public class LynxController : PlayerController
     {
         // Visual Effect
         indicatorQ.SetActive(true);
-        
-        // Variables
+
         inputs.Q = false;
+        inputs.LeftMouse = false;
         CanAttack = false;
-        
         while (true)
         {
             var cameraTransform = _mainCamera.transform;
@@ -189,7 +188,7 @@ public class LynxController : PlayerController
                 CanAttack = true;
                 yield break;
             }
-            
+
             if (inputs.Q || inputs.LeftMouse)
             {
                 CanMove = false;
@@ -200,13 +199,12 @@ public class LynxController : PlayerController
                 
                 _specialCD_Temp = PlayerConfig.GetElementalBurstCD();
                 OnSpecialCooldownEvent();
+                
                 yield break;
             }
-            
             yield return null;
         }
     }
-
 
     protected override void AttackEnd()
     {

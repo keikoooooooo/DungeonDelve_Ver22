@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
+                    "name": "NormalAttack",
                     "type": "Button",
                     "id": "c5918dcc-406a-4ee1-8817-9ddfabe2ddbd",
                     "expectedControlType": "Button",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill",
+                    "name": "ElementalSkill",
                     "type": "Button",
                     "id": "447e42d5-6db5-43ac-b7c7-a0aa6cec0b92",
                     "expectedControlType": "Button",
@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SkillSpecial",
+                    "name": "ElementalBurst",
                     "type": "Button",
                     "id": "da088eb4-35dd-495e-a9cc-8a4aa149a0be",
                     "expectedControlType": "Button",
@@ -165,7 +165,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Attack",
+                    "action": "NormalAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -176,7 +176,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Skill",
+                    "action": "ElementalSkill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -187,7 +187,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "SkillSpecial",
+                    "action": "ElementalBurst",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -278,6 +278,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseItem1",
+                    "type": "Button",
+                    "id": "c66c31b4-6ee2-4fb6-9ef9-2752652d86a6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Use Item 2",
+                    "type": "Button",
+                    "id": "d9a76726-5212-4fd9-9299-17c1a02362fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Use Item 3",
+                    "type": "Button",
+                    "id": "65ea2bc3-80bd-4f18-98c8-97825736f1f4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Use Item 4",
+                    "type": "Button",
+                    "id": "6cc36dda-e272-4e7f-b1b9-7122dd0a0af0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -311,6 +347,50 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "CollectItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76aaded6-3361-4a49-b25b-eccf588759b9",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UseItem1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "136559bd-e25e-4520-810a-4910a9b85037",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Use Item 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d4b54ca-0b3b-4d9f-bbb9-b7bf882fd3c8",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Use Item 3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f2e2ea9-de48-4db6-aa76-5ab92d736170",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Use Item 4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

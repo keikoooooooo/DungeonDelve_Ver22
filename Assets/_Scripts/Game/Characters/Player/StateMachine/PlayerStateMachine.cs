@@ -1,6 +1,7 @@
 using System;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculateDMG
@@ -24,15 +25,14 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     public Vector3 InputMovement { get; set; }
     
     public bool IsGrounded => characterController.isGrounded;
-    public bool CanControl { get; set; } // nhân vật có thể điều khiển ?
     protected bool CanMove { get; set; }
     protected bool CanRotation { get; set; }
     protected bool CanAttack { get; set; }
     public bool IsIdle => inputs.Move.magnitude == 0;
-    protected bool IsJump => CanControl && inputs.Space && !inputs.LeftShift && !animator.IsTag("Damage", 1);
-    public bool IsWalk => CanControl && !IsIdle && _movementState == MovementState.StateWalk;
-    public bool IsRun => CanControl && !IsIdle && IsGrounded && !inputs.LeftShift && _movementState == MovementState.StateRun;
-    public bool IsDash => CanControl && inputs.LeftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
+    protected bool IsJump => inputs.Space && !inputs.LeftShift && !animator.IsTag("Damage", 1);
+    public bool IsWalk => !IsIdle && _movementState == MovementState.StateWalk;
+    public bool IsRun => !IsIdle && IsGrounded && !inputs.LeftShift && _movementState == MovementState.StateRun;
+    public bool IsDash => inputs.LeftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
 
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
@@ -92,17 +92,15 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     private void OnEnable()
     {
         SetVariables();
-        DamageableData.Add(gameObject, this);
-
         HandleEnable();
+        RegisterEvent();
+        
     }
     protected virtual void Update()
     {
         HandleInput();
         
         CurrentState.UpdateState();
-        
-        if(!CanControl) return;
         
         HandleJumping();
         
@@ -114,7 +112,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     }
     private void OnDisable()
     {
-        DamageableData.Remove(gameObject);
+        UnRegisterEvent();
     }
 
     
@@ -137,12 +135,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         
         // Set Config
         _gravity = -30f;
-        CanControl = true;
         CanMove = true;
         CanRotation = true;
         CanIncreaseST = true;
         _movementState = MovementState.StateRun;
         characterController.enabled = true;
+        inputs.PlayerInput.Enable();
         InitStatus();
     }
     public void InitStatus()
@@ -150,7 +148,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         Health.InitValue(PlayerConfig.GetHP());
         Stamina.InitValue(PlayerConfig.GetST());
     }
-
+    
 
     private void HandleEnable()
     {
@@ -160,7 +158,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         setDissolve.Apply();
         enableEffect.Play();
     }
-    
     private void HandleInput()
     {
         // Giá trị di chuyển
@@ -266,6 +263,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         inputs.Move =Vector3.zero;
         AppliedMovement = Vector3.zero;
         InputMovement = Vector3.zero;
+        inputs.PlayerInput.Disable();
         
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.GetDEF() * 0.5f) : PlayerConfig.GetDEF();
@@ -282,7 +280,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         if (Health.CurrentValue <= 0)
         {
             CurrentState.SwitchState(_state.Dead());
-            CanControl = false;
             return;
         }
         
@@ -291,10 +288,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     }
     public void ReleaseDamageState() // gọi trên animationEvent để giải phóng trạng thái TakeDamages
     {
-        CanMove = true;
-        CanRotation = true;
-        CanAttack = true;
         CurrentState.SwitchState(_state.Idle());
+        inputs.PlayerInput.Enable();
     }
     #endregion
 
@@ -304,16 +299,21 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     #endregion
 
 
+    protected virtual void RegisterEvent()
+    {
+        DamageableData.Add(gameObject, this);
+    }
+    protected virtual void UnRegisterEvent()
+    {
+        DamageableData.Remove(gameObject);
+    }
+
+
     /// <summary>
     /// Khi nhận sát thương, nếu nhân vật cần thực hiện hành vi thì Override lại
     /// </summary>
-    protected virtual void HandleDamage()
-    {
-        CanMove = false;
-        CanRotation = false;
-        CanAttack = false;
-    }
-    
+    protected virtual void HandleDamage() { }
+
     /// <summary>
     /// Giải phóng tất cả trạng thái khi nhảy, lướt,
     /// </summary>

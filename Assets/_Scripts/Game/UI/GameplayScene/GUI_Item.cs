@@ -15,10 +15,10 @@ public class GUI_Item : MonoBehaviour, IPooled<GUI_Item>
     [SerializeField] private Sprite rarityFrameEpic;
     [SerializeField] private Sprite rarityFrameLegendary;
 
-    public int GetItemValue { get; private set; }
     public ItemCustom GetItemCustom { get; private set; }
-    
+    public int GetItemValue { get; private set; }
 
+    
     /// <summary>
     /// Set Item ra UI
     /// </summary>

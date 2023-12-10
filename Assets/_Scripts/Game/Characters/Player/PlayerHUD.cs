@@ -13,6 +13,7 @@ public class PlayerHUD : MonoBehaviour, IGUI
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Slider expProgress;
+    [SerializeField] private Slot[] slots;
     
     private PlayerController player;
     private SO_CharacterUpgradeData _characterUpgradeData;
@@ -22,10 +23,12 @@ public class PlayerHUD : MonoBehaviour, IGUI
     private void OnEnable()
     {
         GUI_Manager.Add(this);
+        GUI_Bag.OnItemChangedSlotEvent += LoadSlot;
     }
     private void OnDisable()
     {
         GUI_Manager.Remove(this);
+        GUI_Bag.OnItemChangedSlotEvent -= LoadSlot;
         
         if(!_isEventRegistered) 
             return;
@@ -67,6 +70,11 @@ public class PlayerHUD : MonoBehaviour, IGUI
         nameText.text = player.PlayerConfig.GetName();
         chapterIcon.sprite = player.PlayerConfig.ChapterIcon;
         expProgress.minValue = 0;
+        
+        for (var i = 0; i < slots.Length; i++)
+        {
+            slots[i].SetKeyText($"{i + 1}");
+        }
     }
     private void ChangedConfigValue()
     {
@@ -79,6 +87,12 @@ public class PlayerHUD : MonoBehaviour, IGUI
         expProgress.maxValue = _characterUpgradeData.GetNextEXP(_currentLevel);
         expProgress.value = player.PlayerConfig.GetCurrentEXP();
     }
-    
+    private void LoadSlot(Slot[] _slots)
+    {
+        for (var i = 0; i < _slots.Length; i++)
+        {
+            slots[i].SetSlot(_slots[i].GetItem);
+        }
+    }
   
 }

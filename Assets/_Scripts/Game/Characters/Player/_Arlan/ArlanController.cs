@@ -110,14 +110,14 @@ public class ArlanController : PlayerController
     }
     protected override void ElementalSkill()
     {
-        if(!IsSkillPressed) return;
+        if(!IsElementalSkill) return;
         
         WeaponEquipped();
         base.ElementalSkill();
     }
     protected override void ElementalBurst()
     {
-        if(!IsSpecialPressed) return;
+        if(!IsElementalBurst) return;
         
         WeaponEquipped();
         base.ElementalBurst();

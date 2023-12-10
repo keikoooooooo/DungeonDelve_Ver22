@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class MenuController : Singleton<MenuController>
 {
@@ -12,62 +13,77 @@ public class MenuController : Singleton<MenuController>
     public UnityEvent OnClickBOpenMenuEvent;
     public UnityEvent OnCloseMenuEvent;
     
+    private UserData _userData;
+    private PlayerController _player;
+    private GameManager _gameManager;
+    
     private bool _isOpenMenu;
     private bool _isEventRegistered;
-    private PlayerController _player;
-    private UserData _userData;
 
     
     private void OnEnable()
     {
-        if(!GameManager.Instance) return;
-        GUI_Manager.SendRef(GameManager.Instance);
-
-        _player = GameManager.Instance.Player;
-        _userData = GameManager.Instance.UserData;
-        if (!_isEventRegistered)
-        {
-            _isEventRegistered = true;
-            _userData.OnCoinChangedEvent += OnCoinChanged;
-        }
-        
-        _userData.SendEventCoinChaged();
+        RegisterEvent();
     }
     private void Start()
     {
         _isOpenMenu = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
-    private void Update() => HandleInput();
     private void OnDisable()
     {
+        UnRegisterEvent();
+    }
+
+    private void RegisterEvent()
+    {
+        GUIInputs.InputAction.UI.OpenMenu.performed += OpenMenu;
+        GUIInputs.InputAction.UI.OpenBag.performed += OpenBag;
+
+        _gameManager = GameManager.Instance;
+        if(!_gameManager) return;
+        GUI_Manager.SendRef(_gameManager);
+
+        _player = _gameManager.Player;
+        _userData = _gameManager.UserData;
+        
+        if (!_isEventRegistered)
+        {
+            _isEventRegistered = true;
+            _userData.OnCoinChangedEvent += OnCoinChanged;
+        }
+        _userData.SendEventCoinChaged();
+    }
+    private void UnRegisterEvent()
+    {
+        GUIInputs.InputAction.UI.OpenMenu.performed -= OpenMenu;
+        GUIInputs.InputAction.UI.OpenBag.performed -= OpenBag;
+        
         if(!_isEventRegistered) return;
         _userData.OnCoinChangedEvent -= OnCoinChanged;
         _isEventRegistered = false;
     }
     
-    private void HandleInput()
+    
+    private void OpenMenu(InputAction.CallbackContext _context)
     {
-        if (GUIInputs.Esc)
+        _isOpenMenu = !_isOpenMenu;
+        if(_isOpenMenu)
         {
-            GUIInputs.Esc = false;
-            _isOpenMenu = !_isOpenMenu;
-            if(_isOpenMenu)
-            {
-                OpenMenu();
-                OnClickEscOpenMenuEvent?.Invoke(); 
-            }
-            else
-            {
-                CloseMenu();
-            }
+            OpenMenu();
+            OnClickEscOpenMenuEvent?.Invoke(); 
         }
-
-        if (!GUIInputs.B || _isOpenMenu) return;
-        GUIInputs.B = false;
+        else
+        {
+            CloseMenu();
+        }
+    }
+    private void OpenBag(InputAction.CallbackContext _context)
+    {
+        if(_isOpenMenu) return;
         _isOpenMenu = true;
         OpenMenu();
-        OnClickBOpenMenuEvent?.Invoke();
+        OnClickBOpenMenuEvent?.Invoke(); 
     }
     private void OnCoinChanged(int _value) => currencyText.text = $"{_value}";
     
@@ -91,7 +107,6 @@ public class MenuController : Singleton<MenuController>
         _player.PlayerData.PlayerRenderTexture.CloseRenderUI();
         _isOpenMenu = false;
     }
-
     
 
     public void ExitToLoginScene(string _sceneName)

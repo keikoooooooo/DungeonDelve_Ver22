@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RewardManager : Singleton<RewardManager>
 {
@@ -28,18 +29,22 @@ public class RewardManager : Singleton<RewardManager>
     
     // tạo hàng chờ phần thưởng của coin, và coin di chuyển tới vị trí player sẽ tự động nhận thưởng
     private readonly Queue<RewardSetup.ItemReward> _coinRewardData = new();
+
     
-    
+    private void OnEnable()
+    {
+        GUIInputs.InputAction.UI.CollectItem.performed += OnCollectInput;
+    }
     private void Start()
     {
         Init();
         GetRef();
     }
-    private void Update()
+    private void OnDisable()
     {
-        HandleInput();
+        GUIInputs.InputAction.UI.CollectItem.performed -= OnCollectInput;
     }
-    
+ 
     
     private void Init()
     {
@@ -54,19 +59,18 @@ public class RewardManager : Singleton<RewardManager>
     }
     private void GetRef()
     {
-        if (!GameManager.Instance || !GameManager.Instance.Player) return;
-        _userData = GameManager.Instance.UserData;
-        _player = GameManager.Instance.Player;
+        var _gameManager = GameManager.Instance; if (!_gameManager) return;
+        _userData = _gameManager.UserData;
+        _player = _gameManager.Player;
     }
-    private void HandleInput()
+    private void OnCollectInput(InputAction.CallbackContext _context)
     {
-        if (!_itemRewardsData.Any() || !GUIInputs.F) return;
-        GUIInputs.F = false;
+        if (!_itemRewardsData.Any()) return;
         
         var _keyValuePair = _itemRewardsData.FirstOrDefault();
-        _keyValuePair.Key.Release();
         RemoveNoticeReward(_keyValuePair.Key);
         SetReward(_keyValuePair.Value);
+        _keyValuePair.Key.Release();
     }
     
     
@@ -159,21 +163,13 @@ public class RewardManager : Singleton<RewardManager>
     /// <param name="_itemReward"> Phần thưởng được thêm vào. </param>
     public void AddNoticeReward(ItemDrop _itemDrop, RewardSetup.ItemReward _itemReward)
     {
-        var _des = _itemReward.GetDescription();
-        var _nameCode = _itemReward.GetNameCode();
-        Sprite _sprite = null;
-        if (gameItemData.GetItemCustom(_nameCode, out var itemCustom))
+        _itemRewardsData.TryAdd(_itemDrop, _itemReward);
+        var _newItemNotice = new Dictionary<string, Sprite>();
+        foreach (var (key, value) in _itemRewardsData)
         {
-            _sprite = itemCustom.sprite;
+            _newItemNotice.TryAdd(value.GetDescription(), gameItemData.GetItemCustom(value.GetNameCode()).sprite);
         }
-
-        if (_itemRewardsData.ContainsKey(_itemDrop)) return;
-        
-        // Tạo thông báo có phần thưởng
-        RewardNoticeManager.CreateNoticeT2(_des, _sprite);
-
-        // Thêm dữ liệu phần thưởng vào danh sách chờ
-        _itemRewardsData.Add(_itemDrop, _itemReward);
+        RewardNoticeManager.UpdateNoticeT2(_newItemNotice);
     }
     
     /// <summary>
@@ -183,7 +179,7 @@ public class RewardManager : Singleton<RewardManager>
     public void RemoveNoticeReward(ItemDrop _itemDrop)
     {
         if(!_itemRewardsData.ContainsKey(_itemDrop)) return;
-
+        
         _itemRewardsData.Remove(_itemDrop);
         RewardNoticeManager.ReleaseAllNoticeT2();
         

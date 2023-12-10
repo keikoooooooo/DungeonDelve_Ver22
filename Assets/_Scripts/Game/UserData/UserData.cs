@@ -23,9 +23,6 @@ public class UserData
         private set => _coin = value;
     }
     
-    [Tooltip("Các slot đang trang bị item"), SerializeField, JsonProperty] 
-    private Dictionary<int, ItemNameCode> slotEquippeds;
-    
     [Tooltip("Dữ liệu item mà người dùng sở hữu"), SerializeField, JsonProperty] 
     private Dictionary<ItemNameCode, int> _itemInventory;
     
@@ -37,28 +34,36 @@ public class UserData
     {
         username = _username;
         coin = _coin;
-        slotEquippeds = new Dictionary<int, ItemNameCode>()
-        {
-            { 1, default },
-            { 2, default },
-            { 3, default },
-            { 4, default }
-        };
         _itemInventory = new Dictionary<ItemNameCode, int>()
         {
-            { ItemNameCode.POHealth , 5},
-            { ItemNameCode.POStamina, 5},
-            { ItemNameCode.EXPSmall, 10},
-            { ItemNameCode.EXPMedium, 20},
-            { ItemNameCode.EXPBig, 30},
-            { ItemNameCode.UPSpearhead1, 20},
-            { ItemNameCode.JASliver1, 20},
-            { ItemNameCode.UPSpearhead2, 20},
-            { ItemNameCode.JASliver2, 20},
-            { ItemNameCode.UPSpearhead3, 20},
-            { ItemNameCode.JASliver3, 20},
-            { ItemNameCode.UPForgedBow, 20},
-            { ItemNameCode.UPForgedSword, 20},
+            { ItemNameCode.POHealth , 1},
+            { ItemNameCode.PODamage, 2},
+            { ItemNameCode.POStamina, 3},
+            { ItemNameCode.PODefense, 4},
+            { ItemNameCode.POIceResist, 5},
+            { ItemNameCode.EXPSmall, 6},
+            // { ItemNameCode.EXPMedium, 7},
+            // { ItemNameCode.EXPBig, 8},
+            // { ItemNameCode.JASliver1, 9},
+            // { ItemNameCode.JASliver2, 10},
+            // { ItemNameCode.JASliver3, 11},
+            // { ItemNameCode.UPSpearhead1, 12},
+            // { ItemNameCode.UPSpearhead2, 13},
+            // { ItemNameCode.UPSpearhead3, 14},
+            // { ItemNameCode.UPForgedBow, 15},
+            // { ItemNameCode.UPForgedSword, 16},
+            // { ItemNameCode.JABlue1, 17},
+            // { ItemNameCode.JABlue2, 18},
+            // { ItemNameCode.JABlue3, 19},
+            // { ItemNameCode.JABlue4, 21},
+            // { ItemNameCode.JARed1, 22},
+            // { ItemNameCode.JARed2, 23},
+            // { ItemNameCode.JARed3, 24},
+            // { ItemNameCode.JARed4, 25},
+            // { ItemNameCode.JAYellow1, 26},
+            // { ItemNameCode.JAYellow2, 27},
+            // { ItemNameCode.JAYellow3, 28},
+            // { ItemNameCode.JAYellow4, 29},
         };
     }
 

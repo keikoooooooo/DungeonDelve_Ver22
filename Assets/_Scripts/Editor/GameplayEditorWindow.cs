@@ -612,22 +612,33 @@ public class GameplayEditorWindow : EditorWindow
         Space(10);
         scrollView = GUILayout.BeginScrollView(scrollView);
         
+        
         GUILayout.BeginHorizontal();
         for (var i = 0; i < _gameItemData.GameItemDatas.Count; i++)
         {
-            if (i % 8 == 0 && i != 0)
+            if (i % 5 == 0 && i != 0)
             {
                 GUILayout.EndHorizontal();
                 Space(25);
                 GUILayout.BeginHorizontal();
             }
+            GUILayout.BeginHorizontal();
             GUILayout.BeginVertical();
             var itemDefault = _gameItemData.GameItemDatas[i];
             itemDefault.code = (ItemNameCode)EditorGUILayout.EnumPopup("", itemDefault.code, Width(150));
             itemDefault.sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.sprite, typeof(Sprite), false, Width(150), Height(150));
             Space(2);
             itemDefault.ratity = (ItemRarity)EditorGUILayout.EnumPopup("", itemDefault.ratity, Width(150));
+            itemDefault.isConsumable = EditorGUILayout.Toggle("", itemDefault.isConsumable, Width(150));
             GUILayout.EndVertical();
+            
+            GUILayout.BeginVertical();
+            EditorGUILayout.LabelField( "   STATS", LabelColorText(Color.cyan));
+            EditorGUILayout.LabelField($"   NameCode: {itemDefault.code}", Width(150));
+            EditorGUILayout.LabelField($"   Rarity: {itemDefault.ratity}", Width(150));
+            EditorGUILayout.LabelField($"   Consumable: {itemDefault.isConsumable}", Width(150));
+            GUILayout.EndVertical();
+            GUILayout.EndHorizontal();
         }
         
         GUILayout.EndHorizontal();

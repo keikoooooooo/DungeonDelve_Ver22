@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using NaughtyAttributes;
@@ -47,17 +48,59 @@ public class RewardNoticeManager : Singleton<RewardNoticeManager>
     /// Tạo 1 text thông báo với giá trị value item nhận được và icon hiển thị tương ứng item đó
     /// Thông báo này sẽ xuất hiện để thu thập vật phẩm khi player đứng gần 1 item
     /// </summary>
-    /// <param name="_value"> Giá trị Text trong TextBar </param>
+    /// <param name="_titleText"> Giá trị Text trong TextBar </param>
     /// <param name="_spriteIcon"> Icon hiển thị trên TextBar </param>
-    public static void CreateNoticeT2(string _value, Sprite _spriteIcon)
+    public static void CreateNoticeT2(string _titleText, Sprite _spriteIcon)
     {
         var count = _pooltextBar2.List.Count(textBar3 => textBar3.gameObject.activeSelf);
         
         var textBar = _pooltextBar2.Get();
-        textBar.SetTextBar(_value, _spriteIcon);
+        textBar.SetTextBar(_titleText, _spriteIcon);
         textBar.animator.Play(count == 0 ? "TextBar02_IN" : "TextBar02_WAIT");
     }
 
+    /// <summary>
+    /// Cập nhật lại danh sách các Notice của item khi người dùng đứng gần các item.
+    /// </summary>
+    /// <param name="_newItemNotice"> Danh sách item mới. </param>
+    public static void UpdateNoticeT2(Dictionary<string, Sprite> _newItemNotice)
+    {
+        var _currenNotice = _pooltextBar2.List.Where(item => item.gameObject.activeSelf).ToList();
+        var _currentNoticeCount = _currenNotice.Count;
+        var _newNoticeCount = _newItemNotice.Count;
+        
+        if (_currentNoticeCount < _newNoticeCount)
+        {
+            var _needCount = _newNoticeCount - _currentNoticeCount;
+            for (var i = 0; i < _needCount; i++)
+            {
+                var _newNotice = _pooltextBar2.Get();
+                _currenNotice.Add(_newNotice);
+            }
+        }
+        else if (_currentNoticeCount > _newNoticeCount)
+        {
+            var _needCount = _currentNoticeCount - _newNoticeCount;
+            for (var i = 0; i < _needCount; i++)
+            {
+                _currenNotice[i].Release();
+            }
+        }
+        
+        var count = 0;
+        var _animIDPlay = "TextBar02_IN";
+        foreach (var (key, value) in _newItemNotice)
+        {
+            _currenNotice[count].SetTextBar(key, value);
+            _currenNotice[count].animator.Play(_animIDPlay);
+            _animIDPlay = "TextBar02_WAIT";
+            count++;
+        }
+    }
+    
+    /// <summary>
+    /// Giải phóng tất cả text thông báo nhận Item về Pool
+    /// </summary>
     public static void ReleaseAllNoticeT2() => _pooltextBar2.List.ForEach(t => t.Release());
     
     
@@ -78,12 +121,9 @@ public class RewardNoticeManager : Singleton<RewardNoticeManager>
         _titleTween?.Kill();
         _titleTween = titleText.DOColor(new Color(1, 1, 1, 0), _tweenDuration);
         
+        // Khi tiêu đề được tắt sẽ bắt đầu save dữ liệu mới vào dữ liệu của User
         if(PlayFabHandleUserData.Instance)
             PlayFabHandleUserData.Instance.SaveData();
     }
-    
-    
-    
-    
     
 }

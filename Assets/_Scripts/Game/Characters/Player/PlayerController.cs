@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 [Serializable]
@@ -38,11 +39,13 @@ public abstract class PlayerController : PlayerStateMachine
     private AttackCustom attackCustom;
     public event Action<float> E_SkillCD; 
     public event Action<float> E_SpecialCD;
+
+    protected bool IsNormalAttack => inputs.LeftMouse;
+    protected bool IsElementalSkill => inputs.E && _skillCD_Temp <= 0;
+    protected bool IsElementalBurst => inputs.Q && _specialCD_Temp <= 0;
     
-    protected bool IsAttackPressed => inputs.LeftMouse;
-    protected bool IsSkillPressed => inputs.E && _skillCD_Temp <= 0;
-    protected bool IsSpecialPressed => inputs.Q && _specialCD_Temp <= 0;
     public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding
+    
     
     // Player
     [HideInInspector] private Vector3 _pushVelocity;       // vận tốc đẩy 
@@ -68,6 +71,7 @@ public abstract class PlayerController : PlayerStateMachine
             _ => 0
         };
     }
+
     protected void HandleAttack()
     {
         animator.SetFloat(IDStateTime, Mathf.Repeat(animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
@@ -78,16 +82,16 @@ public abstract class PlayerController : PlayerStateMachine
             AttackEnd();
         }
         
-        if(!CanAttack || !IsGrounded || !CanControl || animator.IsTag("Damage", 1)) return;
+        if(!CanAttack || !IsGrounded) return;
         
         Attack();
         ElementalSkill();
         ElementalBurst();
     }
-
+    
     private void Attack()
     {
-        if (IsAttackPressed)
+        if (IsNormalAttack)
         {
             _isAttackPressed = true;
             MouseHoldTime += Time.deltaTime;
@@ -95,11 +99,11 @@ public abstract class PlayerController : PlayerStateMachine
         
         switch (_isAttackPressed)
         {
-            case true when !IsAttackPressed && MouseHoldTime < .5f:
+            case true when !IsNormalAttack && MouseHoldTime < .5f:
                 NormalAttack();
                 break;
             
-            case true when IsAttackPressed && MouseHoldTime >= .5f:
+            case true when IsNormalAttack && MouseHoldTime >= .5f:
                 CanAttack = false;
                 _isAttackPressed = false;
                 ChargedAttack();
@@ -125,7 +129,7 @@ public abstract class PlayerController : PlayerStateMachine
     }
     protected virtual void ElementalSkill()
     {
-        if(!IsSkillPressed) return;
+        if(!IsElementalSkill) return;
 
         animator.SetTrigger(IDSkill);
         CanAttack = false;
@@ -138,7 +142,8 @@ public abstract class PlayerController : PlayerStateMachine
     }
     protected virtual void ElementalBurst()
     {
-        if(!IsSpecialPressed) return;
+        if(!IsElementalBurst) return;
+        
         animator.SetTrigger(IDSpecial);
         CanAttack = false;
         CanMove = false;
@@ -231,7 +236,7 @@ public abstract class PlayerController : PlayerStateMachine
     /// <returns></returns>
     protected int Calculation(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
     #endregion
-
+    
     
     protected virtual void AttackEnd()
     {
@@ -240,23 +245,20 @@ public abstract class PlayerController : PlayerStateMachine
         CanMove = true;
         CanRotation = true;
     }
+
     protected virtual void SkillEnd()
     {
-        inputs.E = false;
-        
         AttackEnd();
+        inputs.E = false;
     }
     protected virtual void SpecialEnd()
     {
-        inputs.Q = false;
-        
         AttackEnd();
+        inputs.Q = false;
     }
     public override void ReleaseAction()
     {
         inputs.LeftMouse = false;
-        inputs.E = false;
-        inputs.Q = false;
         AttackEnd();
     }
     

@@ -8,63 +8,63 @@ public class PlayerInputs : MonoBehaviour
         + Ví dụ: Action: Move -> Function: OnMove
      */
     
-    private Inputs _playerInput;
+    [HideInInspector] public Inputs PlayerInput;
 
     private void Awake()
     {
-        _playerInput = new Inputs();
+        PlayerInput = new Inputs();
     }
 
     private void OnEnable()
     {
-        _playerInput.Player.Enable();
+        PlayerInput.Player.Enable();
         
-        _playerInput.Player.Move.performed  += OnMovePressed;
-        _playerInput.Player.Move.canceled += OnMovePressed;
+        PlayerInput.Player.Move.performed  += OnMovePressed;
+        PlayerInput.Player.Move.canceled += OnMovePressed;
         
-        _playerInput.Player.SwitchMode.started  += OnChangeStatePressed;
-        _playerInput.Player.SwitchMode.canceled += OnChangeStatePressed;
+        PlayerInput.Player.SwitchMode.started  += OnChangeStatePressed;
+        PlayerInput.Player.SwitchMode.canceled += OnChangeStatePressed;
         
-        _playerInput.Player.Jump.started  += OnJumpPressed;
-        _playerInput.Player.Jump.canceled += OnJumpPressed;
+        PlayerInput.Player.Jump.started  += OnJumpPressed;
+        PlayerInput.Player.Jump.canceled += OnJumpPressed;
         
-        _playerInput.Player.Dash.started  += OnDashPressed;
-        _playerInput.Player.Dash.canceled += OnDashPressed;
+        PlayerInput.Player.Dash.started  += OnDashPressed;
+        PlayerInput.Player.Dash.canceled += OnDashPressed;
         
-        _playerInput.Player.Attack.started += OnAttackPressed;
-        _playerInput.Player.Attack.canceled += OnAttackPressed;
+        PlayerInput.Player.NormalAttack.started += OnAttackPressed;
+        PlayerInput.Player.NormalAttack.canceled += OnAttackPressed;
         
-        _playerInput.Player.Skill.started += OnSkillPressed;
-        _playerInput.Player.Skill.canceled += OnSkillPressed;
+        PlayerInput.Player.ElementalSkill.started += OnSkillPressed;
+        PlayerInput.Player.ElementalSkill.canceled += OnSkillPressed;
         
-        _playerInput.Player.SkillSpecial.started += OnSkillSpecialPressed;
-        _playerInput.Player.SkillSpecial.canceled += OnSkillSpecialPressed;
+        PlayerInput.Player.ElementalBurst.started += OnSkillSpecialPressed;
+        PlayerInput.Player.ElementalBurst.canceled += OnSkillSpecialPressed;
         
     }
     private void OnDisable()
     {
-        _playerInput.Player.Move.performed  -= OnMovePressed;
-        _playerInput.Player.Move.canceled -= OnMovePressed;
+        PlayerInput.Player.Move.performed  -= OnMovePressed;
+        PlayerInput.Player.Move.canceled -= OnMovePressed;
         
-        _playerInput.Player.SwitchMode.started  -= OnChangeStatePressed;
-        _playerInput.Player.SwitchMode.canceled -= OnChangeStatePressed;
+        PlayerInput.Player.SwitchMode.started  -= OnChangeStatePressed;
+        PlayerInput.Player.SwitchMode.canceled -= OnChangeStatePressed;
         
-        _playerInput.Player.Jump.started  -= OnJumpPressed;
-        _playerInput.Player.Jump.canceled -= OnJumpPressed;
+        PlayerInput.Player.Jump.started  -= OnJumpPressed;
+        PlayerInput.Player.Jump.canceled -= OnJumpPressed;
         
-        _playerInput.Player.Dash.started  -= OnDashPressed;
-        _playerInput.Player.Dash.canceled -= OnDashPressed;
+        PlayerInput.Player.Dash.started  -= OnDashPressed;
+        PlayerInput.Player.Dash.canceled -= OnDashPressed;
         
-        _playerInput.Player.Attack.started -= OnAttackPressed;
-        _playerInput.Player.Attack.canceled -= OnAttackPressed;
+        PlayerInput.Player.NormalAttack.started -= OnAttackPressed;
+        PlayerInput.Player.NormalAttack.canceled -= OnAttackPressed;
         
-        _playerInput.Player.Skill.started -= OnSkillPressed;
-        _playerInput.Player.Skill.canceled -= OnSkillPressed;
+        PlayerInput.Player.ElementalSkill.started -= OnSkillPressed;
+        PlayerInput.Player.ElementalSkill.canceled -= OnSkillPressed;
         
-        _playerInput.Player.SkillSpecial.started -= OnSkillSpecialPressed;
-        _playerInput.Player.SkillSpecial.canceled -= OnSkillSpecialPressed;
+        PlayerInput.Player.ElementalBurst.started -= OnSkillSpecialPressed;
+        PlayerInput.Player.ElementalBurst.canceled -= OnSkillSpecialPressed;
         
-        _playerInput.Player.Disable();
+        PlayerInput.Player.Disable();
     }
 
 

@@ -87,19 +87,21 @@ public class TimelineBOReaper : MonoBehaviour
         ApplyEmission(0, 0);
     }
 
-    public void ActiveControlPlayer() // gọi trên EventAnimationTimeline
+    public void ActiveControlPlayer() // gọi trên EventAnimationTimelineS
     {
         if (!_player) 
             return;
-        _player.CanControl = true;
-        GUIInputs.CanInput = true;
+        
+        _player.inputs.PlayerInput.Enable();
+        GUIInputs.EnableInput();
     }
     public void DeActiveControlPlayer()
     {
         if (!_player) 
             return;
-        _player.CanControl = false;
-        GUIInputs.CanInput = false;
+        
+        _player.inputs.PlayerInput.Disable();
+        GUIInputs.DisableInput();
     }
 
 
