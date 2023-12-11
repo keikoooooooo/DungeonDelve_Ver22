@@ -25,7 +25,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
             return;
 
         var _item = draggableItem.GetItem();
-        if(!_item.GetItemCustom.isConsumable || _item == GetItem) 
+        if(_item.GetItemCustom.type != ItemType.Consumable || _item == GetItem) 
             return;
         
         OnSelectSlotEvent?.Invoke(this, _item);

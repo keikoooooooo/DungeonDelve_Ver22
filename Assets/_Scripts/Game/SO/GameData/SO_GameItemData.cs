@@ -67,6 +67,14 @@ public enum ItemRarity
     Legendary = 4
 }
 
+public enum ItemType
+{
+    Consumable,
+    Upgrade,
+    Quest,
+    Currency
+}
+
 
 /// <summary>
 /// Thông tin của từng Item
@@ -75,18 +83,13 @@ public enum ItemRarity
 public class ItemCustom
 {
     public ItemNameCode code;
+    public string nameItem;
     public Sprite sprite;
     public ItemRarity ratity;
+    public ItemType type;
+    public string description;
     
-    [Tooltip("Item có thuộc loại tiêu hao không ?")]
-    public bool isConsumable;
-
     public ItemCustom() { }
-    public ItemCustom(ItemNameCode _itemCode, ItemRarity _itemRarity)
-    {
-        code = _itemCode;
-        ratity = _itemRarity;
-    }
 }
 
 

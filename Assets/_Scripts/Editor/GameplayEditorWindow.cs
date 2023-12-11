@@ -610,38 +610,51 @@ public class GameplayEditorWindow : EditorWindow
         EditorGUI.BeginChangeCheck();
         
         Space(10);
-        scrollView = GUILayout.BeginScrollView(scrollView);
-        
-        
         GUILayout.BeginHorizontal();
-        for (var i = 0; i < _gameItemData.GameItemDatas.Count; i++)
+        GUILayout.Label( "",  Width(100));
+        GUILayout.Box( "Name Code", BoxColorText(Color.red), Width(150));
+        GUILayout.Box( "Name Item", BoxColorText(Color.red), Width(150));
+        GUILayout.Box( "Description", BoxColorText(Color.red), Width(150));
+        GUILayout.Box( "Sprite", BoxColorText(Color.red), Width(150));
+        GUILayout.Box( "Rarity", BoxColorText(Color.red), Width(150));
+        GUILayout.Box( "Type", BoxColorText(Color.red), Width(150));
+        GUILayout.EndHorizontal();
+        
+        scrollView = GUILayout.BeginScrollView(scrollView);
+        GUILayout.BeginVertical();
+        foreach (var _itemData in _gameItemData.GameItemDatas)
         {
-            if (i % 5 == 0 && i != 0)
-            {
-                GUILayout.EndHorizontal();
-                Space(25);
-                GUILayout.BeginHorizontal();
-            }
+            GUILayout.BeginHorizontal(GUI.skin.box);
+            
             GUILayout.BeginHorizontal();
-            GUILayout.BeginVertical();
-            var itemDefault = _gameItemData.GameItemDatas[i];
-            itemDefault.code = (ItemNameCode)EditorGUILayout.EnumPopup("", itemDefault.code, Width(150));
-            itemDefault.sprite = (Sprite)EditorGUILayout.ObjectField(itemDefault.sprite, typeof(Sprite), false, Width(150), Height(150));
-            Space(2);
-            itemDefault.ratity = (ItemRarity)EditorGUILayout.EnumPopup("", itemDefault.ratity, Width(150));
-            itemDefault.isConsumable = EditorGUILayout.Toggle("", itemDefault.isConsumable, Width(150));
-            GUILayout.EndVertical();
+            EditorGUILayout.LabelField( "CUSTOM", LabelColorText(Color.yellow), Width(100));
+            _itemData.code = (ItemNameCode)EditorGUILayout.EnumPopup("", _itemData.code, Width(150));
+            _itemData.nameItem = EditorGUILayout.TextField("", _itemData.nameItem,Width(150));
+            _itemData.description = EditorGUILayout.TextField("", _itemData.description,Width(150));
+            _itemData.sprite = (Sprite)EditorGUILayout.ObjectField(_itemData.sprite, typeof(Sprite), false, Width(150), Height(150));
+            _itemData.ratity = (ItemRarity)EditorGUILayout.EnumPopup("", _itemData.ratity, Width(150));
+            _itemData.type = (ItemType)EditorGUILayout.EnumPopup("", _itemData.type, Width(150));
+            GUILayout.EndHorizontal();
             
             GUILayout.BeginVertical();
             EditorGUILayout.LabelField( "   STATS", LabelColorText(Color.cyan));
-            EditorGUILayout.LabelField($"   NameCode: {itemDefault.code}", Width(150));
-            EditorGUILayout.LabelField($"   Rarity: {itemDefault.ratity}", Width(150));
-            EditorGUILayout.LabelField($"   Consumable: {itemDefault.isConsumable}", Width(150));
+            EditorGUILayout.LabelField($"   NameCode: {_itemData.code}", Width(550));
+            EditorGUILayout.LabelField($"   Name: {_itemData.nameItem}", Width(550));
+            EditorGUILayout.LabelField($"   Rarity: {_itemData.ratity}", Width(150));
+            EditorGUILayout.LabelField($"   Type: {_itemData.type}", Width(150));
+            var _desToStr = " Description: " + _itemData.description;
+            var lines = _desToStr.Split('.');
+            foreach (var line in lines)
+            {
+                EditorGUILayout.LabelField("  " + line);
+            }
             GUILayout.EndVertical();
+            
             GUILayout.EndHorizontal();
+            Space(10);
         }
         
-        GUILayout.EndHorizontal();
+        GUILayout.EndVertical();
         GUILayout.EndScrollView();
         
         Space(10);

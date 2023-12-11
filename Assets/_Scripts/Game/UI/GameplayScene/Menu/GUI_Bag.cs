@@ -143,7 +143,9 @@ public class GUI_Bag : MonoBehaviour, IGUI
                 code = guiItem.GetItemCustom.code,
                 ratity = guiItem.GetItemCustom.ratity,
                 sprite = guiItem.GetItemCustom.sprite,
-                isConsumable = guiItem.GetItemCustom.isConsumable
+                description = guiItem.GetItemCustom.description,
+                type = guiItem.GetItemCustom.type,
+                nameItem = guiItem.GetItemCustom.nameItem,
             };
             _itemData.Add(itemCustom, guiItem.GetItemValue);
         }

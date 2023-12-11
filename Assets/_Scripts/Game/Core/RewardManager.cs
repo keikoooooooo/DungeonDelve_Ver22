@@ -86,7 +86,9 @@ public class RewardManager : Singleton<RewardManager>
         
         foreach (var VARIABLE in _rewards)
         {
-            if (VARIABLE.GetNameCode() != ItemNameCode.COCoin)
+            var itemCustom = gameItemData.GetItemCustom(VARIABLE.GetNameCode());
+            
+            if (itemCustom.type != ItemType.Currency)
             {
                 CreateItemDrop(VARIABLE, position );
                 continue;
@@ -138,17 +140,15 @@ public class RewardManager : Singleton<RewardManager>
     public void SetReward(RewardSetup.ItemReward _itemReward)
     {
         var _val = _itemReward.GetValue();
-        var _des = _itemReward.GetDescription() + " <size=12><color=#ABABAB>x</size></color> " + _val;
         var _nameCode = _itemReward.GetNameCode();
-        Sprite _sprite = null;
-        if (gameItemData.GetItemCustom(_nameCode, out var itemCustom))
-        {
-            _sprite = itemCustom.sprite;
-        }
+        var _itemCustom = gameItemData.GetItemCustom(_nameCode);
+        var _sprite = _itemCustom.sprite;
+        var _des = _itemCustom.nameItem + " <size=12><color=#ABABAB>x</size></color> " + _val;
+        
         RewardNoticeManager.Instance.EnableTitleNoticeT1();
         RewardNoticeManager.CreateNoticeT1(_des, _sprite);
         
-        if (_nameCode == ItemNameCode.COCoin)
+        if (_itemCustom.type == ItemType.Currency)
         {
             _userData.IncreaseCoin(_val);
             return;
@@ -167,7 +167,8 @@ public class RewardManager : Singleton<RewardManager>
         var _newItemNotice = new Dictionary<string, Sprite>();
         foreach (var (key, value) in _itemRewardsData)
         {
-            _newItemNotice.TryAdd(value.GetDescription(), gameItemData.GetItemCustom(value.GetNameCode()).sprite);
+            var _itemCustom = gameItemData.GetItemCustom(value.GetNameCode());
+            _newItemNotice.TryAdd(_itemCustom.nameItem, _itemCustom.sprite);
         }
         RewardNoticeManager.UpdateNoticeT2(_newItemNotice);
     }
@@ -185,13 +186,10 @@ public class RewardManager : Singleton<RewardManager>
         
         foreach (var keyValuePair in _itemRewardsData)
         {
-            var _des = keyValuePair.Value.GetDescription();
             var _nameCode = keyValuePair.Value.GetNameCode();
-            Sprite _sprite = null;
-            if (gameItemData.GetItemCustom(_nameCode, out var itemCustom))
-            {
-                _sprite = itemCustom.sprite;
-            }
+            var _itemCustom = gameItemData.GetItemCustom(_nameCode);
+            var _des = _itemCustom.nameItem;
+            var _sprite = _itemCustom.sprite;
             RewardNoticeManager.CreateNoticeT2(_des, _sprite);
         }
     }

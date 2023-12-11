@@ -13,9 +13,6 @@ public class RewardSetup : MonoBehaviour
         [SerializeField, Tooltip("Loại phần thưởng, được phân loại bởi Item Namecode")]
         private ItemNameCode code;
         
-        [SerializeField, Tooltip("Mô tả phần thưởng sẽ hiển thị trên thanh thông báo")] 
-        private string rewardDescription;
-        
         [SerializeField, MinMaxSlider(1, 999), Tooltip("Giá trị tối thiểu và tối đa của phần thưởng")]
         private Vector2 value;
         
@@ -25,12 +22,6 @@ public class RewardSetup : MonoBehaviour
         /// </summary>
         /// <returns></returns>
         public ItemNameCode GetNameCode() => code;
-        
-        /// <summary>
-        /// Mô tả phần thưởng được hiển thị trên thanh thông báo
-        /// </summary>
-        /// <returns></returns>
-        public string GetDescription() => rewardDescription;
         
         /// <summary>
         /// Giá trị phần thưởng
