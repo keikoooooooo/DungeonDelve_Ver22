@@ -12,6 +12,14 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     [field: SerializeField, Required] public SO_EnemyConfiguration EnemyConfig { get; private set; }
     [field: SerializeField, Required] public Blackboard Blackboard { get; private set; }
     
+    [Space]
+    [SerializeField, Tooltip("Layer chính: chịu ảnh hưởng của va chạm trong game")]
+    private LayerMask mainLayer;
+    
+    [SerializeField, Tooltip("Layer phụ: không chịu ảnh hưởng bởi va chạm, khi Enemy die sẽ chuyển về layer này")]
+    private LayerMask ignoreLayer;
+
+
     // Get & Set Property 
     public StatusHandle Health { get; private set; }
     public Vector3 PlayerPosition => _player.transform.position;
@@ -20,32 +28,34 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     private readonly List<int> _enemyLevel = new() { 11, 21, 31, 41, 51, 61, 71, 81, 91, 101};
     
     // Events
-    public UnityEvent OnTakeDamageEvent;
-    public UnityEvent OnDieEvent;
+    [Space]
+    public UnityEvent<EnemyController> OnTakeDamageEvent;
+    public UnityEvent<EnemyController> OnDieEvent;
     
     // Variables
     private GameObject _player;
-    
-    
+
     private void Awake()
     {
-        Health = new StatusHandle(EnemyConfig.GetHP());
+        Health = new StatusHandle();
     }
     private void OnEnable()
     {
-        Health.InitValue(EnemyConfig.GetHP());
+        InitStatus();
         SetTakeDMG(false);
         SetDie(false);
+        
+        DamageableData.Add(gameObject, this);
+        gameObject.layer = GetObjectLayerIndex(mainLayer.value);
     }
     private void Start()
     {
-        if(GameManager.Instance && GameManager.Instance.Player)
+        var _gameManager = GameManager.Instance;
+        if(_gameManager)
         {
-            _player = GameManager.Instance.Player.gameObject;
+            _player =_gameManager.Player.gameObject;
             SetRefPlayer(_player);
         }
-        
-        DamageableData.Add(gameObject, this);
         SetRootPosition(transform.localPosition);
         SetRunSpeed(EnemyConfig.GetRunSpeed());
         SetWalkSpeed(EnemyConfig.GetWalkSpeed());
@@ -53,9 +63,30 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         SetCDSkillAttack(EnemyConfig.GetSkillAttackCD());
         SetCDSpecialAttack(EnemyConfig.GetSpecialAttackCD());
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
         DamageableData.Remove(gameObject);
+    }
+    
+    private static int GetObjectLayerIndex(LayerMask _mask)
+    {
+        if (_mask.value == 0) return 0;
+        for (var i = 0; i < 32; i++)
+        {
+            var _layerValue = 1 << i;
+            if ((_mask.value & _layerValue) != 0) return i;
+        }
+        return 0;
+    }
+    
+    public void UpdateConfig(SO_EnemyConfiguration _enemyConfiguration)
+    {
+        EnemyConfig = _enemyConfiguration;
+        InitStatus();
+    }
+    public void InitStatus()
+    {
+        Health.InitValue(EnemyConfig.GetHP());
     }
 
 
@@ -105,15 +136,23 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         
         if (Health.CurrentValue <= 0)
         {
-            EnemyTracker.Remove(transform);
-            SetDie(true);
-            OnDieEvent?.Invoke();
+            Die();
         }
         else
         {
             SetTakeDMG(true);
-            OnTakeDamageEvent?.Invoke();
+            OnTakeDamageEvent?.Invoke(this);
         }
+    }
+    private void Die()
+    {
+        gameObject.layer = GetObjectLayerIndex(ignoreLayer.value);
+        EnemyTracker.Remove(transform);
+        OnDieEvent?.Invoke(this);
+        SetDie(true);
+        SetChaseSensor(false);
+        SetAttackSensor(false);
+        SetTakeDMG(false);
     }
     #endregion
     

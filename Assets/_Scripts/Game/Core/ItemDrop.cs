@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,7 @@ public class ItemDrop : MonoBehaviour, IPooled<ItemDrop>
     
     private RewardSetup.ItemReward _itemReward;
     private readonly float _jumpForce = 2.5f;
+    private Coroutine _timeActiveCoroutine;
     
     private void OnEnable()
     {
@@ -18,8 +20,16 @@ public class ItemDrop : MonoBehaviour, IPooled<ItemDrop>
         var jumpDirection = new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f)).normalized;
         rb.velocity = jumpDirection * _jumpForce;
         rb.useGravity = true;
+        
+        if(_timeActiveCoroutine != null) StopCoroutine(TimerCoroutine());
+        _timeActiveCoroutine = StartCoroutine(TimerCoroutine());
     }
-    
+
+    private IEnumerator TimerCoroutine()
+    {
+        yield return new WaitForSeconds(Random.Range(80, 100));
+        if(gameObject.activeSelf) Release();
+    }
     public void SetItemDrop(Sprite _sprite, RewardSetup.ItemReward _itemRewardData)
     {
         _itemReward = _itemRewardData;

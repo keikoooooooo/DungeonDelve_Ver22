@@ -37,8 +37,8 @@ public class MenuController : Singleton<MenuController>
 
     private void RegisterEvent()
     {
-        GUIInputs.InputAction.UI.OpenMenu.performed += OpenMenu;
-        GUIInputs.InputAction.UI.OpenBag.performed += OpenBag;
+        GUI_Inputs.InputAction.UI.OpenMenu.performed += OpenMenu;
+        GUI_Inputs.InputAction.UI.OpenBag.performed += OpenBag;
 
         _gameManager = GameManager.Instance;
         if(!_gameManager) return;
@@ -56,8 +56,8 @@ public class MenuController : Singleton<MenuController>
     }
     private void UnRegisterEvent()
     {
-        GUIInputs.InputAction.UI.OpenMenu.performed -= OpenMenu;
-        GUIInputs.InputAction.UI.OpenBag.performed -= OpenBag;
+        GUI_Inputs.InputAction.UI.OpenMenu.performed -= OpenMenu;
+        GUI_Inputs.InputAction.UI.OpenBag.performed -= OpenBag;
         
         if(!_isEventRegistered) return;
         _userData.OnCoinChangedEvent -= OnCoinChanged;

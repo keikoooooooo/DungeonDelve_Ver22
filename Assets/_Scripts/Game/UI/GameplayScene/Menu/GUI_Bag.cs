@@ -37,10 +37,10 @@ public class GUI_Bag : MonoBehaviour, IGUI
     private void RegisterEvent()
     {
         GUI_Manager.Add(this);
-        GUIInputs.InputAction.UI.UseItem1.performed += UseItem1;
-        GUIInputs.InputAction.UI.UseItem2.performed += UseItem2;
-        GUIInputs.InputAction.UI.UseItem3.performed += UseItem3;
-        GUIInputs.InputAction.UI.UseItem4.performed += UseItem4;
+        GUI_Inputs.InputAction.UI.UseItem1.performed += UseItem1;
+        GUI_Inputs.InputAction.UI.UseItem2.performed += UseItem2;
+        GUI_Inputs.InputAction.UI.UseItem3.performed += UseItem3;
+        GUI_Inputs.InputAction.UI.UseItem4.performed += UseItem4;
     }
     private void UnRegisterEvent()
     {
@@ -50,10 +50,10 @@ public class GUI_Bag : MonoBehaviour, IGUI
         }
         
         GUI_Manager.Remove(this);
-        GUIInputs.InputAction.UI.UseItem1.performed -= UseItem1;
-        GUIInputs.InputAction.UI.UseItem2.performed -= UseItem2;
-        GUIInputs.InputAction.UI.UseItem3.performed -= UseItem3;
-        GUIInputs.InputAction.UI.UseItem4.performed -= UseItem4;
+        GUI_Inputs.InputAction.UI.UseItem1.performed -= UseItem1;
+        GUI_Inputs.InputAction.UI.UseItem2.performed -= UseItem2;
+        GUI_Inputs.InputAction.UI.UseItem3.performed -= UseItem3;
+        GUI_Inputs.InputAction.UI.UseItem4.performed -= UseItem4;
     }
     
     

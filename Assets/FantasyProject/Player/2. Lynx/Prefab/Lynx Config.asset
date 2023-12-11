@@ -17,7 +17,7 @@ MonoBehaviour:
   CurrentEXP: 0
   Infor: 
   MaxHP: 100000
-  ATK: 86
+  ATK: 186
   CRITRate: 5.4352
   CRITDMG: 50
   DEF: 16

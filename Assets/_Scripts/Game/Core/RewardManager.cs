@@ -33,7 +33,7 @@ public class RewardManager : Singleton<RewardManager>
     
     private void OnEnable()
     {
-        GUIInputs.InputAction.UI.CollectItem.performed += OnCollectInput;
+        GUI_Inputs.InputAction.UI.CollectItem.performed += OnCollectInput;
     }
     private void Start()
     {
@@ -42,7 +42,7 @@ public class RewardManager : Singleton<RewardManager>
     }
     private void OnDisable()
     {
-        GUIInputs.InputAction.UI.CollectItem.performed -= OnCollectInput;
+        GUI_Inputs.InputAction.UI.CollectItem.performed -= OnCollectInput;
     }
  
     
@@ -87,10 +87,9 @@ public class RewardManager : Singleton<RewardManager>
         foreach (var VARIABLE in _rewards)
         {
             var itemCustom = gameItemData.GetItemCustom(VARIABLE.GetNameCode());
-            
             if (itemCustom.type != ItemType.Currency)
             {
-                CreateItemDrop(VARIABLE, position );
+                CreateItemDrop(VARIABLE, itemCustom, position );
                 continue;
             }
             
@@ -112,12 +111,9 @@ public class RewardManager : Singleton<RewardManager>
         _coin.OnMoveCompleteEvent -= CoinMoveCompleted;
         SetReward(_coinRewardData.Dequeue());
     }
-    private void CreateItemDrop(RewardSetup.ItemReward _itemReward, Vector3 _pos)
+    private void CreateItemDrop(RewardSetup.ItemReward _itemReward, ItemCustom _itemCustom, Vector3 _pos)
     {
-        if (!gameItemData.GetItemCustom(_itemReward.GetNameCode(), out var itemCustom))
-            return;
-
-        var _itemDrop = itemCustom.ratity switch
+        var _itemDrop = _itemCustom.ratity switch
         {
             ItemRarity.Common => _poolItemCommon.Get(_pos),
             ItemRarity.Uncommon => _poolItemUnCommon.Get(_pos),
@@ -126,9 +122,7 @@ public class RewardManager : Singleton<RewardManager>
             ItemRarity.Legendary => _poolItemLegendary.Get(_pos),
             _ => null
         };
-        
-        if (!_itemDrop) return;
-        _itemDrop.SetItemDrop(itemCustom.sprite, _itemReward);
+        _itemDrop!.SetItemDrop(_itemCustom.sprite, _itemReward);
     }
     
     

@@ -5,7 +5,7 @@ using UnityEngine;
 public static class EnemyTracker
 {
     private static readonly List<Transform> EnemiesTracker = new();
-    public static bool DetectEnemy => EnemiesTracker.Any();
+    public static bool DetectEnemy => EnemiesTracker.Count != 0;
     
     public static void Add(Transform _transform)
     {

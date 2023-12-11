@@ -185,8 +185,9 @@ public abstract class PlayerController : PlayerStateMachine
     }
     private IEnumerator RotateToTargetCoroutine()
     {
-        if (!EnemyTracker.DetectEnemy) yield break;
-
+        if (!EnemyTracker.DetectEnemy) 
+            yield break;
+        
         var target = EnemyTracker.FindClosestEnemy(transform);
         var direction = Quaternion.LookRotation(target.position - transform.position);
         var directionLocal = Mathf.Floor(transform.eulerAngles.y);
