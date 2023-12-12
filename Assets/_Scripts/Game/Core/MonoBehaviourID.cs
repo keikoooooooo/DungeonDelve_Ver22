@@ -31,7 +31,6 @@ public class MonoBehaviourID : MonoBehaviour
 
     protected void OnValidate()
     {
-        Debug.Log("OnValidate Check");
         if (!gameObject.scene.IsValid()) // Nếu Object chưa khởi tạo thì không tạo ID để tránh lỗi. Vd: Prefab
         {
             uniqueID.Value = string.Empty;

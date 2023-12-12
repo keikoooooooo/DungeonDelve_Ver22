@@ -12,14 +12,14 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     [SerializeField] private Slider progressSlider;
     [SerializeField] private TextMeshProUGUI currencyText;
     [Space]
-    [SerializeField] private GUI_Item itemPrefab;
+    [SerializeField] private UI_Item itemPrefab;
     [SerializeField] private Transform slotItems;
 
     [Space]
     [SerializeField] private Button cancelBtt;
     [SerializeField] private Button upgradeBtt;
     
-    private ObjectPooler<GUI_Item> _poolItem;
+    private ObjectPooler<UI_Item> _poolItem;
     private UserData _userData;
     private SO_PlayerConfiguration _playerConfig;
     private PlayerRenderTexture _playerRenderTexture;
@@ -79,7 +79,7 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
     }
     private void Init()
     {
-        _poolItem = new ObjectPooler<GUI_Item>(itemPrefab, slotItems, _gameItemData.GameItemDatas.Count);
+        _poolItem = new ObjectPooler<UI_Item>(itemPrefab, slotItems, _gameItemData.GameItemDatas.Count);
         progressSlider.maxValue = 1;
         progressSlider.minValue = 0;
         progressSlider.value = 0;

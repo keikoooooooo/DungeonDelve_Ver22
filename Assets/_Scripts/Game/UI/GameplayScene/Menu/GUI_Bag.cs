@@ -11,7 +11,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
     
     
     [Space]
-    [SerializeField] private GUI_Item itemPrefab;
+    [SerializeField] private UI_Item itemPrefab;
     [SerializeField] private Transform itemContent;
     [Space]
     [SerializeField] private DropdownBar sortDropdown;
@@ -20,7 +20,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
     // Variables
     private UserData _userData;
     private SO_GameItemData _gameItemData;
-    private static ObjectPooler<GUI_Item> _poolItem;
+    private static ObjectPooler<UI_Item> _poolItem;
     private readonly Dictionary<ItemCustom, int> _itemData = new();
     private readonly string PP_SortOption = "SortOptionIndex";
 
@@ -84,7 +84,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
     {
         _userData = _gameManager.UserData;
         _gameItemData = _gameManager.GameItemData;
-        _poolItem = new ObjectPooler<GUI_Item>(itemPrefab, itemContent, _gameItemData.GameItemDatas.Count);
+        _poolItem = new ObjectPooler<UI_Item>(itemPrefab, itemContent, _gameItemData.GameItemDatas.Count);
         
         InitNewSlot();
         UpdateData();
@@ -153,7 +153,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
         SortItem(_itemData);
         LoadOldSlot();
     }
-    private static List<GUI_Item> SortedByName(List<GUI_Item> _guiItems, bool _reverse)
+    private static List<UI_Item> SortedByName(List<UI_Item> _guiItems, bool _reverse)
     {
         _guiItems.Sort((item1, item2) => item1.GetItemCustom.code.CompareTo(item2.GetItemCustom.code));
         if (_reverse) 
@@ -161,7 +161,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
         
         return _guiItems;
     }
-    private static List<GUI_Item> SortedByRarity(List<GUI_Item> _guiItems, bool _reverse)
+    private static List<UI_Item> SortedByRarity(List<UI_Item> _guiItems, bool _reverse)
     {
         _guiItems.Sort((item1, item2) => item1.GetItemCustom.ratity.CompareTo(item2.GetItemCustom.ratity));
         if (_reverse)
@@ -169,7 +169,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
         
         return _guiItems;
     }
-    private static List<GUI_Item> SortedByQuantity(List<GUI_Item> _guiItems, bool _reverse)
+    private static List<UI_Item> SortedByQuantity(List<UI_Item> _guiItems, bool _reverse)
     {        
         _guiItems.Sort((item1, item2) => item1.GetItemValue.CompareTo(item2.GetItemValue));
         if (_reverse)
@@ -202,21 +202,21 @@ public class GUI_Bag : MonoBehaviour, IGUI
         }
         OnItemChangedSlotEvent?.Invoke(slots);
     }
-    public static GUI_Item GetGUIItem(ItemNameCode _itemNameCode)
+    public static UI_Item GetGUIItem(ItemNameCode _itemNameCode)
     {
-        GUI_Item _guiItem = null;
+        UI_Item uiItem = null;
         foreach (var guiItem in _poolItem.List.Where(item => item.gameObject.activeSelf))
         {
             if (guiItem.GetItemCustom.code == _itemNameCode)
             {
-                _guiItem = guiItem;
+                uiItem = guiItem;
             }
         }
-        return _guiItem;
+        return uiItem;
     } 
     
     
-    public void OnDropItem(Slot _slot, GUI_Item _item)
+    public void OnDropItem(Slot _slot, UI_Item _item)
     {
         var _slotEmptyIdx = -1;
         var _sameSlotItem = -1;

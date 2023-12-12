@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
-    public UnityEvent<Slot, GUI_Item> OnSelectSlotEvent;
+    public UnityEvent<Slot, UI_Item> OnSelectSlotEvent;
     
     [SerializeField] private TextMeshProUGUI keyText;
     [SerializeField] private Image iconItem;
@@ -15,7 +15,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
     private float _lastClickTimer;
     private readonly float _doubleClickDelay = .3f;
     
-    public GUI_Item GetItem { get; private set; }
+    public UI_Item GetItem { get; private set; }
     public string KeyPlayerPrefs { get; private set; }
 
     
@@ -54,7 +54,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
     /// Set item vào slot này
     /// </summary>
     /// <param name="_newItem"> Item cần set </param>
-    public void SetSlot(GUI_Item _newItem)
+    public void SetSlot(UI_Item _newItem)
     {
         GetItem = _newItem;
         if (GetItem != null)

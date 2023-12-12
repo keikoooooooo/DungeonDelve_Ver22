@@ -51,6 +51,8 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         UpdateConfig();
         SetDie(false);
         SetTakeDMG(false);
+        SetChaseSensor(false);
+        SetAttackSensor(false);
         SetRootPosition(transform.position);
         DamageableData.Add(gameObject, this);
         gameObject.SetObjectLayer(mainLayer.value);

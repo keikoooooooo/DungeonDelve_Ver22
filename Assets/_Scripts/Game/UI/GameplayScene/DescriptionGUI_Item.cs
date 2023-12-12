@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class DescriptionGUI_Item : MonoBehaviour
 {
-    [SerializeField] private GUI_Item item;
+    [SerializeField] private UI_Item item;
     [SerializeField] private RectTransform descriptionPanel;
     [Space, Header("UI")]
     [SerializeField] private TextMeshProUGUI nameText;

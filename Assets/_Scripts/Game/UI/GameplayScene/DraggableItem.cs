@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField] private GUI_Item item;
+    [SerializeField] private UI_Item item;
     [Header("UI")] 
     [SerializeField] private Image iconDrag;
 
     private readonly Color _enableColor = new(1, 1, 1, 1);
     private readonly Color _disableColor = new(1, 1, 1, 0);
     
-    public GUI_Item GetItem() => item;
+    public UI_Item GetItem() => item;
 
 
     private void OnEnable() => DraggableData.Add(gameObject, this);

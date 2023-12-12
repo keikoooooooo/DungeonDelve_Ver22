@@ -82,6 +82,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] protected int _attackCounter;
     [HideInInspector] protected float _skillCD_Temp;
     [HideInInspector] protected float _specialCD_Temp;
+    [HideInInspector] private int _currentHP;
     #endregion
     
     private void Awake()
@@ -139,12 +140,18 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         _movementState = MovementState.StateRun;
         characterController.enabled = true;
         inputs.PlayerInput.Enable();
+        
         InitStatus();
     }
     public void InitStatus()
     {
-        Health.InitValue(PlayerConfig.GetHP());
-        Stamina.InitValue(PlayerConfig.GetST());
+        var _maxHP = PlayerConfig.GetHP();
+        var _maxST = PlayerConfig.GetST();
+        Health.InitValue(_maxHP);
+        Stamina.InitValue(_maxST);
+
+        // _currentHP = PlayerPrefs.GetInt(PlayerConfig.NameCode.ToString(), _maxHP);
+        // Health.Decreases(_maxHP - _currentHP);
     }
     
 
@@ -316,6 +323,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     /// </summary>
     public abstract void ReleaseAction();
 
-
+    // private void OnApplicationQuit()
+    // {
+    //     PlayerPrefs.SetInt(PlayerConfig.NameCode.ToString(), Health.CurrentValue);
+    // }
 }
 
