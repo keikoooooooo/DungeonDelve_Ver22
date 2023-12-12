@@ -1,10 +1,9 @@
 using System;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
-public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculateDMG
+public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 {
     #region Variables
     [Header("BaseClass -------")]
@@ -80,9 +79,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     [HideInInspector] private float _jumpVelocity;
     [HideInInspector] private float _jumpCD_Temp;
     [HideInInspector] private float _delayIncreaseST;
+    [HideInInspector] protected int _attackCounter;
     [HideInInspector] protected float _skillCD_Temp;
     [HideInInspector] protected float _specialCD_Temp;
-    [HideInInspector] protected int _calculatedDamage;
     #endregion
     
     private void Awake()
@@ -93,8 +92,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     {
         SetVariables();
         HandleEnable();
-        RegisterEvent();
-        
+        DamageableData.Add(gameObject, this);
     }
     protected virtual void Update()
     {
@@ -112,7 +110,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     }
     private void OnDisable()
     {
-        UnRegisterEvent();
+        DamageableData.Remove(gameObject);
     }
 
     
@@ -237,32 +235,37 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     }
     
     
-    #region HandleDMG
-    public void CauseDMG(GameObject _gameObject)
+    #region Handle Damageable
+    public void CauseDMG(GameObject _gameObject, AttackType _attackType)
     {
         if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
-        
-        /*  NOTE:
-         *  - 1. calculatedDamage: đã được tính mỗi khi attack theo type bằng animationEvent
-         *  - 2. còn phía dưới là sẽ cộng thêm chỉ số phụ như: %CritDMG, ....
-         */
-        
+
+        var _damage = _attackType switch
+        {
+            AttackType.NormalAttack => CalculationDMG(PercentDMG_NA()),
+            AttackType.ChargedAttack => CalculationDMG(PercentDMG_CA()),
+            AttackType.ElementalSkill => CalculationDMG(PercentDMG_EK()),
+            AttackType.ElementalBurst => CalculationDMG(PercentDMG_EB()),
+            _ => 1
+        };
+
         var _isCrit = false;  // Có kích CRIT không ?
         if (Random.value <= PlayerConfig.GetCRITRate() / 100)
         {
             var critDMG = (PlayerConfig.GetCRITDMG() + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
-            _calculatedDamage = Mathf.CeilToInt(_calculatedDamage * critDMG);
+            _damage = Mathf.CeilToInt(_damage * critDMG);
             _isCrit = true;
         } 
+        
         // Gọi takeDMG trên đối tượng vừa va chạm
-        iDamageable.TakeDMG(_calculatedDamage, _isCrit);
+        iDamageable.TakeDMG(_damage, _isCrit);
     }
     public void TakeDMG(int _damage, bool _isCRIT) 
     {
         ReleaseAction();
-        inputs.Move =Vector3.zero;
-        AppliedMovement = Vector3.zero;
         InputMovement = Vector3.zero;
+        AppliedMovement = Vector3.zero;
+        inputs.Move =Vector3.zero;
         inputs.PlayerInput.Disable();
         
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
@@ -273,9 +276,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         
         Health.Decreases(_finalDmg);
         DMGPopUpGenerator.Instance.Create(transform.position, _finalDmg, _isCRIT, false);
-
-        animator.ResetTrigger(IDDamageStand);
-        animator.ResetTrigger(IDDamageFall);
         
         if (Health.CurrentValue <= 0)
         {
@@ -286,7 +286,14 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
         HandleDamage();
         CurrentState.SwitchState(_isCRIT ? _state.DamageFall() : _state.DamageStand());
     }
-    public void ReleaseDamageState() // gọi trên animationEvent để giải phóng trạng thái TakeDamages
+
+    public virtual float PercentDMG_NA() => PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
+    public virtual float PercentDMG_CA() => PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
+    public virtual float PercentDMG_EK() => PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
+    public virtual float PercentDMG_EB() => PlayerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
+    public virtual int CalculationDMG(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
+    
+    public void ReleaseDamageState() // gọi trên animationEvent để giải phóng trạng thái TakeDamage
     {
         CurrentState.SwitchState(_state.Idle());
         inputs.PlayerInput.Enable();
@@ -297,17 +304,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     #region Event Callback
     public void OnDashEvent() => E_Dash?.Invoke();
     #endregion
-
-
-    protected virtual void RegisterEvent()
-    {
-        DamageableData.Add(gameObject, this);
-    }
-    protected virtual void UnRegisterEvent()
-    {
-        DamageableData.Remove(gameObject);
-    }
-
+    
 
     /// <summary>
     /// Khi nhận sát thương, nếu nhân vật cần thực hiện hành vi thì Override lại
@@ -317,11 +314,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable, ICalculat
     /// <summary>
     /// Giải phóng tất cả trạng thái khi nhảy, lướt,
     /// </summary>
-    public abstract void ReleaseAction();    
-    public abstract void CalculateDMG_NA();
-    public abstract void CalculateDMG_CA();
-    public abstract void CalculateDMG_EK();
-    public abstract void CalculateDMG_EB();
-    
+    public abstract void ReleaseAction();
+
+
 }
 

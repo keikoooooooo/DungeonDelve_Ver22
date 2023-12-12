@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class PhysicsDetection : DetectionBase, IPooled<PhysicsDetection>
@@ -9,10 +10,10 @@ public class PhysicsDetection : DetectionBase, IPooled<PhysicsDetection>
     [Tooltip("Layer cần kiểm tra va chạm")]
     public LayerMask layerToCheck;
 
+    [SerializeField] private bool drawGizmos;
+    [SerializeField, ShowIf("drawGizmos")] private Color drawColor;
     
     private readonly Collider[] hitColliders = new Collider[10];
-    
-
 
     public void CheckCollision()
     {
@@ -29,7 +30,8 @@ public class PhysicsDetection : DetectionBase, IPooled<PhysicsDetection>
     
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        if(!drawGizmos) return;
+        Gizmos.color = drawColor;
         Gizmos.DrawWireSphere(transform.position, radiusCheck);
     }
 }

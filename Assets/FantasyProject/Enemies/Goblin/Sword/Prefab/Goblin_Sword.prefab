@@ -463,7 +463,7 @@ Transform:
   m_Children:
   - {fileID: 4947708275219752311}
   m_Father: {fileID: 5375376990153376241}
-  m_LocalEulerAnglesHint: {x: 0.0000015995689, y: 0.00000059757554, z: -69.515045}
+  m_LocalEulerAnglesHint: {x: 0.0000005098688, y: 0.0000010944848, z: -69.97886}
 --- !u!1 &775407641522437232
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +499,7 @@ Transform:
   - {fileID: 5684723040799441357}
   - {fileID: 2988618888988154714}
   m_Father: {fileID: 8182865932816398872}
-  m_LocalEulerAnglesHint: {x: 37.272484, y: -165.34868, z: -179.09741}
+  m_LocalEulerAnglesHint: {x: 29.356878, y: -126.25767, z: -139.99615}
 --- !u!1 &884642485378979773
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8216490933375277753}
-  m_LocalEulerAnglesHint: {x: 0.00000076978944, y: -0.0000053445865, z: -63.36901}
+  m_LocalEulerAnglesHint: {x: -0.0000015307932, y: 0.0000030527929, z: -63.369015}
 --- !u!1 &998506753865120603
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +562,7 @@ Transform:
   m_Children:
   - {fileID: 6351751702355010460}
   m_Father: {fileID: 1032172582359652652}
-  m_LocalEulerAnglesHint: {x: -0.045011513, y: 80.66796, z: -179.99243}
+  m_LocalEulerAnglesHint: {x: -6.7702165, y: 97.17625, z: -137.07808}
 --- !u!1 &1297629555246682727
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +594,7 @@ Transform:
   m_Children:
   - {fileID: 7089081503716670497}
   m_Father: {fileID: 4778510763393278351}
-  m_LocalEulerAnglesHint: {x: -4.2581215, y: 21.375097, z: -14.675603}
+  m_LocalEulerAnglesHint: {x: 10.81634, y: 14.267637, z: -21.009424}
 --- !u!1 &1458058446381903979
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +626,7 @@ Transform:
   m_Children:
   - {fileID: 1943317979700588230}
   m_Father: {fileID: 5997062304074717670}
-  m_LocalEulerAnglesHint: {x: 0.0000003469125, y: -0.00000079093655, z: 104.999916}
+  m_LocalEulerAnglesHint: {x: 4.722309, y: 1.0061259, z: 87.79983}
 --- !u!1 &1483915641137914231
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +658,7 @@ Transform:
   m_Children:
   - {fileID: 7534816579707754350}
   m_Father: {fileID: 5700751416153389748}
-  m_LocalEulerAnglesHint: {x: -49.62829, y: 95.164505, z: -50.673664}
+  m_LocalEulerAnglesHint: {x: -49.628273, y: 95.164505, z: -50.8592}
 --- !u!1 &1629809918875103170
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,7 +692,7 @@ Transform:
   - {fileID: 1569729490009917961}
   - {fileID: 730117848328776454}
   m_Father: {fileID: 8953282748346567129}
-  m_LocalEulerAnglesHint: {x: -4.999986, y: -0.00802956, z: -14.998966}
+  m_LocalEulerAnglesHint: {x: 16.862322, y: -9.547326, z: -23.245506}
 --- !u!1 &1700687119555227794
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,7 +723,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6152074740275314651}
-  m_LocalEulerAnglesHint: {x: -0.000040127412, y: -0.000024528863, z: -90.000114}
+  m_LocalEulerAnglesHint: {x: -0.000012011301, y: -0.0000598982, z: -90.000084}
 --- !u!1 &1729662398316358670
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +754,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6529762522748914537}
-  m_LocalEulerAnglesHint: {x: 0.000004445013, y: 0.000002546236, z: -60.194626}
+  m_LocalEulerAnglesHint: {x: 0.0000023304076, y: -0.0000006329274, z: -60.19463}
 --- !u!1 &2108368469906885541
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,8 +856,7 @@ MonoBehaviour:
   _serializedExposedParameters: []
   _boundGraphSerialization: '{"type":"NodeCanvas.BehaviourTrees.BehaviourTree","nodes":[{"dynamic":true,"_position":{"x":-1810.143,"y":1473.119},"$type":"NodeCanvas.BehaviourTrees.Selector","$id":"0"},{"filterMode":0,"maxCount":{"_value":1},"coolDownTime":{"_value":5.0},"_position":{"x":-3400.182,"y":2028.285},"$type":"NodeCanvas.BehaviourTrees.Filter","$id":"1"},{"_position":{"x":-3376.193,"y":2158.997},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"2"},{"_action":{"executionMode":1,"actions":[{"valueA":{"_name":"DissolveDuration","_targetVariableID":"85508897-13d1-4f0f-95a8-53a4ea606b50"},"valueB":{},"$type":"NodeCanvas.Tasks.Actions.SetFloat"},{"canvasGroup":{"_value":1},"setTo":{},"transitTime":0.0,"$type":"NodeCanvas.Tasks.Actions.AlphaCanvasGroup"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-3750.694,"y":2307.923},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"3"},{"_subTree":{"_value":2},"_position":{"x":-3525.397,"y":2292.827},"$type":"NodeCanvas.BehaviourTrees.SubTree","$id":"4"},{"_action":{"valueA":{"_name":"DissolveDuration","_targetVariableID":"85508897-13d1-4f0f-95a8-53a4ea606b50"},"valueB":{"_value":2.0},"$type":"NodeCanvas.Tasks.Actions.SetFloat"},"_position":{"x":-3339.401,"y":2300.392},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"5"},{"_subTree":{"_value":3},"_position":{"x":-3157.812,"y":2293.086},"$type":"NodeCanvas.BehaviourTrees.SubTree","$id":"6"},{"isDynamic":true,"_condition":{"valueA":{"_name":"Die","_targetVariableID":"06e07d3c-3450-44e3-87d2-023a40b7ac51"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-2665.797,"y":2050.222},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"7"},{"_position":{"x":-2655.496,"y":2196.98},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"8"},{"_action":{"actions":[{"canvasGroup":{"_value":1},"setTo":{},"transitTime":0.3,"$type":"NodeCanvas.Tasks.Actions.AlphaCanvasGroup"},{"parameter":{"_name":"AI_Dead","_targetVariableID":"969a1777-c4aa-4c55-b703-95ca13602a6e"},"parameterHashID":{},"setTo":{"_value":true},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"},{"valueA":{"_name":"DissolveDuration","_targetVariableID":"85508897-13d1-4f0f-95a8-53a4ea606b50"},"valueB":{"_value":0.75},"$type":"NodeCanvas.Tasks.Actions.SetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-2942.447,"y":2327.152},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"9"},{"_subTree":{"_value":2},"_position":{"x":-2706.65,"y":2329.486},"$type":"NodeCanvas.BehaviourTrees.SubTree","$id":"10"},{"_action":{"actions":[{"method":{"_baseInfo":"RewardSetup|SendRewardData|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"randomValue":{"_value":true},"minValue":{"_value":2.0},"maxValue":{"_value":3.0},"waitTime":{"_value":1.0},"$type":"NodeCanvas.Tasks.Actions.Wait"},{"boolVariable":{"_name":"Die","_targetVariableID":"06e07d3c-3450-44e3-87d2-023a40b7ac51"},"setTo":0,"$type":"NodeCanvas.Tasks.Actions.SetBoolean"},{"setObject":{"_name":"This","_targetVariableID":"cadadbe8-67ab-4229-8f07-653ac7122d86"},"setTo":0,"_isDisabled":true,"$type":"NodeCanvas.Tasks.Actions.SetObjectActive"},{"method":{"_baseInfo":"EnemyController|Release|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-2515.1,"y":2328.523},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"11"},{"_condition":{"valueA":{"_name":"TakeDMG","_targetVariableID":"33db82ab-6c78-43d3-b210-7962cc7e2435"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-2260.573,"y":2049.594},"_comment":"Th\u1ef1c
     hi\u1ec7n Task n\u00e0y n\u1ebfu\nPlayer trong ph\u1ea1m vi \nph\u00e1t hi\u1ec7n
-    c\u1ee7a Enemy","$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"12"},{"_subTree":{"_value":4},"_position":{"x":-2251.368,"y":2175.273},"$type":"NodeCanvas.BehaviourTrees.SubTree","$id":"13"},{"_condition":{"valueA":{"_name":"RootSensor","_targetVariableID":"ffffab03-9180-4d88-8189-5eca31ec7ad7"},"valueB":{},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-1617.025,"y":2060.93},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"14"},{"_position":{"x":-1578.458,"y":2172.168},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"15"},{"_action":{"executionMode":1,"actions":[{"parameter":{"_name":"AI_4Direction","_targetVariableID":"8682168e-1ab5-4b31-a54a-a6fb24c6850e"},"parameterHashID":{},"setTo":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"},{"parameter":{"_name":"AI_Speed","_targetVariableID":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6"},"parameterHashID":{},"setTo":{},"transitTime":0.15,"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-1848.905,"y":2318.874},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"16"},{"_action":{"randomValue":{"_value":true},"minValue":{"_value":1.4},"maxValue":{"_value":3.0},"waitTime":{"_value":1.0},"$type":"NodeCanvas.Tasks.Actions.Wait"},"_position":{"x":-1577.499,"y":2312.756},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"17"},{"_action":{"executionMode":1,"actions":[{"log":{"_value":"Out
-    ROOT"},"$type":"NodeCanvas.Tasks.Actions.DebugLogText"},{"targetPosition":{"_name":"RootPosition","_targetVariableID":"89834339-a928-41b8-be27-ab63ebf75ac5"},"speed":{"_value":1.9},"keepDistance":{"_value":0.1},"overrideAgent":{"_type":"UnityEngine.AI.NavMeshAgent","_name":"NavMesh","_targetVariableID":"5beb4606-4611-4681-8e08-f8a758b4f125"},"$type":"NodeCanvas.Tasks.Actions.MoveToPosition"},{"parameter":{"_name":"AI_Speed","_targetVariableID":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6"},"parameterHashID":{},"setTo":{"_value":0.5},"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-1466.587,"y":2310.306},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"18"},{"isDynamic":true,"_condition":{"valueA":{"_name":"RootSensor","_targetVariableID":"ffffab03-9180-4d88-8189-5eca31ec7ad7"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-821.2043,"y":2021.369},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"19"},{"dynamic":true,"_position":{"x":-733.6648,"y":2282.181},"$type":"NodeCanvas.BehaviourTrees.Selector","$id":"20"},{"isDynamic":true,"_condition":{"valueA":{"_name":"ChaseSensor","_targetVariableID":"14daa4e8-1cbf-4690-b7ba-981f07aef454"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-1031.905,"y":2465.049},"_comment":"Th\u1ef1c
+    c\u1ee7a Enemy","$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"12"},{"_subTree":{"_value":4},"_position":{"x":-2251.368,"y":2175.273},"$type":"NodeCanvas.BehaviourTrees.SubTree","$id":"13"},{"_condition":{"valueA":{"_name":"RootSensor","_targetVariableID":"ffffab03-9180-4d88-8189-5eca31ec7ad7"},"valueB":{},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-1617.025,"y":2060.93},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"14"},{"_position":{"x":-1578.458,"y":2172.168},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"15"},{"_action":{"executionMode":1,"actions":[{"parameter":{"_name":"AI_4Direction","_targetVariableID":"8682168e-1ab5-4b31-a54a-a6fb24c6850e"},"parameterHashID":{},"setTo":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"},{"parameter":{"_name":"AI_Speed","_targetVariableID":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6"},"parameterHashID":{},"setTo":{},"transitTime":0.15,"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-1844.905,"y":2309.874},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"16"},{"_action":{"randomValue":{"_value":true},"minValue":{"_value":2.0},"maxValue":{"_value":6.0},"waitTime":{"_value":1.0},"$type":"NodeCanvas.Tasks.Actions.Wait"},"_position":{"x":-1569.499,"y":2310.756},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"17"},{"_action":{"executionMode":1,"actions":[{"targetPosition":{"_name":"RootPosition","_targetVariableID":"89834339-a928-41b8-be27-ab63ebf75ac5"},"speed":{"_value":1.9},"keepDistance":{"_value":0.1},"overrideAgent":{"_type":"UnityEngine.AI.NavMeshAgent","_name":"NavMesh","_targetVariableID":"5beb4606-4611-4681-8e08-f8a758b4f125"},"$type":"NodeCanvas.Tasks.Actions.MoveToPosition"},{"parameter":{"_name":"AI_Speed","_targetVariableID":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6"},"parameterHashID":{},"setTo":{"_value":0.5},"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-1455.587,"y":2309.306},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"18"},{"isDynamic":true,"_condition":{"valueA":{"_name":"RootSensor","_targetVariableID":"ffffab03-9180-4d88-8189-5eca31ec7ad7"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-821.2043,"y":2021.369},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"19"},{"dynamic":true,"_position":{"x":-733.6648,"y":2282.181},"$type":"NodeCanvas.BehaviourTrees.Selector","$id":"20"},{"isDynamic":true,"_condition":{"valueA":{"_name":"ChaseSensor","_targetVariableID":"14daa4e8-1cbf-4690-b7ba-981f07aef454"},"valueB":{"_value":true},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-1031.905,"y":2465.049},"_comment":"Th\u1ef1c
     hi\u1ec7n Task n\u00e0y n\u1ebfu\nPlayer trong ph\u1ea1m vi \nph\u00e1t hi\u1ec7n
     c\u1ee7a Enemy","$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"21"},{"_position":{"x":-990.7785,"y":2587.654},"_comment":"","$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"22"},{"_action":{"canvasGroup":{"_value":1},"setTo":{"_value":1.0},"transitTime":0.2,"$type":"NodeCanvas.Tasks.Actions.AlphaCanvasGroup"},"_position":{"x":-1170.387,"y":2679.731},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"23"},{"dynamic":true,"_position":{"x":-964.7141,"y":2689.875},"$type":"NodeCanvas.BehaviourTrees.Selector","$id":"24"},{"maxCount":{"_value":1},"coolDownTime":{"_name":"NormalAttackCD","_targetVariableID":"a6e8b603-177a-4299-8bec-dd196cfb3bf1"},"_position":{"x":-1505.172,"y":2871.636},"$type":"NodeCanvas.BehaviourTrees.Filter","$id":"25"},{"_position":{"x":-1506.72,"y":3037.199},"$type":"NodeCanvas.BehaviourTrees.Selector","$id":"26"},{"isDynamic":true,"_condition":{"valueA":{"_name":"AttackSensor","_targetVariableID":"91309c9a-4f37-4f9b-9a6c-165377703db7"},"valueB":{},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_position":{"x":-2007.615,"y":3227.492},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"27"},{"_position":{"x":-1970.975,"y":3362.942},"_comment":"","$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"28"},{"_action":{"executionMode":1,"actions":[{"parameter":{"_name":"AI_Vertical","_targetVariableID":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3"},"parameterHashID":{},"setTo":{},"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"parameter":{"_name":"AI_Horizontal","_targetVariableID":"c556f23f-5915-4e8f-86e8-dd09ea8b9c57"},"parameterHashID":{},"setTo":{},"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-2289.141,"y":3492.144},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"29"},{"_action":{"parameter":{"_name":"AI_4Direction","_targetVariableID":"8682168e-1ab5-4b31-a54a-a6fb24c6850e"},"parameterHashID":{},"setTo":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"},"_position":{"x":-2037.423,"y":3496.248},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"30"},{"_action":{"executionMode":1,"actions":[{"parameter":{"_name":"AI_Speed","_targetVariableID":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6"},"parameterHashID":{},"setTo":{"_value":1.0},"updateFrameByFrame":{"_value":true},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"objectApplyRotation":{"_name":"Model","_targetVariableID":"f549d7d3-a24e-481a-82f6-ac95cf209fef"},"target":{"_name":"Player","_targetVariableID":"228e13d6-2e8b-4815-aa60-e51a38b42538"},"speed":{"_name":"RunSpeed","_targetVariableID":"a5204500-d647-48ea-bfb4-afa977af47d4"},"keepDistance":{"_value":1.0},"overrideAgent":{"_type":"UnityEngine.AI.NavMeshAgent","_name":"NavMesh","_targetVariableID":"5beb4606-4611-4681-8e08-f8a758b4f125"},"$type":"NodeCanvas.Tasks.Actions.MoveToGameObject"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-1779.853,"y":3496.366},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"31"},{"_position":{"x":-1244.86,"y":3245.691},"_comment":"Th\u1ef1c
     hi\u1ec7n chu\u1ed7i h\u00e0nh \u0111\u1ed9ng c\u1ee7a Attack","$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"32"},{"_action":{"executionMode":1,"actions":[{"parameter":{"_name":"AI_Vertical","_targetVariableID":"f52d5dd4-7386-43b8-8ce6-88a3c9b81cf3"},"parameterHashID":{},"setTo":{},"transitTime":0.15,"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"parameter":{"_name":"AI_Speed","_targetVariableID":"b86d0a82-f3cd-460d-b9d3-2d873c5ca5b6"},"parameterHashID":{},"setTo":{},"transitTime":0.15,"updateFrameByFrame":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"Animator","_targetVariableID":"6732ff63-7a86-4db2-b9f9-f00c4f4d9dcf"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"}],"$type":"NodeCanvas.Framework.ActionList"},"_position":{"x":-1489.243,"y":3370.959},"_comment":"-
@@ -885,8 +884,8 @@ MonoBehaviour:
     _version: 3.25
     _category: 
     _comments: 
-    _translation: {x: 2801, y: -1863}
-    _zoomFactor: 0.9490699
+    _translation: {x: 2172.0002, y: -472.00003}
+    _zoomFactor: 0.4680064
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
@@ -1043,14 +1042,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c23e9330b0b2c34a95bc94710542f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EnemyConfig>k__BackingField: {fileID: 11400000, guid: c379a30b074fe2844b25f40fff9c9104, type: 2}
   <Blackboard>k__BackingField: {fileID: 4505854519866438606}
+  enemyConfig: {fileID: 11400000, guid: c379a30b074fe2844b25f40fff9c9104, type: 2}
   mainLayer:
     serializedVersion: 2
     m_Bits: 4096
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   OnTakeDamageEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1113,7 +1112,7 @@ Transform:
   m_Children:
   - {fileID: 479233653651494886}
   m_Father: {fileID: 3486182295378557549}
-  m_LocalEulerAnglesHint: {x: -0.04520945, y: 7.7768736, z: -40.00617}
+  m_LocalEulerAnglesHint: {x: -0.045204967, y: 7.7768693, z: -40.00618}
 --- !u!1 &2260194933369853872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,7 +1144,7 @@ Transform:
   m_Children:
   - {fileID: 6571231474294675663}
   m_Father: {fileID: 2338289637669446435}
-  m_LocalEulerAnglesHint: {x: 0.0000015263967, y: 0.0000007653954, z: -63.36901}
+  m_LocalEulerAnglesHint: {x: -0.0000030527956, y: -0.0000015307932, z: -63.36901}
 --- !u!1 &2486713017965536778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,7 +1176,7 @@ Transform:
   m_Children:
   - {fileID: 5286068306111425151}
   m_Father: {fileID: 744524291496659078}
-  m_LocalEulerAnglesHint: {x: -0.0000018236595, y: 0.00000000226313, z: -69.51505}
+  m_LocalEulerAnglesHint: {x: -0.0000003093295, y: -0.0000010214036, z: -69.97886}
 --- !u!1 &2839087632086061266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1208,7 @@ Transform:
   m_Children:
   - {fileID: 166132446484898486}
   m_Father: {fileID: 8266505702772319154}
-  m_LocalEulerAnglesHint: {x: 0.000009162774, y: 0.000000774183, z: -63.36901}
+  m_LocalEulerAnglesHint: {x: -0.0000019090946, y: -0.0000000021968216, z: -63.36901}
 --- !u!1 &2857002223827045471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1624,7 @@ Transform:
   m_Children:
   - {fileID: 2975640489195409345}
   m_Father: {fileID: 607265324665203690}
-  m_LocalEulerAnglesHint: {x: -0.00000009564049, y: -0.00000028802592, z: -18.369009}
+  m_LocalEulerAnglesHint: {x: -0.000003241087, y: 0.0000010762261, z: -18.36901}
 --- !u!1 &2930352037545912099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,7 +1655,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 489006700388138273}
-  m_LocalEulerAnglesHint: {x: -0.00000020220897, y: -0.0000018983567, z: -69.515045}
+  m_LocalEulerAnglesHint: {x: 0.0000008021731, y: 0.00000029230017, z: -69.97886}
 --- !u!1 &2931563590261635699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1688,7 +1687,7 @@ Transform:
   m_Children:
   - {fileID: 4547418108902098437}
   m_Father: {fileID: 1032172582359652652}
-  m_LocalEulerAnglesHint: {x: 0.00002649756, y: 0.00008532185, z: -33.057083}
+  m_LocalEulerAnglesHint: {x: 0.000022940314, y: 0.00008846467, z: -33.057083}
 --- !u!1 &2941358978053212007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,7 +1775,7 @@ Transform:
   m_Children:
   - {fileID: 3241502175200921324}
   m_Father: {fileID: 5700751416153389748}
-  m_LocalEulerAnglesHint: {x: 0.04561814, y: -1.0930895, z: -44.917686}
+  m_LocalEulerAnglesHint: {x: 0.045618247, y: -1.0930897, z: -45.288754}
 --- !u!1 &3156719004314677675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1807,7 +1806,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2620137737368923248}
-  m_LocalEulerAnglesHint: {x: -0.0000030483998, y: -0.00000534898, z: -63.36901}
+  m_LocalEulerAnglesHint: {x: -2.2342547e-20, y: 1.9412167e-17, z: -63.369003}
 --- !u!1 &3161642637445018548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1955,7 +1954,7 @@ Transform:
   m_Children:
   - {fileID: 4778510763393278351}
   m_Father: {fileID: 1943317979700588230}
-  m_LocalEulerAnglesHint: {x: -13.244881, y: 159.86588, z: -43.090607}
+  m_LocalEulerAnglesHint: {x: -12.25892, y: 164.60849, z: -59.08938}
 --- !u!1 &3994642167187910786
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,7 +2025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyController: {fileID: 5417786978086143105}
   effectPoint: {fileID: 91965665187167786}
-  physicsDetection: {fileID: 42916095198277428}
+  NA_Detection: {fileID: 42916095198277428}
   sword1SlashPrefab: {fileID: 2576111974529329993, guid: b2f95ccd5085c304ab1f228f896224d6, type: 3}
   sword2SlashPrefab: {fileID: 2576111974529329993, guid: b2f95ccd5085c304ab1f228f896224d6, type: 3}
   hitPrefab: {fileID: 2915049982350002806, guid: e44bf22971002774d8f81b43d45b6698, type: 3}
@@ -2050,7 +2049,7 @@ GameObject:
   - component: {fileID: 5488716239365535929}
   - component: {fileID: 8769012909204039006}
   m_Layer: 16
-  m_Name: AttackSensor
+  m_Name: Attack Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2239,7 +2238,7 @@ GameObject:
   - component: {fileID: 5357515279280236721}
   - component: {fileID: 42916095198277428}
   m_Layer: 0
-  m_Name: MeleeAttack
+  m_Name: NA Detection
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2254,7 +2253,7 @@ Transform:
   m_GameObject: {fileID: 4258922485832380424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.905, z: 1.095}
+  m_LocalPosition: {x: 0, y: 0.905, z: 1.084}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2289,7 +2288,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollisionEnterEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8671669114011988124}
+        m_TargetAssemblyTypeName: GoblinSword_Effects, Assembly-CSharp
+        m_MethodName: Detection_NA
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   CollisionExitEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2315,6 +2326,8 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 128
+  drawGizmos: 1
+  drawColor: {r: 0.49056602, g: 0.3262727, b: 0.3262727, a: 0.5803922}
 --- !u!1 &4566684587987086411
 GameObject:
   m_ObjectHideFlags: 0
@@ -2346,7 +2359,7 @@ Transform:
   m_Children:
   - {fileID: 5905237279550754096}
   m_Father: {fileID: 6884783260451888196}
-  m_LocalEulerAnglesHint: {x: -4.010444, y: -23.347765, z: -30.366022}
+  m_LocalEulerAnglesHint: {x: -10.935037, y: -29.802818, z: -44.922043}
 --- !u!1 &4584897139141490320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,10 +2423,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 91965665187167786}
   - {fileID: 150235719110071836}
   - {fileID: 5021588857083847382}
   - {fileID: 1118946879411201214}
-  - {fileID: 91965665187167786}
   - {fileID: 9075933272708915696}
   m_Father: {fileID: 3840942111885144534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2449,7 +2462,7 @@ Transform:
   - {fileID: 9114993901000109407}
   - {fileID: 5987817322573511359}
   m_Father: {fileID: 8754058039809151698}
-  m_LocalEulerAnglesHint: {x: -0.0000038073329, y: -0.0000002877604, z: 67.75717}
+  m_LocalEulerAnglesHint: {x: 0.000001016095, y: -0.00000219066, z: 69.88346}
 --- !u!1 &5141955720429255856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2482,7 +2495,7 @@ Transform:
   - {fileID: 5700751416153389748}
   - {fileID: 5037935246829362104}
   m_Father: {fileID: 6351751702355010460}
-  m_LocalEulerAnglesHint: {x: -0.0000027408682, y: -0.0000026582381, z: 107.558136}
+  m_LocalEulerAnglesHint: {x: 0.0000016949383, y: -0.0000048341108, z: 19.321623}
 --- !u!1 &5151548147856331109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2514,7 +2527,7 @@ Transform:
   m_Children:
   - {fileID: 1022979675571160419}
   m_Father: {fileID: 5684723040799441357}
-  m_LocalEulerAnglesHint: {x: -0.00000022409085, y: 0.00000059983836, z: -69.515045}
+  m_LocalEulerAnglesHint: {x: -0.00000030654886, y: -0.000000054915493, z: -69.97886}
 --- !u!1 &5153839937186142741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,7 +2559,7 @@ Transform:
   m_Children:
   - {fileID: 8182865932816398872}
   m_Father: {fileID: 730117848328776454}
-  m_LocalEulerAnglesHint: {x: 51.967976, y: 36.944496, z: 10.070289}
+  m_LocalEulerAnglesHint: {x: 52.500523, y: 9.260296, z: 1.2219872}
 --- !u!1 &5266606291942002276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2578,7 +2591,7 @@ Transform:
   m_Children:
   - {fileID: 2620137737368923248}
   m_Father: {fileID: 3486182295378557549}
-  m_LocalEulerAnglesHint: {x: -0.045620088, y: 1.0930886, z: -40.000866}
+  m_LocalEulerAnglesHint: {x: -0.045615554, y: 1.0930883, z: -40.000877}
 --- !u!1 &5287227145634357686
 GameObject:
   m_ObjectHideFlags: 0
@@ -2740,7 +2753,7 @@ Transform:
   m_Children:
   - {fileID: 8884737029601071564}
   m_Father: {fileID: 5700751416153389748}
-  m_LocalEulerAnglesHint: {x: 0.04520646, y: -7.7768703, z: -44.922993}
+  m_LocalEulerAnglesHint: {x: 0.04520582, y: -7.7768703, z: -45.294052}
 --- !u!1 &5703697815715354998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3188,7 +3201,7 @@ Transform:
   m_Children:
   - {fileID: 902404331261994319}
   m_Father: {fileID: 1032172582359652652}
-  m_LocalEulerAnglesHint: {x: 0.04505398, y: -80.66796, z: -179.99274}
+  m_LocalEulerAnglesHint: {x: 0.4304212, y: -80.67579, z: 177.66136}
 --- !u!1 &6067793796338664274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3220,7 +3233,7 @@ Transform:
   m_Children:
   - {fileID: 489006700388138273}
   m_Father: {fileID: 5700751416153389748}
-  m_LocalEulerAnglesHint: {x: 0.04532172, y: 6.616014, z: -44.91156}
+  m_LocalEulerAnglesHint: {x: 0.045322575, y: 6.6160135, z: -45.282623}
 --- !u!1 &6164530973676796002
 GameObject:
   m_ObjectHideFlags: 0
@@ -3252,7 +3265,7 @@ Transform:
   m_Children:
   - {fileID: 5768403317897617835}
   m_Father: {fileID: 1569729490009917961}
-  m_LocalEulerAnglesHint: {x: 6.977968, y: 13.080348, z: 37.926964}
+  m_LocalEulerAnglesHint: {x: -29.346172, y: -19.71103, z: 56.446156}
 --- !u!1 &6264355331644473164
 GameObject:
   m_ObjectHideFlags: 0
@@ -3285,7 +3298,7 @@ Transform:
   - {fileID: 6152074740275314651}
   - {fileID: 3385572925291834025}
   m_Father: {fileID: 5282540160593511800}
-  m_LocalEulerAnglesHint: {x: -0.0000003816685, y: -0.0000007637138, z: 63.44625}
+  m_LocalEulerAnglesHint: {x: 0.0000020660868, y: 0.0000017896434, z: 79.558945}
 --- !u!1 &6295947604650391534
 GameObject:
   m_ObjectHideFlags: 0
@@ -3746,7 +3759,7 @@ Transform:
   m_Children:
   - {fileID: 6559225750702767672}
   m_Father: {fileID: 8973833047291004323}
-  m_LocalEulerAnglesHint: {x: -0.0000004165959, y: -0.0000012110073, z: -18.983616}
+  m_LocalEulerAnglesHint: {x: 7.333127e-17, y: 3.899004e-17, z: -19.029995}
 --- !u!1 &6589520591446691600
 GameObject:
   m_ObjectHideFlags: 0
@@ -3781,7 +3794,7 @@ Transform:
   - {fileID: 2338289637669446435}
   - {fileID: 7384653573786060396}
   m_Father: {fileID: 8029438649990943766}
-  m_LocalEulerAnglesHint: {x: -79.701584, y: -169.01938, z: 161.53058}
+  m_LocalEulerAnglesHint: {x: -81.1448, y: -154.41727, z: 145.54092}
 --- !u!1 &6863851740988922845
 GameObject:
   m_ObjectHideFlags: 0
@@ -3815,7 +3828,7 @@ Transform:
   - {fileID: 3438062581500746495}
   - {fileID: 8367833779009787004}
   m_Father: {fileID: 902404331261994319}
-  m_LocalEulerAnglesHint: {x: -0.00000037111798, y: -0.0000018726766, z: 105.35568}
+  m_LocalEulerAnglesHint: {x: 0.0000013434935, y: 0.00000357402, z: 95.96356}
 --- !u!1 &7048778320547276812
 GameObject:
   m_ObjectHideFlags: 0
@@ -3846,7 +3859,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9114993901000109407}
-  m_LocalEulerAnglesHint: {x: 0.0000017075366, y: 0.00001959336, z: -89.99996}
+  m_LocalEulerAnglesHint: {x: 2.890792, y: -0.0056840805, z: -90.01765}
 --- !u!1 &7132827281721171433
 GameObject:
   m_ObjectHideFlags: 0
@@ -3860,7 +3873,7 @@ GameObject:
   - component: {fileID: 4030538377205289269}
   - component: {fileID: 6647238779099406878}
   m_Layer: 16
-  m_Name: ChaseSensor
+  m_Name: Chase Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3993,7 +4006,7 @@ GameObject:
   - component: {fileID: 2606765093293057253}
   - component: {fileID: 4205678102827049734}
   m_Layer: 16
-  m_Name: RootSensor
+  m_Name: Root Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4527,7 +4540,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8884737029601071564}
-  m_LocalEulerAnglesHint: {x: 0.00000028742255, y: 0.00000010737684, z: -69.515045}
+  m_LocalEulerAnglesHint: {x: -0.00000006467064, y: 0.0000004112574, z: -69.97886}
 --- !u!1 &7265399273437363528
 GameObject:
   m_ObjectHideFlags: 0
@@ -4559,7 +4572,7 @@ Transform:
   m_Children:
   - {fileID: 1504589223714474736}
   m_Father: {fileID: 7384653573786060396}
-  m_LocalEulerAnglesHint: {x: 0.0000052489117, y: 0.0000009605887, z: -63.36901}
+  m_LocalEulerAnglesHint: {x: -0.0000060143066, y: 0.00000056580734, z: -63.36901}
 --- !u!1 &7658212030071201258
 GameObject:
   m_ObjectHideFlags: 0
@@ -4994,7 +5007,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3241502175200921324}
-  m_LocalEulerAnglesHint: {x: 0.00000069868, y: -0.00000065039063, z: -69.515045}
+  m_LocalEulerAnglesHint: {x: -0.00000094833223, y: 0.000000108785905, z: -69.97886}
 --- !u!1 &8029640519385381174
 GameObject:
   m_ObjectHideFlags: 0
@@ -5026,7 +5039,7 @@ Transform:
   m_Children:
   - {fileID: 8029438649990943766}
   m_Father: {fileID: 2124609662136099585}
-  m_LocalEulerAnglesHint: {x: -33.76675, y: -45.770233, z: 30.677465}
+  m_LocalEulerAnglesHint: {x: -26.214014, y: -80.32014, z: 58.51644}
 --- !u!1 &8175825803160193563
 GameObject:
   m_ObjectHideFlags: 0
@@ -5057,7 +5070,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 479233653651494886}
-  m_LocalEulerAnglesHint: {x: 0.0000007631984, y: 0.00000038269766, z: -63.36901}
+  m_LocalEulerAnglesHint: {x: 0.00000076539294, y: -0.0000015263981, z: -63.36901}
 --- !u!1 &8211188908362420346
 GameObject:
   m_ObjectHideFlags: 0
@@ -5088,7 +5101,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4547418108902098437}
-  m_LocalEulerAnglesHint: {x: 0.00021470318, y: 0.00014681385, z: -111.475845}
+  m_LocalEulerAnglesHint: {x: 0.00023505016, y: 0.00013976982, z: -118.724556}
 --- !u!1 &8360722814033306949
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,7 +5133,7 @@ Transform:
   m_Children:
   - {fileID: 6529762522748914537}
   m_Father: {fileID: 3486182295378557549}
-  m_LocalEulerAnglesHint: {x: 38.69856, y: -106.873116, z: -56.424538}
+  m_LocalEulerAnglesHint: {x: 37.76237, y: -107.656944, z: -56.9096}
 --- !u!1 &8532407758719030668
 GameObject:
   m_ObjectHideFlags: 0
@@ -5152,7 +5165,7 @@ Transform:
   m_Children:
   - {fileID: 6884783260451888196}
   m_Father: {fileID: 1943317979700588230}
-  m_LocalEulerAnglesHint: {x: 17.769995, y: -156.84859, z: -27.376673}
+  m_LocalEulerAnglesHint: {x: 15.784474, y: -151.0998, z: -15.092108}
 --- !u!1 &8683460009481374932
 GameObject:
   m_ObjectHideFlags: 0
@@ -5216,7 +5229,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7534816579707754350}
-  m_LocalEulerAnglesHint: {x: 0.0000011521417, y: -0.0000022875606, z: -63.26765}
+  m_LocalEulerAnglesHint: {x: 0.0000007619088, y: -0.0000015281429, z: -63.499577}
 --- !u!1 &9091153040736292625
 GameObject:
   m_ObjectHideFlags: 0
@@ -5248,7 +5261,7 @@ Transform:
   m_Children:
   - {fileID: 8216490933375277753}
   m_Father: {fileID: 3486182295378557549}
-  m_LocalEulerAnglesHint: {x: -0.045328338, y: -6.616011, z: -39.994736}
+  m_LocalEulerAnglesHint: {x: -0.04532151, y: -6.6160164, z: -39.99475}
 --- !u!1 &9182458979559523891
 GameObject:
   m_ObjectHideFlags: 0
@@ -5280,7 +5293,7 @@ Transform:
   m_Children:
   - {fileID: 1032172582359652652}
   m_Father: {fileID: 1943317979700588230}
-  m_LocalEulerAnglesHint: {x: -10.00022, y: -0.007912066, z: -20.044937}
+  m_LocalEulerAnglesHint: {x: 11.043595, y: -11.207755, z: -27.389265}
 --- !u!1001 &6802792155882368331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5388,6 +5401,10 @@ PrefabInstance:
     - target: {fileID: 5832492124200958321, guid: 7bf74894562915448ac1f5f9ae7479b7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762968184768876823, guid: 7bf74894562915448ac1f5f9ae7479b7, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

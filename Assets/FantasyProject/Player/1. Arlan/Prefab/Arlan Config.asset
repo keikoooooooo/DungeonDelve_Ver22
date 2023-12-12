@@ -16,14 +16,14 @@ MonoBehaviour:
   Level: 1
   CurrentEXP: 0
   Infor: 
-  MaxHP: 10000
+  MaxHP: 200
   ATK: 65
-  CRITRate: 5
+  CRITRate: 15
   CRITDMG: 50
   DEF: 30
   WalkSpeed: 1.65
   RunSpeed: 5.2
-  MaxST: 1001
+  MaxST: 100
   ChargedAttackStaminaCost: 20
   RunFastSpeed: 8
   DashStaminaCost: 25

@@ -33,11 +33,10 @@ public class PlayerHUD : MonoBehaviour, IGUI
         if(!_isEventRegistered) 
             return;
         _isEventRegistered = false;
-         
         player.E_SkillCD -= skillCooldownTime.StartCd;
         player.E_SpecialCD -= specialCooldownTime.StartCd;
-        player.Health.E_OnValueChanged -= healthBar.ChangedValue;
-        player.Stamina.E_OnValueChanged -= staminaBar.ChangedValue;
+        player.Health.OnValueChangedEvent -= healthBar.ChangedValue;
+        player.Stamina.OnValueChangedEvent -= staminaBar.ChangedValue;
     }
 
     
@@ -49,11 +48,10 @@ public class PlayerHUD : MonoBehaviour, IGUI
         if (!_isEventRegistered)
         {
             _isEventRegistered = true;
-            
             player.E_SkillCD += skillCooldownTime.StartCd;
             player.E_SpecialCD += specialCooldownTime.StartCd;
-            player.Health.E_OnValueChanged += healthBar.ChangedValue;
-            player.Stamina.E_OnValueChanged += staminaBar.ChangedValue;
+            player.Health.OnValueChangedEvent += healthBar.ChangedValue;
+            player.Stamina.OnValueChangedEvent += staminaBar.ChangedValue;
         }
         
         Init();

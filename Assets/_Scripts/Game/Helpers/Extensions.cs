@@ -11,8 +11,30 @@ public static class Extensions
     /// </summary>
     /// <param name="gameObject"> Object cần kiểm tra Layer </param>
     /// <returns></returns>
-    public static bool Contains(this LayerMask layers, GameObject gameObject)
-        => 0 != (layers.value & 1 << gameObject.layer);
+    public static bool Contains(this LayerMask layers, GameObject gameObject) => 0 != (layers.value & 1 << gameObject.layer);
+
+    /// <summary>
+    /// Set Layer cho Object theo LayerMask truyền vào, nếu LayerMask có từ 2 bit trở lên sẽ trả về bit đầu tiên (tức là LayerMask đầu tiên)
+    /// </summary>
+    /// <param name="_layerMask"> Layer cần set vào Object. </param>
+    /// <returns></returns>
+    public static void SetObjectLayer(this GameObject _gameObject, LayerMask _layerMask) => _gameObject.layer = GetObjectLayerIndex(_layerMask);
+    
+    /// <summary>
+    /// Trả về index của LayerMask truyền vào, nếu LayerMask có từ 2 bit trở lên sẽ trả về bit đầu tiên (tức là LayerMask đầu tiên)
+    /// </summary>
+    /// <param name="_layerMask"> Layer cần lấy Index. </param>
+    /// <returns></returns>
+    public static int GetObjectLayerIndex(LayerMask _layerMask)
+    {
+        if (_layerMask.value == 0) return 0;
+        for (var i = 0; i < 32; i++)
+        {
+            var _layerValue = 1 << i;
+            if ((_layerMask.value & _layerValue) != 0) return i;
+        }
+        return 0;
+    }
     #endregion
     
     

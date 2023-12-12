@@ -9,13 +9,13 @@ using Random = UnityEngine.Random;
 public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyController>
 {
     // Ref
-    [field: SerializeField, Required] public SO_EnemyConfiguration EnemyConfig { get; private set; }
     [field: SerializeField, Required] public Blackboard Blackboard { get; private set; }
+    [SerializeField] private SO_EnemyConfiguration enemyConfig;
+    public SO_EnemyConfiguration EnemyConfig { get; private set; }
     
     [Space]
     [SerializeField, Tooltip("Layer chính: chịu ảnh hưởng của va chạm trong game")]
     private LayerMask mainLayer;
-    
     [SerializeField, Tooltip("Layer phụ: không chịu ảnh hưởng bởi va chạm, khi Enemy die sẽ chuyển về layer này")]
     private LayerMask ignoreLayer;
 
@@ -23,7 +23,6 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     // Get & Set Property 
     public StatusHandle Health { get; private set; }
     public Vector3 PlayerPosition => _player.transform.position;
-    public int CalculatedDamage { get; set; }
     
     private readonly List<int> _enemyLevel = new() { 11, 21, 31, 41, 51, 61, 71, 81, 91, 101};
     
@@ -33,30 +32,32 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     public UnityEvent<EnemyController> OnDieEvent;
     
     // Variables
-    private GameObject _player;
-
+    private PlayerController _player;
+    private int _attackCount;
+    
     private void Awake()
     {
         Health = new StatusHandle();
+        EnemyConfig = Instantiate(enemyConfig);
     }
     private void OnEnable()
     {
-        InitStatus();
-        SetTakeDMG(false);
+        if(!_player && GameManager.Instance)
+        {
+            _player =GameManager.Instance.Player;
+            SetRefPlayer(_player.gameObject);
+        }
+
+        UpdateConfig();
         SetDie(false);
-        
+        SetTakeDMG(false);
+        SetRootPosition(transform.position);
         DamageableData.Add(gameObject, this);
-        gameObject.layer = GetObjectLayerIndex(mainLayer.value);
+        gameObject.SetObjectLayer(mainLayer.value);
     }
     private void Start()
     {
-        var _gameManager = GameManager.Instance;
-        if(_gameManager)
-        {
-            _player =_gameManager.Player.gameObject;
-            SetRefPlayer(_player);
-        }
-        SetRootPosition(transform.localPosition);
+        Health.CallInitValueEvent();
         SetRunSpeed(EnemyConfig.GetRunSpeed());
         SetWalkSpeed(EnemyConfig.GetWalkSpeed());
         SetCDNormalAttack(EnemyConfig.GetNormalAttackCD());
@@ -68,29 +69,35 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         DamageableData.Remove(gameObject);
     }
     
-    private static int GetObjectLayerIndex(LayerMask _mask)
+    public void UpdateConfig()
     {
-        if (_mask.value == 0) return 0;
-        for (var i = 0; i < 32; i++)
-        {
-            var _layerValue = 1 << i;
-            if ((_mask.value & _layerValue) != 0) return i;
-        }
-        return 0;
-    }
-    
-    public void UpdateConfig(SO_EnemyConfiguration _enemyConfiguration)
-    {
-        EnemyConfig = _enemyConfiguration;
-        InitStatus();
-    }
-    public void InitStatus()
-    {
+        var _multiplier = 0f;   // Tỷ lệ tăng của enemy so với người chơi
+        var _currentValue = 0;  // Giá trị hiện tại
+        var _newValue = 0;      // Giá trị mới
+        
+        // Set HP
+        _currentValue = _player.PlayerConfig.GetHP();
+        _multiplier = EnemyConfig.GetHPRatio();
+        _newValue = Mathf.RoundToInt(_currentValue * _multiplier);
+        EnemyConfig.SetHP(_newValue);
+        
+        // Set DEF
+        _currentValue = _player.PlayerConfig.GetDEF();
+        _multiplier = EnemyConfig.GetDEFRatio();
+        _newValue = Mathf.RoundToInt(_currentValue * _multiplier);
+        EnemyConfig.SetDEF(_newValue);
+        
+        // Set Level
+        _currentValue = _player.PlayerConfig.GetLevel();
+        _multiplier = EnemyConfig.GetLevelRatio();
+        _newValue = Mathf.RoundToInt(_currentValue * _multiplier);
+        EnemyConfig.SetLevel(_newValue);
+        
         Health.InitValue(EnemyConfig.GetHP());
     }
+    
 
-
-    // Set BehaviorTrees Variables    
+    #region Set BehaviorTrees Variables
     private void SetRefPlayer(GameObject _value) => Blackboard.SetVariableValue("Player", _value);
     private void SetRootPosition(Vector3 _value) => Blackboard.SetVariableValue("RootPosition", _value);
     private void SetWalkSpeed(float _value) => Blackboard.SetVariableValue("WalkSpeed", _value);
@@ -103,25 +110,31 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     public void SetAttackSensor(bool _value) => Blackboard.SetVariableValue("AttackSensor", _value);
     public void SetTakeDMG(bool _value) => Blackboard.SetVariableValue("TakeDMG", _value);
     public void SetDie(bool _value) => Blackboard.SetVariableValue("Die", _value);
-    
+    #endregion
+
 
     #region HandleDMG
-    public void CauseDMG(GameObject _gameObject)
+    public void CauseDMG(GameObject _gameObject, AttackType _attackType)
     {
         if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
 
-        // Có kích CRIT không ?
-        var critRateRandom = Random.value;
-        var _isCrit = false;
-        if (critRateRandom <= EnemyConfig.GetCRITRate() / 100)
+        var _damage = _attackType switch
+        {
+            AttackType.NormalAttack => PercentDMG_NA(),
+            AttackType.ChargedAttack => PercentDMG_CA(),
+            AttackType.ElementalSkill => PercentDMG_EK(),
+            AttackType.ElementalBurst => PercentDMG_EB(),
+            _ => 1
+        };
+       
+        var _isCrit = false;  // Có kích CRIT không ?
+        if (Random.value <= EnemyConfig.GetCRITRate() / 100)
         {
             var critDMG = (EnemyConfig.GetCRITDMG() + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
-            
-            CalculatedDamage = Mathf.CeilToInt(CalculatedDamage * critDMG);
+            _damage *= critDMG;
             _isCrit = true;
         } 
-        
-        iDamageable.TakeDMG(CalculatedDamage, _isCrit);
+        iDamageable.TakeDMG( Mathf.CeilToInt(_damage), _isCrit);
     }
     public void TakeDMG(int _damage, bool _isCRIT)
     {  
@@ -146,7 +159,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     }
     private void Die()
     {
-        gameObject.layer = GetObjectLayerIndex(ignoreLayer.value);
+        gameObject.SetObjectLayer(ignoreLayer.value);
         EnemyTracker.Remove(transform);
         OnDieEvent?.Invoke(this);
         SetDie(true);
@@ -154,16 +167,15 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         SetAttackSensor(false);
         SetTakeDMG(false);
     }
-    #endregion
-    
-    
-    /// <summary>
-    /// Tìm Index của %ATK cộng thêm dựa trên level hiện tại của enemy 
-    /// </summary>
-    /// <returns></returns>
-    public int FindLevelIndex()
-    {
-        var _level = 0;
+
+    public void SetAttackCount(int _value) => _attackCount = _value;
+    public float PercentDMG_NA() => enemyConfig.GetNormalAttackMultiplier()[_attackCount].GetMultiplier()[FindMultiplierLevelIndex()];
+    public float PercentDMG_CA() => enemyConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public float PercentDMG_EK() => enemyConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public float PercentDMG_EB() => enemyConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    private int FindMultiplierLevelIndex()  //Tìm Index của %ATK cộng thêm dựa trên level hiện tại của enemy 
+    {   
+        var _level = _enemyLevel[^1];
         for (var i = 0; i < _enemyLevel.Count; i++)
         {
             if (EnemyConfig.GetLevel() >= _enemyLevel[i]) continue;
@@ -172,12 +184,16 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         }
         return _level;
     }
-
-    /// <summary>
-    /// Chuyển đổi phần trăm (%) vừa tính thành sát thương đầu ra của Enemy
-    /// </summary>
-    /// <param name="_percent"> Phần trăm sát thương. </param>
-    public void ConvertDMG(float _percent) => CalculatedDamage = Mathf.CeilToInt(EnemyConfig.GetATK() * (_percent / 100.0f));
+    public int CalculationDMG(float _percent)
+    {
+        var _playerATK = _player.PlayerConfig.GetATK();
+        var _currentATK = EnemyConfig.GetATK();
+        
+        // Set ATK
+        var modifiedEnemyATK = Mathf.CeilToInt(_currentATK * (_percent / 100.0f));
+        return modifiedEnemyATK * (_playerATK / _currentATK);
+    }
+    #endregion
 
     
     public void Release() => ReleaseCallback?.Invoke(this);

@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoblinSword_Effects : MonoBehaviour, ICalculateDMG
+public class GoblinSword_Effects : MonoBehaviour, IAttack
 {
     public EnemyController enemyController;
     
@@ -10,7 +9,7 @@ public class GoblinSword_Effects : MonoBehaviour, ICalculateDMG
     public Transform effectPoint;
 
     [Tooltip("Script kiểm tra va chạm"), SerializeField]
-    private PhysicsDetection physicsDetection;
+    private PhysicsDetection NA_Detection;
     
     [Header("Prefab projectile")] 
     public Reference sword1SlashPrefab;
@@ -29,19 +28,11 @@ public class GoblinSword_Effects : MonoBehaviour, ICalculateDMG
     private Vector3 _posEffect;    // vị trí effect
     private Quaternion _rotEffect; // góc quay effect
 
-    private void Awake()
+    
+    private void Start()
     {
         InitValue();
     }
-    private void OnEnable()
-    {
-        RegisterEvents();
-    }
-    private void OnDisable()
-    {
-        UnRegisterEvents();
-    }
-    
     private void InitValue()
     {
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
@@ -49,16 +40,10 @@ public class GoblinSword_Effects : MonoBehaviour, ICalculateDMG
         _poolSword2Slash = new ObjectPooler<Reference>(sword2SlashPrefab, slotsVFX, 5);
         _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsVFX, 5);
     }
-    private void RegisterEvents()
-    {
-        physicsDetection.CollisionEnterEvent.AddListener(enemyController.CauseDMG);
-    }
-    private void UnRegisterEvents()
-    {
-        physicsDetection.CollisionEnterEvent.RemoveListener(enemyController.CauseDMG);
-    }
+
 
     
+    public void SetAttackCounter(int count) => _attackCounter = count; // Set đòn đánh thứ (x), gọi trên animationEvent
     private void EffectAttack(AnimationEvent eEvent)
     {
         var index = eEvent.intParameter;
@@ -70,18 +55,11 @@ public class GoblinSword_Effects : MonoBehaviour, ICalculateDMG
     }
     public void EffectHit(Vector3 _position) => _poolHit.Get(_position);
     
+    public void CheckNACollision() => NA_Detection.CheckCollision(); // gọi trên event Animation
     
-    public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
-
-
-    public void SetAttackCounter(int count) => _attackCounter = count; // Set đòn đánh thứ (x), gọi trên animationEvent
-    public void CalculateDMG_NA()
-    {
-        var _level = enemyController.FindLevelIndex();
-        var _percent = enemyController.EnemyConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[_level];
-        enemyController.ConvertDMG(_percent);
-    }
-    public void CalculateDMG_CA() { }
-    public void CalculateDMG_EK() { }
-    public void CalculateDMG_EB() { }
+    
+    public void Detection_NA(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.NormalAttack);
+    public void Detection_CA(GameObject _gameObject) { }
+    public void Detection_EK(GameObject _gameObject) { }
+    public void Detection_EB(GameObject _gameObject) { }
 }

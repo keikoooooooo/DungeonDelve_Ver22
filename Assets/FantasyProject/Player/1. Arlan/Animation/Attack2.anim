@@ -112928,7 +112928,7 @@ AnimationClip:
     intParameter: 2
     messageOptions: 0
   - time: 0.46666667
-    functionName: CheckCollision
+    functionName: CheckNACollision
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

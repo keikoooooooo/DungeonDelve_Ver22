@@ -32,13 +32,13 @@ public class LynxController : PlayerController
     [SerializeField] private AxisState yAxis;
 
     public float ChargedAttackTime { get; private set; }
-    
     [HideInInspector] private bool _lockCrosshair;       // có khóa tâm ngắm không
     [HideInInspector] private Vector3 worldPosition;
     [HideInInspector] private float _horizontalBlend;
     [HideInInspector] private float _verticalBlend;
-    private float _damageBonus;
+    
     private Ray _ray;
+    private float _percentDMGCharged;
     private Coroutine _attackCoroutine;
     
     
@@ -51,7 +51,6 @@ public class LynxController : PlayerController
         CheckCrosshair();
     }
     
-    
     protected override void SetVariables()
     {
         base.SetVariables();
@@ -60,7 +59,6 @@ public class LynxController : PlayerController
         crosshair.gameObject.SetActive(false);
         indicatorQ.transform.SetParent(null);
     }
-
     private void CheckCrosshair()
     {
         if (_lockCrosshair)
@@ -101,10 +99,10 @@ public class LynxController : PlayerController
             animator.SetBool(ID4Direction, IsNormalAttack);
 
             ChargedAttackTime += Time.deltaTime;
-            _damageBonus = Mathf.MoveTowards(_damageBonus, PlayerConfig.GetChargedAttackMultiplier()[1].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1], 15f * Time.deltaTime);
+            _percentDMGCharged = Mathf.MoveTowards(_percentDMGCharged, PlayerConfig.GetChargedAttackMultiplier()[1].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1], 15f * Time.deltaTime);
             yield return null;
         }
-        CalculateDMG_CA();
+        PercentDMG_CA();
         
         _movementState = MovementState.StateRun;
         animator.SetBool(ID4Direction, false);
@@ -136,7 +134,7 @@ public class LynxController : PlayerController
         
         // DMG
         ChargedAttackTime = 0;
-        _damageBonus = PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
+        _percentDMGCharged = PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
     }
     private void BlendAnimationValue()
     {
@@ -226,12 +224,7 @@ public class LynxController : PlayerController
         base.ReleaseAction();
         _effects.TurnOffFxHold();
     }
+    
+    public override float PercentDMG_CA() => _percentDMGCharged; // tìm %DMG dựa theo thời gian Holding, % tối đa = PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1]
 
-    public override void CalculateDMG_CA()
-    {
-        // tìm %DMG dựa theo thời gian Holding, % tối đa = PlayerConfig.ChargedAttackMultiplier[1].Multiplier[PlayerConfig.WeaponLevel - 1]
-        _calculatedDamage = Calculation(_damageBonus);
-    }
-    
-    
 }

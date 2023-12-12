@@ -10,7 +10,6 @@ public class PlayerDamageFallState : PlayerBaseState
     private float _timePush;
     private Vector3 _pushVelocity;
     private readonly Vector3 _gravity = new(0f, -9.81f, 0f);
-
     
     public override void EnterState()
     {
@@ -20,8 +19,6 @@ public class PlayerDamageFallState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
-        _machine.InputMovement = Vector3.zero;
-        
         if(_timePush <= 0)
             return;
         

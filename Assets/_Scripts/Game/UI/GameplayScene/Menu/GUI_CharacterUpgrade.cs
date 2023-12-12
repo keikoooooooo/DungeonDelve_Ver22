@@ -64,7 +64,7 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     private void OnEnable()
     {
         GUI_Manager.Add(this);
-        cancelBtt.onClick.AddListener(OnClickCancelButton);
+        cancelBtt.onClick.AddListener(OnClickCancelButton); 
         upgradeBtt.onClick.AddListener(OnClickUpgradeButton);
         
         InitValue();

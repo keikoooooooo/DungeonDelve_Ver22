@@ -4,13 +4,19 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-public class ArlanEffects : MonoBehaviour
+public class ArlanEffects : MonoBehaviour, IAttack
 {
     [Tooltip("Script điều khiển chính"), SerializeField] 
     private ArlanController arlanController;
 
-    [Tooltip("Script kiểm tra va chạm"), SerializeField]
-    private PhysicsDetection physicsDetection;
+    [Tooltip("Kiểm tra va chạm của Normal Attack"), SerializeField]
+    private PhysicsDetection NA_Detection;
+    
+    [Tooltip("Kiểm tra va chạm của Charged Attack"), SerializeField]
+    private PhysicsDetection CA_Detection;
+    
+    [Tooltip("Kiểm tra va chạm của Elenmental Burst"), SerializeField]
+    private PhysicsDetection EB_Detection;
     
     [Tooltip("Đếm ngược thời gian mà Shield(Skil) của Warrior hoạt động"), SerializeField]
     private CooldownTime shieldCooldownTime;
@@ -53,7 +59,6 @@ public class ArlanEffects : MonoBehaviour
     {
         Initialized();
     }
-    
     private void Initialized()
     {
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
@@ -62,6 +67,7 @@ public class ArlanEffects : MonoBehaviour
         _poolSwordHolding = new ObjectPooler<Reference>(swordHoldingPrefab, slotsVFX, 5);
         _poolHit = new ObjectPooler<Reference>(hitPrefab, slotsVFX, 5);
     }
+    
 
     private void EffectSlash(AnimationEvent eEvent)
     {
@@ -108,16 +114,13 @@ public class ArlanEffects : MonoBehaviour
         skill.gameObject.SetActive(false);
         arlanController.UnBuffSkill();
     }
-
     private void EffectSpecial(AnimationEvent eEvent)
     {
         special.gameObject.SetActive(true);
         special.Play();
     }
 
-
-    public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
-
+    
     public void EffectHit(Vector3 _pos) => _poolHit.Get(RandomPosition(_pos, -.15f, .15f));
     private static Vector3 RandomPosition(Vector3 _posCurrent, float minVal, float maxVal)
     {
@@ -125,6 +128,14 @@ public class ArlanEffects : MonoBehaviour
                                          Random.Range(minVal, maxVal), 
                                          Random.Range(minVal, maxVal));
     }
+
     
+    public void CheckNACollision() => NA_Detection.CheckCollision(); // gọi trên Event Animation
+    public void CheckCACollision() => CA_Detection.CheckCollision(); // gọi trên Event Animation
+    public void CheckEBCollision() => EB_Detection.CheckCollision(); // gọi trên ParticalSystem
     
+    public void Detection_NA(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.NormalAttack);
+    public void Detection_CA(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.ChargedAttack);
+    public void Detection_EK(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.ElementalSkill);
+    public void Detection_EB(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.ElementalBurst);
 }

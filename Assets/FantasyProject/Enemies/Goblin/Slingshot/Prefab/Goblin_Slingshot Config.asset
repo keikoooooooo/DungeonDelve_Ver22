@@ -16,16 +16,6 @@ MonoBehaviour:
   Level: 2
   CurrentEXP: 0
   Infor: 
-  MaxHP: 250
-  ATK: 28
-  CRITRate: 50
-  CRITDMG: 50
-  DEF: 5
-  WalkSpeed: 2.5
-  RunSpeed: 3.5
-  NormalAttackCD: 3
-  SkillAttackCD: 5
-  SpecialAttackCD: 10
   NormalAttackMultiplier:
   - MultiplierTypeName: Attack 0
     Multiplier:
@@ -39,5 +29,19 @@ MonoBehaviour:
     - 48.73
     - 52.12
     - 56.38
+  ChargedAttackMultiplier: []
   SkillMultiplier: []
   SpecialMultiplier: []
+  MaxHP: 250
+  ATK: 80
+  CRITRate: 20
+  CRITDMG: 50
+  DEF: 20
+  WalkSpeed: 2.5
+  RunSpeed: 3.5
+  HPRatio: 1.45
+  DEFRatio: 0.65
+  LevelRatio: 1.5
+  NormalAttackCD: 3
+  SkillAttackCD: 5
+  SpecialAttackCD: 10

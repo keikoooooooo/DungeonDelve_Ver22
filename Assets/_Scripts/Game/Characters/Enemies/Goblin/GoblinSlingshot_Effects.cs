@@ -1,14 +1,15 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
+public class GoblinSlingshot_Effects : MonoBehaviour, IAttack
 {
-    public EnemyController enemyController;
+    [SerializeField] private EnemyController enemyController;
 
-    [Tooltip("Điểm xuất hiện effect")] public Transform effectPoint;
+    [Tooltip("Điểm xuất hiện effect"), SerializeField] 
+    private Transform effectPoint;
 
-    [Header("Prefab projectile")] public EffectBase projectilePrefab;
+    [Header("Prefab projectile"),SerializeField] 
+    private EffectBase projectilePrefab;
 
     private ObjectPooler<EffectBase> _poolProjectile;
     private Transform slotsVFX;
@@ -31,24 +32,16 @@ public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
     private void InitValue()
     {
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform;
-        _poolProjectile = new ObjectPooler<EffectBase>(projectilePrefab, slotsVFX, 5);
+        _poolProjectile = new ObjectPooler<EffectBase>(projectilePrefab, slotsVFX, 8);
     }
     private void RegisterEvents()
-    {
-        foreach (var VARIABLE in _poolProjectile.List)
-        {
-            VARIABLE.detectionType.CollisionEnterEvent.AddListener(enemyController.CauseDMG);
-        }
+    {        
+        _poolProjectile.List.ForEach(projectile => projectile.detectionType.CollisionEnterEvent.AddListener(Detection_NA));
     }
     private void UnRegisterEvents()
     {
-        foreach (var VARIABLE in _poolProjectile.List)
-        {
-            VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(enemyController.CauseDMG);
-        }
+        _poolProjectile.List.ForEach(projectile => projectile.detectionType.CollisionEnterEvent.RemoveListener(Detection_NA));
     }
-
-
     public void EffectAttack()
     {
         var playerPos = enemyController.PlayerPosition;
@@ -58,13 +51,8 @@ public class GoblinSlingshot_Effects : MonoBehaviour, ICalculateDMG
         projectile.FIRE();
     }
     
-    public void CalculateDMG_NA()
-    {
-        var _level = enemyController.FindLevelIndex();
-        var _percent = enemyController.EnemyConfig.GetNormalAttackMultiplier()[0].GetMultiplier()[_level];
-        enemyController.ConvertDMG(_percent);
-    }
-    public void CalculateDMG_CA() { }
-    public void CalculateDMG_EK() { }
-    public void CalculateDMG_EB() { }
+    public void Detection_NA(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.NormalAttack);
+    public void Detection_CA(GameObject _gameObject) { }
+    public void Detection_EK(GameObject _gameObject) { }
+    public void Detection_EB(GameObject _gameObject) { }
 }

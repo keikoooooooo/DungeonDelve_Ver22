@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public static class EnemyTracker
@@ -17,13 +16,14 @@ public static class EnemyTracker
         if(!EnemiesTracker.Contains(_transform)) return;
         EnemiesTracker.Remove(_transform);
     }
-    public static Transform FindClosestEnemy(Transform _transfLocal) => SortClosestEnemy(_transfLocal);
+    public static Vector3 FindClosestEnemy(Transform _transfLocal) => SortClosestEnemy(_transfLocal);
     
-    private static Transform SortClosestEnemy(Transform _transfLocal)
+    private static Vector3 SortClosestEnemy(Transform _transfLocal)
     {
+        if (!DetectEnemy) return _transfLocal.position;
         EnemiesTracker.Sort((a, b)
             => Vector3.Distance(a.transform.position, _transfLocal.position).CompareTo(Vector3.Distance(b.transform.position, _transfLocal.position)));
-        return EnemiesTracker[0].transform;
+        return EnemiesTracker[0].transform.position;
     }
 
 }

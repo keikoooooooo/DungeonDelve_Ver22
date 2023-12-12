@@ -16,16 +16,6 @@ MonoBehaviour:
   Level: 21
   CurrentEXP: 0
   Infor: 
-  MaxHP: 500
-  ATK: 150
-  CRITRate: 50
-  CRITDMG: 50
-  DEF: 40
-  WalkSpeed: 5.1
-  RunSpeed: 5.1
-  NormalAttackCD: 4
-  SkillAttackCD: 5
-  SpecialAttackCD: 6
   NormalAttackMultiplier:
   - MultiplierTypeName: Attack 0
     Multiplier:
@@ -63,6 +53,7 @@ MonoBehaviour:
     - 224.12
     - 234.16
     - 250.34
+  ChargedAttackMultiplier: []
   SkillMultiplier:
   - MultiplierTypeName: ' Elemental Skill'
     Multiplier:
@@ -89,3 +80,16 @@ MonoBehaviour:
     - 355.19
     - 375.28
     - 400.01
+  MaxHP: 500
+  ATK: 150
+  CRITRate: 50
+  CRITDMG: 50
+  DEF: 40
+  WalkSpeed: 5.1
+  RunSpeed: 5.1
+  HPRatio: 12.5
+  DEFRatio: 0.85
+  LevelRatio: 15
+  NormalAttackCD: 3.38
+  SkillAttackCD: 5
+  SpecialAttackCD: 6

@@ -30,9 +30,9 @@ public class DMGPopUp : MonoBehaviour, IPooled<DMGPopUp>
    private Vector3 _originPosition;
    private Vector3 _originScale;
    private Coroutine _updateCoroutine;
-   
-   
-   
+
+
+   public void SetMainCamera(Camera _camera) => mainCamera = _camera;
    public void Show(int _damage, bool isApplyCRIT,bool _isEnemy)
    {
       _isCrit = isApplyCRIT;

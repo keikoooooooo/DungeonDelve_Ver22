@@ -1,44 +1,41 @@
-using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
-
-
-public class ReaperEffects : MonoBehaviour, ICalculateDMG
+public class ReaperEffects : MonoBehaviour, IAttack
 {
     [SerializeField] private EnemyController enemyController;
-    public PhysicsDetection physicsDetection;
+    [SerializeField] private PhysicsDetection NA_Detection;
     
-    [Tooltip("Effect Ping NormalAttack")] public GameObject indicatorNormalAttack;
-    [Tooltip("Effect Ping Skill")] public GameObject indicatorSkill;
+    [Tooltip("Effect Ping NormalAttack"), SerializeField] 
+    private GameObject indicatorNormalAttack;
     
-    [Tooltip("Vị trí xuất hiện Attack Effect")]
-    public Transform effectPosition;
+    [Tooltip("Effect Ping Skill"), SerializeField] 
+    private GameObject indicatorSkill;
     
-    [Tooltip("Góc xoay của từng Effect Slash trên Normal Attack")] 
-    public List<EffectOffset> effectOffsets;
+    [Tooltip("Vị trí xuất hiện Attack Effect"), SerializeField]
+    private Transform effectPosition;
+    
+    [Tooltip("Góc xoay của từng Effect Slash trên Normal Attack"), SerializeField] 
+    private List<EffectOffset> effectOffsets;
 
     [Header("Prefab projectile")] 
-    public Reference indicatorPrefab;
-    public Reference slashPrefab;
-    public Reference hitPrefab;
-    public PhysicsDetection specialPrefab;
+    [SerializeField] private Reference indicatorPrefab;
+    [SerializeField] private Reference slashPrefab;
+    [SerializeField] private Reference hitPrefab;
+    [SerializeField] private PhysicsDetection specialPrefab;
 
     [Header("Visual Effect")]
-    public ParticleSystem skillEffect;
+    [SerializeField] private  ParticleSystem skillEffect;
     
     private ObjectPooler<Reference> _poolIndicator;
     private ObjectPooler<Reference> _poolSlash;
     private ObjectPooler<PhysicsDetection> _poolSpecial;
     private ObjectPooler<Reference> _poolHit;
 
-    private int _attackCounter;
-    private Transform slotVFX;
+    private Transform _slotVFX;
     private Vector3 _posEffect;
     private Quaternion _rotEffect;
-    private Coroutine _enableDissolve;
-
-
+    
     private void Start()
     {
         Initialized();
@@ -52,23 +49,23 @@ public class ReaperEffects : MonoBehaviour, ICalculateDMG
 
     private void Initialized()
     {
-        slotVFX = GameObject.FindGameObjectWithTag("SlotsVFX").transform;
+        _slotVFX = GameObject.FindGameObjectWithTag("SlotsVFX").transform;
 
-        _poolIndicator = new ObjectPooler<Reference>(indicatorPrefab, slotVFX, 15);
-        _poolSlash = new ObjectPooler<Reference>(slashPrefab, slotVFX, 10);
-        _poolHit = new ObjectPooler<Reference>(hitPrefab, slotVFX, 35);
-        _poolSpecial = new ObjectPooler<PhysicsDetection>(specialPrefab, slotVFX, 50);
+        _poolIndicator = new ObjectPooler<Reference>(indicatorPrefab, _slotVFX, 15);
+        _poolSlash = new ObjectPooler<Reference>(slashPrefab, _slotVFX, 10);
+        _poolHit = new ObjectPooler<Reference>(hitPrefab, _slotVFX, 35);
+        _poolSpecial = new ObjectPooler<PhysicsDetection>(specialPrefab, _slotVFX, 50);
         
-        skillEffect.transform.SetParent(slotVFX);
-        indicatorSkill.transform.SetParent(slotVFX);
-        indicatorNormalAttack.transform.SetParent(slotVFX);
+        skillEffect.transform.SetParent(_slotVFX);
+        indicatorSkill.transform.SetParent(_slotVFX);
+        indicatorNormalAttack.transform.SetParent(_slotVFX);
     }
 
     private void RegisterEvents()
     {
         foreach (var VARIABLE in _poolSpecial.List)
         {
-            VARIABLE.CollisionEnterEvent.AddListener(enemyController.CauseDMG);
+            VARIABLE.CollisionEnterEvent.AddListener(Detection_NA);
             VARIABLE.PositionEnterEvent.AddListener(EffectHit);
         }
     }
@@ -76,7 +73,7 @@ public class ReaperEffects : MonoBehaviour, ICalculateDMG
     {
         foreach (var VARIABLE in _poolSpecial.List)
         {
-            VARIABLE.CollisionEnterEvent.RemoveListener(enemyController.CauseDMG);
+            VARIABLE.CollisionEnterEvent.RemoveListener(Detection_NA);
             VARIABLE.PositionEnterEvent.RemoveListener(EffectHit);
         }
     }
@@ -94,28 +91,13 @@ public class ReaperEffects : MonoBehaviour, ICalculateDMG
     public void GetIndicator(Vector3 _position) => _poolIndicator.Get(_position);
     public void GetSpecialEffect(Vector3 _position) => _poolSpecial.Get(_position);
     
-    public void CheckCollision() => physicsDetection.CheckCollision(); // gọi trên event Animation
+    public void CheckNACollision() => NA_Detection.CheckCollision(); // gọi trên event Animation
     public void EffectHit(Vector3 _pos) => _poolHit.Get(_pos + new Vector3(Random.Range(-.1f, .1f), Random.Range(.5f, 1f), 0));
     
 
-    public void SetAttackCounter(int count) => _attackCounter = count; // Set đòn đánh thứ (x), gọi trên animationEvent
-    public void CalculateDMG_NA()
-    {
-        var _level = enemyController.FindLevelIndex();
-        var _percent = enemyController.EnemyConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[_level];
-        enemyController.ConvertDMG(_percent);
-    }
-    public void CalculateDMG_CA() { }
-    public void CalculateDMG_EK()
-    {
-        var _level = enemyController.FindLevelIndex();
-        var _percent = enemyController.EnemyConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[_level];
-        enemyController.ConvertDMG(_percent);
-    }
-    public void CalculateDMG_EB()
-    {
-        var _level = enemyController.FindLevelIndex();
-        var _percent = enemyController.EnemyConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[_level];
-        enemyController.ConvertDMG(_percent);
-    }
+    public void SetAttackCounter(int count) => enemyController.SetAttackCount(count); // Gọi trên animationEvent để set đòn đánh thứ (x)
+    public void Detection_NA(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.NormalAttack);
+    public void Detection_CA(GameObject _gameObject) { }
+    public void Detection_EK(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.ElementalSkill);
+    public void Detection_EB(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.ElementalBurst);
 }

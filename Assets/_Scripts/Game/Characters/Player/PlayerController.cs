@@ -49,8 +49,7 @@ public abstract class PlayerController : PlayerStateMachine
     
     // Player
     [HideInInspector] private Vector3 _pushVelocity;       // vận tốc đẩy 
-    [HideInInspector] private int _directionPushVelocity;  // hướng đẩy 
-    [HideInInspector] protected int _attackCounter;        // số lần attackCombo
+    [HideInInspector] private int _directionPushVelocity;  // hướng đẩy
     [HideInInspector] protected bool _isAttackPressed;     // có nhấn attack k ?
     
     private Coroutine _pushVelocityCoroutine;
@@ -119,13 +118,13 @@ public abstract class PlayerController : PlayerStateMachine
         MouseHoldTime = 0;
         animator.SetTrigger(IDNormalAttack);
 
-        CalculateDMG_NA();
+        PercentDMG_NA();
         RotateToEnemy();
     }
     protected virtual void ChargedAttack()
     {
         animator.SetTrigger(IDChargedAttack);
-        CalculateDMG_CA();
+        PercentDMG_CA();
     }
     protected virtual void ElementalSkill()
     {
@@ -137,7 +136,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanRotation = false;
         _skillCD_Temp = PlayerConfig.GetElementalSkillCD();
         
-        CalculateDMG_EK();
+        PercentDMG_EK();
         OnSkillCooldownEvent();
     }
     protected virtual void ElementalBurst()
@@ -150,7 +149,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanRotation = false;
         _specialCD_Temp = PlayerConfig.GetElementalBurstCD();
 
-        CalculateDMG_EB();
+        PercentDMG_EB();
         OnSpecialCooldownEvent();
     }
     protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.GetElementalSkillCD());
@@ -185,11 +184,8 @@ public abstract class PlayerController : PlayerStateMachine
     }
     private IEnumerator RotateToTargetCoroutine()
     {
-        if (!EnemyTracker.DetectEnemy) 
-            yield break;
-        
         var target = EnemyTracker.FindClosestEnemy(transform);
-        var direction = Quaternion.LookRotation(target.position - transform.position);
+        var direction = Quaternion.LookRotation(target - transform.position);
         var directionLocal = Mathf.Floor(transform.eulerAngles.y);
         var directionTaget = Mathf.Floor(direction.eulerAngles.y);
 
@@ -204,39 +200,6 @@ public abstract class PlayerController : PlayerStateMachine
     public void AddEnemy(GameObject _enemy) => EnemyTracker.Add(_enemy.transform);
     public void RemoveEnemy(GameObject _enemy) => EnemyTracker.Remove(_enemy.transform);
     #endregion
-
-    
-    #region Damage Calculation
-    public override void CalculateDMG_NA()
-    {
-        // tìm %DMG dựa theo cấp của vũ khí trên đòn đánh thứ n
-        var _percent = PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; // List bắt đầu từ 0, Vũ khí từ 1 -> nên trừ 1
-        _calculatedDamage = Calculation(_percent); 
-    }
-    public override void CalculateDMG_CA()
-    {
-        var _percent = PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
-        _calculatedDamage = Calculation(_percent);
-    }
-    public override void CalculateDMG_EK()
-     {
-         var _percent = PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
-         _calculatedDamage = Calculation(_percent); 
-     }   
-    public override void CalculateDMG_EB()
-    {
-        var _percent = PlayerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
-        _calculatedDamage = Calculation(_percent); 
-    }
-    
-    
-    /// <summary>
-    /// Tính sát thương đầu ra theo phần trăm * ATK của player
-    /// </summary>
-    /// <param name="_percent"> Phần trăm sát thương. </param>
-    /// <returns></returns>
-    protected int Calculation(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
-    #endregion
     
     
     protected virtual void AttackEnd()
@@ -246,7 +209,6 @@ public abstract class PlayerController : PlayerStateMachine
         CanMove = true;
         CanRotation = true;
     }
-
     protected virtual void SkillEnd()
     {
         AttackEnd();

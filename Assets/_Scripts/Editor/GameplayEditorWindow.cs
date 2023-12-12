@@ -99,7 +99,7 @@ public class GameplayEditorWindow : EditorWindow
         Space(30);
         GUILayout.Label("INFORMATION ------------------------", EditorStyles.boldLabel);
         _playerConfig.SetName(EditorGUILayout.TextField("Name", $"{_playerConfig.NameCode}", Width(500)));
-        _playerConfig.SetLevel(EditorGUILayout.IntSlider("Weapon Level", _playerConfig.GetLevel(), 1, SO_CharacterUpgradeData.levelMax, Width(500)));
+        _playerConfig.SetLevel(EditorGUILayout.IntSlider("Character Level", _playerConfig.GetLevel(), 1, SO_CharacterUpgradeData.levelMax, Width(500)));
         _playerConfig.SetCurrentEXP(EditorGUILayout.IntField("Current EXP", _playerConfig.GetCurrentEXP(), Width(500)));
         _playerConfig.SetInfor(EditorGUILayout.TextField("Infor", _playerConfig.GetInfor(), Width(500)));
         GUILayout.BeginHorizontal();
@@ -443,12 +443,13 @@ public class GameplayEditorWindow : EditorWindow
         Space(30);
         GUILayout.Label("INFORMATION ------------------------", EditorStyles.boldLabel);
         _enemyConfig.SetName(EditorGUILayout.TextField("Name", _enemyConfig.GetName(), Width(500)));
-        _enemyConfig.SetLevel(EditorGUILayout.IntField("Level", _enemyConfig.GetLevel(), Width(500)));
         _enemyConfig.SetInfor(EditorGUILayout.TextField("Infor", _enemyConfig.GetInfor(), Width(500)));
         
         Space(30);
         GUILayout.Label("STATS -------------------------------", EditorStyles.boldLabel);
-        _enemyConfig.SetHP(EditorGUILayout.IntField("Max HP", _enemyConfig.GetHP(), Width(500)));
+        _enemyConfig.SetHPRatio(EditorGUILayout.FloatField("Enemy HP Ratio", _enemyConfig.GetHPRatio(), Width(500)));
+        _enemyConfig.SetDEFRatio(EditorGUILayout.FloatField("Enemy DEF Ratio", _enemyConfig.GetDEFRatio(), Width(500)));
+        _enemyConfig.SetLevelRatio(EditorGUILayout.FloatField("Enemy Level Ratio", _enemyConfig.GetLevelRatio(), Width(500)));
         _enemyConfig.SetATK(EditorGUILayout.IntField("ATK", _enemyConfig.GetATK(), Width(500)));
         _enemyConfig.SetCRITRate(EditorGUILayout.FloatField("CRIT Rate(%)", _enemyConfig.GetCRITRate(), Width(500)));
         _enemyConfig.SetCRITDMG(EditorGUILayout.IntField("CRIT DMG(%)", _enemyConfig.GetCRITDMG(), Width(500)));

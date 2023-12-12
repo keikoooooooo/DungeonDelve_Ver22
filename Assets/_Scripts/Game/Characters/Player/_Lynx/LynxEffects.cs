@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class LynxEffects : MonoBehaviour
+public class LynxEffects : MonoBehaviour, IAttack
 {
     [Tooltip("Script điều khiển chính"), SerializeField]
     private LynxController lynxController;
@@ -15,86 +14,71 @@ public class LynxEffects : MonoBehaviour
     public Transform attackPoint;
     
     [Header("Prefab projectile")] 
-    [SerializeField] private EffectBase arrowComboPrefab;
-    [SerializeField] private EffectBase chargedPrefab;
-    [SerializeField] private EffectBase chargedNoFullyPrefab;
+    [SerializeField] private EffectBase arrowNormalPrefab;
+    [SerializeField] private EffectBase arrowChargedPrefab;
+    [SerializeField] private EffectBase arrowChargedNoFullyPrefab;
     
     [Header("Visual Effect")]
     [SerializeField] private ParticleSystem effectHolding;
     [SerializeField] private ParticleSystem effectSpecial;
     
     private Transform slotsVFX;
-    private ObjectPooler<EffectBase> _poolNormalArrow;
-    private ObjectPooler<EffectBase> _poolChargedArrow;
-    private ObjectPooler<EffectBase> _poolChargedNoFullyArrow;
+    private ObjectPooler<EffectBase> _poolArrowNormal;
+    private ObjectPooler<EffectBase> _poolArrowSkill;
+    private ObjectPooler<EffectBase> _poolArrowChargedFully;
+    private ObjectPooler<EffectBase> _poolArrowChargedNoFully;
+    private ObjectPooler<EffectBase> _poolArrowBurst;
 
-    private Coroutine _mouseHoldTimeCoroutine;
-    
-    
     private float angleYAttack => lynxController.model.eulerAngles.y;
-
     
     // Coroutine
     private Coroutine _specialCoroutine;
 
     
-    private void OnEnable()
+    private void Start()
     {
-        RegisterEvents();
-        effectSpecial.transform.SetParent(slotsVFX);
+        Initialized();
+        RegisterEvent();
     }
-    private void Awake()
+    private void OnDestroy()
     {
-        InitValue();
-    }
-    private void OnDisable()
-    {
-        UnRegisterEvents();
+        UnRegisterEvent();
     }
 
     
-    private void InitValue()
+    private void Initialized()
     {
         slotsVFX = GameObject.FindWithTag("SlotsVFX").transform; 
-        _poolNormalArrow = new ObjectPooler<EffectBase>(arrowComboPrefab, slotsVFX, 25);
-        _poolChargedArrow = new ObjectPooler<EffectBase>(chargedPrefab, slotsVFX, 8);
-        _poolChargedNoFullyArrow = new ObjectPooler<EffectBase>(chargedNoFullyPrefab, slotsVFX, 8);
+        _poolArrowNormal = new ObjectPooler<EffectBase>(arrowNormalPrefab, slotsVFX, 25);
+        _poolArrowChargedFully = new ObjectPooler<EffectBase>(arrowChargedPrefab, slotsVFX, 15);
+        _poolArrowChargedNoFully = new ObjectPooler<EffectBase>(arrowChargedNoFullyPrefab, slotsVFX, 15);
+        _poolArrowSkill = new ObjectPooler<EffectBase>(arrowNormalPrefab, slotsVFX, 25);
+        _poolArrowBurst = new ObjectPooler<EffectBase>(arrowChargedPrefab, slotsVFX, 50);
+        
+        effectSpecial.transform.SetParent(slotsVFX);
     }
-    private void RegisterEvents()
+    private void RegisterEvent()
     {
-        foreach (var VARIABLE in _poolNormalArrow.List)
-        {
-            VARIABLE.detectionType.CollisionEnterEvent.AddListener(lynxController.CauseDMG);
-        }
-        foreach (var VARIABLE in _poolChargedArrow.List)
-        {
-            VARIABLE.detectionType.CollisionEnterEvent.AddListener(lynxController.CauseDMG);
-        }
-        foreach (var VARIABLE in _poolChargedNoFullyArrow.List)
-        {
-            VARIABLE.detectionType.CollisionEnterEvent.AddListener(lynxController.CauseDMG);
-        }
+        _poolArrowNormal.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_NA));
+        _poolArrowChargedFully.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_CA));
+        _poolArrowChargedNoFully.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_CA));
+        _poolArrowSkill.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_EK));
+        _poolArrowBurst.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_EB));
     }
-    private void UnRegisterEvents()
+    private void UnRegisterEvent()
     {
-        foreach (var VARIABLE in _poolNormalArrow.List)
-        {
-            VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(lynxController.CauseDMG);
-        }
-        foreach (var VARIABLE in _poolChargedArrow.List)
-        {
-            VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(lynxController.CauseDMG);
-        }
-        foreach (var VARIABLE in _poolChargedNoFullyArrow.List)
-        {
-            VARIABLE.detectionType.CollisionEnterEvent.RemoveListener(lynxController.CauseDMG);
-        }
+        _poolArrowNormal.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_NA));
+        _poolArrowChargedFully.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_CA));
+        _poolArrowChargedNoFully.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_CA));
+        _poolArrowSkill.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_EK));
+        _poolArrowBurst.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_EB));
     }
+    
     
     private void EffectArrowCombo(AnimationEvent eEvent)
     {
         var _quaternion = EnemyTracker.DetectEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
-        var arrow = _poolNormalArrow.Get(attackPoint.position, _quaternion);
+        var arrow = _poolArrowNormal.Get(attackPoint.position, _quaternion);
         arrow.FIRE();
         
         lynxController.AddForceAttack();
@@ -103,8 +87,8 @@ public class LynxEffects : MonoBehaviour
     {
         TurnOffFxHold();
         var arrow = lynxController.ChargedAttackTime >= 3.5f ? 
-                            _poolChargedArrow.Get(attackPoint.position, attackPoint.rotation) : 
-                            _poolChargedNoFullyArrow.Get(attackPoint.position, attackPoint.rotation) ;
+                            _poolArrowChargedFully.Get(attackPoint.position, attackPoint.rotation) : 
+                            _poolArrowChargedNoFully.Get(attackPoint.position, attackPoint.rotation) ;
         arrow.FIRE();
     }
     public void TurnOnFxHold()
@@ -118,11 +102,12 @@ public class LynxEffects : MonoBehaviour
         effectHolding.gameObject.SetActive(false);
     }
 
+    
     private void Effect_Skill(AnimationEvent eEvent)
     {
         var position = attackPoint.position;
         var rotation = Quaternion.Euler(EnemyTracker.DetectEnemy ? -6f : angleXAttack, attackPoint.eulerAngles.y + eEvent.intParameter, attackPoint.eulerAngles.z);
-        var arrow = _poolNormalArrow.Get(position, rotation);
+        var arrow = _poolArrowSkill.Get(position, rotation);
         arrow.FIRE();
     }
     private void EffectSpecial(AnimationEvent eEvent)
@@ -142,7 +127,7 @@ public class LynxEffects : MonoBehaviour
         yield return new WaitForSeconds(.85f);
         
         // Out
-        var maxRadius = 3f;
+        var maxRadius = 2.5f;
         for (var i = 0; i < 30; i++)
         {
             // lấy 1 vị tri ngẫu nhiên trong bán kính maxRadius
@@ -152,7 +137,7 @@ public class LynxEffects : MonoBehaviour
             var currentPos = transform.position + new Vector3(randomPoint.x, 7f, randomPoint.y);
             var targetPos = lynxController.indicatorQ.transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
             
-            var arrow = _poolChargedArrow.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
+            var arrow = _poolArrowBurst.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
             arrow.FIRE();
             yield return new WaitForSeconds(0.1f);
         }
@@ -160,10 +145,9 @@ public class LynxEffects : MonoBehaviour
         effectSpecial.gameObject.SetActive(false);
         effectSpecial.Stop();
     }
-    
     private Quaternion RandomDirection()
     {
-        var posTarget = EnemyTracker.FindClosestEnemy(lynxController.transform).position;
+        var posTarget = EnemyTracker.FindClosestEnemy(lynxController.transform);
         posTarget.y += 1.3f;
         
         var randRotX = Random.Range(-2f, 2f);
@@ -171,4 +155,9 @@ public class LynxEffects : MonoBehaviour
         return Quaternion.LookRotation(posTarget - attackPoint.transform.position) * Quaternion.Euler(randRotX, randRotY, 0);
     }
 
+    
+    public void Detection_NA(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.NormalAttack);
+    public void Detection_CA(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.ChargedAttack);
+    public void Detection_EK(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.ElementalSkill);
+    public void Detection_EB(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.ElementalBurst);
 }

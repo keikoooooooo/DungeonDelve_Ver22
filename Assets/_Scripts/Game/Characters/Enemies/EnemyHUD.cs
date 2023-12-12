@@ -8,20 +8,26 @@ public class EnemyHUD : MonoBehaviour
     [SerializeField] private ProgressBar healthBar;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI levelText;
-    
+
+
     private void Start()
     {
-        if(nameText) nameText.text = enemy.EnemyConfig.GetName();
-        if(levelText) levelText.text = $"Lv. {enemy.EnemyConfig.GetLevel()}";
-        
-        enemy.Health.E_OnValueChanged += healthBar.ChangedValue;
-        healthBar.Init(enemy.EnemyConfig.GetHP());
+        enemy.Health.OnInitValueEvent += OnConfigChanged;
+        enemy.Health.OnValueChangedEvent += healthBar.ChangedValue;
     }
     private void OnDestroy()
     {
-        enemy.Health.E_OnValueChanged -= healthBar.ChangedValue;
+        enemy.Health.OnInitValueEvent -= OnConfigChanged;
+        enemy.Health.OnValueChangedEvent -= healthBar.ChangedValue;
     }
-    
-    
+
+    private void OnConfigChanged()
+    {
+        healthBar.Init(enemy.EnemyConfig.GetHP());
+        if(nameText) 
+            nameText.text = enemy.EnemyConfig.GetName();
+        if(levelText) 
+            levelText.text = $"Lv. {enemy.EnemyConfig.GetLevel()}";
+    }
     
 }

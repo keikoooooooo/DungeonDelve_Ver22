@@ -19,8 +19,6 @@ public class PlayerDamageStandState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
-        _machine.InputMovement = Vector3.zero;
-        
         if(_timePush <= 0) 
             return;
         

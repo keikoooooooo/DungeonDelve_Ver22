@@ -19,13 +19,19 @@ namespace NodeCanvas.Tasks.Actions
 
         protected override string info => $"Wait {waitTime} sec.";
 
-        protected override void OnUpdate() {
+
+        protected override void OnExecute()
+        {
             if (randomValue.value)
             {
                 waitTime.value = Random.Range(minValue.value, maxValue.value);
             }
-            
-            if ( elapsedTime >= waitTime.value ) {
+        }
+
+        protected override void OnUpdate() 
+        {
+            if ( elapsedTime >= waitTime.value )
+            {
                 EndAction(finishStatus == CompactStatus.Success);
             }
         }

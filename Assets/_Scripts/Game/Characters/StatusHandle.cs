@@ -9,7 +9,8 @@ public class StatusHandle
       MaxValue = maxValue;
       CurrentValue = maxValue;
    } 
-   public event Action<int> E_OnValueChanged;
+   public event Action<int> OnValueChangedEvent;
+   public event Action OnInitValueEvent;
 
    public int MaxValue { get; private set; }
    public int CurrentValue { get; private set; }
@@ -19,7 +20,7 @@ public class StatusHandle
    {
       MaxValue = maxValue;
       CurrentValue = maxValue;
-      CallValueChangeEvent();
+      CallInitValueEvent();
    }
    public void Increases(int _amount)
    {
@@ -37,6 +38,6 @@ public class StatusHandle
 
       CallValueChangeEvent();
    }
-   public void CallValueChangeEvent() => E_OnValueChanged?.Invoke(CurrentValue);
-   
+   public void CallValueChangeEvent() => OnValueChangedEvent?.Invoke(CurrentValue);
+   public void CallInitValueEvent() => OnInitValueEvent?.Invoke();
 }
