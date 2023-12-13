@@ -2026,8 +2026,7 @@ MonoBehaviour:
   enemyController: {fileID: 5417786978086143105}
   effectPoint: {fileID: 91965665187167786}
   NA_Detection: {fileID: 42916095198277428}
-  sword1SlashPrefab: {fileID: 2576111974529329993, guid: b2f95ccd5085c304ab1f228f896224d6, type: 3}
-  sword2SlashPrefab: {fileID: 2576111974529329993, guid: b2f95ccd5085c304ab1f228f896224d6, type: 3}
+  swordSlashPrefab: {fileID: 2576111974529329993, guid: b2f95ccd5085c304ab1f228f896224d6, type: 3}
   hitPrefab: {fileID: 2915049982350002806, guid: e44bf22971002774d8f81b43d45b6698, type: 3}
   effectOffsets:
   - position: {x: 0.195, y: 0.3, z: 0.35}

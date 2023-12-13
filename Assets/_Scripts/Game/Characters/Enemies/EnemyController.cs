@@ -65,11 +65,18 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         SetCDNormalAttack(EnemyConfig.GetNormalAttackCD());
         SetCDSkillAttack(EnemyConfig.GetSkillAttackCD());
         SetCDSpecialAttack(EnemyConfig.GetSpecialAttackCD());
+
+        _player.OnDieEvent += HandlePlayerDie;
     }
     private void OnDisable()
     {
         DamageableData.Remove(gameObject);
     }
+    private void OnDestroy()
+    {
+        _player.OnDieEvent -= HandlePlayerDie;
+    }
+
     
     public void UpdateConfig()
     {
@@ -94,8 +101,14 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         _multiplier = EnemyConfig.GetLevelRatio();
         _newValue = Mathf.RoundToInt(_currentValue * _multiplier);
         EnemyConfig.SetLevel(_newValue);
-        
-        Health.InitValue(EnemyConfig.GetHP());
+
+        var _maxHP = EnemyConfig.GetHP();
+        Health.InitValue(_maxHP, _maxHP);
+    }
+    private void HandlePlayerDie()
+    {
+        SetChaseSensor(false);
+        SetAttackSensor(false);
     }
     
 
@@ -113,8 +126,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     public void SetTakeDMG(bool _value) => Blackboard.SetVariableValue("TakeDMG", _value);
     public void SetDie(bool _value) => Blackboard.SetVariableValue("Die", _value);
     #endregion
-
-
+    
     #region HandleDMG
     public void CauseDMG(GameObject _gameObject, AttackType _attackType)
     {
@@ -124,7 +136,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         {
             AttackType.NormalAttack => PercentDMG_NA(),
             AttackType.ChargedAttack => PercentDMG_CA(),
-            AttackType.ElementalSkill => PercentDMG_EK(),
+            AttackType.ElementalSkill => PercentDMG_ES(),
             AttackType.ElementalBurst => PercentDMG_EB(),
             _ => 1
         };
@@ -173,11 +185,11 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     public void SetAttackCount(int _value) => _attackCount = _value;
     public float PercentDMG_NA() => enemyConfig.GetNormalAttackMultiplier()[_attackCount].GetMultiplier()[FindMultiplierLevelIndex()];
     public float PercentDMG_CA() => enemyConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
-    public float PercentDMG_EK() => enemyConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public float PercentDMG_ES() => enemyConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
     public float PercentDMG_EB() => enemyConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
     private int FindMultiplierLevelIndex()  //Tìm Index của %ATK cộng thêm dựa trên level hiện tại của enemy 
-    {   
-        var _level = _enemyLevel[^1];
+    {
+        var _level = _enemyLevel.Count - 1;
         for (var i = 0; i < _enemyLevel.Count; i++)
         {
             if (EnemyConfig.GetLevel() >= _enemyLevel[i]) continue;

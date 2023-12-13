@@ -108,7 +108,7 @@ public class ArlanEffects : MonoBehaviour, IAttack
     {
         arlanController.BuffSkill();
         var shieldTime = 15f;
-        shieldCooldownTime.StartCd(shieldTime);
+        shieldCooldownTime.StartCdEventEvent(shieldTime);
         yield return new WaitForSeconds(shieldTime);
         skill.Stop();
         skill.gameObject.SetActive(false);
@@ -136,6 +136,6 @@ public class ArlanEffects : MonoBehaviour, IAttack
     
     public void Detection_NA(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.NormalAttack);
     public void Detection_CA(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.ChargedAttack);
-    public void Detection_EK(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.ElementalSkill);
+    public void Detection_ES(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.ElementalSkill);
     public void Detection_EB(GameObject _gameObject) => arlanController.CauseDMG(_gameObject, AttackType.ElementalBurst);
 }

@@ -17,6 +17,7 @@ public class TimelineBOReaper : MonoBehaviour
     private bool _isTriggerPlayer; // có đang TriggerPlayer ?
     
     private PlayerController _player;
+    private PlayerHUD _playerHUD;
     private Coroutine _enableTimelineCoroutine;
     private DateTime _lastTime;
 
@@ -28,9 +29,7 @@ public class TimelineBOReaper : MonoBehaviour
     private void Start()
     {
         _player = GameManager.Instance.Player;
-        
-        var _loadTimeCussess = TimeManager.GetTime(behaviourID.ID, out var convertedTime);
-        _lastTime = _loadTimeCussess ? convertedTime : DateTime.Now;
+        _playerHUD = _player.GetComponentInChildren<PlayerHUD>();
     }
     private void OnDisable()
     {
@@ -64,6 +63,9 @@ public class TimelineBOReaper : MonoBehaviour
     }
     private IEnumerator EnableTimelineCoroutine()
     {
+        var _loadTimeCussess = TimeManager.GetTime(behaviourID.ID, out var convertedTime);
+        _lastTime = _loadTimeCussess ? convertedTime : DateTime.Now;
+        
         _canTrigger = DateTime.Now.Subtract(_lastTime).TotalSeconds > bossActivationTime;
         if(!_canTrigger) yield break;
         
@@ -76,7 +78,7 @@ public class TimelineBOReaper : MonoBehaviour
             DeActiveControlPlayer();
             playableDirector.Play();
             _canTrigger = false;
-            _lastTime = DateTime.Now;
+            TimeManager.SetTime(behaviourID.ID, DateTime.Now);
         }
         else
         {
@@ -88,24 +90,19 @@ public class TimelineBOReaper : MonoBehaviour
 
     public void ActiveControlPlayer() // gọi trên EventAnimationTimelineS
     {
-        if (!_player) 
-            return;
-        
-        _player.inputs.PlayerInput.Enable();
         GUI_Inputs.EnableInput();
+        
+        if (!_player) return;
+        _player.inputs.PlayerInput.Enable();
+        _playerHUD.OpenHUD();
     }
     public void DeActiveControlPlayer()
     {
-        if (!_player) 
-            return;
-        
-        _player.inputs.PlayerInput.Disable();
         GUI_Inputs.DisableInput();
+        
+        if (!_player) return;
+        _player.inputs.PlayerInput.Disable();
+        _playerHUD.CloseHUD();
     }
-
-
-    private void OnApplicationQuit()
-    {
-        TimeManager.SetTime(behaviourID.ID);
-    }
+    
 }

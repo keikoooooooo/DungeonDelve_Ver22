@@ -62,7 +62,7 @@ public class LynxEffects : MonoBehaviour, IAttack
         _poolArrowNormal.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_NA));
         _poolArrowChargedFully.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_CA));
         _poolArrowChargedNoFully.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_CA));
-        _poolArrowSkill.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_EK));
+        _poolArrowSkill.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_ES));
         _poolArrowBurst.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.AddListener(Detection_EB));
     }
     private void UnRegisterEvent()
@@ -70,7 +70,7 @@ public class LynxEffects : MonoBehaviour, IAttack
         _poolArrowNormal.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_NA));
         _poolArrowChargedFully.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_CA));
         _poolArrowChargedNoFully.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_CA));
-        _poolArrowSkill.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_EK));
+        _poolArrowSkill.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_ES));
         _poolArrowBurst.List.ForEach(arrow => arrow.detectionType.CollisionEnterEvent.RemoveListener(Detection_EB));
     }
     
@@ -158,6 +158,6 @@ public class LynxEffects : MonoBehaviour, IAttack
     
     public void Detection_NA(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.NormalAttack);
     public void Detection_CA(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.ChargedAttack);
-    public void Detection_EK(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.ElementalSkill);
+    public void Detection_ES(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.ElementalSkill);
     public void Detection_EB(GameObject _gameObject) => lynxController.CauseDMG(_gameObject, AttackType.ElementalBurst);
 }

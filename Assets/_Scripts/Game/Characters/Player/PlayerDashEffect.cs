@@ -17,17 +17,17 @@ public class PlayerDashEffect : MonoBehaviour
     {
         player = GetComponentInParent<PlayerController>();
         if(player)
-            player.E_Dash += OnEnableDashVisual;
+            player.OnDashEvent += OnEnableDashEventVisual;
         dashPartical.gameObject.SetActive(false);
     }
     private void OnDestroy()
     {
         if(player)
-            player.E_Dash -= OnEnableDashVisual;
+            player.OnDashEvent -= OnEnableDashEventVisual;
     }
 
 
-    public void OnEnableDashVisual()
+    public void OnEnableDashEventVisual()
     {
         dashPartical.gameObject.SetActive(true);
         dashPartical.Play();

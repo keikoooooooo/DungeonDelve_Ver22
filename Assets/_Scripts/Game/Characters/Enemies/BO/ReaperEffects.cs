@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -5,6 +6,7 @@ public class ReaperEffects : MonoBehaviour, IAttack
 {
     [SerializeField] private EnemyController enemyController;
     [SerializeField] private PhysicsDetection NA_Detection;
+    [SerializeField] private PhysicsDetection ES_Detection;
     
     [Tooltip("Effect Ping NormalAttack"), SerializeField] 
     private GameObject indicatorNormalAttack;
@@ -24,8 +26,9 @@ public class ReaperEffects : MonoBehaviour, IAttack
     [SerializeField] private Reference hitPrefab;
     [SerializeField] private PhysicsDetection specialPrefab;
 
-    [Header("Visual Effect")]
-    [SerializeField] private  ParticleSystem skillEffect;
+    [Header("Visual Effect")] 
+    [SerializeField] private ParticleSystem shieldEffect;
+    [SerializeField] private ParticleSystem skillEffect;
     
     private ObjectPooler<Reference> _poolIndicator;
     private ObjectPooler<Reference> _poolSlash;
@@ -35,6 +38,7 @@ public class ReaperEffects : MonoBehaviour, IAttack
     private Transform _slotVFX;
     private Vector3 _posEffect;
     private Quaternion _rotEffect;
+    private Coroutine _skillCoroutine;
     
     private void Start()
     {
@@ -92,12 +96,38 @@ public class ReaperEffects : MonoBehaviour, IAttack
     public void GetSpecialEffect(Vector3 _position) => _poolSpecial.Get(_position);
     
     public void CheckNACollision() => NA_Detection.CheckCollision(); // gọi trên event Animation
-    public void EffectHit(Vector3 _pos) => _poolHit.Get(_pos + new Vector3(Random.Range(-.1f, .1f), Random.Range(.5f, 1f), 0));
+    public void CheckESCollision() => ES_Detection.CheckCollision();
     
+    public void EffectHit(Vector3 _pos) => _poolHit.Get(_pos + new Vector3(Random.Range(-.1f, .1f), Random.Range(.5f, 1f), 0));
+    public void EffectSkill(Vector3 _pos)
+    {
+        if(_skillCoroutine != null) StopCoroutine(_skillCoroutine);
+        _skillCoroutine = StartCoroutine(SkillCoroutine(_pos));
+    }
+    private IEnumerator SkillCoroutine(Vector3 _pos)
+    {
+        shieldEffect.gameObject.SetActive(true);
+        shieldEffect.Play();
+        indicatorSkill.transform.position = _pos;
+        indicatorSkill.gameObject.SetActive(true);
+        
+        yield return new WaitForSeconds(2.5f);
+        indicatorSkill.gameObject.SetActive(false);
+        skillEffect.transform.position = _pos;
+        skillEffect.gameObject.SetActive(true);
+        skillEffect.Play();
+        
+        yield return new WaitForSeconds(.1f);
+        CheckESCollision();
+        
+        yield return new WaitForSeconds(1.2f);
+        skillEffect.Stop();
+        skillEffect.gameObject.SetActive(false);
+    }
 
     public void SetAttackCounter(int count) => enemyController.SetAttackCount(count); // Gọi trên animationEvent để set đòn đánh thứ (x)
     public void Detection_NA(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.NormalAttack);
     public void Detection_CA(GameObject _gameObject) { }
-    public void Detection_EK(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.ElementalSkill);
+    public void Detection_ES(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.ElementalSkill);
     public void Detection_EB(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.ElementalBurst);
 }

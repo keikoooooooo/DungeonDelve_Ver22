@@ -15,7 +15,7 @@ public interface IAttack
     /// <summary>
     /// Phát hiện va chạm của Elemental Skill
     /// </summary>  
-    public void Detection_EK(GameObject _gameObject);
+    public void Detection_ES(GameObject _gameObject);
 
     /// <summary>
     /// Phát hiện va chạm của Elemental Burst

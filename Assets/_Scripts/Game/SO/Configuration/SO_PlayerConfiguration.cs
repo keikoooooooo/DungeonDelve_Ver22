@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable, CreateAssetMenu(fileName = "Player Config", menuName = "Characters Configuration/Player/Player Config")]
 public class SO_PlayerConfiguration : SO_CharacterConfiguration
 {
+    
     [Tooltip("Sức bền tối đa"), SerializeField, JsonProperty] 
     private int MaxST = 100;
     
@@ -50,6 +51,7 @@ public class SO_PlayerConfiguration : SO_CharacterConfiguration
     
     
     // Func
+    
     public int GetST() => MaxST;
     public int SetST(int _value) => MaxST = _value;
     

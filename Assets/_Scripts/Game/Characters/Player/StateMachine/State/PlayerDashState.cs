@@ -17,7 +17,7 @@ public class PlayerDashState : PlayerBaseState
         _machine.animator.SetTrigger(_machine.IDDash);
         _machine.Stamina.Decreases(stCost);
         _machine.ReleaseAction();
-        _machine.OnDashEvent();
+        _machine.CallbackDashEvent();
         
         speedPushDash = .3f;
         direction = Vector3.zero;

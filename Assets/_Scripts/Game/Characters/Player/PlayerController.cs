@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 
 [Serializable]
 public struct EffectOffset
@@ -37,8 +35,8 @@ public abstract class PlayerController : PlayerStateMachine
     
     [Tooltip("Thêm lực đẩy vào character khi tấn công"), SerializeField] 
     private AttackCustom attackCustom;
-    public event Action<float> E_SkillCD; 
-    public event Action<float> E_SpecialCD;
+    public event Action<float> OnElementalSkillCDEvent; 
+    public event Action<float> OnElementalBurstCDEvent;
 
     protected bool IsNormalAttack => inputs.LeftMouse;
     protected bool IsElementalSkill => inputs.E && _skillCD_Temp <= 0;
@@ -136,7 +134,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanRotation = false;
         _skillCD_Temp = PlayerConfig.GetElementalSkillCD();
         
-        PercentDMG_EK();
+        PercentDMG_ES();
         OnSkillCooldownEvent();
     }
     protected virtual void ElementalBurst()
@@ -152,8 +150,8 @@ public abstract class PlayerController : PlayerStateMachine
         PercentDMG_EB();
         OnSpecialCooldownEvent();
     }
-    protected void OnSkillCooldownEvent () => E_SkillCD?.Invoke(PlayerConfig.GetElementalSkillCD());
-    protected void OnSpecialCooldownEvent () => E_SpecialCD?.Invoke(PlayerConfig.GetElementalBurstCD());
+    protected void OnSkillCooldownEvent () => OnElementalSkillCDEvent?.Invoke(PlayerConfig.GetElementalSkillCD());
+    protected void OnSpecialCooldownEvent () => OnElementalBurstCDEvent?.Invoke(PlayerConfig.GetElementalBurstCD());
     
 
     public void SetAttackCounter(int count) => _attackCounter = count; // gọi trên event animaiton
@@ -185,6 +183,8 @@ public abstract class PlayerController : PlayerStateMachine
     private IEnumerator RotateToTargetCoroutine()
     {
         var target = EnemyTracker.FindClosestEnemy(transform);
+        if(target == Vector3.zero) yield break;
+        
         var direction = Quaternion.LookRotation(target - transform.position);
         var directionLocal = Mathf.Floor(transform.eulerAngles.y);
         var directionTaget = Mathf.Floor(direction.eulerAngles.y);

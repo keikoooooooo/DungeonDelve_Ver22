@@ -16,10 +16,10 @@ public class StatusHandle
    public int CurrentValue { get; private set; }
 
 
-   public void InitValue(int maxValue)
+   public void InitValue(int _currentValue, int _maxValue)
    {
-      MaxValue = maxValue;
-      CurrentValue = maxValue;
+      MaxValue = _maxValue;
+      CurrentValue = _currentValue;
       CallInitValueEvent();
    }
    public void Increases(int _amount)

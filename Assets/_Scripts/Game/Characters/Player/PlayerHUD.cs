@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour, IGUI
 {
+    [SerializeField] private Animator hudAnimator;
+    [Space]
     [SerializeField] private ProgressBar healthBar;
     [SerializeField] private ProgressBar staminaBar;
     [SerializeField] private CooldownTime skillCooldownTime;
@@ -22,23 +24,45 @@ public class PlayerHUD : MonoBehaviour, IGUI
     
     private void OnEnable()
     {
-        GUI_Manager.Add(this);
-        GUI_Bag.OnItemChangedSlotEvent += LoadSlot;
+        RegisterEvent();
     }
     private void OnDisable()
     {
+        UnRegisterEvent();
+    }
+
+
+    private void RegisterEvent()
+    {
+        GUI_Manager.Add(this);
+        GUI_Bag.OnItemChangedSlotEvent += LoadSlot;
+
+        if (MenuController.Instance)
+        {
+            MenuController.Instance.OnClickEscOpenMenuEvent.AddListener(CloseHUD);
+            MenuController.Instance.OnClickBOpenMenuEvent.AddListener(CloseHUD);
+            MenuController.Instance.OnCloseMenuEvent.AddListener(OpenHUD);
+        }
+    }
+    private void UnRegisterEvent()
+    {
         GUI_Manager.Remove(this);
         GUI_Bag.OnItemChangedSlotEvent -= LoadSlot;
+
+        if (MenuController.Instance)
+        {
+            MenuController.Instance.OnClickEscOpenMenuEvent.RemoveListener(CloseHUD);
+            MenuController.Instance.OnClickBOpenMenuEvent.RemoveListener(CloseHUD);
+            MenuController.Instance.OnCloseMenuEvent.RemoveListener(OpenHUD);
+        }
         
-        if(!_isEventRegistered) 
-            return;
+        if(!_isEventRegistered) return;
         _isEventRegistered = false;
-        player.E_SkillCD -= skillCooldownTime.StartCd;
-        player.E_SpecialCD -= specialCooldownTime.StartCd;
+        player.OnElementalSkillCDEvent -= skillCooldownTime.StartCdEventEvent;
+        player.OnElementalBurstCDEvent -= specialCooldownTime.StartCdEventEvent;
         player.Health.OnValueChangedEvent -= healthBar.ChangedValue;
         player.Stamina.OnValueChangedEvent -= staminaBar.ChangedValue;
     }
-
     
     public void GetRef(GameManager _gameManager)
     {
@@ -48,8 +72,8 @@ public class PlayerHUD : MonoBehaviour, IGUI
         if (!_isEventRegistered)
         {
             _isEventRegistered = true;
-            player.E_SkillCD += skillCooldownTime.StartCd;
-            player.E_SpecialCD += specialCooldownTime.StartCd;
+            player.OnElementalSkillCDEvent += skillCooldownTime.StartCdEventEvent;
+            player.OnElementalBurstCDEvent += specialCooldownTime.StartCdEventEvent;
             player.Health.OnValueChangedEvent += healthBar.ChangedValue;
             player.Stamina.OnValueChangedEvent += staminaBar.ChangedValue;
         }
@@ -92,5 +116,15 @@ public class PlayerHUD : MonoBehaviour, IGUI
             slots[i].SetSlot(_slots[i].GetItem);
         }
     }
-  
+
+
+    public void OpenHUD()
+    {
+        hudAnimator.Play("PlayerHUD_IN");
+    }
+    public void CloseHUD()
+    {
+        hudAnimator.Play("PlayerHUD_OUT");
+
+    }
 }

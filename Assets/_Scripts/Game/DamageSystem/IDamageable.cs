@@ -41,7 +41,7 @@ public interface IDamageable
     /// <summary>
     /// Phần trăm sát thương của Elemental Skill
     /// </summary>  
-    public float PercentDMG_EK();
+    public float PercentDMG_ES();
     
     
     /// <summary>

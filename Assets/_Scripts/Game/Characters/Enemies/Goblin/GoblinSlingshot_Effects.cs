@@ -53,6 +53,6 @@ public class GoblinSlingshot_Effects : MonoBehaviour, IAttack
     
     public void Detection_NA(GameObject _gameObject) => enemyController.CauseDMG(_gameObject, AttackType.NormalAttack);
     public void Detection_CA(GameObject _gameObject) { }
-    public void Detection_EK(GameObject _gameObject) { }
+    public void Detection_ES(GameObject _gameObject) { }
     public void Detection_EB(GameObject _gameObject) { }
 }

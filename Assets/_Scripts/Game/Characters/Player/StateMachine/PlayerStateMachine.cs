@@ -63,7 +63,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     #endregion
     
     // Events
-    public event Action E_Dash;
+    public event Action OnDashEvent;
+    public event Action OnTakeDMGEvent;
+    public event Action OnDieEvent;
+    
     
     // Player Config
     private PlayerStateFactory _state;
@@ -147,11 +150,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     {
         var _maxHP = PlayerConfig.GetHP();
         var _maxST = PlayerConfig.GetST();
-        Health.InitValue(_maxHP);
-        Stamina.InitValue(_maxST);
-
-        // _currentHP = PlayerPrefs.GetInt(PlayerConfig.NameCode.ToString(), _maxHP);
-        // Health.Decreases(_maxHP - _currentHP);
+        Health.InitValue(_maxHP, _maxHP);
+        Stamina.InitValue(_maxST, _maxST);
     }
     
 
@@ -251,7 +251,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         {
             AttackType.NormalAttack => CalculationDMG(PercentDMG_NA()),
             AttackType.ChargedAttack => CalculationDMG(PercentDMG_CA()),
-            AttackType.ElementalSkill => CalculationDMG(PercentDMG_EK()),
+            AttackType.ElementalSkill => CalculationDMG(PercentDMG_ES()),
             AttackType.ElementalBurst => CalculationDMG(PercentDMG_EB()),
             _ => 1
         };
@@ -287,16 +287,18 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         if (Health.CurrentValue <= 0)
         {
             CurrentState.SwitchState(_state.Dead());
+            CallbackDieEvent();
             return;
         }
         
         HandleDamage();
         CurrentState.SwitchState(_isCRIT ? _state.DamageFall() : _state.DamageStand());
+        CallbackTakeDMGEvent();
     }
 
     public virtual float PercentDMG_NA() => PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
     public virtual float PercentDMG_CA() => PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
-    public virtual float PercentDMG_EK() => PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
+    public virtual float PercentDMG_ES() => PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
     public virtual float PercentDMG_EB() => PlayerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
     public virtual int CalculationDMG(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
     
@@ -309,7 +311,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 
     
     #region Event Callback
-    public void OnDashEvent() => E_Dash?.Invoke();
+    public void CallbackDashEvent() => OnDashEvent?.Invoke();
+    private void CallbackTakeDMGEvent() => OnTakeDMGEvent?.Invoke();
+    private void CallbackDieEvent() => OnDieEvent?.Invoke();
     #endregion
     
 
@@ -323,9 +327,5 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     /// </summary>
     public abstract void ReleaseAction();
 
-    // private void OnApplicationQuit()
-    // {
-    //     PlayerPrefs.SetInt(PlayerConfig.NameCode.ToString(), Health.CurrentValue);
-    // }
 }
 
