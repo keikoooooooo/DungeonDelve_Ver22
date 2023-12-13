@@ -29,7 +29,7 @@ public class RewardManager : Singleton<RewardManager>
     
     // tạo hàng chờ phần thưởng của coin, và coin di chuyển tới vị trí player sẽ tự động nhận thưởng
     private readonly Queue<RewardSetup.ItemReward> _coinRewardData = new();
-
+    
     
     private void OnEnable()
     {

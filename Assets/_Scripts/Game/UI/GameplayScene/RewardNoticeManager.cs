@@ -11,13 +11,14 @@ public class RewardNoticeManager : Singleton<RewardNoticeManager>
     [SerializeField, BoxGroup("Notice type 1")] private TextMeshProUGUI titleText;
     [SerializeField, BoxGroup("Notice type 1")] private TextBar_3 textBar1Prefab;
     [SerializeField, BoxGroup("Notice type 1")] private Transform content1;
-
+    //
     [SerializeField, BoxGroup("Notice type 2")] private TextBar_3 textBar2Prefab;
     [SerializeField, BoxGroup("Notice type 2")] private Transform content2;
-
+    //
+    [SerializeField, BoxGroup("Notice type 3")] private GameObject panelOpenChest;
+    
     private static ObjectPooler<TextBar_3> _pooltextBar1;
     private static ObjectPooler<TextBar_3> _pooltextBar2;
-    
     private Tween _titleTween;
     private readonly float _tweenDuration = .2f;
     private Coroutine _disableNoticeCoroutine;
@@ -31,7 +32,9 @@ public class RewardNoticeManager : Singleton<RewardNoticeManager>
         titleText.color = new Color(1, 1, 1, 0);
     }
 
+    
 
+    #region Notice Type 1
     /// <summary>
     /// Tạo 1 text thông báo với giá trị value item nhận được và icon hiển thị tương ứng item đó
     /// Thông báo này sẽ xuất hiện khi đã thu thập vật phẩm
@@ -44,6 +47,31 @@ public class RewardNoticeManager : Singleton<RewardNoticeManager>
         textBar.SetTextBar(_value, _spriteIcon);
     }
     
+    /// <summary>
+    /// Bật tiêu đề trên bản thông báo khi nhận vật phẩm
+    /// </summary>
+    public void EnableTitleNoticeT1()
+    {
+        _titleTween?.Kill();
+        _titleTween = titleText.DOColor(new Color(1, 1, 1, 1), _tweenDuration);
+        if(_disableNoticeCoroutine != null) 
+            StopCoroutine(_disableNoticeCoroutine);
+        _disableNoticeCoroutine = StartCoroutine(DisableNoticeCoroutine());
+    }
+    private IEnumerator DisableNoticeCoroutine()
+    {
+        yield return _yieldInstruction;
+        _titleTween?.Kill();
+        _titleTween = titleText.DOColor(new Color(1, 1, 1, 0), _tweenDuration);
+        
+        // Khi tiêu đề được tắt sẽ bắt đầu save dữ liệu mới vào dữ liệu của User
+        if(PlayFabHandleUserData.Instance)
+            PlayFabHandleUserData.Instance.SaveData();
+    }
+    #endregion
+
+    
+    #region  Notice Type 2
     /// <summary>
     /// Tạo 1 text thông báo với giá trị value item nhận được và icon hiển thị tương ứng item đó
     /// Thông báo này sẽ xuất hiện để thu thập vật phẩm khi player đứng gần 1 item
@@ -102,28 +130,15 @@ public class RewardNoticeManager : Singleton<RewardNoticeManager>
     /// Giải phóng tất cả text thông báo nhận Item về Pool
     /// </summary>
     public static void ReleaseAllNoticeT2() => _pooltextBar2.List.ForEach(t => t.Release());
+    #endregion
+
+
+    #region Notice Type 3
+    public void OpenChestOpenNotice() => panelOpenChest.SetActive(true);
+    public void CloseChestOpenNotice() => panelOpenChest.SetActive(false);
+    #endregion
+
     
     
-    /// <summary>
-    /// Bật tiêu đề trên bản thông báo khi nhận vật phẩm
-    /// </summary>
-    public void EnableTitleNoticeT1()
-    {
-        _titleTween?.Kill();
-        _titleTween = titleText.DOColor(new Color(1, 1, 1, 1), _tweenDuration);
-        if(_disableNoticeCoroutine != null) 
-            StopCoroutine(_disableNoticeCoroutine);
-        _disableNoticeCoroutine = StartCoroutine(DisableNoticeCoroutine());
-    }
-    private IEnumerator DisableNoticeCoroutine()
-    {
-        yield return _yieldInstruction;
-        _titleTween?.Kill();
-        _titleTween = titleText.DOColor(new Color(1, 1, 1, 0), _tweenDuration);
-        
-        // Khi tiêu đề được tắt sẽ bắt đầu save dữ liệu mới vào dữ liệu của User
-        if(PlayFabHandleUserData.Instance)
-            PlayFabHandleUserData.Instance.SaveData();
-    }
     
 }

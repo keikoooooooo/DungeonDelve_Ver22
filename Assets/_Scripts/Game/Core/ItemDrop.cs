@@ -7,9 +7,9 @@ public class ItemDrop : MonoBehaviour, IPooled<ItemDrop>
 {
     [SerializeField] private SpriteRenderer spriteRender;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private float _jumpForce = 10f;
     
     private RewardSetup.ItemReward _itemReward;
-    private readonly float _jumpForce = 2.5f;
     private Coroutine _timeActiveCoroutine;
     
     private void OnEnable()

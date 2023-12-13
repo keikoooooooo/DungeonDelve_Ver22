@@ -49,9 +49,9 @@ public class GameManager : Singleton<GameManager>
             _playerPrefab = GetPlayerPrefab(_playerConfig.NameCode);
         }
         
-        //Player = Instantiate(_playerPrefab, new Vector3(-43.2999992f,11.6000004f,118.199997f), Quaternion.identity);
-        // Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
-        Player = Instantiate(_playerPrefab, new Vector3(14.3000002f,-30.8999996f,194.300003f), Quaternion.identity);
+        Player = Instantiate(_playerPrefab, new Vector3(-43.2999992f,11.6000004f,118.199997f), Quaternion.identity);
+        //Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
+        //Player = Instantiate(_playerPrefab, new Vector3(14.3000002f,-30.8999996f,194.300003f), Quaternion.identity);
         _playerConfig.ChapterIcon = _playerPrefab.PlayerConfig.ChapterIcon;
         Player.PlayerData.SetData(_playerConfig);
         Player.InitStatus();

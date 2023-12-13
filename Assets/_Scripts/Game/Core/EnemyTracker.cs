@@ -20,6 +20,7 @@ public static class EnemyTracker
     
     private static Vector3 SortClosestEnemy(Transform _transfLocal)
     {
+        EnemiesTracker.RemoveAll(trans => trans == null);
         if (!DetectEnemy) return _transfLocal.position;
         EnemiesTracker.Sort((a, b)
             => Vector3.Distance(a.transform.position, _transfLocal.position).CompareTo(Vector3.Distance(b.transform.position, _transfLocal.position)));
