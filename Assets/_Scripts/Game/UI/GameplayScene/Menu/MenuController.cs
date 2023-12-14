@@ -28,7 +28,7 @@ public class MenuController : Singleton<MenuController>
     private void Start()
     {
         _isOpenMenu = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        CursorHandle.Locked();
     }
     private void OnDisable()
     {
@@ -92,20 +92,18 @@ public class MenuController : Singleton<MenuController>
     {
         GUI_Manager.UpdateGUIData();
         menuPanel.SetActive(true);
-        _player.cinemachineFreeLook.enabled = false;
         _player.PlayerData.PlayerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
-        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
+        CursorHandle.NoneLocked();
     }
     public void CloseMenu()
     {
         Time.timeScale = 1;
         OnCloseMenuEvent?.Invoke();
         menuPanel.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        _player.cinemachineFreeLook.enabled = true;
         _player.PlayerData.PlayerRenderTexture.CloseRenderUI();
         _isOpenMenu = false;
+        CursorHandle.Locked();
     }
     
 
@@ -115,9 +113,4 @@ public class MenuController : Singleton<MenuController>
         PlayFabController.Instance.ClearAccountTemp();
         LoadSceneManager.Instance.LoadScene(_sceneName);
     }
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        Cursor.lockState = hasFocus && !_isOpenMenu ? CursorLockMode.Locked : CursorLockMode.None;
-    }
-    
 }

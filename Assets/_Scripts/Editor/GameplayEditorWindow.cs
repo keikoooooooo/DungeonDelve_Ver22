@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -583,10 +584,11 @@ public class GameplayEditorWindow : EditorWindow
 
     #region GAMECUSTOM
     private int _selectedPanelGameCustomType = -1;
-    private readonly string[] _gameCustomtype = { "ITEM DATA" , "CHARACTER DATA"};
+    private readonly string[] _gameCustomtype = { "ITEM DATA" , "CHARACTER DATA", "QUESTS"};
     
     private SO_GameItemData _soGameItemData;
     private SO_CharacterData _soCharacterData;
+    private QuestSetup[] _questSetupsList;
     
     private void HandlePanelGameCustom()
     {
@@ -601,6 +603,9 @@ public class GameplayEditorWindow : EditorWindow
             case 1:
                 _soCharacterData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Character Data.asset") as SO_CharacterData;
                 ShowCharacterData(_soCharacterData);
+                break;
+            case 2:
+                CustomQuest();
                 break;
         }
     }
@@ -722,6 +727,104 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
         
         if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_characterData);
+    }
+    private void CustomQuest()
+    {
+        _questSetupsList = Resources.LoadAll<QuestSetup>("Quest Custom");
+        
+        var _count = 0;
+        if (_questSetupsList != null && _questSetupsList.Any())
+        {
+            Space(25);
+            GUILayout.Label( "CUSTOM QUESTS", BoxColorText(Color.red), Width(150));
+            Space(5);
+
+            scrollView = GUILayout.BeginScrollView(scrollView);
+            foreach (var questSetup in _questSetupsList)
+            {
+                GUILayout.BeginVertical(GUI.skin.box);
+                EditorGUI.BeginChangeCheck();
+                questSetup.SetIndex(_count);
+                EditorGUILayout.LabelField($"Quest Index:   {questSetup.GetIndex()}", Width(500));
+                questSetup.SetTitle(EditorGUILayout.TextField("Title", questSetup.GetTitle(), Width(1000)));
+                questSetup.SetDescription(EditorGUILayout.TextField("Description", questSetup.GetDescription(), Width(1000)));
+
+                #region Reward Field
+                Space(15);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label( "Rewards Setup", LabelColorText(Color.yellow), Width(150));
+                GUILayout.Label( "Name Code", BoxColorText(Color.cyan), Width(150));
+                GUILayout.Label( "Value", BoxColorText(Color.cyan), Width(150));
+                GUILayout.Label( "Is Random", BoxColorText(Color.cyan), Width(150));
+                GUILayout.Label( "Value Random", BoxColorText(Color.cyan), Width(150));
+                GUILayout.EndVertical();
+                var _currentReward = questSetup.GetReward();
+                foreach (var itemReward in _currentReward)
+                {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label( "", Width(150));
+                    itemReward.SetNameCode((ItemNameCode)EditorGUILayout.EnumPopup("", itemReward.GetNameCode(), Width(150)));
+                    itemReward.SetValue(EditorGUILayout.IntField("", itemReward.GetValue(), Width(150)));
+                    itemReward.SetIsRandom(EditorGUILayout.Toggle("", itemReward.GetIsRandom(), Width(150)));
+                    if(itemReward.GetIsRandom())
+                    {
+                        itemReward.SetValueRandom(EditorGUILayout.Vector2Field("", itemReward.GetValueRandom(), Width(150)));
+                    }
+                    else
+                    {
+                        GUILayout.Label( "NONE",  Width(150));
+                    }
+                    GUILayout.EndHorizontal();
+                }
+
+                #region Button Add/Remove
+                Space(15);
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Add Reward", Width(120), Height(25)))
+                {
+                    _currentReward.Add(new ItemReward());
+                }
+                if (GUILayout.Button("Remove Reward", Width(120), Height(25)))
+                {
+                    if (_currentReward.Any())
+                    {
+                        _currentReward.Remove(_currentReward[^1]);
+                    }
+                }
+                GUILayout.EndHorizontal();
+                #endregion
+                #endregion
+
+                if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(questSetup);
+                GUILayout.EndVertical();
+                _count++;
+            }
+            GUILayout.EndScrollView();
+        }
+        else
+        {
+            EditorGUILayout.HelpBox("Assign a object.", MessageType.Info);
+        }
+        
+        #region Create/Remove Quest
+        if (GUILayout.Button("Add New Quest", Width(120), Height(35)))
+        {
+            var _path = $"Assets/Resources/Quest Custom/Quest_{_count + 1}.asset";
+            var _newQuest = CreateInstance<QuestSetup>();
+            _newQuest.SetReward(new List<ItemReward>());
+            AssetDatabase.CreateAsset(_newQuest, _path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+        if (GUILayout.Button("Remove Quest", Width(120), Height(35)))
+        {
+            var _path = $"Assets/Resources/Quest Custom/Quest_{_count}.asset";
+            var _instanceDel = AssetDatabase.LoadAssetAtPath<QuestSetup>(_path);
+            if (_instanceDel == null) return;
+            AssetDatabase.DeleteAsset(_path);
+            AssetDatabase.Refresh();
+        }
+        #endregion
     }
     #endregion
 

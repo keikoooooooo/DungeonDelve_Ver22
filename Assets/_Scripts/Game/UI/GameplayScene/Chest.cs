@@ -20,7 +20,7 @@ public class Chest : MonoBehaviour
     private Coroutine _activeCoroutine;
     private Coroutine _openCoroutine;
     private Coroutine _closeCoroutine;
-    private RewardNoticeManager _rewardNotice;
+    private NoticeManager _notice;
     
     private bool _detectPlayer; // Có trigger với Player ?
     private bool _canReceived;  // Có thể nhận thưởng ?
@@ -33,7 +33,7 @@ public class Chest : MonoBehaviour
     {
         chestCollider.enabled = false;
         chestVFX.gameObject.SetActive(false);
-        _rewardNotice = RewardNoticeManager.Instance;
+        _notice = NoticeManager.Instance;
         SetDissolve(0, 1, 0);
     }
     private void OnDisable()
@@ -52,7 +52,7 @@ public class Chest : MonoBehaviour
         _canReceived = false;
         OpenChest();
         CloseChest();
-        _rewardNotice.CloseChestOpenNotice();
+        _notice.CloseNoticeT3();
     }
     
     
@@ -138,9 +138,9 @@ public class Chest : MonoBehaviour
     {
         _detectPlayer = true;
         if(!_canReceived) 
-            _rewardNotice.CloseChestOpenNotice();
+            _notice.CloseNoticeT3();
         else 
-            _rewardNotice.OpenChestOpenNotice();
+            _notice.CreateNoticeT3("[F] Open Chest.");
     }
     
     /// <summary>
@@ -149,7 +149,7 @@ public class Chest : MonoBehaviour
     public void OnExitPlayerCollision() 
     {
         _detectPlayer = false;
-        _rewardNotice.CloseChestOpenNotice();
+        _notice.CloseNoticeT3();
     }
 
     /// <summary>

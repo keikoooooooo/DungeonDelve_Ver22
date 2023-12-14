@@ -12,6 +12,7 @@ public class TextBar_3 : MonoBehaviour, IPooled<TextBar_3>
     [Space]
     public UnityEvent OnActiveTextBarEvent;
     
+    
     /// <summary>
     /// Cập nhật thông tin cho textBar
     /// </summary>
@@ -23,11 +24,8 @@ public class TextBar_3 : MonoBehaviour, IPooled<TextBar_3>
         iconTextBar.sprite = _spriteIcon;
         iconTextBar.SetNativeSize();
 
-        CallActiveTextBarEvent();
+        OnActiveTextBarEvent?.Invoke();
     }
-    
-    public void CallActiveTextBarEvent() => OnActiveTextBarEvent?.Invoke();
-    
     
     public void Release() => ReleaseCallback?.Invoke(this);
     public Action<TextBar_3> ReleaseCallback { get; set; }
