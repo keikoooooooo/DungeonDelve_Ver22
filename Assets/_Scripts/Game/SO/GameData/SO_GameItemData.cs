@@ -51,9 +51,14 @@ public enum ItemNameCode
     UPSpearhead2,
     UPSpearhead3,
     UPForgedBow,
-    UPForgedSword
+    UPForgedSword,
+    
+    // Quests (QE)
+    QEGoblinTeeth = 400,
+    
+    
+    
 }
-
 
 /// <summary>
 /// Độ hiếm của Item

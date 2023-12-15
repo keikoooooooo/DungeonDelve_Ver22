@@ -2057,7 +2057,7 @@ RectTransform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 2742567900410903618}
+  m_Father: {fileID: 677399979733902511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5055,11 +5055,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1334870958840609883, guid: 035c038ae55fad34fa739a5972c7f5ce, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 4462925772824896694, guid: 035c038ae55fad34fa739a5972c7f5ce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1321662430926795431}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 035c038ae55fad34fa739a5972c7f5ce, type: 3}
+--- !u!224 &677399979733902511 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4462925772824896694, guid: 035c038ae55fad34fa739a5972c7f5ce, type: 3}
+  m_PrefabInstance: {fileID: 3785808651408408601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2742567900410903618 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1334870958840609883, guid: 035c038ae55fad34fa739a5972c7f5ce, type: 3}
@@ -5418,15 +5423,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.116563864
+      value: 0.11656389
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.05723008
+      value: -0.057230107
       objectReference: {fileID: 0}
     - target: {fileID: 8625300912696124755, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0067280796
+      value: 0.006728084
       objectReference: {fileID: 0}
     - target: {fileID: 8956583454589446629, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_RootOrder

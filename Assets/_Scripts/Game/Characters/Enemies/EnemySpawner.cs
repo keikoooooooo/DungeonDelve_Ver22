@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         
-        _lastTime = TimeManager.GetTime(behaviourID.ID, out var dateTime) ? dateTime : DateTime.MinValue;
+        _lastTime = DateTime.Parse(PlayerPrefs.GetString(behaviourID.ID, DateTime.MinValue.ToString()));
         var _totalSeconds = DateTime.Now.Subtract(_lastTime).TotalSeconds;
         if (_totalSeconds < waitSpawn)
         {

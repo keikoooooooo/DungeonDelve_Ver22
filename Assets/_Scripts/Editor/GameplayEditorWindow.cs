@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -593,7 +594,7 @@ public class GameplayEditorWindow : EditorWindow
     private void HandlePanelGameCustom()
     {
         Space(15);
-        _selectedPanelGameCustomType = GUILayout.Toolbar(_selectedPanelGameCustomType, _gameCustomtype, Width(250), Height(35));
+        _selectedPanelGameCustomType = GUILayout.Toolbar(_selectedPanelGameCustomType, _gameCustomtype, Width(350), Height(35));
         switch (_selectedPanelGameCustomType)
         {
             case 0:
@@ -745,18 +746,37 @@ public class GameplayEditorWindow : EditorWindow
                 GUILayout.BeginVertical(GUI.skin.box);
                 EditorGUI.BeginChangeCheck();
                 questSetup.SetIndex(_count);
-                EditorGUILayout.LabelField($"Quest Index:   {questSetup.GetIndex()}", Width(500));
+                
+                GUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField($"Quest Index:", Width(75));
+                EditorGUILayout.LabelField($"{questSetup.GetIndex()}", LabelColorText(Color.red), Width(500));
+                GUILayout.EndHorizontal();
+                
                 questSetup.SetTitle(EditorGUILayout.TextField("Title", questSetup.GetTitle(), Width(1000)));
                 questSetup.SetDescription(EditorGUILayout.TextField("Description", questSetup.GetDescription(), Width(1000)));
 
-                #region Reward Field
+                #region Quest Requirement
                 Space(15);
                 GUILayout.BeginHorizontal();
+                GUILayout.Label( "Quest Requirement", LabelColorText(Color.yellow), Width(150));
+                GUILayout.Label( "Item Needed", BoxColorText(Color.cyan), Width(150));
+                GUILayout.Label( "Item Value", BoxColorText(Color.cyan), Width(150));
+                GUILayout.EndVertical();
+                
+                GUILayout.BeginHorizontal();
+                GUILayout.Label( "", Width(150));
+                var _task = questSetup.GetTask();
+                _task.SetNameCode((ItemNameCode)EditorGUILayout.EnumPopup("", _task.GetNameCode(), Width(150)));
+                _task.SetValue(EditorGUILayout.IntField("", _task.GetValue(), Width(150)));
+                GUILayout.EndHorizontal();
+                #endregion
+                
+                #region Reward Field
+                Space(20);
+                GUILayout.BeginHorizontal();
                 GUILayout.Label( "Rewards Setup", LabelColorText(Color.yellow), Width(150));
-                GUILayout.Label( "Name Code", BoxColorText(Color.cyan), Width(150));
-                GUILayout.Label( "Value", BoxColorText(Color.cyan), Width(150));
-                GUILayout.Label( "Is Random", BoxColorText(Color.cyan), Width(150));
-                GUILayout.Label( "Value Random", BoxColorText(Color.cyan), Width(150));
+                GUILayout.Label( "Item Reward", BoxColorText(Color.cyan), Width(150));
+                GUILayout.Label( "Item Value", BoxColorText(Color.cyan), Width(150));
                 GUILayout.EndVertical();
                 var _currentReward = questSetup.GetReward();
                 foreach (var itemReward in _currentReward)
@@ -765,21 +785,11 @@ public class GameplayEditorWindow : EditorWindow
                     GUILayout.Label( "", Width(150));
                     itemReward.SetNameCode((ItemNameCode)EditorGUILayout.EnumPopup("", itemReward.GetNameCode(), Width(150)));
                     itemReward.SetValue(EditorGUILayout.IntField("", itemReward.GetValue(), Width(150)));
-                    itemReward.SetIsRandom(EditorGUILayout.Toggle("", itemReward.GetIsRandom(), Width(150)));
-                    if(itemReward.GetIsRandom())
-                    {
-                        itemReward.SetValueRandom(EditorGUILayout.Vector2Field("", itemReward.GetValueRandom(), Width(150)));
-                    }
-                    else
-                    {
-                        GUILayout.Label( "NONE",  Width(150));
-                    }
                     GUILayout.EndHorizontal();
                 }
 
                 #region Button Add/Remove
                 Space(15);
-                GUILayout.BeginHorizontal();
                 if (GUILayout.Button("Add Reward", Width(120), Height(25)))
                 {
                     _currentReward.Add(new ItemReward());
@@ -791,15 +801,16 @@ public class GameplayEditorWindow : EditorWindow
                         _currentReward.Remove(_currentReward[^1]);
                     }
                 }
-                GUILayout.EndHorizontal();
                 #endregion
                 #endregion
 
                 if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(questSetup);
                 GUILayout.EndVertical();
+                EditorGUI.DrawRect(GUILayoutUtility.GetRect(1, 1), Color.gray);
                 _count++;
             }
             GUILayout.EndScrollView();
+            Space(20);
         }
         else
         {
@@ -807,7 +818,9 @@ public class GameplayEditorWindow : EditorWindow
         }
         
         #region Create/Remove Quest
-        if (GUILayout.Button("Add New Quest", Width(120), Height(35)))
+        Space(20);
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(1, 2), Color.white);
+        if (GUILayout.Button("New Quest", Width(120), Height(40)))
         {
             var _path = $"Assets/Resources/Quest Custom/Quest_{_count + 1}.asset";
             var _newQuest = CreateInstance<QuestSetup>();

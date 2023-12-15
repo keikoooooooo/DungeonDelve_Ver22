@@ -9,10 +9,10 @@ public class SwitchPanelControl : MonoBehaviour
     public List<Animator> Animators;
     public List<GameObject> Panels;
     
-    private static readonly int NameHashID_Selected = Animator.StringToHash("Selected");
-    private static readonly int NameHashID_DeSelected = Animator.StringToHash("DeSelected");
-    private static readonly int NameHashID_Trigger = Animator.StringToHash("Trigger");
-    private static readonly int NameHashID_NonTrigger = Animator.StringToHash("NonTrigger");
+    public static readonly int NameHashID_Selected = Animator.StringToHash("Selected");
+    public static readonly int NameHashID_DeSelected = Animator.StringToHash("DeSelected");
+    public static readonly int NameHashID_Trigger = Animator.StringToHash("Trigger");
+    public static readonly int NameHashID_NonTrigger = Animator.StringToHash("NonTrigger");
     
     
     public void SetActivePanel(GameObject _panelObject)
@@ -32,7 +32,6 @@ public class SwitchPanelControl : MonoBehaviour
                 animator.Play(NameHashID_NonTrigger);
         }
     }
-    
     public void DeSelectButton(Animator _animatorCheck)
     {
         foreach (var animator in Animators.Where(animator => animator == _animatorCheck && animator.IsTag("Selected")))
@@ -43,7 +42,8 @@ public class SwitchPanelControl : MonoBehaviour
     
     public void TriggerButton(Animator _animatorCheck)
     {
-        foreach (var animator in Animators.Where(animator => animator == _animatorCheck && !animator.IsTag("Selected")))
+        var _animatorsCheck = Animators.Where(animator => animator == _animatorCheck && !animator.IsTag("Selected"));
+        foreach (var animator in _animatorsCheck)
         {
             animator.Play(NameHashID_Trigger);
         }
@@ -51,7 +51,8 @@ public class SwitchPanelControl : MonoBehaviour
     
     public void NonTriggerButton(Animator _animatorCheck)
     {
-        foreach (var animator in Animators.Where(animator => animator == _animatorCheck && !animator.IsTag("Selected")))
+        var _animatorsCheck = Animators.Where(animator => animator == _animatorCheck && !animator.IsTag("Selected"));
+        foreach (var animator in _animatorsCheck)
         {
             animator.Play(NameHashID_NonTrigger);
         }

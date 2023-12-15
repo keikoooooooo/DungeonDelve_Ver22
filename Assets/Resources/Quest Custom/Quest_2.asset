@@ -15,6 +15,10 @@ MonoBehaviour:
   indexQuest: 1
   titleQuest: Quest 002
   descriptionQuest: Quest 002 Des
+  taskRequirement:
+    type: 0
+    check: 0
+    progress: {x: 0, y: 0}
   rewardSetup:
   - code: 100
     value: 56

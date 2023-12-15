@@ -36,6 +36,8 @@ public class PlayerHUD : MonoBehaviour, IGUI
     {
         GUI_Manager.Add(this);
         GUI_Bag.OnItemChangedSlotEvent += LoadSlot;
+        QuestManager.OnPanelCloseEvent += OpenHUD;
+        QuestManager.OnPanelOpenEvent += CloseHUD;
 
         if (MenuController.Instance)
         {
@@ -43,11 +45,14 @@ public class PlayerHUD : MonoBehaviour, IGUI
             MenuController.Instance.OnClickBOpenMenuEvent.AddListener(CloseHUD);
             MenuController.Instance.OnCloseMenuEvent.AddListener(OpenHUD);
         }
+
     }
     private void UnRegisterEvent()
     {
         GUI_Manager.Remove(this);
         GUI_Bag.OnItemChangedSlotEvent -= LoadSlot;
+        QuestManager.OnPanelCloseEvent -= OpenHUD;
+        QuestManager.OnPanelOpenEvent -= CloseHUD;
 
         if (MenuController.Instance)
         {
@@ -63,6 +68,7 @@ public class PlayerHUD : MonoBehaviour, IGUI
         player.Health.OnValueChangedEvent -= healthBar.ChangedValue;
         player.Stamina.OnValueChangedEvent -= staminaBar.ChangedValue;
     }
+    
     
     public void GetRef(GameManager _gameManager)
     {
@@ -120,11 +126,10 @@ public class PlayerHUD : MonoBehaviour, IGUI
 
     public void OpenHUD()
     {
-        hudAnimator.Play("PlayerHUD_IN");
+        hudAnimator.Play("Panel_IN");
     }
     public void CloseHUD()
     {
-        hudAnimator.Play("PlayerHUD_OUT");
-
+        hudAnimator.Play("Panel_OUT");
     }
 }

@@ -235,3 +235,11 @@ MonoBehaviour:
     description: Coin is the main currency unit used to purchase various items and
       upgrades in game. It is also used in crafting, the upgrade of Artifacts, and
       leveling characters.
+  - code: 400
+    nameItem: Goblin's Teeth
+    sprite: {fileID: 21300000, guid: 3a621010e9c426446b8d89931a938158, type: 3}
+    ratity: 0
+    type: 2
+    description: 'Beware, for those who seek these teeth might find themselves facing
+      the wrath of goblin hordes protecting their most valuable treasures.  How to
+      obtain: May drop upon defeating Goblin.'

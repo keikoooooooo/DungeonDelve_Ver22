@@ -63,9 +63,7 @@ public class TimelineBOReaper : MonoBehaviour
     }
     private IEnumerator EnableTimelineCoroutine()
     {
-        var _loadTimeCussess = TimeManager.GetTime(behaviourID.ID, out var convertedTime);
-        _lastTime = _loadTimeCussess ? convertedTime : DateTime.Now;
-        
+        _lastTime = DateTime.Parse(PlayerPrefs.GetString(behaviourID.ID, DateTime.Now.ToString()));
         _canTrigger = DateTime.Now.Subtract(_lastTime).TotalSeconds > bossActivationTime;
         if(!_canTrigger) yield break;
         
@@ -78,7 +76,7 @@ public class TimelineBOReaper : MonoBehaviour
             DeActiveControlPlayer();
             playableDirector.Play();
             _canTrigger = false;
-            TimeManager.SetTime(behaviourID.ID, DateTime.Now);
+            PlayerPrefs.SetString(behaviourID.ID, DateTime.Now.ToString("O"));
         }
         else
         {

@@ -15,6 +15,9 @@ MonoBehaviour:
   indexQuest: 4
   titleQuest: Quest 005
   descriptionQuest: Quest 005 Des
+  collectionTask:
+    code: 0
+    value: 0
   rewardSetup:
   - code: 203
     value: 3
