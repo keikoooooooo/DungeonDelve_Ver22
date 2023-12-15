@@ -12,22 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08bfadb5671ffc4398ef97e24f08b95, type: 3}
   m_Name: Quest_1
   m_EditorClassIdentifier: 
-  indexQuest: 0
-  titleQuest: Quest 001
-  descriptionQuest: Quest 001 Des
-  collectionTask:
+  id: 9193ea77-9039-4c59-85bf-221912490d79
+  title: Quest 01
+  description: Collect 25 Goblin's Teeth.
+  task:
     code: 400
-    value: 10
-  rewardSetup:
+    value: 25
+  rewards:
+  - code: 20
+    value: 1122
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
   - code: 0
-    value: 12
+    value: 5
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 1
-    value: 23
+    value: 5
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  - code: 2
-    value: 43
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
+  isCompletedQuest: 0

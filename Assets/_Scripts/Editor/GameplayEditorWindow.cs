@@ -745,11 +745,15 @@ public class GameplayEditorWindow : EditorWindow
             {
                 GUILayout.BeginVertical(GUI.skin.box);
                 EditorGUI.BeginChangeCheck();
-                questSetup.SetIndex(_count);
                 
                 GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField($"Quest Index:", Width(75));
-                EditorGUILayout.LabelField($"{questSetup.GetIndex()}", LabelColorText(Color.red), Width(500));
+                if (string.IsNullOrEmpty(questSetup.GetIDQuest())) questSetup.SetIDQuest(Guid.NewGuid().ToString());
+                EditorGUILayout.LabelField($"Quest ID:", Width(75));
+                EditorGUILayout.LabelField($"{questSetup.GetIDQuest()}", LabelColorText(Color.red), Width(300));
+                if (GUILayout.Button("Reset ID", Width(80), Height(15)))
+                {
+                    questSetup.SetIDQuest(Guid.NewGuid().ToString());
+                }
                 GUILayout.EndHorizontal();
                 
                 questSetup.SetTitle(EditorGUILayout.TextField("Title", questSetup.GetTitle(), Width(1000)));

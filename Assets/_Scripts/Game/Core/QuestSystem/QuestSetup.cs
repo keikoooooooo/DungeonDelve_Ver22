@@ -5,10 +5,10 @@ using UnityEngine;
 [Serializable]
 public class CollectionTask
 {
-    [SerializeField, Tooltip("Loại nhiệm vụ")]
+    [SerializeField, Tooltip("Vật phẩm yêu cầu")]
     private ItemNameCode code;
 
-    [SerializeField, Tooltip("Nếu loại nhiệm vụ là Progress sẽ sử dụng giá trị này")] 
+    [SerializeField, Tooltip("Số lượng vật phẩm cần")] 
     private int value;
 
     public ItemNameCode GetNameCode() => code;
@@ -18,26 +18,38 @@ public class CollectionTask
 }
 
 
+[Serializable]
 [CreateAssetMenu(menuName = "Create Quest", fileName = "Quest_")]
 public class QuestSetup : ScriptableObject
 {
-    [SerializeField] private int indexQuest;
-    [SerializeField] private string titleQuest;
-    [SerializeField] private string descriptionQuest;
-    [SerializeField] private CollectionTask collectionTask;
-    [SerializeField] private List<ItemReward> rewardSetup;
+    [HideInInspector, SerializeField] 
+    private string id;
     
+    [SerializeField] private string title;
+    [SerializeField] private string description;
+    [SerializeField] private CollectionTask task;
+    [SerializeField] private List<ItemReward> rewards;
     
-    public int GetIndex() => indexQuest;
-    public string GetTitle() => titleQuest;
-    public string GetDescription() => descriptionQuest;
-    public CollectionTask GetTask() => collectionTask;
-    public List<ItemReward> GetReward() => rewardSetup;
-    
+    [HideInInspector, SerializeField]
+    private bool isCompletedQuest;
 
-    public void SetIndex(int _value) => indexQuest = _value;
-    public void SetTitle(string _value) => titleQuest = _value;
-    public void SetDescription(string _value) => descriptionQuest = _value;
-    public void SetTask(CollectionTask _value) => collectionTask = _value;
-    public void SetReward(List<ItemReward> _value) => rewardSetup = _value;
+    [HideInInspector, SerializeField]
+    private bool isLocked;
+    
+    //
+    public string GetIDQuest() => id;
+    public string GetTitle() => title;
+    public string GetDescription() => description;
+    public CollectionTask GetTask() => task;
+    public List<ItemReward> GetReward() => rewards;
+    public bool GetCompletedQuest() => isCompletedQuest;
+    public bool IsLocked() => isLocked;
+    //
+    public void SetIDQuest(string _value) => id = _value;
+    public void SetTitle(string _value) => title = _value;
+    public void SetDescription(string _value) => description = _value;
+    public void SetTask(CollectionTask _value) => task = _value;
+    public void SetReward(List<ItemReward> _value) => rewards = _value;
+    public void SetCompletedQuest(bool _value) => isCompletedQuest = _value;
+    public bool SetQuestState(bool _value) =>  isLocked = _value;
 }

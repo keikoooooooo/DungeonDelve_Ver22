@@ -12,19 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08bfadb5671ffc4398ef97e24f08b95, type: 3}
   m_Name: Quest_4
   m_EditorClassIdentifier: 
-  indexQuest: 3
-  titleQuest: Quest 004
-  descriptionQuest: Quest 004 Des
-  rewardSetup:
+  id: 3024ccb9-7841-4352-8e1f-21360a91438f
+  title: Quest 04
+  description: Collect 5 Platinum Core.
+  task:
+    code: 114
+    value: 5
+  rewards:
+  - code: 0
+    value: 5
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  - code: 1
+    value: 5
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
   - code: 10
     value: 6
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 11
-    value: 8
+    value: 4
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 12
-    value: 8
+    value: 2
     isRandom: 0
     valueRandom: {x: 0, y: 0}
+  - code: 20
+    value: 800
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  isCompletedQuest: 0

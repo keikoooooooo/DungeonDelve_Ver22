@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -13,6 +12,7 @@ public class GUI_Quest : Singleton<MonoBehaviour>
     [SerializeField] private TextMeshProUGUI titleQuest;
     [SerializeField] private TextMeshProUGUI descriptionQuest;
     [SerializeField] private TextMeshProUGUI questProgressText;
+    [SerializeField] private TextMeshProUGUI errorQuestText;
     [SerializeField] private Button cancelBtt;
     [SerializeField] private Button acceptBtt;
     [Space]
@@ -24,12 +24,12 @@ public class GUI_Quest : Singleton<MonoBehaviour>
     
     private static ObjectPooler<QuestBoxText> _poolQuestBoxText;
     private static ObjectPooler<UI_Item> _poolUIItem;
-   
     private SO_GameItemData _itemData;
     private QuestBoxText _questBox;
-
+    private bool _canPanelOpen;
     private int _currentReceivedQuest;
     private bool _isAccept;
+    
     
     private void Start()
     {
@@ -49,6 +49,7 @@ public class GUI_Quest : Singleton<MonoBehaviour>
         questPanel.gameObject.SetActive(false);
         titleQuest.text = "";
         descriptionQuest.text = "";
+        _canPanelOpen = true;
     }
     private void RegisterEvent()
     {
@@ -68,6 +69,9 @@ public class GUI_Quest : Singleton<MonoBehaviour>
     
     public void OpenPanel()
     {
+        if (!_canPanelOpen) return;
+        _canPanelOpen = false;
+        
         CursorHandle.NoneLocked();
         GUI_Inputs.InputAction.UI.OpenBag.Disable();
         GUI_Inputs.InputAction.UI.OpenMenu.Disable();
@@ -77,10 +81,11 @@ public class GUI_Quest : Singleton<MonoBehaviour>
         noticeQuestPanel.Play("Panel_Disable");
         
         ShowQuest();
-        SetQuestProgressText();
     }
     public void ClosePanel()
     {
+        _canPanelOpen = true;
+        
         QuestManager.ClosePanel();
         CursorHandle.Locked();
         GUI_Inputs.InputAction.UI.OpenBag.Enable();
@@ -89,6 +94,7 @@ public class GUI_Quest : Singleton<MonoBehaviour>
         
         questPanel.SetActive(false);
     }
+    
     private void ShowQuest()
     {
         titleQuest.text = "???";
@@ -102,14 +108,7 @@ public class GUI_Quest : Singleton<MonoBehaviour>
             var textBar = _poolQuestBoxText.Get();
             textBar.SetQuestBox(questSetup);
         }
-
-        var _questActive = _poolQuestBoxText.List.Where(x => x.gameObject.activeSelf);
-
-        for (var i = 0; i < QuestManager.maxQuest; i++)
-        {
-            
-        }
-        
+        SetQuestProgressText();
     }
 
     
@@ -117,7 +116,8 @@ public class GUI_Quest : Singleton<MonoBehaviour>
     {
         titleQuest.text = _questSetup.GetTitle();
         descriptionQuest.text = _questSetup.GetDescription();
-        
+        errorQuestText.text = _questSetup.IsLocked() ? "Can't handle this task today." : "You have completed this task.";
+            
         SpawnItemReward(_questSetup);
         SelectQuestBox(_questBox);
         SetButton(_questBox);
@@ -154,7 +154,7 @@ public class GUI_Quest : Singleton<MonoBehaviour>
             var _animator = questBoxTest.animator;
             if (_animator.IsTag("Selected"))
                 questBoxTest.animator.Play(SwitchPanelControl.NameHashID_NonTrigger);
-            else if (!_animator.IsTag("Selected") && _animator == this._questBox.animator)
+            else if (!_animator.IsTag("Selected") && _animator == _questBox.animator && !_questBox.IsLocked)
                 questBoxTest.animator.Play(SwitchPanelControl.NameHashID_Selected);
         }
         SetButton(_questBox);
@@ -164,12 +164,14 @@ public class GUI_Quest : Singleton<MonoBehaviour>
         var _currentList = _poolQuestBoxText.List.Where(box => box.gameObject.activeSelf).ToList()
             .Where(box => !box.animator.IsTag("Selected", 0) && !box.animator.IsTag("SelectedQuest", 0));
 
+        
         int _hashID;
         if (_hasTrigger)
         {
             foreach (var questBoxTest in _currentList)
             {
-                _hashID = questBoxTest == _questBox ? SwitchPanelControl.NameHashID_Trigger : SwitchPanelControl.NameHashID_NonTrigger;
+                _hashID = questBoxTest == _questBox && !_questBox.IsCompletedQuest && !_questBox.IsLocked ? 
+                    SwitchPanelControl.NameHashID_Trigger : SwitchPanelControl.NameHashID_NonTrigger;
                 questBoxTest.animator.Play(_hashID);
             }   
         }
@@ -184,16 +186,15 @@ public class GUI_Quest : Singleton<MonoBehaviour>
     }
     
     
-    
     private void OnClickNoticeCancelQuest()
     {
-        if (!_questBox || !_questBox.IsAcceptQuest) return;
+        if (!_questBox || !_questBox.IsReceivedQuest) return;
         _isAccept = false;
         OpenNoticeQuestPanel("Would you like to abandon this quest? When canceled, this quest will not be selectable for the remainder of today.\nContinue?");
     }
     private void OnClickNoticeAcceptQuest()
     {
-        if (!_questBox || _questBox.IsAcceptQuest || _currentReceivedQuest >= QuestManager.maxQuest) return;
+        if (!_questBox || _questBox.IsReceivedQuest || _currentReceivedQuest >= QuestManager.maxQuest) return;
         _isAccept = true;
         OpenNoticeQuestPanel("Would you like to accept this quest? \nContinue?");
     }
@@ -231,8 +232,8 @@ public class GUI_Quest : Singleton<MonoBehaviour>
     private void SetQuestProgressText() => questProgressText.text = $"In Progress: {_currentReceivedQuest}/{QuestManager.maxQuest}";
     private void SetButton(QuestBoxText _questBox)
     {
-        acceptBtt.interactable = !_questBox.IsAcceptQuest && _currentReceivedQuest < QuestManager.maxQuest;
-        cancelBtt.interactable = _questBox.IsAcceptQuest;
+        acceptBtt.interactable = !_questBox.IsLocked && !_questBox.IsReceivedQuest && _currentReceivedQuest < QuestManager.maxQuest;
+        cancelBtt.interactable = !_questBox.IsLocked && _questBox.IsReceivedQuest;
     }
 
 }

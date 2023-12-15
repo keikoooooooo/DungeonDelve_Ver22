@@ -55,7 +55,7 @@ public enum ItemNameCode
     
     // Quests (QE)
     QEGoblinTeeth = 400,
-    
+    QEForgottenBook,
     
     
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+
 public class QuestManager : MonoBehaviour
 {
     [SerializeField] private MonoBehaviourID behaviourID;
@@ -15,9 +17,48 @@ public class QuestManager : MonoBehaviour
     public static event Action<QuestSetup> OnQuestCompletedEvent; 
     public static event Action<QuestSetup> OnQuestCancelEvent; 
     public static List<QuestSetup> QuestLists { get; private set; }
-    public static List<QuestSetup> QuestSelect { get; private set; } = new();
+    public static List<QuestSetup> QuestSelected { get; private set; } = new();
     public static int maxQuest { get; private set; } = 3; // Số lượng tối đa quest được nhận. 
-
+    //
+    private readonly string _questFolderSave = "qs_";
+    
+    
+    [Serializable]
+    public class QuestSave
+    {
+        [SerializeField, Tooltip("ID nhiệm vụ")] 
+        private string id;
+        [SerializeField, Tooltip("Task đã hoàn thành chưa ?")] 
+        private bool isCompleted;
+        
+        [SerializeField, Tooltip("Task có đang bị khóa không ?")] 
+        private bool isLocked;
+        public QuestSave() { }
+        
+        /// <summary>
+        /// Tạo 1 Data để lưu trữ thông tin về Task/Quest đang nhận
+        /// </summary>
+        /// <param name="_id"> ID Quest </param>
+        /// <param name="_isCompletedQuest"> Task đã hoàn thành chưa ? </param>
+        public QuestSave(string _id, bool _isCompletedQuest, bool _isLocked)
+        {
+            id = _id;
+            isCompleted = _isCompletedQuest;
+            isLocked = _isLocked;
+        }
+        public string GetID => id;
+        
+        /// <summary>
+        /// Trạng thái của Quest: Hoàn thành/Chưa hoàn thành
+        /// </summary>
+        public bool GetIsCompleted => isCompleted;
+        
+        /// <summary>
+        /// Trạng thái của Quest: Bị khóa/Không bị khóa
+        /// </summary>
+        public bool GetQuestState => isLocked;
+    }
+    
     
     private void Start()
     {
@@ -25,21 +66,17 @@ public class QuestManager : MonoBehaviour
         RegisterEvent();
         
         var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.ID, DateTime.Now.ToString()));
-        var _currentDay = DateTime.Today;
-        if (_lastDay <= _currentDay)
-        {
-            ResetQuest();
-        }
+        if (_lastDay <= DateTime.Today)
+            LoadNewQuest();
         else
-        {
-            CheckQuest();
-        }
+            LoadOldQuest();
     }
     private void OnDestroy()
     {
         UnRegisterEvent();
     }
-    
+    private void OnApplicationQuit() => PlayerPrefs.SetString(behaviourID.ID, DateTime.Now.ToString());
+
     
     private void RegisterEvent()
     {
@@ -55,32 +92,55 @@ public class QuestManager : MonoBehaviour
         OnQuestCompletedEvent -= OnQuestCompleted;
         OnQuestCancelEvent -= OnQuestCancel;
     }
-    private void ResetQuest()
+    private void LoadNewQuest()
     {
         foreach (var questSetup in QuestLists)
         {
-            var _keyPP = behaviourID.ID + questSetup.GetIndex();
-            if (PlayerPrefs.HasKey(_keyPP))
-                PlayerPrefs.DeleteKey(_keyPP);
+            questSetup.SetCompletedQuest(false);
+            FileHandle.Delete(_questFolderSave, questSetup.GetIDQuest());
         }
     }
-    private void CheckQuest()
+    private void LoadOldQuest()
     {
-        List<QuestSetup> _questTemp = new();
+        QuestSelected.Clear();
         foreach (var questSetup in QuestLists)
         {
-            var _keyPP = behaviourID.ID + questSetup.GetIndex();
-            if (PlayerPrefs.HasKey(_keyPP)) continue;
-            _questTemp.Add(questSetup);
+            var _checkQuest = FileHandle.Load(_questFolderSave, questSetup.GetIDQuest(), out QuestSave _questSave);
+            if (!_checkQuest)  continue;
+            questSetup.SetCompletedQuest(_questSave.GetIsCompleted);
+            questSetup.SetQuestState(_questSave.GetQuestState);
+            QuestSelected.Add(questSetup);
         }
-        QuestLists.Clear();
-        QuestLists = _questTemp;
     }
     
-
+    
+    
+    private void OnItemCollection(ItemNameCode _itemNameCode)
+    {
+        Debug.Log("Reward: "+ _itemNameCode);
+    } 
+    private void OnQuestStarted(QuestSetup _questSetup)
+    {
+        FileHandle.Save(new QuestSave(_questSetup.GetIDQuest(), false, false), _questFolderSave, _questSetup.GetIDQuest());
+    }
+    private void OnQuestCompleted(QuestSetup _questSetup)
+    {
+        _questSetup.SetCompletedQuest(true);
+        var _questSave = new QuestSave(_questSetup.GetIDQuest(), true, false);
+        FileHandle.Save(_questSave, _questFolderSave, _questSetup.GetIDQuest());
+    }
+    private void OnQuestCancel(QuestSetup _questSetup)
+    {
+        var _questSave = new QuestSave(_questSetup.GetIDQuest(), false, true);
+        FileHandle.Save(_questSave, _questFolderSave, _questSetup.GetIDQuest());
+    }
+    //
+    public static void CallQuestStartedEvent(QuestSetup _questSetup) => OnQuestStartedEvent?.Invoke(_questSetup);
+    public static void CallQuestCompletedEvent(QuestSetup _questSetup) => OnQuestCompletedEvent?.Invoke(_questSetup);
+    public static void CallQuestCancelEvent(QuestSetup _questSetup) => OnQuestCancelEvent?.Invoke(_questSetup);
+    //
     private void OpenPanel(InputAction.CallbackContext _context) => OnPanelOpenEvent?.Invoke();
     public static void ClosePanel() => OnPanelCloseEvent?.Invoke();
-    
     public void OnEnterPlayer()
     {
         GUI_Inputs.InputAction.UI.CollectItem.performed += OpenPanel;
@@ -91,34 +151,4 @@ public class QuestManager : MonoBehaviour
         GUI_Inputs.InputAction.UI.CollectItem.performed -= OpenPanel;
         NoticeManager.Instance.CloseNoticeT3();
     }
-
-    
-    private void OnItemCollection(ItemNameCode _itemNameCode)
-    {
-        Debug.Log("Reward: "+ _itemNameCode);
-    } 
-    private void OnQuestStarted(QuestSetup _questSetup)
-    {
-        if (!QuestSelect.Contains(_questSetup)) QuestSelect.Add(_questSetup);
-    }
-    private void OnQuestCompleted(QuestSetup _questSetup)
-    {
-        var _keyPP = behaviourID.ID + _questSetup.GetIndex();
-        if (PlayerPrefs.HasKey(_keyPP)) PlayerPrefs.DeleteKey(_keyPP);
-    }
-    private void OnQuestCancel(QuestSetup _questSetup)
-    {
-        PlayerPrefs.SetInt(behaviourID.ID + _questSetup.GetIndex(), _questSetup.GetIndex());
-        
-        if (QuestLists.Contains(_questSetup)) QuestLists.Remove(_questSetup);
-        if (QuestSelect.Contains(_questSetup)) QuestSelect.Remove(_questSetup);
-        OnPanelOpenEvent?.Invoke();
-    }
-    
-    
-    public static void CallQuestStartedEvent(QuestSetup _questSetup) => OnQuestStartedEvent?.Invoke(_questSetup);
-    public static void CallQuestCompletedEvent(QuestSetup _questSetup) => OnQuestCompletedEvent?.Invoke(_questSetup);
-    public static void CallQuestCancelEvent(QuestSetup _questSetup) => OnQuestCancelEvent?.Invoke(_questSetup);
-    
-    private void OnApplicationQuit() => PlayerPrefs.SetString(behaviourID.ID, DateTime.Now.ToString());
 }

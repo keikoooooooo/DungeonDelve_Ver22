@@ -12,30 +12,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08bfadb5671ffc4398ef97e24f08b95, type: 3}
   m_Name: Quest_5
   m_EditorClassIdentifier: 
-  indexQuest: 4
-  titleQuest: Quest 005
-  descriptionQuest: Quest 005 Des
-  collectionTask:
-    code: 0
-    value: 0
-  rewardSetup:
-  - code: 203
-    value: 3
+  id: 00de2676-6ea1-4c6a-b3d6-f2933bad1d87
+  title: Quest 05
+  description: Collect a large quantity of Goblin teeth. The required quantity is
+    100.
+  task:
+    code: 400
+    value: 100
+  rewards:
+  - code: 20
+    value: 10000
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  - code: 204
-    value: 43
+  - code: 0
+    value: 10
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  - code: 1
+    value: 10
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  - code: 2
+    value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 3
-    value: 32
+    value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  - code: 20
-    value: 12
+  - code: 4
+    value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  - code: 107
-    value: 324
+  - code: 10
+    value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
+  - code: 11
+    value: 5
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  - code: 12
+    value: 5
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  - code: 200
+    value: 4
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  - code: 201
+    value: 4
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  - code: 202
+    value: 2
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  isCompletedQuest: 0

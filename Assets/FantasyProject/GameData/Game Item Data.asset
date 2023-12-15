@@ -243,3 +243,12 @@ MonoBehaviour:
     description: 'Beware, for those who seek these teeth might find themselves facing
       the wrath of goblin hordes protecting their most valuable treasures.  How to
       obtain: May drop upon defeating Goblin.'
+  - code: 401
+    nameItem: Forgotten Book
+    sprite: {fileID: 21300000, guid: 16b46af601605c5418677b5c139840fc, type: 3}
+    ratity: 0
+    type: 2
+    description: 'An ancient, weathered tome steeped in mystery and enigma, the Forgotten
+      Book holds secrets lost to time. Its worn cover and faded pages speak of a
+      past filled with knowledge and wisdom, yet its contents remain shrouded in
+      obscurity. '

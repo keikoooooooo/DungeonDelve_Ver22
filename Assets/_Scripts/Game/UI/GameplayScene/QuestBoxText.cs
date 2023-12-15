@@ -11,10 +11,21 @@ public class QuestBoxText : MonoBehaviour, IPooled<QuestBoxText>
     
     public QuestSetup questSetup { get; private set; }
     
+    
     /// <summary>
     /// Có đang nhận nhiệm vụ này ?
     /// </summary>
-    public bool IsAcceptQuest { get; private set; }
+    public bool IsReceivedQuest { get; private set; }
+    /// <summary>
+    /// Nhiệm vụ đã hoàn thành chưa ?
+    /// </summary>
+    public bool IsCompletedQuest { get; private set; }
+    
+    /// <summary>
+    /// Nhiệm vụ có đang bị khóa ?
+    /// </summary>
+    public bool IsLocked { get; private set; }
+    
     
     public event Action<QuestBoxText, QuestSetup> OnQuestSelectEvent;
 
@@ -23,6 +34,8 @@ public class QuestBoxText : MonoBehaviour, IPooled<QuestBoxText>
     {
         questSetup = _questSetup;
         titleText.text = questSetup.GetTitle();
+        IsCompletedQuest = _questSetup.GetCompletedQuest();
+        IsLocked = _questSetup.IsLocked();
     }
     
     public void SelectQuest() =>  OnQuestSelectEvent?.Invoke(this, questSetup);
@@ -31,12 +44,12 @@ public class QuestBoxText : MonoBehaviour, IPooled<QuestBoxText>
     public void OnAcceptQuest() 
     {
         iconAccept.enabled = true;
-        IsAcceptQuest = true;
+        IsReceivedQuest = true;
     }
     public void OnCancelQuest()
     {
         iconAccept.enabled = false;
-        IsAcceptQuest = false;
+        IsReceivedQuest = false;
     }
     
 

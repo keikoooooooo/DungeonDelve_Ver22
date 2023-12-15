@@ -158,7 +158,7 @@ public class Chest : MonoBehaviour
     public void OpenIndicator()
     {
         if (!_canReceived) return;
-        ChestIndicatorManager.AddNoticeChest(this);
+        ChestNoticeManager.AddChest(this);
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ public class Chest : MonoBehaviour
     /// </summary>
     public void CloseIndicator()
     {
-        ChestIndicatorManager.RemoveNoticeChest(this);
+        ChestNoticeManager.RemoveChest(this);
     }
     #endregion
 

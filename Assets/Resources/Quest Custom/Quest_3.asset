@@ -12,19 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08bfadb5671ffc4398ef97e24f08b95, type: 3}
   m_Name: Quest_3
   m_EditorClassIdentifier: 
-  indexQuest: 2
-  titleQuest: Quest 003
-  descriptionQuest: Quest 003 Des
-  rewardSetup:
-  - code: 200
-    value: 1
+  id: 95c76163-8c75-4561-9fb8-06b3cc21d429
+  title: Quest 03
+  description: Collect 5 Moonstone Essence.
+  task:
+    code: 113
+    value: 5
+  rewards:
+  - code: 10
+    value: 7
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  - code: 201
-    value: 2
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
-  - code: 202
+  - code: 11
     value: 3
     isRandom: 0
     valueRandom: {x: 0, y: 0}
+  - code: 20
+    value: 650
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  isCompletedQuest: 0

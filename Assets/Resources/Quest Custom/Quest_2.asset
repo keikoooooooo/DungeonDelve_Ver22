@@ -12,23 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08bfadb5671ffc4398ef97e24f08b95, type: 3}
   m_Name: Quest_2
   m_EditorClassIdentifier: 
-  indexQuest: 1
-  titleQuest: Quest 002
-  descriptionQuest: Quest 002 Des
-  taskRequirement:
-    type: 0
-    check: 0
-    progress: {x: 0, y: 0}
-  rewardSetup:
-  - code: 100
-    value: 56
+  id: 0e28b405-7635-4847-a01b-2e13493b3193
+  title: Quest 02
+  description: Collect 10 Silver Shard.
+  task:
+    code: 112
+    value: 10
+  rewards:
+  - code: 0
+    value: 5
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  - code: 101
-    value: 23
+  - code: 1
+    value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  - code: 102
-    value: 3
+  - code: 2
+    value: 2
     isRandom: 0
     valueRandom: {x: 0, y: 0}
+  - code: 20
+    value: 1000
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  isCompletedQuest: 0
