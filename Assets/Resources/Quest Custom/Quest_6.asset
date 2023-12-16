@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08bfadb5671ffc4398ef97e24f08b95, type: 3}
   m_Name: Quest_6
   m_EditorClassIdentifier: 
-  id: 2f68a024-4a7d-4384-a985-0c82ada051f0
+  task:
+    id: 4f756bc1-5428-421f-811f-9626e7498baf
+    isCompleted: 0
+    isLocked: 0
   title: Quest 06
   description: Embark on a quest for the lost manuscript. According to a stranger,
     an adventurer ventured into the depths of a dark dungeon with this book.
-  task:
+  requirement:
     code: 401
     value: 1
   rewards:
@@ -36,4 +39,3 @@ MonoBehaviour:
     value: 1
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  isCompletedQuest: 0

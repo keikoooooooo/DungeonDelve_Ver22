@@ -1,13 +1,15 @@
+using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUI_Quest : Singleton<MonoBehaviour>
+public class GUI_Quest : MonoBehaviour, IGUI
 {
     [SerializeField] private GameObject questPanel;
     [SerializeField] private Animator noticeQuestPanel;
     [SerializeField] private TextMeshProUGUI noticeQuestText;
+    [SerializeField] private Animator completedPanel;
     [Space]
     [SerializeField] private TextMeshProUGUI titleQuest;
     [SerializeField] private TextMeshProUGUI descriptionQuest;
@@ -15,63 +17,92 @@ public class GUI_Quest : Singleton<MonoBehaviour>
     [SerializeField] private TextMeshProUGUI errorQuestText;
     [SerializeField] private Button cancelBtt;
     [SerializeField] private Button acceptBtt;
+    [SerializeField] private Button reportBtt;
     [Space]
-    [SerializeField] private QuestBoxText textBarPrefab;
+    [SerializeField] private QuestBox barPrefab;
     [SerializeField] private Transform contentQuest;
     [Space]
     [SerializeField] private UI_Item itemPrefab;
     [SerializeField] private Transform contentItem;
+    [SerializeField] private UI_Item itemRequired;
     
-    private static ObjectPooler<QuestBoxText> _poolQuestBoxText;
+    
+    private static ObjectPooler<QuestBox> _poolQuestBoxText;
     private static ObjectPooler<UI_Item> _poolUIItem;
     private SO_GameItemData _itemData;
-    private QuestBoxText _questBox;
+    private UserData _userData;
+    private QuestBox _currentQuestBox;
+    private Coroutine _completedPanelCoroutine;
+    
     private bool _canPanelOpen;
-    private int _currentReceivedQuest;
     private bool _isAccept;
-    
-    
-    private void Start()
+    private bool _isReportQuest;
+
+
+    private void OnEnable()
     {
         Init();
         RegisterEvent();
     }
-    private void OnDestroy()
+    private void Start()
+    {
+        _poolUIItem = new ObjectPooler<UI_Item>(itemPrefab, contentItem, 15);
+        _poolQuestBoxText = new ObjectPooler<QuestBox>(barPrefab, contentQuest, 10);
+        _poolQuestBoxText.List.ForEach(box => box.OnQuestSelectEvent += OnSelectQuest);
+    }
+    private void OnDisable()
     {
         UnRegisterEvent();
+    }
+    private void OnDestroy()
+    {
+        _poolQuestBoxText.List.ForEach(box => box.OnQuestSelectEvent -= OnSelectQuest);
     }
     
     private void Init()
     {
-        _itemData = GameManager.Instance.GameItemData;
-        _poolQuestBoxText = new ObjectPooler<QuestBoxText>(textBarPrefab, contentQuest, 10);
-        _poolUIItem = new ObjectPooler<UI_Item>(itemPrefab, contentItem, 10);
-        questPanel.gameObject.SetActive(false);
         titleQuest.text = "";
         descriptionQuest.text = "";
         _canPanelOpen = true;
+        questPanel.gameObject.SetActive(false);
+        itemRequired.gameObject.SetActive(false);
     }
     private void RegisterEvent()
     {
-        QuestManager.OnPanelOpenEvent += OpenPanel;
+        GUI_Manager.Add(this);
+        QuestManager.OnPanelOpenEvent += OnOpenPanelEvent;
+        QuestManager.OnPanelCloseEvent += OnClosePanelEvent;
         acceptBtt.onClick.AddListener(OnClickNoticeAcceptQuest);
         cancelBtt.onClick.AddListener(OnClickNoticeCancelQuest);
-        _poolQuestBoxText.List.ForEach(box => box.OnQuestSelectEvent += OnSelectQuest);
+        reportBtt.onClick.AddListener(OnClickNoticeReportQuest);
     }
     private void UnRegisterEvent()
     {
-        QuestManager.OnPanelOpenEvent -= OpenPanel;
+        GUI_Manager.Remove(this);
+        QuestManager.OnPanelOpenEvent -= OnOpenPanelEvent;
+        QuestManager.OnPanelCloseEvent -= OnClosePanelEvent;
         acceptBtt.onClick.RemoveListener(OnClickNoticeAcceptQuest);
         cancelBtt.onClick.RemoveListener(OnClickNoticeCancelQuest);
-        _poolQuestBoxText.List.ForEach(box => box.OnQuestSelectEvent -= OnSelectQuest);
+        reportBtt.onClick.RemoveListener(OnClickNoticeReportQuest);
     }
     
     
-    public void OpenPanel()
+    public void GetRef(GameManager _gameManager)
+    {
+        _itemData = _gameManager.GameItemData;
+        _userData = _gameManager.UserData;
+    }
+    public void UpdateData()
+    {
+        ShowQuest();
+    }
+    
+    
+    public void OnOpenPanelEvent()
     {
         if (!_canPanelOpen) return;
-        _canPanelOpen = false;
         
+        _canPanelOpen = false;
         CursorHandle.NoneLocked();
         GUI_Inputs.InputAction.UI.OpenBag.Disable();
         GUI_Inputs.InputAction.UI.OpenMenu.Disable();
@@ -79,14 +110,11 @@ public class GUI_Quest : Singleton<MonoBehaviour>
         
         questPanel.SetActive(true);
         noticeQuestPanel.Play("Panel_Disable");
-        
         ShowQuest();
     }
-    public void ClosePanel()
+    private void OnClosePanelEvent()
     {
         _canPanelOpen = true;
-        
-        QuestManager.ClosePanel();
         CursorHandle.Locked();
         GUI_Inputs.InputAction.UI.OpenBag.Enable();
         GUI_Inputs.InputAction.UI.OpenMenu.Enable();
@@ -94,14 +122,17 @@ public class GUI_Quest : Singleton<MonoBehaviour>
         
         questPanel.SetActive(false);
     }
+    public void OnClickClosePanelButton() => QuestManager.ClosePanel();
     
     private void ShowQuest()
     {
         titleQuest.text = "???";
         descriptionQuest.text = "???";
+        errorQuestText.text = "";
+        itemRequired.gameObject.SetActive(false);
+        
         _poolUIItem.List.ForEach(item => item.Release());
         _poolQuestBoxText.List.ForEach(box => box.Release());
-
         var _quests = QuestManager.QuestLists;
         foreach (var questSetup in _quests)
         {
@@ -110,17 +141,31 @@ public class GUI_Quest : Singleton<MonoBehaviour>
         }
         SetQuestProgressText();
     }
-
-    
-    public void OnSelectQuest(QuestBoxText _questBox, QuestSetup _questSetup)
+    public void OnSelectQuest(QuestBox _questBox)
     {
+        _currentQuestBox = _questBox;
+        
+        var _questSetup = _questBox.questSetup;
         titleQuest.text = _questSetup.GetTitle();
         descriptionQuest.text = _questSetup.GetDescription();
-        errorQuestText.text = _questSetup.IsLocked() ? "Can't handle this task today." : "You have completed this task.";
-            
+        var _task = _questSetup.GetTask();
+        errorQuestText.text = _task.IsCompleted ? "You have completed this task." : _task.IsLocked ? "Can't handle this task today." : "";
+        
         SpawnItemReward(_questSetup);
         SelectQuestBox(_questBox);
         SetButton(_questBox);
+        CheckQuestReport(_questSetup);
+        SetItemReuired(_questSetup);
+    }
+    private void SetItemReuired(QuestSetup _questSetup)
+    {
+        itemRequired.gameObject.SetActive(true);
+        var _taskRequired = _questSetup.GetRequirement();
+        var _itemCustom = _itemData.GetItemCustom(_taskRequired.GetNameCode());
+        var _hasItem = _userData.HasItemValue(_taskRequired.GetNameCode());
+        
+        itemRequired.SetItem(_itemCustom, _taskRequired.GetValue());
+        itemRequired.SetValueText($"{ _taskRequired.GetValue()}/{_hasItem}");
     }
     private void SpawnItemReward(QuestSetup _questSetup)
     {
@@ -145,95 +190,122 @@ public class GUI_Quest : Singleton<MonoBehaviour>
             _count++;
         }
     }
-    private void SelectQuestBox(QuestBoxText _questBox)
+    private void SelectQuestBox(QuestBox _questSelected)
     {
-        this._questBox = _questBox;
+        _currentQuestBox = _questSelected;
         var _currentList = _poolQuestBoxText.List.Where(box => box.gameObject.activeSelf);
-        foreach (var questBoxTest in _currentList)
+        foreach (var _quest in _currentList)
         {
-            var _animator = questBoxTest.animator;
-            if (_animator.IsTag("Selected"))
-                questBoxTest.animator.Play(SwitchPanelControl.NameHashID_NonTrigger);
-            else if (!_animator.IsTag("Selected") && _animator == _questBox.animator && !_questBox.IsLocked)
-                questBoxTest.animator.Play(SwitchPanelControl.NameHashID_Selected);
+            var _animator = _quest.animator;
+            if (_animator.IsTag("Selected") && _quest != _currentQuestBox)
+                _quest.animator.Play(SwitchPanelControl.NameHashID_NonTrigger);
+            else if (!_animator.IsTag("Selected") && _animator == _questSelected.animator)
+                _quest.animator.Play(SwitchPanelControl.NameHashID_Selected);
         }
-        SetButton(_questBox);
     }
-    public static void IsTriggerQuestBox(QuestBoxText _questBox, bool _hasTrigger)
+    public static void IsTriggerQuestBox(QuestBox _questBox, bool _hasTrigger)
     {
-        var _currentList = _poolQuestBoxText.List.Where(box => box.gameObject.activeSelf).ToList()
+        var _questList = _poolQuestBoxText.List.Where(box => box.gameObject.activeSelf).ToList()
             .Where(box => !box.animator.IsTag("Selected", 0) && !box.animator.IsTag("SelectedQuest", 0));
-
         
         int _hashID;
         if (_hasTrigger)
         {
-            foreach (var questBoxTest in _currentList)
+            foreach (var _quest in _questList)
             {
-                _hashID = questBoxTest == _questBox && !_questBox.IsCompletedQuest && !_questBox.IsLocked ? 
-                    SwitchPanelControl.NameHashID_Trigger : SwitchPanelControl.NameHashID_NonTrigger;
-                questBoxTest.animator.Play(_hashID);
+                _hashID = _quest == _questBox ? SwitchPanelControl.NameHashID_Trigger : SwitchPanelControl.NameHashID_NonTrigger;
+                _quest.animator.Play(_hashID);
             }   
         }
         else
         {
-            foreach (var questBoxTest in _currentList)
+            foreach (var _quest in _questList)
             {
                 _hashID = SwitchPanelControl.NameHashID_NonTrigger;
-                questBoxTest.animator.Play(_hashID);
+                _quest.animator.Play(_hashID);
             }
         }
     }
     
     
-    private void OnClickNoticeCancelQuest()
-    {
-        if (!_questBox || !_questBox.IsReceivedQuest) return;
-        _isAccept = false;
-        OpenNoticeQuestPanel("Would you like to abandon this quest? When canceled, this quest will not be selectable for the remainder of today.\nContinue?");
-    }
+    // OnClick Button
     private void OnClickNoticeAcceptQuest()
     {
-        if (!_questBox || _questBox.IsReceivedQuest || _currentReceivedQuest >= QuestManager.maxQuest) return;
         _isAccept = true;
-        OpenNoticeQuestPanel("Would you like to accept this quest? \nContinue?");
+        OpenNoticeQuestPanel("Would you like to accept this quest?\nContinue?");
+    }   
+    private void OnClickNoticeCancelQuest()
+    {
+        _isAccept = false;
+        OpenNoticeQuestPanel("Would you like to abandon this task? If cancelled, this task will no longer be selectable for the remaining time of today." +
+                             " And you will also forfeit one task claim.\nContinue?");
     }
+    private void OnClickNoticeReportQuest()
+    {
+        _isReportQuest = true;
+        OpenNoticeQuestPanel("Would you like to report this mission? Upon completion, you will lose the items required for this mission.\nContinue?");
+    }
+    public void OnClickConfirmButton()
+    {
+        if (_isReportQuest)
+        {
+            _isReportQuest = false;
+            var _task = _currentQuestBox.questSetup.GetRequirement();
+            _userData.IncreaseItemValue(_task.GetNameCode(), -_task.GetValue());
+            QuestManager.OnCompletedQuest(_currentQuestBox.questSetup);
+            
+            if (_completedPanelCoroutine != null)
+                StopCoroutine(_completedPanelCoroutine);
+            _completedPanelCoroutine = StartCoroutine(CompletedPanelCoroutine());
+        }
+        else if (_isAccept)
+        {
+            _isAccept = false;
+            _currentQuestBox.OnAcceptQuest();
+            QuestManager.OnStartedQuest(_currentQuestBox.questSetup);
+        }
+        else
+        {
+            _currentQuestBox.OnCancelQuest();
+            QuestManager.OnCancelQuest(_currentQuestBox.questSetup);
+        }
+        
+        SetButton(_currentQuestBox);
+        SetQuestProgressText();
+        OnClickCancelButton();
+    }
+    public void OnClickCancelButton()
+    {
+        noticeQuestPanel.Play("Panel_OUT");
+    }
+    private IEnumerator CompletedPanelCoroutine()
+    {
+        completedPanel.Play("QuestCompleted_IN");
+        yield return new WaitForSeconds(3f);
+        completedPanel.Play("QuestCompleted_OUT");
+    }
+    
     private void OpenNoticeQuestPanel(string _noticeText)
     {
         noticeQuestPanel.Play("Panel_IN");
         noticeQuestText.text = _noticeText;
     }
-    public void OnClickCancelQuest()
+    private void SetQuestProgressText() => questProgressText.text = $"In Progress: {QuestManager.currentQuest}/{QuestManager.maxQuest}";
+    private void SetButton(QuestBox _questBox)
     {
-        noticeQuestPanel.Play("Panel_OUT");
-    }
-    public void OnClickAcceptQuest()
-    {
-        if (_isAccept)
-        {
-            _currentReceivedQuest++;
-            _questBox.OnAcceptQuest();
-            QuestManager.CallQuestStartedEvent(_questBox.questSetup);
-        }
-        else
-        {
-            _currentReceivedQuest--;
-            _questBox.OnCancelQuest();
-            QuestManager.CallQuestCancelEvent(_questBox.questSetup);
-        }
+        acceptBtt.gameObject.SetActive(!_questBox.IsReceived);
+        reportBtt.gameObject.SetActive(_questBox.IsReceived);
         
-        _isAccept = false;
-        SetButton(_questBox);
-        OnClickCancelQuest();
-        SetQuestProgressText();
+        var _checkCommon = !_questBox.IsLocked && !_questBox.IsCompleted;
+        acceptBtt.interactable = _checkCommon && !_questBox.IsReceived && QuestManager.currentQuest < QuestManager.maxQuest;
+        cancelBtt.interactable = _checkCommon && _questBox.IsReceived;
+    }
+    private void CheckQuestReport(QuestSetup _questSelected)
+    {
+        var _taskRequired = _questSelected.GetRequirement();
+        var _checkComplete = _taskRequired.GetValue() <= _userData.HasItemValue(_taskRequired.GetNameCode());
+        reportBtt.interactable = _checkComplete && !_questSelected.GetTask().IsCompleted;
     }
     
-
-    private void SetQuestProgressText() => questProgressText.text = $"In Progress: {_currentReceivedQuest}/{QuestManager.maxQuest}";
-    private void SetButton(QuestBoxText _questBox)
-    {
-        acceptBtt.interactable = !_questBox.IsLocked && !_questBox.IsReceivedQuest && _currentReceivedQuest < QuestManager.maxQuest;
-        cancelBtt.interactable = !_questBox.IsLocked && _questBox.IsReceivedQuest;
-    }
 
 }

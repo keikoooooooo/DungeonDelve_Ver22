@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08bfadb5671ffc4398ef97e24f08b95, type: 3}
   m_Name: Quest_4
   m_EditorClassIdentifier: 
-  id: 3024ccb9-7841-4352-8e1f-21360a91438f
+  task:
+    id: dfdd6512-76ae-4ebe-b2ce-fe59864e8d5f
+    isCompleted: 0
+    isLocked: 0
   title: Quest 04
   description: Collect 5 Platinum Core.
-  task:
+  requirement:
     code: 114
     value: 5
   rewards:
@@ -43,4 +46,3 @@ MonoBehaviour:
     value: 800
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  isCompletedQuest: 0

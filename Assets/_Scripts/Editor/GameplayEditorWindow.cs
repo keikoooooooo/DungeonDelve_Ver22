@@ -747,12 +747,13 @@ public class GameplayEditorWindow : EditorWindow
                 EditorGUI.BeginChangeCheck();
                 
                 GUILayout.BeginHorizontal();
-                if (string.IsNullOrEmpty(questSetup.GetIDQuest())) questSetup.SetIDQuest(Guid.NewGuid().ToString());
+                var _task = questSetup.GetTask();
+                if (string.IsNullOrEmpty(_task.GetID))_task.SetID(Guid.NewGuid().ToString());
                 EditorGUILayout.LabelField($"Quest ID:", Width(75));
-                EditorGUILayout.LabelField($"{questSetup.GetIDQuest()}", LabelColorText(Color.red), Width(300));
+                EditorGUILayout.LabelField($"{_task.GetID}", LabelColorText(Color.red), Width(300));
                 if (GUILayout.Button("Reset ID", Width(80), Height(15)))
                 {
-                    questSetup.SetIDQuest(Guid.NewGuid().ToString());
+                    _task.SetID(Guid.NewGuid().ToString());
                 }
                 GUILayout.EndHorizontal();
                 
@@ -769,9 +770,9 @@ public class GameplayEditorWindow : EditorWindow
                 
                 GUILayout.BeginHorizontal();
                 GUILayout.Label( "", Width(150));
-                var _task = questSetup.GetTask();
-                _task.SetNameCode((ItemNameCode)EditorGUILayout.EnumPopup("", _task.GetNameCode(), Width(150)));
-                _task.SetValue(EditorGUILayout.IntField("", _task.GetValue(), Width(150)));
+                var _taskRequired = questSetup.GetRequirement();
+                _taskRequired.SetNameCode((ItemNameCode)EditorGUILayout.EnumPopup("", _taskRequired.GetNameCode(), Width(150)));
+                _taskRequired.SetValue(EditorGUILayout.IntField("", _taskRequired.GetValue(), Width(150)));
                 GUILayout.EndHorizontal();
                 #endregion
                 

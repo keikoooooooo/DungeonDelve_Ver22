@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class RewardManager : Singleton<RewardManager>
 {
-    public static event Action<ItemNameCode> OnItemCollectionEvent;
     [SerializeField] private SO_GameItemData gameItemData;
     [Space]
     [SerializeField] private Coin coinPrefab;
@@ -46,7 +44,6 @@ public class RewardManager : Singleton<RewardManager>
     {
         GUI_Inputs.InputAction.UI.CollectItem.performed -= OnCollectInput;
     }
- 
     
     private void Init()
     {
@@ -149,8 +146,6 @@ public class RewardManager : Singleton<RewardManager>
             return;
         }
         _userData.IncreaseItemValue(_nameCode, _val);
-        
-        OnItemCollectionEvent?.Invoke(_nameCode);
     }
     
     /// <summary>

@@ -1,25 +1,54 @@
+using System;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 public static class FileHandle
 {
-
-    public static void Save<T>(T _data, string _fileName)
+    // Encrypt, Decrypt
+    private const int lineLenght = 20;
+    private static readonly bool isEncrypt = true;
+    private static string Encrypt(string _jsonText)
     {
-        var _path = Path.Combine(Application.persistentDataPath, _fileName);
-        var jsonText = JsonUtility.ToJson(_data, true);
-        File.WriteAllText(_path, jsonText);
+        var _bytes = Encoding.UTF8.GetBytes(_jsonText);
+        var _encodedText = Convert.ToBase64String(_bytes);
+        var sb = new StringBuilder();
+        for (var i = 0; i < _encodedText.Length; i+= lineLenght)
+        {
+            var _lenght = Mathf.Min(lineLenght, _encodedText.Length - i);
+            sb.AppendLine(_encodedText.Substring(i, _lenght));
+        }
+        return sb.ToString();
     }
-
+    private static string Decrypt(string _encryptText)
+    {
+        var _bytes = Convert.FromBase64String(_encryptText);
+        var _decryptText = Encoding.UTF8.GetString(_bytes);
+        return _decryptText; 
+    }
+    
+    
+    public static void Save<T>(T _data, string _fileName)
+    {        
+        if (string.IsNullOrEmpty(_fileName)) return;
+        var _path = Path.Combine(Application.persistentDataPath, _fileName);
+        
+        SaveToFile(_path, _data);
+    }
     public static void Save<T>(T _data, string _folder, string _fileName)
     {
+        if (string.IsNullOrEmpty(_fileName)) return;
         var _path = Path.Combine(Application.persistentDataPath, _folder, _fileName);
         Directory.CreateDirectory(Path.GetDirectoryName(_path) ?? string.Empty);
-
-        var jsonText = JsonUtility.ToJson(_data, true);
-        File.WriteAllText(_path, jsonText);
+        
+        SaveToFile(_path, _data);
     }
-
+    private static void SaveToFile<T> (string _path, T _data)
+    {
+        var jsonText = JsonUtility.ToJson(_data, true);
+        
+        File.WriteAllText(_path, isEncrypt ? Encrypt(jsonText) : jsonText);
+    }
     
     public static bool Load<T>(string _fileName, out T _data)
     {
@@ -38,24 +67,22 @@ public static class FileHandle
             _data = default;
             return false;
         }
-        _data = JsonUtility.FromJson<T>(File.ReadAllText(_path));
+        var _jsonText = File.ReadAllText(_path);
+        _data = JsonUtility.FromJson<T>(isEncrypt ? Decrypt(_jsonText) : _jsonText);
         return true;
     }
-
     
     public static void Delete(string _fileName)
     {
         var _path = Path.Combine(Application.persistentDataPath, _fileName);
-        DeleteFile(_path);
+        if (File.Exists(_path))
+            File.Delete(_path);
     }
     public static void Delete(string _folder, string _fileName)
     {
         var _path = Path.Combine(Application.persistentDataPath, _folder, _fileName);
-        DeleteFile(_path);
-    }
-    private static void DeleteFile(string _path)
-    {
-        if (File.Exists(_path))
+        if (File.Exists(_path)) 
             File.Delete(_path);
     }
+    
 }

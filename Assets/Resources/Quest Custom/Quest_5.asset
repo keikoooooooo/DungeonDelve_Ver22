@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08bfadb5671ffc4398ef97e24f08b95, type: 3}
   m_Name: Quest_5
   m_EditorClassIdentifier: 
-  id: 00de2676-6ea1-4c6a-b3d6-f2933bad1d87
+  task:
+    id: 40f2a96d-2d41-4f88-bb9e-e37ec9ccc71a
+    isCompleted: 0
+    isLocked: 0
   title: Quest 05
   description: Collect a large quantity of Goblin teeth. The required quantity is
     100.
-  task:
+  requirement:
     code: 400
     value: 100
   rewards:
@@ -68,4 +71,3 @@ MonoBehaviour:
     value: 2
     isRandom: 0
     valueRandom: {x: 0, y: 0}
-  isCompletedQuest: 0

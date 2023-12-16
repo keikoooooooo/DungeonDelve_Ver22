@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-
+using QuestInGame;
 
 public class QuestManager : MonoBehaviour
 {
@@ -13,132 +11,87 @@ public class QuestManager : MonoBehaviour
     public static event Action OnPanelOpenEvent;
     public static event Action OnPanelCloseEvent;
     //
-    public static event Action<QuestSetup> OnQuestStartedEvent; 
-    public static event Action<QuestSetup> OnQuestCompletedEvent; 
-    public static event Action<QuestSetup> OnQuestCancelEvent; 
-    public static List<QuestSetup> QuestLists { get; private set; }
-    public static List<QuestSetup> QuestSelected { get; private set; } = new();
-    public static int maxQuest { get; private set; } = 3; // Số lượng tối đa quest được nhận. 
+    public static List<QuestSetup> QuestLists { get; private set; } = new();
+    
+    public static int currentQuest { get; private set; } // Số lượng quest đang nhận.
+    public static int maxQuest { get; private set; } = 3; // Số lượng tối đa quest được nhận/1 ngày. 
     //
-    private readonly string _questFolderSave = "qs_";
+    private static readonly string _folderSave = "q_save";
     
     
-    [Serializable]
-    public class QuestSave
-    {
-        [SerializeField, Tooltip("ID nhiệm vụ")] 
-        private string id;
-        [SerializeField, Tooltip("Task đã hoàn thành chưa ?")] 
-        private bool isCompleted;
-        
-        [SerializeField, Tooltip("Task có đang bị khóa không ?")] 
-        private bool isLocked;
-        public QuestSave() { }
-        
-        /// <summary>
-        /// Tạo 1 Data để lưu trữ thông tin về Task/Quest đang nhận
-        /// </summary>
-        /// <param name="_id"> ID Quest </param>
-        /// <param name="_isCompletedQuest"> Task đã hoàn thành chưa ? </param>
-        public QuestSave(string _id, bool _isCompletedQuest, bool _isLocked)
-        {
-            id = _id;
-            isCompleted = _isCompletedQuest;
-            isLocked = _isLocked;
-        }
-        public string GetID => id;
-        
-        /// <summary>
-        /// Trạng thái của Quest: Hoàn thành/Chưa hoàn thành
-        /// </summary>
-        public bool GetIsCompleted => isCompleted;
-        
-        /// <summary>
-        /// Trạng thái của Quest: Bị khóa/Không bị khóa
-        /// </summary>
-        public bool GetQuestState => isLocked;
-    }
-    
-    
+    private void OnApplicationQuit() => PlayerPrefs.SetString(behaviourID.ID, DateTime.Now.ToString());
     private void Start()
     {
-        QuestLists = Resources.LoadAll<QuestSetup>("Quest Custom").ToList();
-        RegisterEvent();
-        
+        var _quests = Resources.LoadAll<QuestSetup>("Quest Custom");
+        QuestLists.Clear();
+        foreach (var questSetup in _quests)
+        {
+            QuestLists.Add(Instantiate(questSetup));
+        }
+
+        currentQuest = 0;
         var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.ID, DateTime.Now.ToString()));
         if (_lastDay <= DateTime.Today)
             LoadNewQuest();
         else
             LoadOldQuest();
     }
-    private void OnDestroy()
-    {
-        UnRegisterEvent();
-    }
-    private void OnApplicationQuit() => PlayerPrefs.SetString(behaviourID.ID, DateTime.Now.ToString());
-
-    
-    private void RegisterEvent()
-    {
-        RewardManager.OnItemCollectionEvent += OnItemCollection;
-        OnQuestStartedEvent += OnQuestStarted;
-        OnQuestCompletedEvent += OnQuestCompleted;
-        OnQuestCancelEvent += OnQuestCancel;
-    }
-    private void UnRegisterEvent()
-    {
-        RewardManager.OnItemCollectionEvent -= OnItemCollection;
-        OnQuestStartedEvent -= OnQuestStarted;
-        OnQuestCompletedEvent -= OnQuestCompleted;
-        OnQuestCancelEvent -= OnQuestCancel;
-    }
     private void LoadNewQuest()
     {
         foreach (var questSetup in QuestLists)
         {
-            questSetup.SetCompletedQuest(false);
-            FileHandle.Delete(_questFolderSave, questSetup.GetIDQuest());
+            var _task = questSetup.GetTask();
+            _task.SetCompleted(false);
+            FileHandle.Delete(_folderSave, _task.GetID);
         }
     }
     private void LoadOldQuest()
     {
-        QuestSelected.Clear();
         foreach (var questSetup in QuestLists)
         {
-            var _checkQuest = FileHandle.Load(_questFolderSave, questSetup.GetIDQuest(), out QuestSave _questSave);
-            if (!_checkQuest)  continue;
-            questSetup.SetCompletedQuest(_questSave.GetIsCompleted);
-            questSetup.SetQuestState(_questSave.GetQuestState);
-            QuestSelected.Add(questSetup);
+            var _task = questSetup.GetTask();
+            var _checkQuest = FileHandle.Load(_folderSave, _task.GetID, out Task _taskSave);
+            if (!_checkQuest) continue;
+            
+            _task.SetCompleted(_taskSave.IsCompleted);
+            _task.SetState(_taskSave.IsLocked);
+            _task.SetReceived(_taskSave.IsReceived);
+            currentQuest++;
         }
     }
     
     
+    public static void OnStartedQuest(QuestSetup _quest)
+    {
+        currentQuest = Mathf.Clamp(currentQuest + 1, 0, maxQuest);
+        
+        var _task = _quest.GetTask();
+        _task.SetCompleted(false);
+        _task.SetState(false);
+        _task.SetReceived(true);
+        FileHandle.Save(_task, _folderSave, _task.GetID);
+    }
+    public static void OnCompletedQuest(QuestSetup _quest)
+    {
+        _quest.GetReward().ForEach(x => RewardManager.Instance.SetReward(x));
+        
+        var _task = _quest.GetTask();
+        _task.SetCompleted(true);
+        _task.SetState(false);
+        _task.SetReceived(true);
+        FileHandle.Save(_task, _folderSave, _task.GetID);
+        ClosePanel();
+    }
+    public static void OnCancelQuest(QuestSetup _quest)
+    {
+        var _task = _quest.GetTask();
+        _task.SetCompleted(false);
+        _task.SetState(true);
+        _task.SetReceived(true);
+        FileHandle.Save(_task, _folderSave, _task.GetID);
+    }
     
-    private void OnItemCollection(ItemNameCode _itemNameCode)
-    {
-        Debug.Log("Reward: "+ _itemNameCode);
-    } 
-    private void OnQuestStarted(QuestSetup _questSetup)
-    {
-        FileHandle.Save(new QuestSave(_questSetup.GetIDQuest(), false, false), _questFolderSave, _questSetup.GetIDQuest());
-    }
-    private void OnQuestCompleted(QuestSetup _questSetup)
-    {
-        _questSetup.SetCompletedQuest(true);
-        var _questSave = new QuestSave(_questSetup.GetIDQuest(), true, false);
-        FileHandle.Save(_questSave, _questFolderSave, _questSetup.GetIDQuest());
-    }
-    private void OnQuestCancel(QuestSetup _questSetup)
-    {
-        var _questSave = new QuestSave(_questSetup.GetIDQuest(), false, true);
-        FileHandle.Save(_questSave, _questFolderSave, _questSetup.GetIDQuest());
-    }
-    //
-    public static void CallQuestStartedEvent(QuestSetup _questSetup) => OnQuestStartedEvent?.Invoke(_questSetup);
-    public static void CallQuestCompletedEvent(QuestSetup _questSetup) => OnQuestCompletedEvent?.Invoke(_questSetup);
-    public static void CallQuestCancelEvent(QuestSetup _questSetup) => OnQuestCancelEvent?.Invoke(_questSetup);
-    //
+    
     private void OpenPanel(InputAction.CallbackContext _context) => OnPanelOpenEvent?.Invoke();
     public static void ClosePanel() => OnPanelCloseEvent?.Invoke();
     public void OnEnterPlayer()

@@ -21,7 +21,6 @@ public class PlayerHUD : MonoBehaviour, IGUI
     private SO_CharacterUpgradeData _characterUpgradeData;
     private bool _isEventRegistered;
     
-    
     private void OnEnable()
     {
         RegisterEvent();
