@@ -8,28 +8,29 @@ public class QuestBox : MonoBehaviour, IPooled<QuestBox>
     public Animator animator;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image iconAccept;
+    [SerializeField] private Image iconReport;
     public event Action<QuestBox> OnQuestSelectEvent;
     
     
     /// <summary> Thông tin quest mà box đang giữ </summary>
     public QuestSetup questSetup { get; private set; }
     
-    /// <summary> Có đang nhận nhiệm vụ này ? </summary>
+    /// <summary> Có đang nhận Task này ? </summary>
     public bool IsReceived { get; private set; }
     
-    /// <summary> Nhiệm vụ đã hoàn thành chưa ? </summary>
+    /// <summary> Task đã hoàn thành chưa ? </summary>
     public bool IsCompleted { get; private set; }
     
-    /// <summary> Nhiệm vụ có đang bị khóa ? </summary>
+    /// <summary> Task có đang bị khóa ? </summary>
     public bool IsLocked { get; private set; }
     
-
-
+    
     public void SetQuestBox(QuestSetup _questSetup)
     {
         questSetup = _questSetup;
         titleText.text = questSetup.GetTitle();
-
+        iconReport.enabled = false;
+        
         var _task = _questSetup.GetTask();
         IsLocked = _task.IsLocked;
         IsReceived = _task.IsReceived;
@@ -53,6 +54,10 @@ public class QuestBox : MonoBehaviour, IPooled<QuestBox>
     {
         iconAccept.enabled = false;
         IsReceived = false;
+    }
+    public void SetReportQuest(bool _canCompleted)
+    {
+        iconReport.enabled = _canCompleted && IsReceived;
     }
     
 

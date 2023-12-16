@@ -136,8 +136,9 @@ public class GUI_Quest : MonoBehaviour, IGUI
         var _quests = QuestManager.QuestLists;
         foreach (var questSetup in _quests)
         {
-            var textBar = _poolQuestBoxText.Get();
-            textBar.SetQuestBox(questSetup);
+            var _questBox = _poolQuestBoxText.Get();
+            _questBox.SetQuestBox(questSetup);
+            CheckQuestReport(_questBox);
         }
         SetQuestProgressText();
     }
@@ -152,10 +153,10 @@ public class GUI_Quest : MonoBehaviour, IGUI
         errorQuestText.text = _task.IsCompleted ? "You have completed this task." : _task.IsLocked ? "Can't handle this task today." : "";
         
         SpawnItemReward(_questSetup);
-        SelectQuestBox(_questBox);
-        SetButton(_questBox);
-        CheckQuestReport(_questSetup);
         SetItemReuired(_questSetup);
+        SetButton(_questBox);
+        SelectQuestBox(_questBox);
+        CheckQuestReport(_questBox);
     }
     private void SetItemReuired(QuestSetup _questSetup)
     {
@@ -262,6 +263,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
         {
             _isAccept = false;
             _currentQuestBox.OnAcceptQuest();
+            CheckQuestReport(_currentQuestBox);
             QuestManager.OnStartedQuest(_currentQuestBox.questSetup);
         }
         else
@@ -300,11 +302,12 @@ public class GUI_Quest : MonoBehaviour, IGUI
         acceptBtt.interactable = _checkCommon && !_questBox.IsReceived && QuestManager.currentQuest < QuestManager.maxQuest;
         cancelBtt.interactable = _checkCommon && _questBox.IsReceived;
     }
-    private void CheckQuestReport(QuestSetup _questSelected)
+    private void CheckQuestReport(QuestBox _questBox)
     {
-        var _taskRequired = _questSelected.GetRequirement();
+        var _taskRequired = _questBox.questSetup.GetRequirement();
         var _checkComplete = _taskRequired.GetValue() <= _userData.HasItemValue(_taskRequired.GetNameCode());
-        reportBtt.interactable = _checkComplete && !_questSelected.GetTask().IsCompleted;
+        reportBtt.interactable = _checkComplete && !_questBox.questSetup.GetTask().IsCompleted;
+        _questBox.SetReportQuest(reportBtt.interactable);
     }
     
 
