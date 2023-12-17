@@ -395,6 +395,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "TESTER",
+            "id": "b7a1f602-dd22-492e-ac1e-cf447dcbe5d5",
+            "actions": [
+                {
+                    "name": "Enter",
+                    "type": "Button",
+                    "id": "ac458292-4e34-4e62-8a1c-6ee88fef0b78",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ScalePanel",
+                    "type": "Button",
+                    "id": "2600b1b8-4d78-412b-bbe2-9764075ce4f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c3e35aa7-cf3f-4520-9e6b-367d80630ecf",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ef2498f-20f8-4d99-bbcb-3ad958ee7d81",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ScalePanel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

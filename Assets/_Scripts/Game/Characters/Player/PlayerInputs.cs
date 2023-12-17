@@ -8,8 +8,7 @@ public class PlayerInputs : MonoBehaviour
         + Ví dụ: Action: Move -> Function: OnMove
      */
     
-    [HideInInspector] public Inputs PlayerInput;
-
+    public Inputs PlayerInput { get; private set; }
     private void Awake()
     {
         PlayerInput = new Inputs();

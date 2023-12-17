@@ -91,7 +91,7 @@ public class TimelineBOReaper : MonoBehaviour
         GUI_Inputs.EnableInput();
         
         if (!_player) return;
-        _player.inputs.PlayerInput.Enable();
+        _player.input.PlayerInput.Enable();
         _playerHUD.OpenHUD();
     }
     public void DeActiveControlPlayer()
@@ -99,7 +99,7 @@ public class TimelineBOReaper : MonoBehaviour
         GUI_Inputs.DisableInput();
         
         if (!_player) return;
-        _player.inputs.PlayerInput.Disable();
+        _player.input.PlayerInput.Disable();
         _playerHUD.CloseHUD();
     }
     

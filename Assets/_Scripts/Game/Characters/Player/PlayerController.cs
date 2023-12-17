@@ -38,9 +38,9 @@ public abstract class PlayerController : PlayerStateMachine
     public event Action<float> OnElementalSkillCDEvent; 
     public event Action<float> OnElementalBurstCDEvent;
 
-    protected bool IsNormalAttack => inputs.LeftMouse;
-    protected bool IsElementalSkill => inputs.E && _skillCD_Temp <= 0;
-    protected bool IsElementalBurst => inputs.Q && _specialCD_Temp <= 0;
+    protected bool IsNormalAttack => input.LeftMouse;
+    protected bool IsElementalSkill => input.E && _skillCD_Temp <= 0;
+    protected bool IsElementalBurst => input.Q && _specialCD_Temp <= 0;
     
     public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding
     
@@ -212,16 +212,16 @@ public abstract class PlayerController : PlayerStateMachine
     protected virtual void SkillEnd()
     {
         AttackEnd();
-        inputs.E = false;
+        input.E = false;
     }
     protected virtual void SpecialEnd()
     {
         AttackEnd();
-        inputs.Q = false;
+        input.Q = false;
     }
     public override void ReleaseAction()
     {
-        inputs.LeftMouse = false;
+        input.LeftMouse = false;
         AttackEnd();
     }
     

@@ -417,6 +417,54 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""TESTER"",
+            ""id"": ""b7a1f602-dd22-492e-ac1e-cf447dcbe5d5"",
+            ""actions"": [
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac458292-4e34-4e62-8a1c-6ee88fef0b78"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScalePanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""2600b1b8-4d78-412b-bbe2-9764075ce4f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c3e35aa7-cf3f-4520-9e6b-367d80630ecf"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ef2498f-20f8-4d99-bbcb-3ad958ee7d81"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ScalePanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -500,6 +548,10 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_UI_UseItem2 = m_UI.FindAction("Use Item 2", throwIfNotFound: true);
         m_UI_UseItem3 = m_UI.FindAction("Use Item 3", throwIfNotFound: true);
         m_UI_UseItem4 = m_UI.FindAction("Use Item 4", throwIfNotFound: true);
+        // TESTER
+        m_TESTER = asset.FindActionMap("TESTER", throwIfNotFound: true);
+        m_TESTER_Enter = m_TESTER.FindAction("Enter", throwIfNotFound: true);
+        m_TESTER_ScalePanel = m_TESTER.FindAction("ScalePanel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -745,6 +797,60 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // TESTER
+    private readonly InputActionMap m_TESTER;
+    private List<ITESTERActions> m_TESTERActionsCallbackInterfaces = new List<ITESTERActions>();
+    private readonly InputAction m_TESTER_Enter;
+    private readonly InputAction m_TESTER_ScalePanel;
+    public struct TESTERActions
+    {
+        private @Inputs m_Wrapper;
+        public TESTERActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Enter => m_Wrapper.m_TESTER_Enter;
+        public InputAction @ScalePanel => m_Wrapper.m_TESTER_ScalePanel;
+        public InputActionMap Get() { return m_Wrapper.m_TESTER; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TESTERActions set) { return set.Get(); }
+        public void AddCallbacks(ITESTERActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TESTERActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TESTERActionsCallbackInterfaces.Add(instance);
+            @Enter.started += instance.OnEnter;
+            @Enter.performed += instance.OnEnter;
+            @Enter.canceled += instance.OnEnter;
+            @ScalePanel.started += instance.OnScalePanel;
+            @ScalePanel.performed += instance.OnScalePanel;
+            @ScalePanel.canceled += instance.OnScalePanel;
+        }
+
+        private void UnregisterCallbacks(ITESTERActions instance)
+        {
+            @Enter.started -= instance.OnEnter;
+            @Enter.performed -= instance.OnEnter;
+            @Enter.canceled -= instance.OnEnter;
+            @ScalePanel.started -= instance.OnScalePanel;
+            @ScalePanel.performed -= instance.OnScalePanel;
+            @ScalePanel.canceled -= instance.OnScalePanel;
+        }
+
+        public void RemoveCallbacks(ITESTERActions instance)
+        {
+            if (m_Wrapper.m_TESTERActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITESTERActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TESTERActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TESTERActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TESTERActions @TESTER => new TESTERActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -809,5 +915,10 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnUseItem2(InputAction.CallbackContext context);
         void OnUseItem3(InputAction.CallbackContext context);
         void OnUseItem4(InputAction.CallbackContext context);
+    }
+    public interface ITESTERActions
+    {
+        void OnEnter(InputAction.CallbackContext context);
+        void OnScalePanel(InputAction.CallbackContext context);
     }
 }
