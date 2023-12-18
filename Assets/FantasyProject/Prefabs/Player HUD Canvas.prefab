@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 532838228}
   - component: {fileID: 1650299049}
   m_Layer: 7
-  m_Name: Skill
+  m_Name: Elemental Skill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1000,7 +1000,7 @@ GameObject:
   - component: {fileID: 743309037}
   - component: {fileID: 1383127743}
   m_Layer: 7
-  m_Name: Special
+  m_Name: Elemental Burst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3991,11 +3991,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903f26c6c41f439498ea5f466118b0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   hudAnimator: {fileID: 391596350280582745}
   healthBar: {fileID: 1210821417497883206}
   staminaBar: {fileID: 4165775507836117422}
-  skillCooldownTime: {fileID: 1650299049}
-  specialCooldownTime: {fileID: 1383127743}
+  elementalSkillCD: {fileID: 1650299049}
+  elementalBurstCD: {fileID: 1383127743}
   chapterIcon: {fileID: 1592075703}
   nameText: {fileID: 403225777}
   levelText: {fileID: 1694715094}

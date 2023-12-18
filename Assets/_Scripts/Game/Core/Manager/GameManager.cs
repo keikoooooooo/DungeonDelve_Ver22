@@ -1,7 +1,6 @@
 using System.Linq;
 using UnityEngine;
 
-
 /// <summary>
 /// Class này sẽ chạy đầu tiên để spawn ra Player và set dữ liệu từ User vào nhân vật
 /// </summary>
@@ -29,13 +28,12 @@ public class GameManager : Singleton<GameManager>
     
     public PlayerController Player { get; private set; }
     private SO_PlayerConfiguration _playerConfig;
-    
+    private PlayerController _playerPrefab;
     
     private void OnEnable()
     {
         CharacterUpgradeData.RenewValue();
-
-        PlayerController _playerPrefab;
+        
         if(!PlayFabHandleUserData.Instance)
         {
             UserData = new UserData("Test Editor", 50000000);
@@ -48,16 +46,22 @@ public class GameManager : Singleton<GameManager>
             _playerConfig = PlayFabHandleUserData.Instance.PlayerConfig;
             _playerPrefab = GetPlayerPrefab(_playerConfig.NameCode);
         }
-        
-        //Player = Instantiate(_playerPrefab, new Vector3(-43.2999992f,11.6000004f,118.199997f), Quaternion.identity);
-        Player = Instantiate(_playerPrefab, new Vector3(-4.08385849f,10.7921753f,59.4095268f), Quaternion.identity);
-        //Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
-        //Player = Instantiate(_playerPrefab, new Vector3(14.3000002f,-30.8999996f,194.300003f), Quaternion.identity);
         _playerConfig.ChapterIcon = _playerPrefab.PlayerConfig.ChapterIcon;
-        Player.PlayerData.SetData(_playerConfig);
-        Player.InitStatus();
+        InstancePlayer();
     }
 
+    private void InstancePlayer()
+    {
+        Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
+        Player.PlayerData.SetData(_playerConfig);
+         
+        // Set Status Value
+        var _value = _playerConfig.GetHP();
+        Player.Health.InitValue(_value, _value);
+        _value = _playerConfig.GetST();
+        Player.Stamina.InitValue(_value, _value);
+    }
+    
     private PlayerController GetPlayerPrefab(CharacterNameCode _characterNameCode)
     => CharacterData.CharactersData.Where(characterCustom => characterCustom.prefab.PlayerConfig.NameCode == _characterNameCode)
         .Select(characterCustom => characterCustom.prefab).FirstOrDefault();

@@ -48,7 +48,8 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     // giá trị cộng thêm khi upgrade
     private int _increaseLevel;      
     private int _increaseEXP;       
-    private int _increaseHP => 200 * _increaseLevel;
+    private int _increaseHP => 100 * _increaseLevel;
+    private int _increaseST => 5 * _increaseLevel;
     private int _increasATK => 15 * _increaseLevel;        
     private int _increasDEF => 3 * _increaseLevel;
     private bool _canUpgrade => _currentLevel < _characterLevelMax;
@@ -239,11 +240,13 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
     {
         var currentLevel = _playerConfig.GetLevel() + _increaseLevel;
         var currentHP = _playerConfig.GetHP() + _increaseHP;
+        var currentST = _playerConfig.GetST() + _increaseST;
         var currentATK = _playerConfig.GetATK() + _increasATK;
         var currentDEF = _playerConfig.GetDEF() + _increasDEF;
         
         UpgradeNoticeManager.Instance.SetLevelText($"Lv. {currentLevel}");
         UpgradeNoticeManager.CreateNoticeBar("Max HP",$"{_playerConfig.GetHP()}", $"{currentHP}");
+        UpgradeNoticeManager.CreateNoticeBar("Max ST",$"{_playerConfig.GetST()}", $"{currentST}");
         UpgradeNoticeManager.CreateNoticeBar("ATK",$"{_playerConfig.GetATK()}", $"{currentATK}");
         UpgradeNoticeManager.CreateNoticeBar("DEF",$"{_playerConfig.GetDEF()}", $"{currentDEF}");
         UpgradeNoticeManager.Instance.EnableNotice();
@@ -252,9 +255,12 @@ public class GUI_CharacterUpgrade : MonoBehaviour, IGUI
         _playerConfig.SetLevel(currentLevel);
         _playerConfig.SetCurrentEXP((int)backProgressSliderBar.value);
         _playerConfig.SetHP(currentHP);
+        _playerConfig.SetST(currentST);
         _playerConfig.SetATK(currentATK);
         _playerConfig.SetDEF(currentDEF);
-        _player.InitStatus();
+        
+        _player.Health.UpdateMaxValue(currentHP);
+        _player.Stamina.UpdateMaxValue(currentST);
         
         switch (_selectItem)
         {

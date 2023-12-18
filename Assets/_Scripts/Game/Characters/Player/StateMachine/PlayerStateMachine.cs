@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Cinemachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -35,7 +36,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
-    
+
     [Header("Set Material")] 
     public M_SetEmission setEmission;
     public M_SetFloat setDissolve;
@@ -83,8 +84,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] private float _jumpCD_Temp;
     [HideInInspector] private float _delayIncreaseST;
     [HideInInspector] protected int _attackCounter;
-    [HideInInspector] protected float _skillCD_Temp;
-    [HideInInspector] protected float _specialCD_Temp;
+    protected float _skillCD_Temp;
+    protected float _burstCD_Temp;
     [HideInInspector] private int _currentHP;
     #endregion
     
@@ -111,12 +112,14 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleRotation();
 
         HandleStamina();
+        
+        if (Input.GetKeyDown(KeyCode.O)) TakeDMG(1, false);
+        if (Input.GetKeyDown(KeyCode.P)) TakeDMG(100, false);
     }
     private void OnDisable()
     {
         DamageableData.Remove(gameObject);
     }
-
     
     private void GetReference()
     {
@@ -143,24 +146,16 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         _movementState = MovementState.StateRun;
         characterController.enabled = true;
         input.PlayerInput.Enable();
-        
-        InitStatus();
-    }
-    public void InitStatus()
-    {
-        var _maxHP = PlayerConfig.GetHP();
-        var _maxST = PlayerConfig.GetST();
-        Health.InitValue(_maxHP, _maxHP);
-        Stamina.InitValue(_maxST, _maxST);
     }
     
-
+    
     private void HandleEnable()
     {
         setDissolve.ChangeDurationApply(1f);
         setDissolve.ChangeCurrentValue(1f);
         setDissolve.ChangeValueSet(0f);
         setDissolve.Apply();
+        enableEffect.gameObject.SetActive(true);
         enableEffect.Play();
     }
     private void HandleInput()
@@ -172,7 +167,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         
         // Thời gian hồi chiêu
         _skillCD_Temp = _skillCD_Temp > 0 ? _skillCD_Temp - Time.deltaTime : 0;
-        _specialCD_Temp = _specialCD_Temp > 0 ? _specialCD_Temp - Time.deltaTime : 0;
+        _burstCD_Temp = _burstCD_Temp > 0 ? _burstCD_Temp - Time.deltaTime : 0;
         
         if (!input.ChangeState) return; // Chuyển mode: Walk <=> Run
         input.ChangeState = false;
@@ -306,6 +301,27 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     {
         CurrentState.SwitchState(_state.Idle());
         input.PlayerInput.Enable();
+    }
+    public async void ResetDeadState()
+    {
+        HandleEnable();
+        transform.position = Vector3.zero;
+        model.rotation = Quaternion.Euler(Vector3.zero);
+        animator.SetBool(IDDead,false);
+        setEmission.ChangeIntensitySet(0);
+        setEmission.ChangeDurationApply(0);
+        setEmission.Apply();
+        cinemachineFreeLook.m_XAxis.Value = 0;
+        cinemachineFreeLook.m_YAxis.Value = .5f;
+        cinemachineFreeLook.enabled = true;
+        characterController.enabled = true;
+
+        var _hp = PlayerConfig.GetHP();
+        var _st = PlayerConfig.GetST();
+        Health.InitValue(_hp, _hp);
+        Stamina.InitValue(_st, _st);
+        await Task.Delay(700);
+        ReleaseDamageState();
     }
     #endregion
 

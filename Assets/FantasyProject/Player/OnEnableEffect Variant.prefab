@@ -49,6 +49,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3781946149995631009, guid: 6d933073bb21d2c48a7b0b5ba2d2337f, type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781946149995631009, guid: 6d933073bb21d2c48a7b0b5ba2d2337f, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}

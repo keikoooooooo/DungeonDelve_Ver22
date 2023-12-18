@@ -90,10 +90,11 @@ public class PlayFabController : Singleton<PlayFabController>
             PlayFabErrorCode.EmailAddressNotAvailable => "Email Address Not Available !",
             PlayFabErrorCode.InvalidEmailAddress => "Invalid Email Address !",
             PlayFabErrorCode.InvalidUsernameOrPassword or 
+            PlayFabErrorCode.InvalidEmailOrPassword or 
                 PlayFabErrorCode.InvalidUsername or
                 PlayFabErrorCode.InvalidPassword or
                 PlayFabErrorCode.AccountNotFound
-                => "Invalid Username Or Password",
+                => "Invalid Email Or Password",
             
             _ => $"{_error.Error}"
         };

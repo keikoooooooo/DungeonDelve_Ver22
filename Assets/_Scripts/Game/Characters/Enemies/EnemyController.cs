@@ -23,7 +23,6 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     // Get & Set Property 
     public StatusHandle Health { get; private set; }
     public Vector3 PlayerPosition => _player.transform.position;
-    
     private readonly List<int> _enemyLevel = new() { 11, 21, 31, 41, 51, 61, 71, 81, 91, 101};
     
     // Events
@@ -35,6 +34,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     private PlayerController _player;
     private int _attackCount;
     
+    
     private void Awake()
     {
         Health = new StatusHandle();
@@ -42,38 +42,36 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     }
     private void OnEnable()
     {
+        DamageableData.Add(gameObject, this);
+        gameObject.SetObjectLayer(mainLayer.value);
+        
         if(!_player && GameManager.Instance)
         {
-            _player =GameManager.Instance.Player;
+            _player = GameManager.Instance.Player;
+            _player.OnDieEvent += HandlePlayerDie;
             SetRefPlayer(_player.gameObject);
         }
-
+        
         UpdateConfig();
         SetDie(false);
         SetTakeDMG(false);
         SetChaseSensor(false);
         SetAttackSensor(false);
         SetRootPosition(transform.position);
-        DamageableData.Add(gameObject, this);
-        gameObject.SetObjectLayer(mainLayer.value);
     }
     private void Start()
     {
-        Health.CallInitValueEvent();
+        var _maxHP = EnemyConfig.GetHP();
+        Health.InitValue(_maxHP, _maxHP);
         SetRunSpeed(EnemyConfig.GetRunSpeed());
         SetWalkSpeed(EnemyConfig.GetWalkSpeed());
         SetCDNormalAttack(EnemyConfig.GetNormalAttackCD());
         SetCDSkillAttack(EnemyConfig.GetSkillAttackCD());
         SetCDSpecialAttack(EnemyConfig.GetSpecialAttackCD());
-
-        _player.OnDieEvent += HandlePlayerDie;
     }
     private void OnDisable()
     {
         DamageableData.Remove(gameObject);
-    }
-    private void OnDestroy()
-    {
         _player.OnDieEvent -= HandlePlayerDie;
     }
 

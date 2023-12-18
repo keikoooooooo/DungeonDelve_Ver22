@@ -7,12 +7,8 @@ public class GUI_SettingGraphics : MonoBehaviour
     [SerializeField] private DropdownBar fpsDropdown;
     
     
-    private readonly List<string> _fps = new()
-    {
-        "24", "30", "45", "60", "120", "144", "Unlimit"
-    };
-    private readonly List<Resolution> _resolutions = new()
-    {
+    private readonly List<string> _fps = new() { "24", "30", "45", "60", "120", "144", "Unlimit" };
+    private readonly List<Resolution> _resolutions = new() {
         new Resolution { width = 3840, height = 2160},  // 4K
         new Resolution { width = 2560, height = 1440},  // 2K
         new Resolution { width = 1920, height = 1080},  // FHD

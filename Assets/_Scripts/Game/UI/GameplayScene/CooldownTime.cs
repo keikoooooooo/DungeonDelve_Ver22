@@ -9,42 +9,52 @@ public class CooldownTime : MonoBehaviour
     [SerializeField] private Image fill;
     [SerializeField] private TextMeshProUGUI valueText;
 
-    private bool valueTextNotNull;
+    private bool _valueTextNotNull;
     private Coroutine _cooldownCoroutine;
+    private float _durationTemp;
 
 
     private void Start()
     {
-        valueTextNotNull = valueText != null;
+        _valueTextNotNull = valueText != null;
         ActiveFill(false);
     }
 
-    public void StartCdEventEvent(float duration)
+    public void StartCooldownEvent(float duration)
     {
         if(_cooldownCoroutine != null)
             StopCoroutine(_cooldownCoroutine);
         _cooldownCoroutine = StartCoroutine(CooldownCoroutine(duration));
     }
+    public void ContinueCooldownEvent()
+    {
+        if (_durationTemp == 0)
+            return;
+        if(_cooldownCoroutine != null)
+            StopCoroutine(_cooldownCoroutine);
+        _cooldownCoroutine = StartCoroutine(CooldownCoroutine(_durationTemp));
+    }
     private IEnumerator CooldownCoroutine(float duration)
     {
         var _duration = duration;
-        var _currentTime = 0f;
-        
+
         ActiveFill(true);
-        
         while (_duration >= 0)
         {
-            _currentTime = _duration / duration;
+            var _currentTime = _duration / duration;
             if (fill)
                 fill.fillAmount = _currentTime;
             
-            if (valueTextNotNull)
+            if (_valueTextNotNull)
                 valueText.text = _duration.ToString("F1");
 
             _duration -= Time.deltaTime;
+            _durationTemp = _duration;
+            Debug.Log("Duration: " + duration);
             yield return null;
         }
 
+        _durationTemp = 0;
         ActiveFill(false);
     }
 
@@ -52,10 +62,9 @@ public class CooldownTime : MonoBehaviour
     {
         if (fill) 
             fill.gameObject.SetActive(_canActive);
-        if (valueTextNotNull)
+        if (_valueTextNotNull)
             valueText.gameObject.SetActive(_canActive);
     }
     
     
-
 }

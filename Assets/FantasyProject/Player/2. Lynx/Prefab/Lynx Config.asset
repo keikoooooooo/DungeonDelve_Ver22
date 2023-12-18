@@ -128,7 +128,7 @@ MonoBehaviour:
     - 79.41
     - 83.49
     - 86.06
-  MaxHP: 200
+  MaxHP: 30
   ATK: 80
   CRITRate: 15
   CRITDMG: 50

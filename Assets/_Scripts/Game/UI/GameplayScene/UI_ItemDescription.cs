@@ -21,7 +21,6 @@ public class UI_ItemDescription : MonoBehaviour
     private Vector3 _currentPosition;
     private Canvas _canvas;
 
-    private float _screenWidth;
     private float _posWidth;
     private float _posHieght;
     
@@ -29,7 +28,6 @@ public class UI_ItemDescription : MonoBehaviour
     {
         _canvas = GetComponentInParent<Canvas>();
         _itemRectTransform = item.GetComponent<RectTransform>();
-        _screenWidth = Screen.width;
         descriptionPanel.gameObject.SetActive(false);
     }
 
@@ -56,7 +54,7 @@ public class UI_ItemDescription : MonoBehaviour
         var rightEdge = itemCorners[2].x;
         var bottomEdge = itemCorners[0].y;
         
-        _posWidth = rightEdge + widthOffset < _screenWidth ? 250f : -250f;     // nếu nhỏ hơn -> chưa ra khỏi màn hình, ngược lại thì Flip trục X
+        _posWidth = rightEdge + widthOffset < Screen.width ? 250f : -250f;     // nếu nhỏ hơn -> chưa ra khỏi màn hình, ngược lại thì Flip trục X
         _posHieght = bottomEdge - heightOffset > 0 ? -137.5f : 137.5f;         // nếu nhỏ hơn 0 -> ra khỏi màn hình -> Flip trục Y
 
         _currentPosition = new Vector3(_posWidth, _posHieght, 0);

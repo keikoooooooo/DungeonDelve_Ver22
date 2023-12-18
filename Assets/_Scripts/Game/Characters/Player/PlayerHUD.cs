@@ -1,29 +1,42 @@
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour, IGUI
 {
+    [SerializeField, Required] private PlayerController player;
     [SerializeField] private Animator hudAnimator;
     [Space]
     [SerializeField] private ProgressBar healthBar;
     [SerializeField] private ProgressBar staminaBar;
-    [SerializeField] private CooldownTime skillCooldownTime;
-    [SerializeField] private CooldownTime specialCooldownTime;
+    [SerializeField] private CooldownTime elementalSkillCD;
+    [SerializeField] private CooldownTime elementalBurstCD;
     [Space] 
     [SerializeField] private Image chapterIcon;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Slider expProgress;
     [SerializeField] private Slot[] slots;
-    
-    private PlayerController player;
+
     private SO_CharacterUpgradeData _characterUpgradeData;
     private bool _isEventRegistered;
+    
     
     private void OnEnable()
     {
         RegisterEvent();
+        OpenHUD();
+    }
+    private void Start()
+    {
+        for (var i = 0; i < slots.Length; i++)
+        {
+            slots[i].SetKeyText($"{i + 1}");
+        }
+        nameText.text = player.PlayerConfig.GetName();
+        chapterIcon.sprite = player.PlayerConfig.ChapterIcon;
+        expProgress.minValue = 0;
     }
     private void OnDisable()
     {
@@ -33,102 +46,80 @@ public class PlayerHUD : MonoBehaviour, IGUI
 
     private void RegisterEvent()
     {
-        GUI_Manager.Add(this);
-        GUI_Bag.OnItemChangedSlotEvent += LoadSlot;
-        QuestManager.OnPanelCloseEvent += OpenHUD;
-        QuestManager.OnPanelOpenEvent += CloseHUD;
-
         if (MenuController.Instance)
         {
             MenuController.Instance.OnClickEscOpenMenuEvent.AddListener(CloseHUD);
             MenuController.Instance.OnClickBOpenMenuEvent.AddListener(CloseHUD);
             MenuController.Instance.OnCloseMenuEvent.AddListener(OpenHUD);
         }
+        GUI_Manager.Add(this);
+        GUI_Bag.OnItemChangedSlotEvent += UpdateItemSlot;
+        QuestManager.OnPanelCloseEvent += OpenHUD;
+        QuestManager.OnPanelOpenEvent += CloseHUD;
+        
+        player.OnElementalSkillCDEvent += elementalSkillCD.StartCooldownEvent;
+        player.OnElementalBurstCDEvent += elementalBurstCD.StartCooldownEvent;
 
+        player.Health.OnInitValueEvent += healthBar.Init;
+        player.Health.OnCurrentValueChangeEvent += healthBar.OnCurrentValueChange;
+        player.Health.OnMaxValueChangeEvent += healthBar.OnMaxValueChange;
+
+        player.Stamina.OnInitValueEvent += staminaBar.Init;
+        player.Stamina.OnCurrentValueChangeEvent += staminaBar.OnCurrentValueChange;
+        player.Stamina.OnMaxValueChangeEvent += staminaBar.OnMaxValueChange;
     }
     private void UnRegisterEvent()
     {
-        GUI_Manager.Remove(this);
-        GUI_Bag.OnItemChangedSlotEvent -= LoadSlot;
-        QuestManager.OnPanelCloseEvent -= OpenHUD;
-        QuestManager.OnPanelOpenEvent -= CloseHUD;
-
         if (MenuController.Instance)
         {
             MenuController.Instance.OnClickEscOpenMenuEvent.RemoveListener(CloseHUD);
             MenuController.Instance.OnClickBOpenMenuEvent.RemoveListener(CloseHUD);
             MenuController.Instance.OnCloseMenuEvent.RemoveListener(OpenHUD);
         }
+        GUI_Manager.Remove(this);
+        GUI_Bag.OnItemChangedSlotEvent -= UpdateItemSlot;
+        QuestManager.OnPanelCloseEvent -= OpenHUD;
+        QuestManager.OnPanelOpenEvent -= CloseHUD;
         
-        if(!_isEventRegistered) return;
-        _isEventRegistered = false;
-        player.OnElementalSkillCDEvent -= skillCooldownTime.StartCdEventEvent;
-        player.OnElementalBurstCDEvent -= specialCooldownTime.StartCdEventEvent;
-        player.Health.OnValueChangedEvent -= healthBar.ChangedValue;
-        player.Stamina.OnValueChangedEvent -= staminaBar.ChangedValue;
-    }
-    
-    
-    public void GetRef(GameManager _gameManager)
-    {
-        player = _gameManager.Player;
-        _characterUpgradeData = _gameManager.CharacterUpgradeData;
-
-        if (!_isEventRegistered)
-        {
-            _isEventRegistered = true;
-            player.OnElementalSkillCDEvent += skillCooldownTime.StartCdEventEvent;
-            player.OnElementalBurstCDEvent += specialCooldownTime.StartCdEventEvent;
-            player.Health.OnValueChangedEvent += healthBar.ChangedValue;
-            player.Stamina.OnValueChangedEvent += staminaBar.ChangedValue;
-        }
+        player.OnElementalSkillCDEvent -= elementalSkillCD.StartCooldownEvent;
+        player.OnElementalBurstCDEvent -= elementalBurstCD.StartCooldownEvent;
         
-        Init();
-        UpdateData();
-    }
-    public void UpdateData()
-    {
-        ChangedConfigValue();
-    }
-    
-    
-    private void Init()
-    {
-        nameText.text = player.PlayerConfig.GetName();
-        chapterIcon.sprite = player.PlayerConfig.ChapterIcon;
-        expProgress.minValue = 0;
+        player.Health.OnInitValueEvent -= healthBar.Init;
+        player.Health.OnCurrentValueChangeEvent -= healthBar.OnCurrentValueChange;
+        player.Health.OnMaxValueChangeEvent -= healthBar.OnMaxValueChange;
         
-        for (var i = 0; i < slots.Length; i++)
-        {
-            slots[i].SetKeyText($"{i + 1}");
-        }
+        player.Stamina.OnInitValueEvent -= staminaBar.Init;
+        player.Stamina.OnCurrentValueChangeEvent -= staminaBar.OnCurrentValueChange;
+        player.Stamina.OnMaxValueChangeEvent -= staminaBar.OnMaxValueChange;
     }
-    private void ChangedConfigValue()
-    {
-        healthBar.Init(player.PlayerConfig.GetHP());
-        staminaBar.Init(player.PlayerConfig.GetST());
-        
-        var _currentLevel = player.PlayerConfig.GetLevel();
-        levelText.text = $"Lv. {_currentLevel}";
-
-        expProgress.maxValue = _characterUpgradeData.GetNextEXP(_currentLevel);
-        expProgress.value = player.PlayerConfig.GetCurrentEXP();
-    }
-    private void LoadSlot(Slot[] _slots)
+    private void UpdateItemSlot(Slot[] _slots)
     {
         for (var i = 0; i < _slots.Length; i++)
         {
             slots[i].SetSlot(_slots[i].GetItem);
         }
     }
-
-
-    public void OpenHUD()
+    
+    
+    public void GetRef(GameManager _gameManager)
     {
-        hudAnimator.Play("Panel_IN");
+        _characterUpgradeData = _gameManager.CharacterUpgradeData;
+        UpdateData();
     }
+    public void UpdateData()
+    {
+        var _currentLevel = player.PlayerConfig.GetLevel();
+        levelText.text = $"Lv. {_currentLevel}";
+        expProgress.maxValue = _characterUpgradeData.GetNextEXP(_currentLevel);
+        expProgress.value = player.PlayerConfig.GetCurrentEXP();
+    }
+    
+    
+    public void OpenHUD() => hudAnimator.Play("Panel_IN");
     public void CloseHUD()
     {
         hudAnimator.Play("Panel_OUT");
+        elementalSkillCD.ContinueCooldownEvent();
+        elementalBurstCD.ContinueCooldownEvent();
     }
 }

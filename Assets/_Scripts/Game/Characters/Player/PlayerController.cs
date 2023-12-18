@@ -40,7 +40,7 @@ public abstract class PlayerController : PlayerStateMachine
 
     protected bool IsNormalAttack => input.LeftMouse;
     protected bool IsElementalSkill => input.E && _skillCD_Temp <= 0;
-    protected bool IsElementalBurst => input.Q && _specialCD_Temp <= 0;
+    protected bool IsElementalBurst => input.Q && _burstCD_Temp <= 0;
     
     public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding
     
@@ -145,7 +145,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanAttack = false;
         CanMove = false;
         CanRotation = false;
-        _specialCD_Temp = PlayerConfig.GetElementalBurstCD();
+        _burstCD_Temp = PlayerConfig.GetElementalBurstCD();
 
         PercentDMG_EB();
         OnSpecialCooldownEvent();

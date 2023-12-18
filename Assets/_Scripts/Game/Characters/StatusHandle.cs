@@ -3,32 +3,43 @@ using System;
 [Serializable]
 public class StatusHandle
 {
-   public StatusHandle() { }
-   public StatusHandle(int maxValue)
-   {
-      MaxValue = maxValue;
-      CurrentValue = maxValue;
-   } 
-   public event Action<int> OnValueChangedEvent;
-   public event Action OnInitValueEvent;
+   public event Action<int> OnCurrentValueChangeEvent;
+   public event Action<int> OnMaxValueChangeEvent;
+   public event Action<int, int> OnInitValueEvent;
 
    public int MaxValue { get; private set; }
    public int CurrentValue { get; private set; }
 
-
+   
+   /// <summary>
+   /// Khởi tạo 1 Status với các giá trị ban đầu.
+   /// </summary>
+   /// <param name="_currentValue"> Giá trị hiện tại. </param>
+   /// <param name="_maxValue"> Giá trị tối đa </param>
    public void InitValue(int _currentValue, int _maxValue)
    {
       MaxValue = _maxValue;
       CurrentValue = _currentValue;
-      CallInitValueEvent();
+      OnInitValueEvent?.Invoke(CurrentValue, MaxValue);
    }
+   
+   /// <summary>
+   /// Cập nhật lại giá trị tối đa
+   /// </summary>
+   /// <param name="_maxValue"></param>
+   public void UpdateMaxValue(int _maxValue)
+   {
+      MaxValue = _maxValue;
+      OnMaxValueChangeEvent?.Invoke(MaxValue);
+   }
+   
    public void Increases(int _amount)
    {
       CurrentValue += _amount;
       if (CurrentValue >= MaxValue)
          CurrentValue = MaxValue;
       
-      CallValueChangeEvent();
+      OnCurrentValueChangeEvent?.Invoke(CurrentValue);
    }
    public void Decreases(int _amount)
    {
@@ -36,8 +47,8 @@ public class StatusHandle
       if (CurrentValue <= 0)
          CurrentValue = 0;
 
-      CallValueChangeEvent();
+      OnCurrentValueChangeEvent?.Invoke(CurrentValue);
    }
-   public void CallValueChangeEvent() => OnValueChangedEvent?.Invoke(CurrentValue);
-   public void CallInitValueEvent() => OnInitValueEvent?.Invoke();
+   
+   
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerDeadState : PlayerBaseState
@@ -7,6 +8,7 @@ public class PlayerDeadState : PlayerBaseState
 
     private float _delayDissolve;
     private bool _canDelay;
+    private Coroutine _handleCoroutine;
     
     public override void EnterState()
     {
@@ -18,12 +20,10 @@ public class PlayerDeadState : PlayerBaseState
             DeadDissolve(); 
             return;
         }
-
         _delayDissolve = 2f;
         _canDelay = true;
         _machine.animator.SetBool(_machine.IDDead, true);
     }
-
     public override void UpdateState()
     {
         if(!_canDelay) return;
@@ -33,7 +33,11 @@ public class PlayerDeadState : PlayerBaseState
             return;
         
         _canDelay = false;
+        _machine.cinemachineFreeLook.enabled = false;
         DeadDissolve();
+        if (_handleCoroutine != null) 
+            _machine.StopCoroutine(_handleCoroutine);
+        _handleCoroutine = _machine.StartCoroutine(HandleCoroutine());
     }
     protected override void ExitState() { }
     public override void CheckSwitchState() { }
@@ -47,8 +51,15 @@ public class PlayerDeadState : PlayerBaseState
         
         _machine.setDissolve.ChangeCurrentValue(0);
         _machine.setDissolve.ChangeValueSet(1);
-        _machine.setDissolve.ChangeDurationApply(3f);
+        _machine.setDissolve.ChangeDurationApply(2f);
         _machine.setDissolve.Apply();
     }
+    private IEnumerator HandleCoroutine()
+    {
+        yield return new WaitForSeconds(3f);
+        LoadingPanel.Instance.Active(.7f);
+        _machine.ResetDeadState();
+    }
+    
     
 }
