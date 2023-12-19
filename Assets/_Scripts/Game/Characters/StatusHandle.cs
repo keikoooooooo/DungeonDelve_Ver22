@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class StatusHandle
@@ -6,11 +7,10 @@ public class StatusHandle
    public event Action<int> OnCurrentValueChangeEvent;
    public event Action<int> OnMaxValueChangeEvent;
    public event Action<int, int> OnInitValueEvent;
-
+   
    public int MaxValue { get; private set; }
    public int CurrentValue { get; private set; }
 
-   
    /// <summary>
    /// Khởi tạo 1 Status với các giá trị ban đầu.
    /// </summary>
@@ -35,20 +35,13 @@ public class StatusHandle
    
    public void Increases(int _amount)
    {
-      CurrentValue += _amount;
-      if (CurrentValue >= MaxValue)
-         CurrentValue = MaxValue;
-      
+      CurrentValue = Mathf.Clamp(CurrentValue + _amount, 0, MaxValue);
       OnCurrentValueChangeEvent?.Invoke(CurrentValue);
    }
    public void Decreases(int _amount)
    {
-      CurrentValue -= _amount;
-      if (CurrentValue <= 0)
-         CurrentValue = 0;
-
+      CurrentValue = Mathf.Clamp(CurrentValue - _amount, 0, MaxValue);
       OnCurrentValueChangeEvent?.Invoke(CurrentValue);
    }
-   
    
 }

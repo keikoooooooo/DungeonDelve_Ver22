@@ -3992,6 +3992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  panel: {fileID: 1621456486809130357}
   hudAnimator: {fileID: 391596350280582745}
   healthBar: {fileID: 1210821417497883206}
   staminaBar: {fileID: 4165775507836117422}

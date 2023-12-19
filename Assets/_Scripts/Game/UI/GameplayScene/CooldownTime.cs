@@ -5,59 +5,49 @@ using UnityEngine.UI;
 
 public class CooldownTime : MonoBehaviour
 {
-    
     [SerializeField] private Image fill;
     [SerializeField] private TextMeshProUGUI valueText;
 
     private bool _valueTextNotNull;
-    private Coroutine _cooldownCoroutine;
     private float _durationTemp;
-
+    private float _lastDuration;
+    private Coroutine _cooldownCoroutine;
 
     private void Start()
     {
         _valueTextNotNull = valueText != null;
         ActiveFill(false);
     }
-
-    public void StartCooldownEvent(float duration)
+    
+    public void OnCooldownTime(float duration)
     {
-        if(_cooldownCoroutine != null)
-            StopCoroutine(_cooldownCoroutine);
-        _cooldownCoroutine = StartCoroutine(CooldownCoroutine(duration));
+        _durationTemp = duration;
+        _lastDuration = duration;
+        if(_cooldownCoroutine != null) StopCoroutine(_cooldownCoroutine);
+        _cooldownCoroutine = StartCoroutine(CooldownCoroutine());
     }
-    public void ContinueCooldownEvent()
+    public void ContinueCooldownTime()
     {
-        if (_durationTemp == 0)
+        if (_lastDuration == 0)
             return;
-        if(_cooldownCoroutine != null)
-            StopCoroutine(_cooldownCoroutine);
-        _cooldownCoroutine = StartCoroutine(CooldownCoroutine(_durationTemp));
+        if(_cooldownCoroutine != null) StopCoroutine(_cooldownCoroutine);
+        _cooldownCoroutine = StartCoroutine(CooldownCoroutine());
     }
-    private IEnumerator CooldownCoroutine(float duration)
+    private IEnumerator CooldownCoroutine()
     {
-        var _duration = duration;
-
         ActiveFill(true);
-        while (_duration >= 0)
+        while (_lastDuration >= 0)
         {
-            var _currentTime = _duration / duration;
-            if (fill)
-                fill.fillAmount = _currentTime;
-            
-            if (_valueTextNotNull)
-                valueText.text = _duration.ToString("F1");
-
-            _duration -= Time.deltaTime;
-            _durationTemp = _duration;
-            Debug.Log("Duration: " + duration);
+            var _currentTime = _lastDuration / _durationTemp;
+            SetFill(_currentTime);
+            SetValueText();
+            _lastDuration -= Time.deltaTime;
             yield return null;
         }
-
-        _durationTemp = 0;
+        _lastDuration = 0;
         ActiveFill(false);
     }
-
+    
     private void ActiveFill(bool _canActive)
     {
         if (fill) 
@@ -65,6 +55,13 @@ public class CooldownTime : MonoBehaviour
         if (_valueTextNotNull)
             valueText.gameObject.SetActive(_canActive);
     }
-    
+    private void SetFill(float _amount)
+    {
+        if (fill) fill.fillAmount = _amount;
+    }
+    private void SetValueText()
+    {
+        if (_valueTextNotNull) valueText.text = _lastDuration.ToString("F1");
+    }
     
 }

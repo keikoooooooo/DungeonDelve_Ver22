@@ -1,17 +1,19 @@
+using System;
 using System.Collections;
+using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(RewardSetup))]
 public class Chest : MonoBehaviour
 {
+    [SerializeField, Required] private RewardSetup rewardSetup;
     [SerializeField] private Animator chestAnimator;
     [SerializeField] private BoxCollider chestCollider;
     [SerializeField] private ParticleSystem chestVFX;
     [SerializeField] private M_SetFloat setDissolve;
-
-    [Space(10)]
-    public UnityEvent OnOpenChestEvent;
+    
+    private event Action OnOpenChestEvent;
     public IconIndicator Indicator { get; set; }
     
     private readonly int OpenChestID = Animator.StringToHash("OpenChest");
@@ -28,6 +30,7 @@ public class Chest : MonoBehaviour
     private void OnEnable()
     {
         GUI_Inputs.InputAction.UI.CollectItem.performed += OnClickOpenChest;
+        OnOpenChestEvent += rewardSetup.SendRewardData;
     }
     private void Start()
     {
@@ -39,6 +42,7 @@ public class Chest : MonoBehaviour
     private void OnDisable()
     {
         GUI_Inputs.InputAction.UI.CollectItem.performed -= OnClickOpenChest;
+        OnOpenChestEvent -= rewardSetup.SendRewardData;
     }
     
     

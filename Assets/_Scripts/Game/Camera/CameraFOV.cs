@@ -21,7 +21,7 @@ public class CameraFOV : MonoBehaviour
     private void Update()
     {
         _scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        if (_scrollInput == 0 || Time.timeScale <= 0 || !cinemachineFreeLook.enabled) return;
+        if (_scrollInput == 0 || Time.timeScale <= 0) return;
         
         _fovCurrent -= _scrollInput * scrollSpeed;
         _fovCurrent = Mathf.Clamp(_fovCurrent, fovMin, fovMax);

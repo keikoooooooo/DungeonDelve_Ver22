@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class PlayerHUD : MonoBehaviour, IGUI
 {
     [SerializeField, Required] private PlayerController player;
+    [Space]
+    [SerializeField] private GameObject panel;
     [SerializeField] private Animator hudAnimator;
     [Space]
     [SerializeField] private ProgressBar healthBar;
@@ -57,8 +59,8 @@ public class PlayerHUD : MonoBehaviour, IGUI
         QuestManager.OnPanelCloseEvent += OpenHUD;
         QuestManager.OnPanelOpenEvent += CloseHUD;
         
-        player.OnElementalSkillCDEvent += elementalSkillCD.StartCooldownEvent;
-        player.OnElementalBurstCDEvent += elementalBurstCD.StartCooldownEvent;
+        player.OnElementalSkillCDEvent += elementalSkillCD.OnCooldownTime;
+        player.OnElementalBurstCDEvent += elementalBurstCD.OnCooldownTime;
 
         player.Health.OnInitValueEvent += healthBar.Init;
         player.Health.OnCurrentValueChangeEvent += healthBar.OnCurrentValueChange;
@@ -81,8 +83,8 @@ public class PlayerHUD : MonoBehaviour, IGUI
         QuestManager.OnPanelCloseEvent -= OpenHUD;
         QuestManager.OnPanelOpenEvent -= CloseHUD;
         
-        player.OnElementalSkillCDEvent -= elementalSkillCD.StartCooldownEvent;
-        player.OnElementalBurstCDEvent -= elementalBurstCD.StartCooldownEvent;
+        player.OnElementalSkillCDEvent -= elementalSkillCD.OnCooldownTime;
+        player.OnElementalBurstCDEvent -= elementalBurstCD.OnCooldownTime;
         
         player.Health.OnInitValueEvent -= healthBar.Init;
         player.Health.OnCurrentValueChangeEvent -= healthBar.OnCurrentValueChange;
@@ -113,13 +115,17 @@ public class PlayerHUD : MonoBehaviour, IGUI
         expProgress.maxValue = _characterUpgradeData.GetNextEXP(_currentLevel);
         expProgress.value = player.PlayerConfig.GetCurrentEXP();
     }
-    
-    
-    public void OpenHUD() => hudAnimator.Play("Panel_IN");
+
+
+    public void OpenHUD()
+    {
+        panel.SetActive(true);
+        hudAnimator.Play("Panel_IN");
+        elementalSkillCD.ContinueCooldownTime();
+        elementalBurstCD.ContinueCooldownTime();
+    }
     public void CloseHUD()
     {
         hudAnimator.Play("Panel_OUT");
-        elementalSkillCD.ContinueCooldownEvent();
-        elementalBurstCD.ContinueCooldownEvent();
     }
 }

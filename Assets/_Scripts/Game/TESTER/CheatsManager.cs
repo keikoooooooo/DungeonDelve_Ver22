@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 public class CheatsManager : MonoBehaviour, IGUI
 {
@@ -30,10 +29,13 @@ public class CheatsManager : MonoBehaviour, IGUI
     private readonly Vector3[] _waypoints = {
         Vector3.zero, 
         new (2.22f, 11f, 55f),
-        new (-48f, 10.87f, 104f),
+        new (-50f, 10.9f, 94.5f),
         new (14.3f, -30.3f, 176.5f),
     };
-    private readonly YieldInstruction _yieldReturn = new WaitForSeconds(.1f);
+    //
+    private readonly WaitForSecondsRealtime _wait_100ms = new(.1f);
+    private readonly WaitForSecondsRealtime _wait_500ms = new(.5f);
+    private readonly WaitForSecondsRealtime _waitNull = new(0f);
     private Coroutine _itemHandleCoroutine;
     private Coroutine _characterHandleCoroutine;
     private Coroutine _positionHandleCoroutine;
@@ -43,7 +45,6 @@ public class CheatsManager : MonoBehaviour, IGUI
     private bool _enter;
     private bool _isStarted;
     private bool _checkType;
-    
     // Default String Code
     private readonly string _pattern_ENTER = "enter";
     private readonly string _pattern_RESET = "reset";
@@ -96,6 +97,7 @@ public class CheatsManager : MonoBehaviour, IGUI
             inputField.ActivateInputField();
             frameScale.sizeDelta = sizeNotScale;
             frameScale.anchoredPosition = posNotScale;
+            scrollView.Scroll();
         }
     }
     private void OnEnterChat(InputAction.CallbackContext _context)
@@ -119,29 +121,24 @@ public class CheatsManager : MonoBehaviour, IGUI
         CursorHandle.NoneLocked();
         GUI_Inputs.InputAction.UI.Disable();
         _player.input.PlayerInput.Disable();
-        _player.cinemachineFreeLook.enabled = false;
         //
         _isStarted = false;
         _checkType = false;
         frameScale.sizeDelta = sizeNotScale;
         frameScale.anchoredPosition = posNotScale;
         SpawnText("<color=#00ECFF>------- CHEATS PANEL -------</color>");
+        Time.timeScale = 0;
+        ResetAllTypeCoroutine();
     }
     private void ClosePanel()
     {
+        Time.timeScale = 1;
         panel.SetActive(false);
         CursorHandle.Locked();
         GUI_Inputs.InputAction.UI.Enable();
         _player.input.PlayerInput.Enable();
-        _player.cinemachineFreeLook.enabled = true;
         inputField.text = "";
-        
-        if (_itemHandleCoroutine != null) StopCoroutine(_itemHandleCoroutine);
-        _itemHandleCoroutine = null;
-        if (_characterHandleCoroutine != null) StopCoroutine(_characterHandleCoroutine);
-        _characterHandleCoroutine = null;
-        if (_positionHandleCoroutine != null) StopCoroutine(_positionHandleCoroutine);
-        _positionHandleCoroutine = null;
+        ResetAllTypeCoroutine();
     }
     private void HandlerCheats()
     {
@@ -182,6 +179,8 @@ public class CheatsManager : MonoBehaviour, IGUI
         SpawnText("2. Item");
         await Task.Delay(100);
         SpawnText("3. Transform Position");
+        await Task.Delay(100);
+        scrollView.Scroll();
     }
     
     // Selected Option Handle
@@ -226,14 +225,17 @@ public class CheatsManager : MonoBehaviour, IGUI
                 switch (inputField.text)
                 {
                     case "/b" or "/B":
+                        SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                         ShowTypeStart();
-                        _characterHandleCoroutine = null;
+                        ResetAllTypeCoroutine();
                         yield break;
                     case "a" or "A":
                         GETPlayerConfig();
                         break;
                     case "b" or "B":
                         SpawnText($"Please enter in the following format: [KEY:x,VAL:x] to SET.");
+                        yield return _wait_100ms;
+                        scrollView.Scroll();
                         while (true)
                         {
                             if (_enter)
@@ -244,14 +246,14 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     var x = Convert.ToInt32(_match.Groups[1].Value);
                                     var y = Convert.ToInt32(_match.Groups[2].Value);
                                     SpawnText("<color=#0BFF7D>Wait...</color>");
-                                    yield return new WaitForSeconds(.8f);
+                                    yield return _wait_500ms;
                                     if (x is < 1 or > 11)
                                     {
                                         SpawnText($"Index not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
                                         continue;
                                     }
                                     SETValuePlayerConfig(x, y);
-                                    yield return new WaitForSeconds(.5f);
+                                    yield return _wait_500ms;
                                     SpawnText("<color=#0BFF7D>SET Data Success...</color>");
                                     GUI_Manager.UpdateGUIData();
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
@@ -260,16 +262,18 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
                                 SpawnText($"<color=#0BFF7D>Recommended syntax: [KEY:x,VAL:x]</color>");
-                                yield return _yieldReturn;
+                                yield return _wait_100ms;
                                 SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                 OperationMethod();
                                 break;
                             }
-                            yield return null;
+                            yield return _waitNull;
                         }
                         break;
                     case "c" or "C":
                         SpawnText($"Please enter in the following format: [KEY:x,VAL:x] to ADD.");
+                        yield return _wait_100ms;
+                        scrollView.Scroll();
                         while (true)
                         {
                             if (_enter)
@@ -280,14 +284,14 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     var x = Convert.ToInt32(_match.Groups[1].Value);
                                     var y = Convert.ToInt32(_match.Groups[2].Value);
                                     SpawnText("<color=#0BFF7D>Wait...</color>");
-                                    yield return new WaitForSeconds(.8f);
+                                    yield return _wait_500ms;
                                     if (x is < 1 or > 11)
                                     {
                                         SpawnText($"Index not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
                                         continue;
                                     }
                                     ADDValuePlayerConfig(x, y);
-                                    yield return new WaitForSeconds(.5f);
+                                    yield return _wait_500ms;
                                     SpawnText("<color=#0BFF7D>SET Data Success...</color>");
                                     GUI_Manager.UpdateGUIData();
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
@@ -296,16 +300,18 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
                                 SpawnText($"<color=#0BFF7D>Recommended syntax: [KEY:x,VAL:x]</color>");
-                                yield return _yieldReturn;
+                                yield return _wait_100ms;
                                 SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                 OperationMethod();
                                 break;
                             }
-                            yield return null;
+                            yield return _waitNull;
                         }
                         break;
                     case "d" or "D":
                         SpawnText($"Please enter in the following format: [KEY:x,VAL:x] to SUBTRACT.");
+                        yield return _wait_100ms;
+                        scrollView.Scroll();
                         while (true)
                         {
                             if (_enter)
@@ -316,14 +322,14 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     var x = Convert.ToInt32(_match.Groups[1].Value);
                                     var y = Convert.ToInt32(_match.Groups[2].Value);
                                     SpawnText("<color=#0BFF7D>Wait...</color>");
-                                    yield return new WaitForSeconds(.8f);
+                                    yield return _wait_500ms;
                                     if (x is < 1 or > 11)
                                     {
                                         SpawnText($"Index not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
                                         continue;
                                     }
                                     SUBTRACTValuePlayerConfig(x, y);
-                                    yield return new WaitForSeconds(.5f);
+                                    yield return _wait_500ms;
                                     SpawnText("<color=#0BFF7D>SET Data Success...</color>");
                                     GUI_Manager.UpdateGUIData();
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
@@ -332,16 +338,18 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
                                 SpawnText($"<color=#0BFF7D>Recommended syntax: [KEY:x,VAL:x]</color>");
-                                yield return _yieldReturn;
+                                yield return _wait_100ms;
                                 SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                 OperationMethod();
                                 break;
                             }                            
-                            yield return null;
+                            yield return _waitNull;
                         }
                         break;
                     case "e" or "E":
                         SpawnText($"Please enter in the following format: [KEY:x,VAL:x] to MULTIPLY.");
+                        yield return _wait_100ms;
+                        scrollView.Scroll();
                         while (true)
                         {
                             if (_enter)
@@ -352,14 +360,14 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     var x = Convert.ToInt32(_match.Groups[1].Value);
                                     var y = Convert.ToInt32(_match.Groups[2].Value);
                                     SpawnText("<color=#0BFF7D>Wait...</color>");
-                                    yield return new WaitForSeconds(.8f);
+                                    yield return _wait_500ms;
                                     if (x is < 1 or > 11)
                                     {
                                         SpawnText($"Index not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
                                         continue;
                                     }
                                     MULTIPLYValuePlayerConfig(x, y);
-                                    yield return new WaitForSeconds(.5f);
+                                    yield return _wait_500ms;
                                     SpawnText("<color=#0BFF7D>SET Data Success...</color>");
                                     GUI_Manager.UpdateGUIData();
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
@@ -368,12 +376,12 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
                                 SpawnText($"<color=#0BFF7D>Recommended syntax: [KEY:x,VAL:x]</color>");
-                                yield return _yieldReturn;
+                                yield return _wait_100ms;
                                 SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                 OperationMethod();
                                 break;
                             }
-                            yield return null;
+                            yield return _waitNull;
                         }
                         break;
                     default:
@@ -381,17 +389,19 @@ public class CheatsManager : MonoBehaviour, IGUI
                         break;
                 }
             }
-            yield return null;
+            yield return _waitNull;
         }
     }
     private IEnumerator ItemCoroutine()
     {
         SpawnText("<color=#0BFF7D>--------- ITEM ---------</color>");
-        yield return _yieldReturn;
+        yield return _wait_100ms;
         SpawnText("Would you like to get information or set information?");
-        yield return _yieldReturn;
+        yield return _wait_100ms;
         SpawnText("1. GETTER");
         SpawnText("2. SETTER");
+        yield return _wait_100ms;
+        scrollView.Scroll();
         while (true)
         {
             if (_enter && inputField.text.Length != 0)
@@ -399,12 +409,14 @@ public class CheatsManager : MonoBehaviour, IGUI
                 if (CheckPattern(inputField.text, _pattern_RETURN))
                 {
                     ShowTypeStart();
-                    _itemHandleCoroutine = null;
+                    ResetAllTypeCoroutine();
                     yield break;
                 }
                 if (!int.TryParse(inputField.text, out var _result))
                 {
                     SpawnText($"The syntax is invalid. Error option: <color=#FF3434>{inputField.text}</color>");
+                    yield return _wait_100ms;
+                    scrollView.Scroll();
                     continue;
                 }
                 switch (_result)
@@ -415,12 +427,14 @@ public class CheatsManager : MonoBehaviour, IGUI
                         foreach (var itemCode in _itemCodes)
                         {
                             SpawnText($"{_count}. {itemCode}");
-                            yield return _yieldReturn;
+                            yield return _wait_100ms;
                             _count++;
                         }
                         SpawnText("<color=#0BFF7D>--------- ITEM ---------</color>");
                         SpawnText("1. GETTER");
                         SpawnText("2. SETTER");
+                        yield return _wait_100ms;
+                        scrollView.Scroll();
                         continue;
                         
                     case 2:
@@ -432,8 +446,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 if (CheckPattern(inputField.text, _pattern_RETURN))
                                 {
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
-                                    SpawnText("0. GETTER");
-                                    SpawnText("1. SETTER");
+                                    SpawnText("1. GETTER");
+                                    SpawnText("2. SETTER");
                                     break;
                                 }
                                 
@@ -444,10 +458,12 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     var y = Convert.ToInt32(_match.Groups[2].Value);
                                     
                                     SpawnText("<color=#0BFF7D>Wait...</color>");
-                                    yield return new WaitForSeconds(.8f);
+                                    yield return _wait_500ms;
                                     if (x >= _itemCodes.Length)
                                     {
                                         SpawnText($"Item not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
+                                        yield return _wait_100ms;
+                                        scrollView.Scroll();
                                     }
                                     else
                                     {
@@ -457,19 +473,25 @@ public class CheatsManager : MonoBehaviour, IGUI
                                             _userData.IncreaseCoin(y);
                                         else 
                                             _userData.IncreaseItemValue(_itemCodes[x], y);
-                                        yield return new WaitForSeconds(.5f);
+                                        yield return _wait_500ms;
                                         SpawnText("<color=#0BFF7D>SET Data Success...</color>");
+                                        yield return _wait_100ms;
+                                        scrollView.Scroll();
                                     }
-                                    yield return _yieldReturn;
+                                    yield return _wait_100ms;
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                     SpawnText("0. GETTER");
                                     SpawnText("1. SETTER");
+                                    yield return _wait_100ms;
+                                    scrollView.Scroll();
                                     break;
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
                                 SpawnText($"<color=#0BFF7D>Recommended syntax: [KEY:x,VAL:x]</color>");
+                                yield return _wait_100ms;
+                                scrollView.Scroll();
                             }
-                            yield return null;
+                            yield return _waitNull;
                         }
                         continue;
                     
@@ -478,17 +500,19 @@ public class CheatsManager : MonoBehaviour, IGUI
                         continue;
                 }
             }
-            yield return null;
+            yield return _waitNull;
         }
     }
     private IEnumerator PositionHandleCoroutine()
     {
         SpawnText("<color=#0BFF7D>--------- POSITION ---------</color>");
-        yield return _yieldReturn;
+        yield return _wait_100ms;
         SpawnText("Would you like to get information or set information?");
-        yield return _yieldReturn;
+        yield return _wait_100ms;
         SpawnText("1. GETTER");
         SpawnText("2. SETTER");
+        yield return _wait_100ms;
+        scrollView.Scroll();
         while (true)
         {
             if (_enter && inputField.text.Length != 0)
@@ -496,7 +520,7 @@ public class CheatsManager : MonoBehaviour, IGUI
                 if (CheckPattern(inputField.text, _pattern_RETURN))
                 {
                     ShowTypeStart();
-                    _positionHandleCoroutine = null;
+                    ResetAllTypeCoroutine();
                     yield break;
                 }
                 
@@ -510,22 +534,24 @@ public class CheatsManager : MonoBehaviour, IGUI
                 {
                     case 1:
                         SpawnText($"Current Position: {_player.transform.position.ToString("F1")}");
-                        SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
-                        yield return _yieldReturn;
+                        SpawnText($"/b <color=#0BFF7D>Return</color>");
+                        yield return _wait_100ms;
                         SpawnText("Would you like to get information or set information?");
-                        yield return _yieldReturn;
+                        yield return _wait_100ms;
                         SpawnText("1. GETTER");
                         SpawnText("2. SETTER");
-                        yield break;
+                        yield return _wait_100ms;
+                        scrollView.Scroll();
+                        break;
                     case 2:
                         SpawnText("Choose an available position");
-                        yield return _yieldReturn;
+                        yield return _wait_100ms;
                         for (var i = 0; i < _waypoints.Length; i++)
                         {
                             SpawnText($"Point {i + 1}: [x:{_waypoints[i].x}, y:{_waypoints[i].y}, z:{_waypoints[i].z}]");
-                            yield return _yieldReturn;
+                            yield return _wait_100ms;
                         }
-                        yield return _yieldReturn;
+                        yield return _wait_100ms;
                         SpawnText("Please select a position.");
                         while (true)
                         {
@@ -534,11 +560,13 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 if (CheckPattern(inputField.text, _pattern_RETURN))
                                 {
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
-                                    yield return _yieldReturn;
+                                    yield return _wait_100ms;
                                     SpawnText("Would you like to get information or set information?");
-                                    yield return _yieldReturn;
+                                    yield return _wait_100ms;
                                     SpawnText("1. GETTER");
                                     SpawnText("2. SETTER");
+                                    yield return _wait_100ms;
+                                    scrollView.Scroll();
                                     break;
                                 }
                                 
@@ -547,51 +575,37 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     SpawnText($"The syntax is invalid. Error option: <color=#FF3434>{inputField.text}</color>");
                                     continue;
                                 } 
-                                var _check = false;
-                                switch (result)
-                                {
-                                    case 1:
-                                        SpawnText($"Position SET {_waypoints[0]}");
-                                        _player.transform.position = _waypoints[0];
-                                        _check = true;
-                                        break;
-                                    case 2:
-                                        SpawnText($"Position SET {_waypoints[1]}");
-                                        _player.transform.position = _waypoints[1];
-                                        _check = true;
-                                        break;
-                                    case 3:
-                                        SpawnText($"Position SET {_waypoints[2]}");
-                                        _player.transform.position = _waypoints[2];
-                                        _check = true;
-                                        break;
-                                    case 4:
-                                        SpawnText($"Position SET {_waypoints[3]}");
-                                        _player.transform.position = _waypoints[3];
-                                        _check = true;
-                                        break;
-                                    default: SpawnText($"Error option: <color=#FF3434>{inputField.text}</color>"); break;
-                                }
+                                var _check = result is >= 1 and <= 4;
                                 if (_check)
                                 {
-                                    TeleportPlayer();
+                                    Time.timeScale = 1;
+                                    LoadingPanel.Instance.Active(1.85f);
+                                    var _target = _waypoints[result - 1];
+                                    SpawnText($"Position SET {_target}");
                                     SpawnText("<color=#0BFF7D>SET Position Success...</color>");
-                                    SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
-                                    yield return _yieldReturn;
-                                    SpawnText("Would you like to get information or set information?");
-                                    yield return _yieldReturn;
-                                    SpawnText("1. GETTER");
-                                    SpawnText("2. SETTER");
+                                    _player.input.PlayerInput.Disable();
+                                    _enter = false;
+                                    _isOpen = false;
+                                    panel.SetActive(false);
+                                    yield return new WaitForSecondsRealtime(2.3f);
+                                    _player.transform.position = _target;
+                                    _player.input.PlayerInput.Enable();
+                                    ClosePanel();
                                     break;
                                 }
+                                SpawnText($"Error option: <color=#FF3434>{inputField.text}</color>");
                             }
-                            yield return null;
+                            yield return _waitNull;
                         }
                         break;
-                    default: SpawnText($"Error option: <color=#FF3434>{inputField.text}</color>"); break;
+                    default:
+                        SpawnText($"Error option: <color=#FF3434>{inputField.text}</color>"); 
+                        yield return _wait_100ms;
+                        scrollView.Scroll();
+                        break;
                 }
             }
-            yield return null;
+            yield return _waitNull;
         }
     }
     private async void GETPlayerConfig()
@@ -623,6 +637,8 @@ public class CheatsManager : MonoBehaviour, IGUI
         SpawnText("Which action would you like to perform?");
         await Task.Delay(100);
         OperationMethod();
+        await Task.Delay(150);
+        scrollView.Scroll();
     }
     private void OperationMethod()
     {
@@ -631,6 +647,7 @@ public class CheatsManager : MonoBehaviour, IGUI
         SpawnText("<color=#FF7D00>c. ADD</color>");
         SpawnText("<color=#FF7D00>d. SUBTRACT</color>");
         SpawnText("<color=#FF7D00>e. MULTIPLY</color>");
+        scrollView.Scroll();
     }
     private void ADDValuePlayerConfig(int _index, float _value)
     {
@@ -638,14 +655,18 @@ public class CheatsManager : MonoBehaviour, IGUI
         switch (_index)
         {
             case 1:
-                _player.PlayerConfig.SetHP(_player.PlayerConfig.GetHP() + (int)_value);
+                var _hp = _player.PlayerConfig.GetHP();
+                _player.PlayerConfig.SetHP(_hp + (int)_value);
+                _hp = _player.PlayerConfig.GetHP();
+                _player.Health.InitValue(_hp, _hp);
                 SpawnText($"VALUE SETTO: {_player.PlayerConfig.GetHP()}");
-                _player.Health.UpdateMaxValue(_player.PlayerConfig.GetHP());
                 break;
             case 2:
-                _player.PlayerConfig.SetST(_player.PlayerConfig.GetST() + (int)_value);
+                var _st = _player.PlayerConfig.GetST();
+                _player.PlayerConfig.SetST(_st + (int)_value);
+                _st = _player.PlayerConfig.GetST();
+                _player.Stamina.InitValue(_st, _st);
                 SpawnText($"VALUE SETTO: {_player.PlayerConfig.GetST()}");
-                _player.Stamina.UpdateMaxValue(_player.PlayerConfig.GetST());
                 break;
             case 3:
                 _player.PlayerConfig.SetATK(_player.PlayerConfig.GetATK() + (int)_value);
@@ -693,12 +714,14 @@ public class CheatsManager : MonoBehaviour, IGUI
             case 1:
                 _player.PlayerConfig.SetHP((int)_value);
                 SpawnText($"VALUE SETTO: {_player.PlayerConfig.GetHP()}");
-                _player.Health.UpdateMaxValue(_player.PlayerConfig.GetHP());
+                var _hp = _player.PlayerConfig.GetHP();
+                _player.Health.InitValue(_hp, _hp);
                 break;
             case 2:
                 _player.PlayerConfig.SetST((int)_value);
                 SpawnText($"VALUE SETTO: {_player.PlayerConfig.GetST()}");
-                _player.Stamina.UpdateMaxValue(_player.PlayerConfig.GetST());
+                var _st = _player.PlayerConfig.GetST();
+                _player.Stamina.InitValue(_st, _st);
                 break;
             case 3:
                 _player.PlayerConfig.SetATK((int)_value);
@@ -744,13 +767,18 @@ public class CheatsManager : MonoBehaviour, IGUI
         switch (_index)
         {
             case 1:
-                _player.PlayerConfig.SetHP(_player.PlayerConfig.GetHP() - (int)_value);
-                _player.Health.UpdateMaxValue(_player.PlayerConfig.GetHP());
+                var _hp = _player.PlayerConfig.GetHP();
+                _player.PlayerConfig.SetHP(_hp - (int)_value);
+                _hp = _player.PlayerConfig.GetHP();
+                _player.Health.InitValue(_hp, _hp);
                 SpawnText($"VALUE SETTO: {_player.PlayerConfig.GetHP()}");
+                
                 break;
             case 2:
-                _player.PlayerConfig.SetST(_player.PlayerConfig.GetST() - (int)_value);
-                _player.Stamina.UpdateMaxValue(_player.PlayerConfig.GetST());
+                var _st = _player.PlayerConfig.GetST();
+                _player.PlayerConfig.SetST(_st - (int)_value);
+                _st = _player.PlayerConfig.GetST();
+                _player.Stamina.InitValue(_st, _st);
                 SpawnText($"VALUE SETTO: {_player.PlayerConfig.GetST()}");
                 break;
             case 3:
@@ -797,13 +825,17 @@ public class CheatsManager : MonoBehaviour, IGUI
         switch (_index)
         {
             case 1:
-                _player.PlayerConfig.SetHP(_player.PlayerConfig.GetHP() * (int)_value);
-                _player.Health.UpdateMaxValue(_player.PlayerConfig.GetHP());
+                var _hp = _player.PlayerConfig.GetHP();
+                _player.PlayerConfig.SetHP(_hp * (int)_value);
+                _hp = _player.PlayerConfig.GetHP();
+                _player.Health.InitValue(_hp, _hp);
                 SpawnText($"VALUE SETTO: {_player.PlayerConfig.GetHP()}");
                 break;
             case 2:
-                _player.PlayerConfig.SetST(_player.PlayerConfig.GetST() * (int)_value);
-                _player.Stamina.UpdateMaxValue(_player.PlayerConfig.GetST());
+                var _st = _player.PlayerConfig.GetST();
+                _player.PlayerConfig.SetST(_st * (int)_value);
+                _st = _player.PlayerConfig.GetST();
+                _player.Stamina.InitValue(_st, _st);
                 SpawnText($"VALUE SETTO: {_player.PlayerConfig.GetST()}");
                 break;
             case 3:
@@ -844,15 +876,17 @@ public class CheatsManager : MonoBehaviour, IGUI
                 break;
         }
     }
-    private async void TeleportPlayer()
+    private void ResetAllTypeCoroutine()
     {
-        LoadingPanel.Instance.Active(Random.Range(.68f, .8f));
-        await Task.Delay(300);
-        _enter = false;
-        _isOpen = false;
-        ClosePanel();
+        if (_itemHandleCoroutine != null) StopCoroutine(_itemHandleCoroutine);
+        _itemHandleCoroutine = null;
+        if (_characterHandleCoroutine != null) StopCoroutine(_characterHandleCoroutine);
+        _characterHandleCoroutine = null;
+        if (_positionHandleCoroutine != null) StopCoroutine(_positionHandleCoroutine);
+        _positionHandleCoroutine = null;
     }
-    
+
+ 
     private void ReleaseTextBox()
     {
         inputField.text = "";

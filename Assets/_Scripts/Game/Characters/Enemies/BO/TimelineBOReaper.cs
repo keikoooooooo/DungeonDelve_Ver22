@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Playables;
 
 public class TimelineBOReaper : MonoBehaviour
 {
     [SerializeField] private MonoBehaviourID behaviourID;
+    [Space]
     [SerializeField] private EnemyController reaperBOSS;
+    [SerializeField] private Chest chest;
     [SerializeField] private PlayableDirector playableDirector;
     [SerializeField] private M_SetEmission setEmission;
     
@@ -37,9 +40,11 @@ public class TimelineBOReaper : MonoBehaviour
     }
 
     
-    private void HandleBossDie(EnemyController _enemy)
+    private async void HandleBossDie(EnemyController _enemy)
     {
         ApplyEmission(15, 0);
+        await Task.Delay(3000);
+        chest.CreateChest();
     }
     
     public void OnEnterPlayer(GameObject _gameObject)
@@ -86,7 +91,7 @@ public class TimelineBOReaper : MonoBehaviour
         }
     }
 
-    public void ActiveControlPlayer() // gọi trên EventAnimationTimelineS
+    public void ActiveControlPlayer() // gọi trên EventAnimationTimeline
     {
         GUI_Inputs.EnableInput();
         

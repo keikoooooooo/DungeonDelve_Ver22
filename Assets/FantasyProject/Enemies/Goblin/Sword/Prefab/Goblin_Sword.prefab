@@ -1069,30 +1069,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rewardsData:
-  - code: 0
-    value: 0
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
-  - code: 1
-    value: 0
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
-  - code: 2
-    value: 0
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
-  - code: 3
-    value: 0
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
-  - code: 4
-    value: 0
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
   - code: 20
     value: 0
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
+    isRandom: 1
+    valueRandom: {x: 150, y: 550}
+  - code: 0
+    value: 0
+    isRandom: 1
+    valueRandom: {x: 1, y: 5}
+  - code: 1
+    value: 0
+    isRandom: 1
+    valueRandom: {x: 1, y: 5}
+  - code: 2
+    value: 0
+    isRandom: 1
+    valueRandom: {x: 1, y: 5}
+  - code: 10
+    value: 0
+    isRandom: 1
+    valueRandom: {x: 1, y: 5}
+  - code: 11
+    value: 0
+    isRandom: 1
+    valueRandom: {x: 1, y: 5}
+  - code: 12
+    value: 0
+    isRandom: 1
+    valueRandom: {x: 1, y: 3}
 --- !u!1 &2195668644245869938
 GameObject:
   m_ObjectHideFlags: 0

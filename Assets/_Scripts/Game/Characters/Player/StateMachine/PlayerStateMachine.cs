@@ -112,9 +112,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleRotation();
 
         HandleStamina();
-        
-        if (Input.GetKeyDown(KeyCode.O)) TakeDMG(1, false);
-        if (Input.GetKeyDown(KeyCode.P)) TakeDMG(100, false);
     }
     private void OnDisable()
     {

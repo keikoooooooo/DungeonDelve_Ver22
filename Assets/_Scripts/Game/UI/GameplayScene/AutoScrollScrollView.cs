@@ -7,8 +7,9 @@ public class AutoScrollScrollView : MonoBehaviour
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField, Tooltip("Tốc độ cuộn")]
     private float speedScroll = 15f;
-    
     private Coroutine _scrollCoroutine;
+    private readonly WaitForSecondsRealtime _waitNull = new(0f);
+    
     
     public void Scroll()
     {
@@ -19,8 +20,8 @@ public class AutoScrollScrollView : MonoBehaviour
     {
         while (scrollRect.verticalNormalizedPosition > 0.01f)
         {
-            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, 0f, Time.deltaTime * speedScroll);
-            yield return null;
+            scrollRect.verticalNormalizedPosition = Mathf.Lerp(scrollRect.verticalNormalizedPosition, 0f, Time.unscaledTime * speedScroll);
+            yield return _waitNull;
         }
         scrollRect.verticalNormalizedPosition = 0f;
     }

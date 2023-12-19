@@ -1,12 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class LoadingPanel : Singleton<LoadingPanel>
 {
     [SerializeField] private Animator animator;
     [SerializeField] private Image background;
     [SerializeField] private Sprite[] spriteBG;
+
     
     private readonly int IDSceneLoading_IN = Animator.StringToHash("SceneLoading_IN");
     private readonly int IDSceneLoading_OUT = Animator.StringToHash("SceneLoading_OUT");
@@ -25,10 +27,13 @@ public class LoadingPanel : Singleton<LoadingPanel>
         if (_coroutine != null) StopCoroutine(_coroutine);
         _coroutine = StartCoroutine(DeactiveCoroutine(_deactiveTime));
     }
-    public void Deactive() => animator.SetTrigger(IDSceneLoading_OUT);
+    public void Deactive()
+    {
+        animator.SetTrigger(IDSceneLoading_OUT);
+    }
     private IEnumerator DeactiveCoroutine(float _deactiveTime)
     {
-        yield return new WaitForSeconds(_deactiveTime);
+        yield return new WaitForSecondsRealtime(_deactiveTime);
         Deactive();
     }
     
