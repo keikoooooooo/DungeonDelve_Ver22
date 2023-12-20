@@ -36,9 +36,8 @@ public class LynxController : PlayerController
     [HideInInspector] private Vector3 worldPosition;
     [HideInInspector] private float _horizontalBlend;
     [HideInInspector] private float _verticalBlend;
-    
+    [HideInInspector] private float _percentDMGCharged;
     private Ray _ray;
-    private float _percentDMGCharged;
     private Coroutine _attackCoroutine;
     
     

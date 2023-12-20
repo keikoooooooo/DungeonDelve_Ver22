@@ -37,7 +37,7 @@ public class GUI_CharacterStats : MonoBehaviour, IGUI
     public void GetRef(GameManager _gameManager)
     {
         _playerConfig = _gameManager.Player.PlayerConfig;
-        _playerRender = _gameManager.Player.PlayerData.PlayerRenderTexture;
+        _playerRender = _gameManager.Player.playerData.PlayerRenderTexture;
         _upgradeData = _gameManager.CharacterUpgradeData;
         rawMainMesh.texture = _playerRender.renderTexture;
         rawShadowMesh.texture = rawMainMesh.texture;

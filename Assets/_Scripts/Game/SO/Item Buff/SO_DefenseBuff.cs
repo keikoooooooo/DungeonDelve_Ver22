@@ -8,20 +8,18 @@ public class SO_DefenseBuff : SO_BuffEffect
     public float buffTimeOut;
 
     private Coroutine _buffCoroutine;
-    private int _value;
-    
+    private int _currentDEF;
     
     public override void Apply(PlayerController _player)
     {
-        _value = Mathf.CeilToInt(Value);
-        
+        _currentDEF = _player.PlayerConfig.GetDEF();
         if (_buffCoroutine != null)
         {
             _player.StopCoroutine(_buffCoroutine);
         }
         else
         {
-            _player.PlayerConfig.SetDEF(_player.PlayerConfig.GetDEF() + _value);
+            _player.PlayerConfig.SetDEF(_currentDEF + Mathf.CeilToInt(Value));
         }
         _buffCoroutine = _player.StartCoroutine(CooldownDeBuff(_player));
     }
@@ -29,9 +27,8 @@ public class SO_DefenseBuff : SO_BuffEffect
     private IEnumerator CooldownDeBuff(PlayerStateMachine _player)
     {
         yield return new WaitForSeconds(buffTimeOut);
-        _player.PlayerConfig.SetDEF(_player.PlayerConfig.GetDEF() - _value);
+        _player.PlayerConfig.SetDEF(_currentDEF);
         _buffCoroutine = null;
     }
-    
     
 }

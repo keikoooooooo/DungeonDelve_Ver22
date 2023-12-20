@@ -92,7 +92,7 @@ public class MenuController : Singleton<MenuController>
     {
         GUI_Manager.UpdateGUIData();
         menuPanel.SetActive(true);
-        _player.PlayerData.PlayerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
+        _player.playerData.PlayerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
         Time.timeScale = 0;
         CursorHandle.NoneLocked();
     }
@@ -101,7 +101,7 @@ public class MenuController : Singleton<MenuController>
         Time.timeScale = 1;
         OnCloseMenuEvent?.Invoke();
         menuPanel.SetActive(false);
-        _player.PlayerData.PlayerRenderTexture.CloseRenderUI();
+        _player.playerData.PlayerRenderTexture.CloseRenderUI();
         _isOpenMenu = false;
         CursorHandle.Locked();
     }

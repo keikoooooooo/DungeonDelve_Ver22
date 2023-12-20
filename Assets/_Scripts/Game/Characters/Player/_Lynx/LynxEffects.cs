@@ -77,10 +77,22 @@ public class LynxEffects : MonoBehaviour, IAttack
     
     private void EffectArrowCombo(AnimationEvent eEvent)
     {
-        var _quaternion = EnemyTracker.DetectEnemy ? RandomDirection() : Quaternion.Euler(angleXAttack , angleYAttack, 0f);
+        Quaternion _quaternion;
+        var _checClosestEnemy  = EnemyTracker.FindClosestEnemy(transform, out var posTarget);
+        if (!_checClosestEnemy)
+        {
+            _quaternion = Quaternion.Euler(angleXAttack, angleYAttack, 0f);
+        }
+        else
+        {
+            posTarget.y += 1.3f;
+            var randRotX = Random.Range(-2f, 2f);
+            var randRotY = Random.Range(-2f, 2f);
+            _quaternion = Quaternion.LookRotation(posTarget - attackPoint.transform.position) * Quaternion.Euler(randRotX, randRotY, 0);
+        }
+                
         var arrow = _poolArrowNormal.Get(attackPoint.position, _quaternion);
         arrow.FIRE();
-        
         lynxController.AddForceAttack();
     }
     private void EffectArrowHold(AnimationEvent eEvent)
@@ -106,7 +118,9 @@ public class LynxEffects : MonoBehaviour, IAttack
     private void Effect_Skill(AnimationEvent eEvent)
     {
         var position = attackPoint.position;
-        var rotation = Quaternion.Euler(EnemyTracker.DetectEnemy ? -6f : angleXAttack, attackPoint.eulerAngles.y + eEvent.intParameter, attackPoint.eulerAngles.z);
+        var rotation = Quaternion.Euler(EnemyTracker.DetectEnemy ? -6f : angleXAttack, 
+                                                                                attackPoint.eulerAngles.y + eEvent.intParameter,
+                                                                                attackPoint.eulerAngles.z);
         var arrow = _poolArrowSkill.Get(position, rotation);
         arrow.FIRE();
     }
@@ -144,15 +158,6 @@ public class LynxEffects : MonoBehaviour, IAttack
         
         effectSpecial.gameObject.SetActive(false);
         effectSpecial.Stop();
-    }
-    private Quaternion RandomDirection()
-    {
-        var posTarget = EnemyTracker.FindClosestEnemy(lynxController.transform);
-        posTarget.y += 1.3f;
-        
-        var randRotX = Random.Range(-2f, 2f);
-        var randRotY = Random.Range(-2f, 2f);
-        return Quaternion.LookRotation(posTarget - attackPoint.transform.position) * Quaternion.Euler(randRotX, randRotY, 0);
     }
 
     

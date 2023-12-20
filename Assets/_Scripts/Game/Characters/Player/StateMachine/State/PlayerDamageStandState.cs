@@ -32,9 +32,8 @@ public class PlayerDamageStandState : PlayerBaseState
     }
     public override void CheckSwitchState()
     {
-        if (_machine.IsDash)
-        {
-            SwitchState(_factory.Dash());
-        }
+        if (!_machine.IsDash) return;
+        SwitchState(_factory.Dash());
+        _machine.ReleaseDamageState();
     }
 }

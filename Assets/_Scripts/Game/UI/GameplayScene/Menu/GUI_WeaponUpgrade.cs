@@ -59,8 +59,8 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
         _userData = _gameManager.UserData;
         _gameItemData = _gameManager.GameItemData;
         _playerConfig = _gameManager.Player.PlayerConfig;
-        _weaponUpgradeConfig = _gameManager.Player.PlayerData.WeaponUpgradeConfig;
-        _playerRenderTexture = _gameManager.Player.PlayerData.PlayerRenderTexture;
+        _weaponUpgradeConfig = _gameManager.Player.playerData.WeaponUpgradeConfig;
+        _playerRenderTexture = _gameManager.Player.playerData.PlayerRenderTexture;
         rawMesh.texture = _playerRenderTexture.renderTexture;
         
         if (!_isEventRegistered)

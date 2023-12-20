@@ -18,7 +18,6 @@ public enum PushDirectionEnum
 [Serializable]
 public class AttackCustom
 {
-    
     [Tooltip("Các lực đẩy mỗi khi attack, lực áp dụng tương ứng thứ n của animationClip Attack, vd: Attack2 -> lấy giá trị thứ 2 áp dụng vào")]
     public List<float> pushForce;
     
@@ -52,7 +51,7 @@ public abstract class PlayerController : PlayerStateMachine
     
     private Coroutine _pushVelocityCoroutine;
     private Coroutine _pushMoveCoroutine;
-    private Coroutine _rotateToTargetCoroutine;
+    private Coroutine _focusEnemyCoroutine;
 
     
     protected override void SetVariables()
@@ -117,7 +116,7 @@ public abstract class PlayerController : PlayerStateMachine
         animator.SetTrigger(IDNormalAttack);
 
         PercentDMG_NA();
-        RotateToEnemy();
+        FocusEnemy();
     }
     protected virtual void ChargedAttack()
     {
@@ -173,17 +172,17 @@ public abstract class PlayerController : PlayerStateMachine
     }
     
     
-    #region Xử lí xoay nhân vật về phía Enemy mỗi khi Attack
-    private void RotateToEnemy()
+    #region Focus về phía Enemy mỗi khi Attack
+    private void FocusEnemy()
     {
-        if (_rotateToTargetCoroutine != null)
-            StopCoroutine(RotateToTargetCoroutine());
-        _rotateToTargetCoroutine = StartCoroutine(RotateToTargetCoroutine());
+        if (_focusEnemyCoroutine != null)
+            StopCoroutine(FocusEnemyCoroutine());
+        _focusEnemyCoroutine = StartCoroutine(FocusEnemyCoroutine());
     }
-    private IEnumerator RotateToTargetCoroutine()
+    private IEnumerator FocusEnemyCoroutine()
     {
-        var target = EnemyTracker.FindClosestEnemy(transform);
-        if(target == Vector3.zero) yield break;
+        var _checClosestEnemy  = EnemyTracker.FindClosestEnemy(transform, out var target);
+        if(!_checClosestEnemy) yield break;
         
         var direction = Quaternion.LookRotation(target - transform.position);
         var directionLocal = Mathf.Floor(transform.eulerAngles.y);

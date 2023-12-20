@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3a656301b83054e8f10b595b8d6d4f, type: 3}
   m_Name: ExpSmall_BU
   m_EditorClassIdentifier: 
-  ItemCustom:
-    Type: 17
-    Sprite: {fileID: 21300000, guid: 0cc10918b747c234397ad20ff7e34a06, type: 3}
-  Description: Increases Character EXP by 1000.
+  NameCode: 0
+  value: 1000
   Value: 1000
   UpgradeCost: 250

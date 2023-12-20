@@ -113,7 +113,7 @@ public class Chest : MonoBehaviour
     }
     private IEnumerator CloseChestCoroutine()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(4f);
         SetDissolve(0, 1, 1.5f);
         
         yield return new WaitForSeconds(.5f);

@@ -20,6 +20,22 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a847be26accd7bb48807dc9ab2ff03dc, type: 2}
+    - target: {fileID: 3031721766408572321, guid: c5a94752ea0277e428ae9dfe00e03f34, type: 3}
+      propertyPath: m_FadeMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3031721766408572321, guid: c5a94752ea0277e428ae9dfe00e03f34, type: 3}
+      propertyPath: m_AnimateCrossFading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3031721766408572321, guid: c5a94752ea0277e428ae9dfe00e03f34, type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.42737183
+      objectReference: {fileID: 0}
+    - target: {fileID: 3031721766408572321, guid: c5a94752ea0277e428ae9dfe00e03f34, type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.20160949
+      objectReference: {fileID: 0}
     - target: {fileID: 7422805092944093290, guid: c5a94752ea0277e428ae9dfe00e03f34, type: 3}
       propertyPath: m_Name
       value: Ice_StoneGroup_02 Variant

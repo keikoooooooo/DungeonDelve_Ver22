@@ -7,23 +7,25 @@ using Random = UnityEngine.Random;
 public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 {
     #region Variables
-    [Header("BaseClass -------")]
-    public PlayerInputs input;
-    public Transform model;
-    public Animator animator;
-    public CharacterController characterController;
-    public CinemachineFreeLook cinemachineFreeLook;
-    public ParticleSystem enableEffect;
+    [field: Header("BaseClass -------")] // REF
+    [field: SerializeField] public PlayerInputs input { get; private set; }
+    [field: SerializeField] public Transform model { get; private set; }
+    [field: SerializeField] public Animator animator { get; private set; }
+    [field: SerializeField] public CharacterController characterController { get; private set; }
+    [field: SerializeField] public CinemachineFreeLook cinemachineFreeLook { get; private set; }
+    [field: SerializeField] public ParticleSystem enableEffect { get; private set; }
+    [field: SerializeField] public PlayerDataHandle playerData { get; private set; }
+    [field: Header("BaseClass/Set Material")]
+    [field: SerializeField] public M_SetEmission setEmission { get; private set; }
+    [field: SerializeField] public M_SetFloat setDissolve { get; private set; }
     
     #region Get & Set Property
-    public PlayerDataHandle PlayerData;
-    public SO_PlayerConfiguration PlayerConfig => PlayerData.PlayerConfig;
+    public SO_PlayerConfiguration PlayerConfig => playerData.PlayerConfig;
     public StatusHandle Health { get; private set; }
     public StatusHandle Stamina { get; private set; }
     public PlayerBaseState CurrentState { get; set; }
     public Vector3 AppliedMovement { get; set; }
     public Vector3 InputMovement { get; set; }
-    
     public bool IsGrounded => characterController.isGrounded;
     protected bool CanMove { get; set; }
     protected bool CanRotation { get; set; }
@@ -33,13 +35,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public bool IsWalk => !IsIdle && _movementState == MovementState.StateWalk;
     public bool IsRun => !IsIdle && IsGrounded && !input.LeftShift && _movementState == MovementState.StateRun;
     public bool IsDash => input.LeftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
-
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     #endregion
-
-    [Header("Set Material")] 
-    public M_SetEmission setEmission;
-    public M_SetFloat setDissolve;
     
     #region Animation IDs Paramater
     // FLOAT
@@ -63,13 +60,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] public int IDSpecial = Animator.StringToHash("Special");              //  kỹ năng đặc biệt
     #endregion
     
-    // Events
+    #region Events
     public event Action OnDashEvent;
     public event Action OnTakeDMGEvent;
     public event Action OnDieEvent;
-    
-    
-    // Player Config
+    #endregion
+
+    #region Variables Config
     private PlayerStateFactory _state;
     protected enum MovementState
     {
@@ -84,11 +81,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] private float _jumpCD_Temp;
     [HideInInspector] private float _delayIncreaseST;
     [HideInInspector] protected int _attackCounter;
-    protected float _skillCD_Temp;
-    protected float _burstCD_Temp;
+    [HideInInspector] protected float _skillCD_Temp;
+    [HideInInspector] protected float _burstCD_Temp;
     [HideInInspector] private int _currentHP;
     #endregion
-    
+    #endregion
+
     private void Awake()
     {
         GetReference();
@@ -117,7 +115,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     {
         DamageableData.Remove(gameObject);
     }
-    
+
+
     private void GetReference()
     {
         _mainCamera = Camera.main;
@@ -265,7 +264,11 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         InputMovement = Vector3.zero;
         AppliedMovement = Vector3.zero;
         input.Move =Vector3.zero;
-        input.PlayerInput.Disable();
+        input.PlayerInput.Player.Move.Disable();
+        input.PlayerInput.Player.Jump.Disable();
+        input.PlayerInput.Player.NormalAttack.Disable();
+        input.PlayerInput.Player.ElementalSkill.Disable();
+        input.PlayerInput.Player.ElementalBurst.Disable();
         
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.GetDEF() * 0.5f) : PlayerConfig.GetDEF();
@@ -293,11 +296,14 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public virtual float PercentDMG_ES() => PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
     public virtual float PercentDMG_EB() => PlayerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
     public virtual int CalculationDMG(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
-    
     public void ReleaseDamageState() // gọi trên animationEvent để giải phóng trạng thái TakeDamage
     {
         CurrentState.SwitchState(_state.Idle());
-        input.PlayerInput.Enable();
+        input.PlayerInput.Player.Move.Enable();
+        input.PlayerInput.Player.Jump.Enable();
+        input.PlayerInput.Player.NormalAttack.Enable();
+        input.PlayerInput.Player.ElementalSkill.Enable();
+        input.PlayerInput.Player.ElementalBurst.Enable();
     }
     public async void ResetDeadState()
     {
@@ -339,6 +345,5 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     /// Giải phóng tất cả trạng thái khi nhảy, lướt,
     /// </summary>
     public abstract void ReleaseAction();
-
 }
 

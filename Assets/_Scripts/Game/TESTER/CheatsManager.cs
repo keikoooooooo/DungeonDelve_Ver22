@@ -250,6 +250,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     if (x is < 1 or > 11)
                                     {
                                         SpawnText($"Index not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
+                                        yield return _wait_100ms;
+                                        scrollView.Scroll();
                                         continue;
                                     }
                                     SETValuePlayerConfig(x, y);
@@ -258,6 +260,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     GUI_Manager.UpdateGUIData();
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                     OperationMethod();
+                                    yield return _wait_100ms;
+                                    scrollView.Scroll();
                                     break;
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
@@ -265,6 +269,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 yield return _wait_100ms;
                                 SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                 OperationMethod();
+                                yield return _wait_100ms;
+                                scrollView.Scroll();
                                 break;
                             }
                             yield return _waitNull;
@@ -288,6 +294,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     if (x is < 1 or > 11)
                                     {
                                         SpawnText($"Index not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
+                                        yield return _wait_100ms;
+                                        scrollView.Scroll();
                                         continue;
                                     }
                                     ADDValuePlayerConfig(x, y);
@@ -296,6 +304,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     GUI_Manager.UpdateGUIData();
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                     OperationMethod();
+                                    yield return _wait_100ms;
+                                    scrollView.Scroll();
                                     break;
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
@@ -303,6 +313,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 yield return _wait_100ms;
                                 SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                 OperationMethod();
+                                yield return _wait_100ms;
+                                scrollView.Scroll();
                                 break;
                             }
                             yield return _waitNull;
@@ -326,6 +338,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     if (x is < 1 or > 11)
                                     {
                                         SpawnText($"Index not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
+                                        yield return _wait_100ms;
+                                        scrollView.Scroll();
                                         continue;
                                     }
                                     SUBTRACTValuePlayerConfig(x, y);
@@ -334,6 +348,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     GUI_Manager.UpdateGUIData();
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                     OperationMethod();
+                                    yield return _wait_100ms;
+                                    scrollView.Scroll();
                                     break;
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
@@ -341,6 +357,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 yield return _wait_100ms;
                                 SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                 OperationMethod();
+                                yield return _wait_100ms;
+                                scrollView.Scroll();
                                 break;
                             }                            
                             yield return _waitNull;
@@ -364,6 +382,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     if (x is < 1 or > 11)
                                     {
                                         SpawnText($"Index not found. Error code: [KEY:<color=#FF3434>{x}</color>,VAL:{y}]");
+                                        yield return _wait_100ms;
+                                        scrollView.Scroll();
                                         continue;
                                     }
                                     MULTIPLYValuePlayerConfig(x, y);
@@ -372,6 +392,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     GUI_Manager.UpdateGUIData();
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                     OperationMethod();
+                                    yield return _wait_100ms;
+                                    scrollView.Scroll();
                                     break;
                                 }
                                 SpawnText($"<color=#FF3434>The syntax is invalid!!!</color>");
@@ -379,6 +401,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                 yield return _wait_100ms;
                                 SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
                                 OperationMethod();
+                                yield return _wait_100ms;
+                                scrollView.Scroll();
                                 break;
                             }
                             yield return _waitNull;
@@ -583,13 +607,15 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     var _target = _waypoints[result - 1];
                                     SpawnText($"Position SET {_target}");
                                     SpawnText("<color=#0BFF7D>SET Position Success...</color>");
+                                    panel.SetActive(false);
                                     _player.input.PlayerInput.Disable();
+                                    yield return new WaitForSecondsRealtime(2.15f);
+                                    _player.characterController.enabled = false;  
+                                    _player.transform.position = _target;
+                                    _player.characterController.enabled = true;  
+                                    _player.input.PlayerInput.Enable();
                                     _enter = false;
                                     _isOpen = false;
-                                    panel.SetActive(false);
-                                    yield return new WaitForSecondsRealtime(2.3f);
-                                    _player.transform.position = _target;
-                                    _player.input.PlayerInput.Enable();
                                     ClosePanel();
                                     break;
                                 }

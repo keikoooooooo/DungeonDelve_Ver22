@@ -16,15 +16,16 @@ public static class EnemyTracker
         if(!EnemiesTracker.Contains(_transform)) return;
         EnemiesTracker.Remove(_transform);
     }
-    public static Vector3 FindClosestEnemy(Transform _transfLocal) => SortClosestEnemy(_transfLocal);
-    
-    private static Vector3 SortClosestEnemy(Transform _transfLocal)
+    public static bool FindClosestEnemy(Transform _transfLocal, out Vector3 _target)
     {
+        _target = Vector3.zero;
         EnemiesTracker.RemoveAll(trans => trans == null);
-        if (!DetectEnemy) return _transfLocal.position;
-        EnemiesTracker.Sort((a, b)
-            => Vector3.Distance(a.transform.position, _transfLocal.position).CompareTo(Vector3.Distance(b.transform.position, _transfLocal.position)));
-        return EnemiesTracker[0].transform.position;
+        if (!DetectEnemy) 
+            return false;
+        EnemiesTracker.Sort((a, b) => Vector3.Distance(a.transform.position, _transfLocal.position)
+                                                                .CompareTo(Vector3.Distance(b.transform.position, _transfLocal.position)));
+        _target = EnemiesTracker[0].transform.position;
+        return true;
     }
 
 }

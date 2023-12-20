@@ -53,7 +53,7 @@ public class GameManager : Singleton<GameManager>
     private void InstancePlayer()
     {
         Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
-        Player.PlayerData.SetData(_playerConfig);
+        Player.playerData.SetData(_playerConfig);
          
         // Set Status Value
         var _value = _playerConfig.GetHP();

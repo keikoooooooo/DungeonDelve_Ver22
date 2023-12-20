@@ -70,7 +70,6 @@ public class ArlanController : PlayerController
         Debug.Log("Disable Skill");
     }   
     
-    
     // OverridingMethods
     protected override void SetVariables()
     {
@@ -80,7 +79,6 @@ public class ArlanController : PlayerController
         if(_weaponUnEquippedCoroutine !=null) StopCoroutine(_weaponUnEquippedCoroutine);
         _weaponUnEquippedCoroutine = StartCoroutine(WeaponUnEquippedCoroutine());
     }
-
     public override void ReleaseAction()
     {
         base.ReleaseAction();
@@ -90,7 +88,6 @@ public class ArlanController : PlayerController
         else if (swordOnShoulder.activeSelf)
             WeaponUnEquipped();
     }
-
     protected override void HandleDamage()
     {
         WeaponEquipped();

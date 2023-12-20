@@ -39,7 +39,7 @@ public class GUI_WeaponStats : MonoBehaviour, IGUI
     public void GetRef(GameManager _gameManager)
     {
         _playerConfig = _gameManager.Player.PlayerConfig;
-        _playerRender = _gameManager.Player.PlayerData.PlayerRenderTexture;
+        _playerRender = _gameManager.Player.playerData.PlayerRenderTexture;
         rawMesh.texture = _playerRender.renderTexture;
         
         UpdateData();
