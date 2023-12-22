@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -110,6 +111,7 @@ public class MenuController : Singleton<MenuController>
     public void ExitToLoginScene(string _sceneName)
     {
         Time.timeScale = 1;
+        DOTween.Clear();
         PlayFabController.Instance.ClearAccountTemp();
         LoadSceneManager.Instance.LoadScene(_sceneName);
     }

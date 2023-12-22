@@ -1,4 +1,5 @@
 using System.Collections;
+using FMOD.Studio;
 using UnityEngine;
 
 public class PlayerRunFastState : PlayerBaseState
@@ -9,10 +10,12 @@ public class PlayerRunFastState : PlayerBaseState
 
     private float currentBlend;
     private Coroutine _subtractSTCoroutine;
-    
+    //
+    private PLAYBACK_STATE _playbackState;
    
     public override void EnterState()
     {
+        _machine._footstepsInstance = _machine.runfastFootsteps;
         currentBlend = _machine.animator.GetFloat(_machine.IDSpeed);
         _machine.animator.speed = 1.4f;
         _machine.CanIncreaseST = false;
@@ -27,11 +30,12 @@ public class PlayerRunFastState : PlayerBaseState
 
         currentBlend = Mathf.MoveTowards(currentBlend, 1, 5f * Time.deltaTime);
         _machine.animator.SetFloat(_machine.IDSpeed, currentBlend);
-        
+
         CheckSwitchState();
     }
     protected override void ExitState()
     {
+        _machine._footstepsInstance.stop(STOP_MODE.ALLOWFADEOUT);
         _machine.input.LeftShift = false;
         _machine.animator.speed = 1f;
         _machine.CanIncreaseST = true;

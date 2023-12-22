@@ -1,12 +1,15 @@
 using System;
 using System.Threading.Tasks;
 using Cinemachine;
+using FMOD.Studio;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(PlayerDataHandle))]
 public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 {
     #region Variables
+    #region Ref
     [field: Header("BaseClass -------")] // REF
     [field: SerializeField] public PlayerInputs input { get; private set; }
     [field: SerializeField] public Transform model { get; private set; }
@@ -15,10 +18,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [field: SerializeField] public CinemachineFreeLook cinemachineFreeLook { get; private set; }
     [field: SerializeField] public ParticleSystem enableEffect { get; private set; }
     [field: SerializeField] public PlayerDataHandle playerData { get; private set; }
+    [field: SerializeField] public PlayerVoice voice { get; private set; }
     [field: Header("BaseClass/Set Material")]
     [field: SerializeField] public M_SetEmission setEmission { get; private set; }
     [field: SerializeField] public M_SetFloat setDissolve { get; private set; }
-    
+    #endregion
+
     #region Get & Set Property
     public SO_PlayerConfiguration PlayerConfig => playerData.PlayerConfig;
     public StatusHandle Health { get; private set; }
@@ -84,6 +89,11 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     [HideInInspector] protected float _skillCD_Temp;
     [HideInInspector] protected float _burstCD_Temp;
     [HideInInspector] private int _currentHP;
+    [HideInInspector] private PLAYBACK_STATE _footstepsPLAYBACK_STATE;
+    [HideInInspector] public EventInstance _footstepsInstance;
+    public EventInstance walkFootsteps { get; private set; }
+    public EventInstance runFootsteps { get; private set; }
+    public EventInstance runfastFootsteps { get; private set; }
     #endregion
     #endregion
 
@@ -110,6 +120,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleRotation();
 
         HandleStamina();
+
+        HandleFootstepsAudio();
     }
     private void OnDisable()
     {
@@ -123,6 +135,9 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         _state = new PlayerStateFactory(this);
         Health = new StatusHandle();
         Stamina = new StatusHandle();
+        walkFootsteps = AudioManager.CreateInstance(FMOD_Events.Instance.walkFootsteps);
+        runFootsteps = AudioManager.CreateInstance(FMOD_Events.Instance.runFootsteps);
+        runfastFootsteps = AudioManager.CreateInstance(FMOD_Events.Instance.runfastFootsteps);
     }
 
     /// <summary>
@@ -199,6 +214,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
                 animator.SetBool(IDJump, true);
                 animator.SetBool(IDFall, false);
                 _jumpVelocity = Mathf.Sqrt(PlayerConfig.GetJumpHeight() * -2f * _gravity);
+                voice.PlayJumping();
                 ReleaseAction();
                 break;
         }
@@ -230,6 +246,21 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 
         _delayIncreaseST = .15f;
         Stamina.Increases(2);
+    }
+    private void HandleFootstepsAudio()
+    {
+        if (IsGrounded && input.Move != Vector2.zero && !animator.IsTag("Attack"))
+        {
+            _footstepsInstance.getPlaybackState(out _footstepsPLAYBACK_STATE);
+            if (_footstepsPLAYBACK_STATE == PLAYBACK_STATE.STOPPED)
+            {
+                _footstepsInstance.start();
+            }
+        }
+        else
+        {
+            _footstepsInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        }
     }
     
     

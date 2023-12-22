@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
+using FMODUnity;
 using Spine.Unity;
 
 
@@ -23,6 +24,9 @@ public class LynxController : PlayerController
     [Space(10)]
     [Tooltip("Camera khi hold attack"), SerializeField]
     private CinemachineVirtualCamera aimCam;
+
+    [Tooltip("Audio khi Player nhắm."), SerializeField] 
+    private EventReference aimAudio;
     
     [Tooltip("Đối tượng mà aim camera theo dõi"),SerializeField] 
     private Transform targetCameraFocus;
@@ -102,15 +106,9 @@ public class LynxController : PlayerController
             yield return null;
         }
         PercentDMG_CA();
-        
-        _movementState = MovementState.StateRun;
-        animator.SetBool(ID4Direction, false);
-        cinemachineFreeLook.m_XAxis.Value = xAxis.Value;
-        
-        if(IsJump || IsDash) yield break;
-        CanMove = false;
-        CanRotation = false;
+        EndChargedAttack();
     }
+    // ReSharper disable Unity.PerformanceAnalysis
     private void InitChargedAttackValue()
     {
         // Animation
@@ -134,6 +132,19 @@ public class LynxController : PlayerController
         // DMG
         ChargedAttackTime = 0;
         _percentDMGCharged = PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
+        
+        // Audio
+        AudioManager.PlayOneShot(aimAudio, transform.position);
+    }
+    private void EndChargedAttack()
+    {
+        _movementState = MovementState.StateRun;
+        animator.SetBool(ID4Direction, false);
+        cinemachineFreeLook.m_XAxis.Value = xAxis.Value;
+        
+        if(IsJump || IsDash) return;
+        CanMove = false;
+        CanRotation = false;
     }
     private void BlendAnimationValue()
     {

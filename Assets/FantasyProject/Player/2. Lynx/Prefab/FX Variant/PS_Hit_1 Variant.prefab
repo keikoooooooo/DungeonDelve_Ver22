@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 713857164547537394, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1163039419812742976, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       propertyPath: m_LocalScale.x
@@ -458,6 +458,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6130567110401474471, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1654510265178733698}
+    - targetCorrespondingSourceObject: {fileID: 6130567110401474471, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2148736018281852347}
   m_SourcePrefab: {fileID: 100100000, guid: 2346e2e78b606f24198dc68919370a40, type: 3}
 --- !u!1 &97140737723702518 stripped
 GameObject:
@@ -516,6 +519,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8a2bd8d10eafa4184b59cca8a25686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2148736018281852347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97140737723702518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1707101157
+      Data2: 1299929822
+      Data3: -969478511
+      Data4: -970377701
+    Path: event:/WEAPON/Bow_ARROW_HIT_01
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 15
 --- !u!198 &7182304823289367173 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4026665142206687700, guid: 2346e2e78b606f24198dc68919370a40, type: 3}

@@ -1,14 +1,15 @@
 using FMODUnity;
-using NaughtyAttributes;
 using UnityEngine;
 
 public class FMOD_Events : Singleton<FMOD_Events>
 {
-
-    [field: BoxGroup("SFX/Player/MALE"), SerializeField] public EventReference male_JUMP { get; private set; }
-    [field: BoxGroup("SFX/Player/MALE"), SerializeField] public EventReference male_DASH { get; private set; }
-
-    [field: BoxGroup("SFX/Player/FEMALE"), SerializeField] public EventReference female_JUMP { get; private set; }
-    [field: BoxGroup("SFX/Player/FEMALE"), SerializeField] public EventReference female_DASH { get; private set; }
+    [field:  Header("PLAYER SFX")]
+    [field: SerializeField] public EventReference walkFootsteps { get; private set; }
+    [field: SerializeField] public EventReference runFootsteps { get; private set; }
+    [field: SerializeField] public EventReference runfastFootsteps { get; private set; }
+    
+    
+    
+    
     
 }

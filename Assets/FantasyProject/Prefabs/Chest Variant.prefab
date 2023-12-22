@@ -51,7 +51,7 @@ MonoBehaviour:
       - m_Target: {fileID: 8065085120820719922}
         m_TargetAssemblyTypeName: Chest, Assembly-CSharp
         m_MethodName: OnEnterPlayerCollision
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -303,6 +303,26 @@ PrefabInstance:
       propertyPath: chestCollider
       value: 
       objectReference: {fileID: 7824044604104441394}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: openAudio.Path
+      value: event:/UI/UI_OPENCHEST
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: openAudio.Guid.Data1
+      value: -1543012482
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: openAudio.Guid.Data2
+      value: 1083742929
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: openAudio.Guid.Data3
+      value: 1584761731
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: openAudio.Guid.Data4
+      value: 606005094
+      objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: OnOpenChestEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1

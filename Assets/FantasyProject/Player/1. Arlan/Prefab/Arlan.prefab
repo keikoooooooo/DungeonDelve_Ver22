@@ -2907,6 +2907,7 @@ GameObject:
   - component: {fileID: 1787091444842432457}
   - component: {fileID: 1802613745807339804}
   - component: {fileID: 1802613745807339874}
+  - component: {fileID: 1060547604585890178}
   - component: {fileID: 5139688112690164920}
   - component: {fileID: 1787091444842432454}
   - component: {fileID: 5471503419370806156}
@@ -3004,6 +3005,59 @@ MonoBehaviour:
   LeftMouse: 0
   E: 0
   Q: 0
+--- !u!114 &1060547604585890178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5471503419370806157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf6efc8e05a7044a9f88cec55ccc986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoodMorningEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  GoodAfternoonEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  GoodEveningEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  GoodNightEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  ChatEvent: []
+  OpenChestEvent: []
+  RelaxEvent: []
+  JumpEvent: []
+  DashEvent: []
+  LightAttackEvent: []
+  MidAttackEvent: []
+  HeavyAttackEvent: []
+  ElementalSkillEvent: []
+  ElementalBurstEvent: []
+  LightHitEvent: []
+  HeavyHitEvent: []
+  DieEvent: []
 --- !u!114 &5139688112690164920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3038,6 +3092,7 @@ MonoBehaviour:
   <cinemachineFreeLook>k__BackingField: {fileID: 5122457800056933351}
   <enableEffect>k__BackingField: {fileID: 4137938532677343948}
   <playerData>k__BackingField: {fileID: 5139688112690164920}
+  <voice>k__BackingField: {fileID: 1060547604585890178}
   <setEmission>k__BackingField: {fileID: 6697748734349368505}
   <setDissolve>k__BackingField: {fileID: 5532174074674715041}
   IDSpeed: -823668238
@@ -4899,15 +4954,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0048766155
+      value: 0.004876617
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000001892874
+      value: -0.0000000030276595
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -9.230929e-12
+      value: 1.476491e-11
       objectReference: {fileID: 0}
     - target: {fileID: 5822535128316044608, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y

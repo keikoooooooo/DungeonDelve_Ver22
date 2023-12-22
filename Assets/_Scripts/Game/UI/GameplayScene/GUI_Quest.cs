@@ -279,6 +279,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
     public void OnClickCancelButton()
     {
         noticeQuestPanel.Play("Panel_OUT");
+        _isReportQuest = false;
     }
     private IEnumerator CompletedPanelCoroutine()
     {

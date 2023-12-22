@@ -17,6 +17,7 @@ public class LynxEffects : MonoBehaviour, IAttack
     [SerializeField] private EffectBase arrowNormalPrefab;
     [SerializeField] private EffectBase arrowChargedPrefab;
     [SerializeField] private EffectBase arrowChargedNoFullyPrefab;
+    [SerializeField] private EffectBase arrowFire;
     
     [Header("Visual Effect")]
     [SerializeField] private ParticleSystem effectHolding;
@@ -53,7 +54,7 @@ public class LynxEffects : MonoBehaviour, IAttack
         _poolArrowChargedFully = new ObjectPooler<EffectBase>(arrowChargedPrefab, slotsVFX, 15);
         _poolArrowChargedNoFully = new ObjectPooler<EffectBase>(arrowChargedNoFullyPrefab, slotsVFX, 15);
         _poolArrowSkill = new ObjectPooler<EffectBase>(arrowNormalPrefab, slotsVFX, 25);
-        _poolArrowBurst = new ObjectPooler<EffectBase>(arrowChargedPrefab, slotsVFX, 50);
+        _poolArrowBurst = new ObjectPooler<EffectBase>(arrowFire, slotsVFX, 50);
         
         effectSpecial.transform.SetParent(slotsVFX);
     }
@@ -98,9 +99,16 @@ public class LynxEffects : MonoBehaviour, IAttack
     private void EffectArrowHold(AnimationEvent eEvent)
     {
         TurnOffFxHold();
-        var arrow = lynxController.ChargedAttackTime >= 3.5f ? 
-                            _poolArrowChargedFully.Get(attackPoint.position, attackPoint.rotation) : 
-                            _poolArrowChargedNoFully.Get(attackPoint.position, attackPoint.rotation) ;
+        EffectBase arrow;
+        if (lynxController.ChargedAttackTime >= 3.5f)
+        {
+            arrow = _poolArrowChargedFully.Get(attackPoint.position, attackPoint.rotation);
+            lynxController.voice.PlayMidAttack();
+        }
+        else
+        {
+            arrow = _poolArrowChargedNoFully.Get(attackPoint.position, attackPoint.rotation);
+        }
         arrow.FIRE();
     }
     public void TurnOnFxHold()
@@ -113,7 +121,6 @@ public class LynxEffects : MonoBehaviour, IAttack
         effectHolding.Stop();
         effectHolding.gameObject.SetActive(false);
     }
-
     
     private void Effect_Skill(AnimationEvent eEvent)
     {

@@ -444,5 +444,44 @@ PrefabInstance:
     - {fileID: 5761300332687458995, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7963070265621199737, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5351236227551551555}
   m_SourcePrefab: {fileID: 100100000, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
+--- !u!1 &8365783658045013775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7963070265621199737, guid: d8b3feef50c293240b1ef25d86eb2da7, type: 3}
+  m_PrefabInstance: {fileID: 1917330432233948278}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5351236227551551555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8365783658045013775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1707101157
+      Data2: 1299929822
+      Data3: -969478511
+      Data4: -970377701
+    Path: event:/WEAPON/Bow_ARROW_HIT_01
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 15

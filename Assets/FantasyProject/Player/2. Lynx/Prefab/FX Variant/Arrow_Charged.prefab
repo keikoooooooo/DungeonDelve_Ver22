@@ -214,6 +214,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2137427691623013657, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
+      propertyPath: StopEvent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137427691623013657, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2350650071270741545, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
       propertyPath: m_Layer
       value: 8

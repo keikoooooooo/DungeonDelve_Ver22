@@ -12,13 +12,14 @@ public class ChestNoticeManager : MonoBehaviour
     
     private Camera _mainCam;
     private Vector3 chestScreenPoint;
-    private static readonly Dictionary<Chest, IconIndicator> _chests = new();
+    private static Dictionary<Chest, IconIndicator> _chests;
     private static ObjectPooler<IconIndicator> _poolIndicator;
     
     
     private void Awake()
     {
         _mainCam = Camera.main;
+        _chests = new Dictionary<Chest, IconIndicator>();
     }
     private void Start()
     {

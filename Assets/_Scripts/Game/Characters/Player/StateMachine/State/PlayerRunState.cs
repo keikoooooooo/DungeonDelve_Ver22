@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using UnityEngine;
 
 public class PlayerRunState : PlayerBaseState
@@ -9,9 +10,12 @@ public class PlayerRunState : PlayerBaseState
     private float currentBlend;
     private float lastInputLeftShift; // thời gian nhấn phím shift 
     private bool isLeftShiftPressed; // có nhấn phím shift ?
+    //  
+    private PLAYBACK_STATE _playbackState;
     
     public override void EnterState()
     {
+        _machine._footstepsInstance = _machine.runFootsteps;
         currentBlend = _machine.animator.GetFloat(_machine.IDSpeed);
     }
     public override void UpdateState()
@@ -20,12 +24,13 @@ public class PlayerRunState : PlayerBaseState
         
         currentBlend = Mathf.MoveTowards(currentBlend, 1, 5f * Time.deltaTime);
         _machine.animator.SetFloat(_machine.IDSpeed, currentBlend);
-        
-        
+
         CheckSwitchState();
     }
     protected override void ExitState()
-    { }
+    {
+        _machine._footstepsInstance.stop(STOP_MODE.ALLOWFADEOUT);
+    }
     
     public override void CheckSwitchState()
     {
@@ -64,4 +69,5 @@ public class PlayerRunState : PlayerBaseState
         }  
         
     }
+    
 }

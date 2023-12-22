@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +9,8 @@ using UnityEngine.InputSystem;
 public class Chest : MonoBehaviour
 {
     [SerializeField, Required] private RewardSetup rewardSetup;
+    [Space] 
+    [SerializeField] private EventReference openAudio;
     [SerializeField] private Animator chestAnimator;
     [SerializeField] private BoxCollider chestCollider;
     [SerializeField] private ParticleSystem chestVFX;
@@ -23,9 +26,9 @@ public class Chest : MonoBehaviour
     private Coroutine _openCoroutine;
     private Coroutine _closeCoroutine;
     private NoticeManager _notice;
-    
     private bool _detectPlayer; // Có trigger với Player ?
     private bool _canReceived;  // Có thể nhận thưởng ?
+    
     
     private void OnEnable()
     {
@@ -44,8 +47,13 @@ public class Chest : MonoBehaviour
         GUI_Inputs.InputAction.UI.CollectItem.performed -= OnClickOpenChest;
         OnOpenChestEvent -= rewardSetup.SendRewardData;
     }
-    
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P)) CreateChest();
+    }
+
+
     /// <summary>
     /// Khi nhấn (Input) để mở rương
     /// </summary>
@@ -76,8 +84,6 @@ public class Chest : MonoBehaviour
         chestAnimator.Rebind();
         SetDissolve(0, 1, 0);
         chestAnimator.SetTrigger(ActiveChestID);
-        OpenIndicator();
-        
         yield return new WaitForSeconds(.1f);
         SetDissolve(1, 0, 2f);
     }
@@ -100,6 +106,7 @@ public class Chest : MonoBehaviour
         chestVFX.gameObject.SetActive(true);
         chestVFX.Play();
         OnOpenChestEvent?.Invoke();
+        AudioManager.PlayOneShot(openAudio, transform.position);
     }
     
     /// <summary>
@@ -138,7 +145,7 @@ public class Chest : MonoBehaviour
     /// <summary>
     /// Mở thông báo mở rương 
     /// </summary>
-    public void OnEnterPlayerCollision()
+    public void OnEnterPlayerCollision(GameObject _playerObject)
     {
         _detectPlayer = true;
         if(!_canReceived) 

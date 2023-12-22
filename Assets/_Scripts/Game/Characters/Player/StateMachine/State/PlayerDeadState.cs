@@ -12,8 +12,8 @@ public class PlayerDeadState : PlayerBaseState
     
     public override void EnterState()
     {
+        _machine.voice.PlayDie();
         _machine.characterController.enabled = false;
-
         if (!_machine.IsGrounded)
         {
             _canDelay = false;

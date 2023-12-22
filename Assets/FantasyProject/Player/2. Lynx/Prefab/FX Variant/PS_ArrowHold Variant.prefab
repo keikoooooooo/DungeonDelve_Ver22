@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 304669021573947951, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
@@ -312,4 +313,83 @@ PrefabInstance:
       value: -25431899
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3522067147260334173, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2137427691623013657}
+    - targetCorrespondingSourceObject: {fileID: 3522067147260334173, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8055737056375486084}
   m_SourcePrefab: {fileID: 100100000, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+--- !u!1 &4766121245306248930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3522067147260334173, guid: 5ee0cee073951e94a9b20cd5e0207d41, type: 3}
+  m_PrefabInstance: {fileID: 8269822148104507071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2137427691623013657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766121245306248930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -935226386
+      Data2: 1284625792
+      Data3: -885258828
+      Data4: -1214045753
+    Path: event:/WEAPON/FireBall_SHOOT_01
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &8055737056375486084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766121245306248930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeed1aa4468ad10439f572b5baff58e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isFromPool: 0
+  audio:
+    Guid:
+      Data1: -252292361
+      Data2: 1280659724
+      Data3: 969808007
+      Data4: 1509572868
+    Path: event:/WEAPON/Bow_ARROW_SHOOT_02
+  audios:
+  - Guid:
+      Data1: -670282731
+      Data2: 1294886589
+      Data3: 503706800
+      Data4: 420837329
+    Path: event:/WEAPON/Bow_ARROW_SHOOT_01
+  - Guid:
+      Data1: -252292361
+      Data2: 1280659724
+      Data3: 969808007
+      Data4: 1509572868
+    Path: event:/WEAPON/Bow_ARROW_SHOOT_02
+  isRandomAudio: 0

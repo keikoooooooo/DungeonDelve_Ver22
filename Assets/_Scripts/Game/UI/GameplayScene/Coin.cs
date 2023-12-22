@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 
 public class Coin : MonoBehaviour, IPooled<Coin>
 {
+    [SerializeField] private new Audio audio;
     [SerializeField] private TrailRenderer coinTrail;
     [SerializeField] private AnimationCurve moveCurve;
     [SerializeField] private float moveSpeed = 15f;
@@ -39,7 +40,6 @@ public class Coin : MonoBehaviour, IPooled<Coin>
         _moveTween ?.Kill();
         _moveTween = transform.DOMove(GetRandomPos_1(transform.position), _duration).SetEase(moveCurve).OnComplete(() => { _canMove = true; });
     }
-    
     private void LateUpdate()
     {
         if(!_canMove) return;
@@ -52,6 +52,7 @@ public class Coin : MonoBehaviour, IPooled<Coin>
     }
 
 
+    public void PlayAudio() => audio.Play();
     private static Vector3 GetRandomPos_1(Vector3 _currentPos)
     {
         var posRand = Random.insideUnitSphere * 1.25f;

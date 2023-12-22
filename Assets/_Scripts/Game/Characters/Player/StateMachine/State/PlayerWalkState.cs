@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using FMOD.Studio;
 using UnityEngine;
 
 public class PlayerWalkState : PlayerBaseState
@@ -9,9 +8,11 @@ public class PlayerWalkState : PlayerBaseState
 
     
     private float currentBlend;
+    private PLAYBACK_STATE _playbackState;
     
     public override void EnterState()
     {
+        _machine._footstepsInstance = _machine.walkFootsteps;
         _machine.animator.speed = 1.25f;
         currentBlend = _machine.animator.GetFloat(_machine.IDSpeed);
     }
@@ -21,15 +22,14 @@ public class PlayerWalkState : PlayerBaseState
         
         currentBlend = Mathf.MoveTowards(currentBlend, .5f, 5f * Time.deltaTime);
         _machine.animator.SetFloat(_machine.IDSpeed, currentBlend);
-        
+
         CheckSwitchState();
     }
     protected override void ExitState()
     {
         _machine.animator.speed = 1f;
+        _machine._footstepsInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
-
-
     public override void CheckSwitchState()
     {
         // // Kiểm tra các trạng thái khi nhân vật đang đứng dưới đất
@@ -46,5 +46,6 @@ public class PlayerWalkState : PlayerBaseState
             SwitchState(_factory.Run());
         }
     }
+    
     
 }

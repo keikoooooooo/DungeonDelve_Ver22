@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,8 @@ public class RewardManager : Singleton<RewardManager>
     [SerializeField] private ItemDrop _itemDropRarePrefab;
     [SerializeField] private ItemDrop _itemDropEpicPrefab;
     [SerializeField] private ItemDrop _itemDropLegendaryPrefab;
+    [Space]
+    [SerializeField] private EventReference collectItemAudio;
     
     private UserData _userData;
     private PlayerController _player;
@@ -70,6 +73,7 @@ public class RewardManager : Singleton<RewardManager>
         RemoveNoticeReward(_keyValuePair.Key);
         SetReward(_keyValuePair.Value);
         _keyValuePair.Key.Release();
+        AudioManager.PlayOneShot(collectItemAudio, _keyValuePair.Key.transform.position);
     }
     
     
@@ -107,6 +111,7 @@ public class RewardManager : Singleton<RewardManager>
     }
     private void CoinMoveCompleted(Coin _coin)
     {
+        _coin.PlayAudio();
         _coin.OnMoveCompleteEvent -= CoinMoveCompleted;
         SetReward(_coinRewardData.Dequeue());
     }

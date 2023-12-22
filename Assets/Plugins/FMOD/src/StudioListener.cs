@@ -52,7 +52,7 @@ namespace FMODUnity
             }
             return result;
         }
-
+        
         private static void AddListener(StudioListener listener)
         {
             // Is the listener already in the list?
@@ -122,6 +122,11 @@ namespace FMODUnity
             {
                 RuntimeManager.SetListenerLocation(ListenerNumber, gameObject, attenuationObject);
             }
+        }
+
+        public void SetAttenuationObject(GameObject _gameObject)
+        {
+            attenuationObject = _gameObject;
         }
     }
 }

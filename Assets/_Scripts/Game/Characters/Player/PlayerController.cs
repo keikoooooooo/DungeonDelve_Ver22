@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMOD.Studio;
 using UnityEngine;
 
 [Serializable]
@@ -114,7 +115,7 @@ public abstract class PlayerController : PlayerStateMachine
         
         MouseHoldTime = 0;
         animator.SetTrigger(IDNormalAttack);
-
+        
         PercentDMG_NA();
         FocusEnemy();
     }

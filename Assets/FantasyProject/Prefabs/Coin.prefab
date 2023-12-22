@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 6092043555420584195}
   - component: {fileID: 772737257938115263}
   - component: {fileID: 3944437912798546093}
+  - component: {fileID: -5402937063048750886}
   m_Layer: 16
   m_Name: Coin
   m_TagString: Untagged
@@ -243,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10dd00e9854af4f4c83684d5d895e4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audio: {fileID: -5402937063048750886}
   coinTrail: {fileID: 744633747891105128}
   moveCurve:
     serializedVersion: 2
@@ -279,3 +281,22 @@ MonoBehaviour:
     m_RotationOrder: 4
   moveSpeed: 17
   rorationSpeed: 450
+--- !u!114 &-5402937063048750886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336036552922060937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd055f03114d2a8499c35d428a6b7197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio:
+    Guid:
+      Data1: 561670829
+      Data2: 1186132173
+      Data3: 544332943
+      Data4: -18086901
+    Path: event:/UI/UI_Collect_Coin

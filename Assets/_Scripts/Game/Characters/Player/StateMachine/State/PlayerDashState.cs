@@ -13,6 +13,7 @@ public class PlayerDashState : PlayerBaseState
     
     public override void EnterState()
     {
+        _machine.voice.PlayDash();
         _machine.animator.Rebind();
         _machine.animator.SetTrigger(_machine.IDDash);
         _machine.Stamina.Decreases(stCost);
