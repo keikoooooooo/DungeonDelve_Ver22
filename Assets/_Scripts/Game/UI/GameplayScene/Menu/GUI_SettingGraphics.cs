@@ -9,15 +9,15 @@ public class GUI_SettingGraphics : MonoBehaviour
     
     private readonly List<string> _fps = new() { "24", "30", "45", "60", "120", "144", "Unlimit" };
     private readonly List<Resolution> _resolutions = new() {
-        new Resolution { width = 3840, height = 2160},  // 4K
-        new Resolution { width = 2560, height = 1440},  // 2K
-        new Resolution { width = 1920, height = 1080},  // FHD
-        new Resolution { width = 1600, height =  900},  
-        new Resolution { width = 1280, height =  720},  
-        new Resolution { width = 1024, height =  576},  
-        new Resolution { width =  854, height =  480},  
-        new Resolution { width =  640, height =  360},  
-        new Resolution { width =  426, height =  240},  
+        new Resolution { width = 3840, height = 2160 },  // 4K
+        new Resolution { width = 2560, height = 1440 },  // 2K
+        new Resolution { width = 1920, height = 1080 },  // FHD
+        new Resolution { width = 1600, height =  900 },  
+        new Resolution { width = 1280, height =  720 },  
+        new Resolution { width = 1024, height =  576 },  
+        new Resolution { width =  854, height =  480 },  
+        new Resolution { width =  640, height =  360 },  
+        new Resolution { width =  426, height =  240 },  
     };
     
     // Key PlayerPrefs

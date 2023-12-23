@@ -26,7 +26,6 @@ public class PlayerVoice : MonoBehaviour
     [BoxGroup("COMBAT"), SerializeField] private EventReference[] LightHitEvent;
     [BoxGroup("COMBAT"), SerializeField] private EventReference[] HeavyHitEvent;
     [BoxGroup("COMBAT"), SerializeField] private EventReference[] DieEvent;
-
     private void OnEnable()
     {
         var _currentHour = DateTime.Now.Hour;
@@ -44,9 +43,8 @@ public class PlayerVoice : MonoBehaviour
         }
     }
 
-    private static int Clamp(int _index, EventReference[] _references) => Mathf.Clamp(_index, 0, _references.Length - 1);
+    
     private void Play(EventReference _eventReference) => AudioManager.PlayOneShot(_eventReference, transform.position);
-
     
     #region STORY
     public void PlayChat(int _audioIndex) => AudioManager.PlayOneShot(ChatEvent[_audioIndex], transform.position);

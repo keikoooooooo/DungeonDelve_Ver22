@@ -219,8 +219,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2137427691623013657, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/WEAPON/FireBall_SHOOT_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137427691623013657, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
       propertyPath: OverrideMaxDistance
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137427691623013657, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -45402206
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137427691623013657, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1173258582
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137427691623013657, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: -1596500854
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137427691623013657, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 1086578678
       objectReference: {fileID: 0}
     - target: {fileID: 2350650071270741545, guid: 5a058ddd4c89fa44c9f861427085701a, type: 3}
       propertyPath: m_Layer

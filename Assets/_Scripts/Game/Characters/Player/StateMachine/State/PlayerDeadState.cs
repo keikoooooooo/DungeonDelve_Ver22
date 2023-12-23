@@ -7,41 +7,55 @@ public class PlayerDeadState : PlayerBaseState
         : base(_currentContext, factory) { }
 
     private float _delayDissolve;
-    private bool _canDelay;
-    private Coroutine _handleCoroutine;
+    private float _delayResetState;
+    private bool _isDie;
+    private bool _canSetDissolve;
     
     public override void EnterState()
     {
+        _isDie = true;
+        _canSetDissolve = true;
         _machine.voice.PlayDie();
         _machine.characterController.enabled = false;
+        _delayResetState = 2.5f;
+
         if (!_machine.IsGrounded)
         {
-            _canDelay = false;
+            _canSetDissolve = false;
+  
+            _delayDissolve = 0f;
             DeadDissolve(); 
-            return;
         }
-        _delayDissolve = 2f;
-        _canDelay = true;
-        _machine.animator.SetBool(_machine.IDDead, true);
+        else
+        {
+            _delayDissolve = 2f;
+            _machine.animator.SetBool(_machine.IDDead, true);
+        }
     }
     public override void UpdateState()
     {
-        if(!_canDelay) return;
+        if (_canSetDissolve)
+        {
+            _delayDissolve = _delayDissolve > 0 ? _delayDissolve - Time.deltaTime : 0;
+            if (_delayDissolve > 0) return;
+            DeadDissolve();
+        }
         
-        _delayDissolve = _delayDissolve > 0 ? _delayDissolve - Time.deltaTime : 0;
-        if (_delayDissolve > 0) 
-            return;
-        
-        _canDelay = false;
-        _machine.cinemachineFreeLook.enabled = false;
-        DeadDissolve();
-        if (_handleCoroutine != null) 
-            _machine.StopCoroutine(_handleCoroutine);
-        _handleCoroutine = _machine.StartCoroutine(HandleCoroutine());
+        CheckSwitchState();
     }
     protected override void ExitState() { }
-    public override void CheckSwitchState() { }
-    
+    public override void CheckSwitchState()
+    {
+        if (!_isDie) return;
+        
+        _delayResetState = _delayResetState > 0 ? _delayResetState - Time.deltaTime : 0;
+        if (_delayResetState > 0) 
+            return;
+        
+        LoadingPanel.Instance.Active(.7f);
+        _machine.ResetDeadState();
+        _isDie = false;
+    }
     private void DeadDissolve()
     {
         _machine.setEmission.ChangeCurrentIntensity(-3f);   
@@ -53,12 +67,8 @@ public class PlayerDeadState : PlayerBaseState
         _machine.setDissolve.ChangeValueSet(1);
         _machine.setDissolve.ChangeDurationApply(2f);
         _machine.setDissolve.Apply();
-    }
-    private IEnumerator HandleCoroutine()
-    {
-        yield return new WaitForSeconds(3f);
-        LoadingPanel.Instance.Active(.7f);
-        _machine.ResetDeadState();
+        
+        _canSetDissolve = false;
     }
     
     

@@ -128,7 +128,7 @@ MonoBehaviour:
     - 79.41
     - 83.49
     - 86.06
-  MaxHP: 300
+  MaxHP: 50
   ATK: 80
   CRITRate: 15
   CRITDMG: 50
@@ -141,8 +141,8 @@ MonoBehaviour:
   DashStaminaCost: 25
   JumpHeight: 1.4
   JumpCD: 0.38
-  ElementalSkillCD: 4
-  ElementalBurstCD: 4
+  ElementalSkillCD: 3
+  ElementalBurstCD: 3
   WeaponName: Twilight
   WeaponInfo: Increases Elemental Skill and Elemental Burst DMG by 36%
   WeaponLevel: 1

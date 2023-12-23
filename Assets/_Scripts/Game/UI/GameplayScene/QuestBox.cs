@@ -35,32 +35,24 @@ public class QuestBox : MonoBehaviour, IPooled<QuestBox>
         IsLocked = _task.IsLocked;
         IsReceived = _task.IsReceived;
         IsCompleted = _task.IsCompleted;
-        
-        if (IsReceived)
-            OnAcceptQuest();
-        else
-            OnCancelQuest();
+
+        SetReceivedQuestBox(IsReceived && !IsLocked);
     }
     
     public void SelectQuest() =>  OnQuestSelectEvent?.Invoke(this);
     public void TriggerBoxQuest() => GUI_Quest.IsTriggerQuestBox(this, true);
     public void NonTriggerBoxQuest() =>  GUI_Quest.IsTriggerQuestBox(this, false);
-    public void OnAcceptQuest() 
+
+    public void SetReceivedQuestBox(bool _value)
     {
-        iconAccept.enabled = true;
-        IsReceived = true;
-    }
-    public void OnCancelQuest()
-    {
-        iconAccept.enabled = false;
-        IsReceived = false;
+        iconAccept.enabled = _value;
+        IsReceived = _value;
     }
     public void SetReportQuest(bool _canCompleted)
     {
         iconReport.enabled = _canCompleted && IsReceived;
     }
     
-
     public void Release() => ReleaseCallback?.Invoke(this);
     public Action<QuestBox> ReleaseCallback { get; set; }
 }

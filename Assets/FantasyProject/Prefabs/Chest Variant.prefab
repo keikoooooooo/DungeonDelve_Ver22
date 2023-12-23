@@ -305,22 +305,42 @@ PrefabInstance:
       objectReference: {fileID: 7824044604104441394}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: openAudio.Path
-      value: event:/UI/UI_OPENCHEST
+      value: event:/UI/UI_CHEST_OPEN_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: activeAudio.Path
+      value: event:/UI/UI_REWARD_01
       objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: openAudio.Guid.Data1
-      value: -1543012482
+      value: -1035564758
       objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: openAudio.Guid.Data2
-      value: 1083742929
+      value: 1127566209
       objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: openAudio.Guid.Data3
-      value: 1584761731
+      value: 1006732479
       objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: openAudio.Guid.Data4
+      value: -139511635
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: activeAudio.Guid.Data1
+      value: -1543012482
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: activeAudio.Guid.Data2
+      value: 1083742929
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: activeAudio.Guid.Data3
+      value: 1584761731
+      objectReference: {fileID: 0}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: activeAudio.Guid.Data4
       value: 606005094
       objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}

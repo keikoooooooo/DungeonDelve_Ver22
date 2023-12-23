@@ -66,6 +66,41 @@ MonoBehaviour:
       Data3: -812750966
       Data4: 525335354
     Path: event:/FOOTSTEPS/Footstep_RUNFAST
+  <menuOpen>k__BackingField:
+    Guid:
+      Data1: 1740733434
+      Data2: 1100116017
+      Data3: -819640394
+      Data4: -1181243946
+    Path: event:/UI/UI_MENU_OPEN
+  <menuClose>k__BackingField:
+    Guid:
+      Data1: -687979412
+      Data2: 1249623919
+      Data3: 1023954868
+      Data4: 1991393031
+    Path: event:/UI/UI_MENU_CLOSE
+  <chestOpen>k__BackingField:
+    Guid:
+      Data1: -1035564758
+      Data2: 1127566209
+      Data3: 1006732479
+      Data4: -139511635
+    Path: event:/UI/UI_CHEST_OPEN_01
+  <rewards>k__BackingField:
+    Guid:
+      Data1: -1543012482
+      Data2: 1083742929
+      Data3: 1584761731
+      Data4: 606005094
+    Path: event:/UI/UI_REWARD_01
+  <dungeonAmbience>k__BackingField:
+    Guid:
+      Data1: -245987833
+      Data2: 1189204824
+      Data3: 828932529
+      Data4: -1061500155
+    Path: event:/AMBIENCE/Dungeon
 --- !u!1 &4476319100527341716
 GameObject:
   m_ObjectHideFlags: 0

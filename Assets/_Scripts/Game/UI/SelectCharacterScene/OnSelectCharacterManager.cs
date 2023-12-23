@@ -1,6 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
+using FMODUnity;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,17 +9,18 @@ public class OnSelectCharacterManager : MonoBehaviour
 {
     [SerializeField] private LoadSceneButton loadSceneButton;
     [Space]
-    [SerializeField] private GameObject nameChar_01;
-    [SerializeField] private RawImage char_01RawImage;
-    [SerializeField] private Animator char_01Animator;
-    [SerializeField] private SO_PlayerConfiguration char_01Config;
+    [BoxGroup("CHARACTER 01"), SerializeField] private GameObject nameChar_01;
+    [BoxGroup("CHARACTER 01"), SerializeField] private RawImage char_01RawImage;
+    [BoxGroup("CHARACTER 01"), SerializeField] private Animator char_01Animator;
+    [BoxGroup("CHARACTER 01"), SerializeField] private SO_PlayerConfiguration char_01Config;
     [Space]
-    [SerializeField] private GameObject nameChar_02;
-    [SerializeField] private RawImage char_02RawImage;
-    [SerializeField] private Animator char_02Animator;
-    [SerializeField] private SO_PlayerConfiguration char_02Config;
+    [BoxGroup("CHARACTER 02"), SerializeField] private GameObject nameChar_02;
+    [BoxGroup("CHARACTER 02"), SerializeField] private RawImage char_02RawImage;
+    [BoxGroup("CHARACTER 02"), SerializeField] private Animator char_02Animator;
+    [BoxGroup("CHARACTER 02"), SerializeField] private SO_PlayerConfiguration char_02Config;
     [Space] 
     [SerializeField] private GameObject animatedLoadPanel;
+    [SerializeField] private EventReference escOnClickSound;
     //
     private Tween colorChar_01Tween;
     private Tween colorChar_02Tween;
@@ -29,9 +31,7 @@ public class OnSelectCharacterManager : MonoBehaviour
     private readonly Color _unSelectColor = new(0.8f, 0.8f, 0.8f, 1);
     private readonly int IDTalkingSelect = Animator.StringToHash("TalkingSelect");
     private readonly int IDTalkingDeSelect = Animator.StringToHash("TalkingDeSelect");
-    
     private Coroutine _loadPanelCoroutine;
-
     private int _selectChar = -1;
     private SO_PlayerConfiguration _playerConfig;
 
@@ -53,6 +53,12 @@ public class OnSelectCharacterManager : MonoBehaviour
     {
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
         
+        AudioManager.PlayOneShot(escOnClickSound, transform.position);
+        switch (_selectChar)
+        {
+            case 1: char_01Animator.SetTrigger(IDTalkingDeSelect); break;
+            case 2: char_02Animator.SetTrigger(IDTalkingDeSelect); break;
+        }
         _selectChar = -1;
         ClearDotTween();
         char_01RawImage.DOColor(_unSelectColor, _durationTween);
@@ -71,10 +77,9 @@ public class OnSelectCharacterManager : MonoBehaviour
             colorChar_02Tween = char_02RawImage.DOColor(_unSelectColor, _durationTween);
             textChar_01Tween = nameChar_01.transform.DOScale(_selectScale, _durationTween);
             textChar_02Tween = nameChar_02.transform.DOScale(Vector3.one, _durationTween);
-            
-            if (char_01Animator.IsTag("select")) return;
-            char_01Animator.SetTrigger(IDTalkingSelect);
-            char_02Animator.SetTrigger(IDTalkingDeSelect);
+
+            if (!char_01Animator.IsTag("select"))   char_01Animator.SetTrigger(IDTalkingSelect);
+            if (!char_02Animator.IsTag("deselect")) char_02Animator.SetTrigger(IDTalkingDeSelect);
         }
         else
         {
@@ -84,9 +89,8 @@ public class OnSelectCharacterManager : MonoBehaviour
             textChar_01Tween = nameChar_01.transform.DOScale(Vector3.one, _durationTween);
             textChar_02Tween = nameChar_02.transform.DOScale(_selectScale, _durationTween);
             
-            if (char_02Animator.IsTag("select")) return;
-            char_01Animator.SetTrigger(IDTalkingDeSelect);
-            char_02Animator.SetTrigger(IDTalkingSelect);
+            if (!char_01Animator.IsTag("deselect")) char_01Animator.SetTrigger(IDTalkingDeSelect);
+            if (!char_02Animator.IsTag("select"))   char_02Animator.SetTrigger(IDTalkingSelect);
         }
     }
     private void ClearDotTween()
@@ -100,7 +104,7 @@ public class OnSelectCharacterManager : MonoBehaviour
     
     public void UpdateUserData()
     {
-        if (!PlayFabHandleUserData.Instance || _selectChar <= 0) return;
+        if (_selectChar <= 0 || !PlayFabHandleUserData.Instance) return;
         
         _playerConfig = Instantiate(_selectChar == 1 ? char_01Config : char_02Config);
         PlayFabHandleUserData.Instance.PlayerConfig = _playerConfig;

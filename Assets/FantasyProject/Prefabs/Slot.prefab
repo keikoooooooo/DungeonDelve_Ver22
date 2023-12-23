@@ -241,7 +241,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756984048b7bcdc458e64f946179880a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnSelectSlotEvent:
+    m_PersistentCalls:
+      m_Calls: []
   keyText: {fileID: 619924410856601247}
+  setSlotAudio:
+    Guid:
+      Data1: 1430478488
+      Data2: 1176681502
+      Data3: -1620520564
+      Data4: 1870518826
+    Path: event:/UI/UI_BUTTON_05
   iconItem: {fileID: 4408556996016379097}
 --- !u!1 &7512841984984539145
 GameObject:

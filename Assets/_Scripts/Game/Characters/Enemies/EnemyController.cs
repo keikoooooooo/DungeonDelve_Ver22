@@ -44,13 +44,8 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     {
         DamageableData.Add(gameObject, this);
         gameObject.SetObjectLayer(mainLayer.value);
-        
-        if(!_player && GameManager.Instance)
-        {
-            _player = GameManager.Instance.Player;
-            _player.OnDieEvent += HandlePlayerDie;
-            SetRefPlayer(_player.gameObject);
-        }
+        _player = GameManager.Instance.Player;
+        _player.OnDieEvent += HandlePlayerDie;
         
         UpdateConfig();
         SetDie(false);
@@ -61,6 +56,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     }
     private void Start()
     {
+        SetRefPlayer(_player.gameObject);
         var _maxHP = EnemyConfig.GetHP();
         Health.InitValue(_maxHP, _maxHP);
         SetRunSpeed(EnemyConfig.GetRunSpeed());
@@ -75,7 +71,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         _player.OnDieEvent -= HandlePlayerDie;
     }
 
-    
+
     public void UpdateConfig()
     {
         var _multiplier = 0f;   // Tỷ lệ tăng của enemy so với người chơi

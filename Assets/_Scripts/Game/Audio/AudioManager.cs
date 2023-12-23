@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
@@ -22,8 +21,11 @@ public class AudioManager : Singleton<AudioManager>
     public const string PP_MusicVolumeIndex = "MusicVolumeIndex";
     public const string PP_SFXVolumeIndex = "SFXVolumeIndex";
     public const string PP_DialogueVolumeIndex = "DialogueVolumeIndex";
-
+    //
     private static List<EventInstance> _eventInstances;
+    private EventInstance _ambienceInstance;
+    
+    
     
     protected override void Awake()
     {
@@ -37,6 +39,7 @@ public class AudioManager : Singleton<AudioManager>
     private void Start()
     {
         LoadOldVolume();
+        InitializeAmbience(FMOD_Events.Instance.dungeonAmbience);
     }
     private void OnDestroy()
     {
@@ -80,7 +83,13 @@ public class AudioManager : Singleton<AudioManager>
         _eventInstances.Add(_instance);
         return _instance;
     }
-    
+
+    private void InitializeAmbience(EventReference _eventReference)
+    {
+        _ambienceInstance = CreateInstance(_eventReference);
+        _ambienceInstance.start();
+    } 
+    public void SetAmbienceParameter(string parameterName, float parameterValue) => _ambienceInstance.setParameterByName(parameterName, parameterValue);
 }
 
 

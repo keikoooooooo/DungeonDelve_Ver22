@@ -1,3 +1,4 @@
+using FMODUnity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
     public UnityEvent<Slot, UI_Item> OnSelectSlotEvent;
     
     [SerializeField] private TextMeshProUGUI keyText;
+    [SerializeField] private EventReference setSlotAudio;
     [SerializeField] private Image iconItem;
 
     private int _clickCount;
@@ -28,6 +30,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
         if(_item.GetItemCustom.type != ItemType.Consumable || _item == GetItem) 
             return;
         
+        AudioManager.PlayOneShot(setSlotAudio, transform.position);
         OnSelectSlotEvent?.Invoke(this, _item);
     }
     public void OnPointerClick(PointerEventData eventData)

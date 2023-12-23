@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5700799999947143358}
   - component: {fileID: 4461587008494771643}
   - component: {fileID: 311091297586852233}
+  - component: {fileID: 5402982177613545792}
   m_Layer: 5
   m_Name: Description Button
   m_TagString: Untagged
@@ -104,6 +105,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5402982177613545792}
+        m_TargetAssemblyTypeName: Audio, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClickEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -142,6 +155,25 @@ MonoBehaviour:
   desText: {fileID: 6225876784885769109}
   widthOffset: 250
   heightOffset: 250
+--- !u!114 &5402982177613545792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764454297324450608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd055f03114d2a8499c35d428a6b7197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio:
+    Guid:
+      Data1: -157941344
+      Data2: 1301174934
+      Data3: -862150472
+      Data4: 809890712
+    Path: event:/UI/UI_BUTTON_09
 --- !u!1 &1692497920913419682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,6 +1250,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 833606818390843301}
   iconDrag: {fileID: 620707193290492977}
+  selectAudio:
+    Guid:
+      Data1: -1063892416
+      Data2: 1221037402
+      Data3: 1100536234
+      Data4: -1208895803
+    Path: event:/UI/UI_BUTTON_08
 --- !u!1 &8567719952746810245
 GameObject:
   m_ObjectHideFlags: 0

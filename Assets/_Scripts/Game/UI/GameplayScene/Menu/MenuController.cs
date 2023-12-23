@@ -8,7 +8,7 @@ public class MenuController : Singleton<MenuController>
 {
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private TextMeshProUGUI currencyText;
-    
+
     [Space]
     public UnityEvent OnClickEscOpenMenuEvent;
     public UnityEvent OnClickBOpenMenuEvent;
@@ -68,6 +68,7 @@ public class MenuController : Singleton<MenuController>
     
     private void OpenMenu(InputAction.CallbackContext _context)
     {
+        if (Time.timeScale == 0 && !_isOpenMenu) return;
         _isOpenMenu = !_isOpenMenu;
         if(_isOpenMenu)
         {
@@ -96,6 +97,7 @@ public class MenuController : Singleton<MenuController>
         _player.playerData.PlayerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
         Time.timeScale = 0;
         CursorHandle.NoneLocked();
+        AudioManager.PlayOneShot(FMOD_Events.Instance.menuOpen, transform.position);
     }
     public void CloseMenu()
     {
@@ -105,6 +107,8 @@ public class MenuController : Singleton<MenuController>
         _player.playerData.PlayerRenderTexture.CloseRenderUI();
         _isOpenMenu = false;
         CursorHandle.Locked();
+        
+        AudioManager.PlayOneShot(FMOD_Events.Instance.menuClose, transform.position);
     }
     
 
@@ -112,7 +116,8 @@ public class MenuController : Singleton<MenuController>
     {
         Time.timeScale = 1;
         DOTween.Clear();
-        PlayFabController.Instance.ClearAccountTemp();
-        LoadSceneManager.Instance.LoadScene(_sceneName);
+        
+        if (PlayFabController.Instance) PlayFabController.Instance.ClearAccountTemp();
+        if (LoadSceneManager.Instance) LoadSceneManager.Instance.LoadScene(_sceneName);
     }
 }

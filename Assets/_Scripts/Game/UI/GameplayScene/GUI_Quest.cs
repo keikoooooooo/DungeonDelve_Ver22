@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using QuestInGame;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +16,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
     [SerializeField] private TextMeshProUGUI titleQuest;
     [SerializeField] private TextMeshProUGUI descriptionQuest;
     [SerializeField] private TextMeshProUGUI questProgressText;
-    [SerializeField] private TextMeshProUGUI errorQuestText;
+    [SerializeField] private TextMeshProUGUI taskNoticeText;
     [SerializeField] private Button cancelBtt;
     [SerializeField] private Button acceptBtt;
     [SerializeField] private Button reportBtt;
@@ -25,8 +27,8 @@ public class GUI_Quest : MonoBehaviour, IGUI
     [SerializeField] private UI_Item itemPrefab;
     [SerializeField] private Transform contentItem;
     [SerializeField] private UI_Item itemRequired;
-    
-    
+
+    private static List<QuestSetup> _quests => QuestManager.QuestLists;
     private static ObjectPooler<QuestBox> _poolQuestBoxText;
     private static ObjectPooler<UI_Item> _poolUIItem;
     private SO_GameItemData _itemData;
@@ -101,44 +103,51 @@ public class GUI_Quest : MonoBehaviour, IGUI
     public void OnOpenPanelEvent()
     {
         if (!_canPanelOpen) return;
-        
         _canPanelOpen = false;
         CursorHandle.NoneLocked();
         GUI_Inputs.InputAction.UI.OpenBag.Disable();
-        GUI_Inputs.InputAction.UI.OpenMenu.Disable();
         Time.timeScale = 0;
         
         questPanel.SetActive(true);
         noticeQuestPanel.Play("Panel_Disable");
         ShowQuest();
+        AudioManager.PlayOneShot(FMOD_Events.Instance.menuOpen, transform.position);
     }
     private void OnClosePanelEvent()
     {
+        if (_canPanelOpen) return;
         _canPanelOpen = true;
         CursorHandle.Locked();
         GUI_Inputs.InputAction.UI.OpenBag.Enable();
-        GUI_Inputs.InputAction.UI.OpenMenu.Enable();
         Time.timeScale = 1;
         
         questPanel.SetActive(false);
+        AudioManager.PlayOneShot(FMOD_Events.Instance.menuClose, transform.position);
     }
-    public void OnClickClosePanelButton() => QuestManager.ClosePanel();
+
+    public void OnClickClosePanelButton() => QuestManager.ClosePanel(default);
     
     private void ShowQuest()
     {
         titleQuest.text = "???";
         descriptionQuest.text = "???";
-        errorQuestText.text = "";
+        taskNoticeText.text = "";
         itemRequired.gameObject.SetActive(false);
         
         _poolUIItem.List.ForEach(item => item.Release());
         _poolQuestBoxText.List.ForEach(box => box.Release());
-        var _quests = QuestManager.QuestLists;
-        foreach (var questSetup in _quests)
+
+        for (var i = 0; i < _quests.Count; i++)
         {
-            var _questBox = _poolQuestBoxText.Get();
-            _questBox.SetQuestBox(questSetup);
-            CheckQuestReport(_questBox);
+            _poolQuestBoxText.Get();
+        }
+        var _count = 0;
+        var _boxQuestActives = _poolQuestBoxText.List.Where(x => x.gameObject.activeSelf);
+        foreach (var _questBox in _boxQuestActives)
+        {
+            _questBox.SetQuestBox(_quests[_count]);
+            CheckQuestReport(_questBox); 
+            _count++;
         }
         SetQuestProgressText();
     }
@@ -149,9 +158,8 @@ public class GUI_Quest : MonoBehaviour, IGUI
         var _questSetup = _questBox.questSetup;
         titleQuest.text = _questSetup.GetTitle();
         descriptionQuest.text = _questSetup.GetDescription();
-        var _task = _questSetup.GetTask();
-        errorQuestText.text = _task.IsCompleted ? "You have completed this task." : _task.IsLocked ? "Can't handle this task today." : "";
         
+        SetNoticeText(_questSetup.GetTask());
         SpawnItemReward(_questSetup);
         SetItemReuired(_questSetup);
         SetButton(_questBox);
@@ -251,8 +259,8 @@ public class GUI_Quest : MonoBehaviour, IGUI
         if (_isReportQuest)
         {
             _isReportQuest = false;
-            var _task = _currentQuestBox.questSetup.GetRequirement();
-            _userData.IncreaseItemValue(_task.GetNameCode(), -_task.GetValue());
+            var _taskRequirement = _currentQuestBox.questSetup.GetRequirement();
+            _userData.IncreaseItemValue(_taskRequirement.GetNameCode(), -_taskRequirement.GetValue());
             QuestManager.OnCompletedQuest(_currentQuestBox.questSetup);
             
             if (_completedPanelCoroutine != null)
@@ -262,19 +270,20 @@ public class GUI_Quest : MonoBehaviour, IGUI
         else if (_isAccept)
         {
             _isAccept = false;
-            _currentQuestBox.OnAcceptQuest();
-            CheckQuestReport(_currentQuestBox);
+            _currentQuestBox.SetReceivedQuestBox(true);
             QuestManager.OnStartedQuest(_currentQuestBox.questSetup);
         }
         else
         {
-            _currentQuestBox.OnCancelQuest();
+            _currentQuestBox.SetReceivedQuestBox(false);
             QuestManager.OnCancelQuest(_currentQuestBox.questSetup);
         }
-        
-        SetButton(_currentQuestBox);
-        SetQuestProgressText();
+
         OnClickCancelButton();
+        SetQuestProgressText();
+        SetButton(_currentQuestBox);
+        CheckQuestReport(_currentQuestBox);
+        SetNoticeText(_currentQuestBox.questSetup.GetTask()); 
     }
     public void OnClickCancelButton()
     {
@@ -301,7 +310,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
         
         var _checkCommon = !_questBox.IsLocked && !_questBox.IsCompleted;
         acceptBtt.interactable = _checkCommon && !_questBox.IsReceived && QuestManager.currentQuest < QuestManager.maxQuest;
-        cancelBtt.interactable = _checkCommon && _questBox.IsReceived;
+        cancelBtt.interactable = _checkCommon && _questBox.IsReceived;     
     }
     private void CheckQuestReport(QuestBox _questBox)
     {
@@ -310,6 +319,6 @@ public class GUI_Quest : MonoBehaviour, IGUI
         reportBtt.interactable = _checkComplete && !_questBox.questSetup.GetTask().IsCompleted;
         _questBox.SetReportQuest(reportBtt.interactable);
     }
-    
+    private void SetNoticeText(Task _task) => taskNoticeText.text = _task.IsCompleted ? "You have completed this task." : _task.IsLocked ? "Can't handle this task today." : "";
 
 }

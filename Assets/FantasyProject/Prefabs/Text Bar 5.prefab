@@ -451,6 +451,8 @@ GameObject:
   - component: {fileID: 6554062425054652959}
   - component: {fileID: 7193528798368650166}
   - component: {fileID: 6943658649959016269}
+  - component: {fileID: 781657001920700020}
+  - component: {fileID: 8878695293458023570}
   m_Layer: 5
   m_Name: Text Bar 5
   m_TagString: Untagged
@@ -513,12 +515,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8878695293458023570}
+        m_TargetAssemblyTypeName: Audio, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClickEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7193528798368650166}
         m_TargetAssemblyTypeName: QuestBoxTest, Assembly-CSharp
         m_MethodName: SelectQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 781657001920700020}
+        m_TargetAssemblyTypeName: Audio, Assembly-CSharp
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -580,3 +606,41 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &781657001920700020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374970585328173322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd055f03114d2a8499c35d428a6b7197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio:
+    Guid:
+      Data1: -174840167
+      Data2: 1176354949
+      Data3: 2061744810
+      Data4: -1528626720
+    Path: event:/UI/UI_BUTTON_06
+--- !u!114 &8878695293458023570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374970585328173322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd055f03114d2a8499c35d428a6b7197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio:
+    Guid:
+      Data1: -157941344
+      Data2: 1301174934
+      Data3: -862150472
+      Data4: 809890712
+    Path: event:/UI/UI_BUTTON_09

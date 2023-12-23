@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,8 +8,7 @@ using UnityEngine.InputSystem;
 public class Chest : MonoBehaviour
 {
     [SerializeField, Required] private RewardSetup rewardSetup;
-    [Space] 
-    [SerializeField] private EventReference openAudio;
+    [Space]
     [SerializeField] private Animator chestAnimator;
     [SerializeField] private BoxCollider chestCollider;
     [SerializeField] private ParticleSystem chestVFX;
@@ -47,12 +45,7 @@ public class Chest : MonoBehaviour
         GUI_Inputs.InputAction.UI.CollectItem.performed -= OnClickOpenChest;
         OnOpenChestEvent -= rewardSetup.SendRewardData;
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P)) CreateChest();
-    }
-
+    
 
     /// <summary>
     /// Khi nhấn (Input) để mở rương
@@ -103,10 +96,10 @@ public class Chest : MonoBehaviour
         chestAnimator.SetBool(OpenChestID, true);
         
         yield return new WaitForSeconds(.8f);
+        AudioManager.PlayOneShot(FMOD_Events.Instance.chestOpen, transform.position);
         chestVFX.gameObject.SetActive(true);
         chestVFX.Play();
         OnOpenChestEvent?.Invoke();
-        AudioManager.PlayOneShot(openAudio, transform.position);
     }
     
     /// <summary>
@@ -127,7 +120,7 @@ public class Chest : MonoBehaviour
         chestVFX.gameObject.SetActive(false);
         chestVFX.Stop();
         
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.4f);
         chestCollider.enabled = false;
         chestAnimator.SetBool(OpenChestID, false);
     }

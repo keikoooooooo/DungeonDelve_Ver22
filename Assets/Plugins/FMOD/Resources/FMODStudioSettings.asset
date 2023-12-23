@@ -241,6 +241,7 @@ MonoBehaviour:
   MasterBanks:
   - Master
   Banks:
+  - AMBIENCE
   - MUSIC
   - SFX
   BanksToLoad: []

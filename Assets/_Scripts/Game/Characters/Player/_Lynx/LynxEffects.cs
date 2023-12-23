@@ -153,10 +153,10 @@ public class LynxEffects : MonoBehaviour, IAttack
         {
             // lấy 1 vị tri ngẫu nhiên trong bán kính maxRadius
             var randomPoint = Random.insideUnitCircle * maxRadius;
-            
-            // Từ vị trí xuất hiện và vị trí mục tiêu tìm ngẫu nhiên 1 vị trí mới trong bk vừa tìm đc
-            var currentPos = transform.position + new Vector3(randomPoint.x, 7f, randomPoint.y);
-            var targetPos = lynxController.indicatorQ.transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
+
+            var _target = lynxController.indicatorQ.transform.position;
+            var currentPos = _target + new Vector3(randomPoint.x, 5f, randomPoint.y);
+            var targetPos = _target + new Vector3(randomPoint.x, 0.1f, randomPoint.y);
             
             var arrow = _poolArrowBurst.Get(currentPos, Quaternion.LookRotation(targetPos - currentPos));
             arrow.FIRE();

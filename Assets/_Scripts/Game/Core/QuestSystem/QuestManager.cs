@@ -11,10 +11,10 @@ public class QuestManager : MonoBehaviour
     public static event Action OnPanelOpenEvent;
     public static event Action OnPanelCloseEvent;
     //
-    public static List<QuestSetup> QuestLists { get; private set; } = new();
+    public static List<QuestSetup> QuestLists { get; } = new();
     
     public static int currentQuest { get; private set; } // Số lượng quest đang nhận.
-    public static int maxQuest { get; private set; } = 3; // Số lượng tối đa quest được nhận/1 ngày. 
+    public static int maxQuest => 3; // Số lượng tối đa quest được nhận/1 ngày. 
     //
     private static readonly string _folderSave = "q_save";
     
@@ -36,7 +36,7 @@ public class QuestManager : MonoBehaviour
         else
             LoadOldQuest();
     }
-    private void LoadNewQuest()
+    private static void LoadNewQuest()
     {
         foreach (var questSetup in QuestLists)
         {
@@ -45,7 +45,7 @@ public class QuestManager : MonoBehaviour
             FileHandle.Delete(_folderSave, _task.GetID);
         }
     }
-    private void LoadOldQuest()
+    private static void LoadOldQuest()
     {
         foreach (var questSetup in QuestLists)
         {
@@ -80,7 +80,8 @@ public class QuestManager : MonoBehaviour
         _task.SetState(false);
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
-        ClosePanel();
+        ClosePanel(default);
+        AudioManager.PlayOneShot(FMOD_Events.Instance.rewards, Vector3.zero);
     }
     public static void OnCancelQuest(QuestSetup _quest)
     {
@@ -92,16 +93,18 @@ public class QuestManager : MonoBehaviour
     }
     
     
-    private void OpenPanel(InputAction.CallbackContext _context) => OnPanelOpenEvent?.Invoke();
-    public static void ClosePanel() => OnPanelCloseEvent?.Invoke();
+    private static void OpenPanel(InputAction.CallbackContext _context) => OnPanelOpenEvent?.Invoke();
+    public static void ClosePanel(InputAction.CallbackContext _context) => OnPanelCloseEvent?.Invoke();
     public void OnEnterPlayer()
     {
         GUI_Inputs.InputAction.UI.CollectItem.performed += OpenPanel;
+        GUI_Inputs.InputAction.UI.OpenMenu.performed += ClosePanel;
         NoticeManager.Instance.CreateNoticeT3("[F] Open Quest.");
     }
     public void OnExitPlayer()
     {
         GUI_Inputs.InputAction.UI.CollectItem.performed -= OpenPanel;
+        GUI_Inputs.InputAction.UI.OpenMenu.performed -= ClosePanel;
         NoticeManager.Instance.CloseNoticeT3();
     }
 }
