@@ -1,21 +1,22 @@
+using System;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayFabController : Singleton<PlayFabController>
 {
-    [Space]
-    public UnityEvent OnLoginSuccessEvent;
-    public UnityEvent OnRegisterSuccessEvent;
-    public UnityEvent OnMailSendForgotPWSuccessEvent;
-    public UnityEvent<string>  OnAccountHandleFailureEvent;
-    
-    
+    public event Action OnLoginSuccessEvent;
+    public event Action<string> OnLoginFailureEvent;
+    public event Action OnRegisterSuccessEvent;
+    public event Action<string> OnRegisterFailureEvent;
+    public event Action OnMailSendForgotPWSuccessEvent;
+    public event Action<string> OnMailSendForgotPWFailureEvent;
+    //
     private readonly string TitleID = "59B82";
     private readonly string USERNAME_Key = "USERNAME";
     private readonly string EMAIL_Key = "EMAIL";
     private readonly string PW_Key = "PASSWORD";
+    public string userID { get; private set; }
     public string username { get; private set; }
     public string userEmail { get; private set; }
     public string userPassword { get; private set; }
@@ -38,13 +39,13 @@ public class PlayFabController : Singleton<PlayFabController>
             result =>
             {
                 SaveAccount();
-                Debug.Log("OnLoginSuccess");
+                GetAccountID();
+                GetUsername();
                 OnLoginSuccessEvent?.Invoke();
             } ,
             error =>
             {
-                OnAccountHandleFailureEvent?.Invoke(ErrorCallback(error));
-                Debug.LogWarning(error.Error);
+                OnLoginFailureEvent?.Invoke(OnLoginErrorCode(error));
             }
         );
     }    
@@ -54,14 +55,12 @@ public class PlayFabController : Singleton<PlayFabController>
         PlayFabClientAPI.RegisterPlayFabUser(request, 
             result =>
             {
-                Debug.Log("OnRegisterSuccess");
                 PlayerPrefs.SetString(USERNAME_Key, username);
                 OnRegisterSuccessEvent?.Invoke();
             } ,
             error =>
             {
-                Debug.LogWarning(error.Error);
-                OnAccountHandleFailureEvent?.Invoke(ErrorCallback(error));
+                OnRegisterFailureEvent?.Invoke(OnRegisterErrorCode(error));
             } 
         );
     }
@@ -71,36 +70,57 @@ public class PlayFabController : Singleton<PlayFabController>
         PlayFabClientAPI.SendAccountRecoveryEmail(request,
             result =>
             {
-                Debug.Log("OnMailSendSuccess");
                 OnMailSendForgotPWSuccessEvent?.Invoke();
             } ,
             error =>
             {
-                Debug.LogWarning(error.Error);
-                OnAccountHandleFailureEvent?.Invoke(ErrorCallback(error));
+                OnMailSendForgotPWFailureEvent?.Invoke(OnForgotPWErrorCode(error));
             }
         );
     }
-    private static string ErrorCallback(PlayFabError _error)
+    
+    private static string OnLoginErrorCode(PlayFabError _error)
     {
         var keyMessage = _error.Error switch
         {
-            PlayFabErrorCode.InvalidParams => "Invalid Parameters !",
-            PlayFabErrorCode.UsernameNotAvailable => "Username Not Available !",
-            PlayFabErrorCode.EmailAddressNotAvailable => "Email Address Not Available !",
-            PlayFabErrorCode.InvalidEmailAddress => "Invalid Email Address !",
             PlayFabErrorCode.InvalidUsernameOrPassword or 
-            PlayFabErrorCode.InvalidEmailOrPassword or 
+                PlayFabErrorCode.InvalidEmailOrPassword or 
                 PlayFabErrorCode.InvalidUsername or
                 PlayFabErrorCode.InvalidPassword or
-                PlayFabErrorCode.AccountNotFound
+                PlayFabErrorCode.AccountNotFound or
+                PlayFabErrorCode.InvalidParams
                 => "Invalid Email Or Password",
-            
             _ => $"{_error.Error}"
         };
         return keyMessage;
     }
-    
+    private static string OnRegisterErrorCode(PlayFabError _error)
+    {
+        var keyMessage = _error.Error switch
+        {
+            PlayFabErrorCode.InvalidParams or PlayFabErrorCode.AccountNotFound => "Invalid Account !",
+            PlayFabErrorCode.UsernameNotAvailable or  PlayFabErrorCode.InvalidUsername => "Username Not Available !",
+            PlayFabErrorCode.EmailAddressNotAvailable or  PlayFabErrorCode.InvalidEmailAddress=> "Email Address Not Available !",
+            _ => $"{_error.Error}"
+        };
+        return keyMessage;
+    }
+    private static string OnForgotPWErrorCode(PlayFabError _error)
+    {
+        var keyMessage = _error.Error switch
+        {
+            PlayFabErrorCode.InvalidUsernameOrPassword or 
+                PlayFabErrorCode.InvalidEmailAddress or 
+                PlayFabErrorCode.EmailAddressNotAvailable or 
+                PlayFabErrorCode.InvalidEmailOrPassword or 
+                PlayFabErrorCode.AccountNotFound or
+                PlayFabErrorCode.InvalidParams
+                => "Invalid Email Address",
+            _ => $"{_error.Error}"
+        };
+        return keyMessage;
+    }
+
     
     
     /// <summary>
@@ -108,6 +128,7 @@ public class PlayFabController : Singleton<PlayFabController>
     /// </summary>
     private void SaveAccount()
     {
+        PlayerPrefs.SetString(USERNAME_Key, username);
         PlayerPrefs.SetString(EMAIL_Key, userEmail);
         PlayerPrefs.SetString(PW_Key, userPassword);
     }
@@ -119,7 +140,7 @@ public class PlayFabController : Singleton<PlayFabController>
     {
         if (!PlayerPrefs.HasKey(EMAIL_Key))
         {
-            OnAccountHandleFailureEvent?.Invoke("Please to login");
+            OnLoginFailureEvent?.Invoke("");
             return;
         }
         
@@ -133,16 +154,49 @@ public class PlayFabController : Singleton<PlayFabController>
     /// </summary>
     public void ClearAccountTemp()
     {
+        userID = "";
         username = "";
         userEmail = "";
         userPassword = "";
+        PlayerPrefs.DeleteKey(USERNAME_Key);
         PlayerPrefs.DeleteKey(EMAIL_Key);
         PlayerPrefs.DeleteKey(PW_Key);
+    }
+
+    // Get Account Info
+    private void GetAccountID()
+    {
+        var _request = new GetPlayerProfileRequest()
+        {
+            PlayFabId = PlayFabSettings.staticPlayer.PlayFabId
+        };
+        PlayFabClientAPI.GetPlayerProfile(_request, result =>
+        {
+            if (result.PlayerProfile is { PlayerId: not null })
+            {
+                userID = result.PlayerProfile.PlayerId;
+            } 
+        }, _ => { });
+    }
+    private void GetUsername()
+    {
+        var _request = new GetAccountInfoRequest()
+        {
+            PlayFabId = PlayFabSettings.staticPlayer.PlayFabId
+        };
+        PlayFabClientAPI.GetAccountInfo(_request, result =>
+        {
+            if (result.AccountInfo is { TitleInfo: not null })
+            {
+                username = result.AccountInfo.Username;
+            } 
+        }, _ => { });
     }
     
     
     // OnInputFieldEvent
-    public void GetUserName(string _nameIn) => username = _nameIn;
-    public void GetUserEmail(string _emailIn) => userEmail = _emailIn;
-    public void GetUserPassword(string _passwordIn) => userPassword = _passwordIn;
+    public void SetUserName(string _nameIn) => username = _nameIn;
+    public void SetUserEmail(string _emailIn) => userEmail = _emailIn;
+    public void SetUserPassword(string _passwordIn) => userPassword = _passwordIn;
+
 }

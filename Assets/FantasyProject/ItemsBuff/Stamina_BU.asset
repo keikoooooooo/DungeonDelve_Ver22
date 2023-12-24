@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f5e9571410d8004cbc7d1ea3950c870, type: 3}
   m_Name: Stamina_BU
   m_EditorClassIdentifier: 
-  NameCode: 0
+  NameCode: 1
   value: 50
-  Value: 50

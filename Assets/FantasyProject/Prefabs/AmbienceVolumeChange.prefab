@@ -48,7 +48,14 @@ MonoBehaviour:
   layerTrigger:
     serializedVersion: 2
     m_Bits: 128
-  parameterName: Volume
+  ambienceAudio:
+    Guid:
+      Data1: -245987833
+      Data2: 1189204824
+      Data3: 828932529
+      Data4: -1061500155
+    Path: event:/AMBIENCE/Dungeon
+  parameterName: _volume
   parameterValue: 1
 --- !u!65 &1130721323156553418
 BoxCollider:

@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c66ba66b52a80b49a8eb7024342520f, type: 3}
   m_Name: DEF_BU
   m_EditorClassIdentifier: 
-  NameCode: 0
-  value: 50
-  Value: 50
-  buffTimeOut: 0
+  NameCode: 3
+  value: 0.25
+  buffTimeOut: 10

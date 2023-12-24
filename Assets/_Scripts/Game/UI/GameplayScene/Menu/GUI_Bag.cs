@@ -1,21 +1,27 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GUI_Bag : MonoBehaviour, IGUI
 {
     [SerializeField] private Slot[] slots;
+    [SerializeField] private DropdownBar sortDropdown;
     public static event Action<Slot[]> OnItemChangedSlotEvent;
-    
     
     [Space]
     [SerializeField] private UI_Item itemPrefab;
     [SerializeField] private Transform itemContent;
-    [Space]
-    [SerializeField] private DropdownBar sortDropdown;
     
+    [BoxGroup("APPLY BUFF"), SerializeField] private SO_HealthBuff healthBuff;
+    [BoxGroup("APPLY BUFF"), SerializeField] private SO_StaminaBuff staminaBuff;
+    [BoxGroup("APPLY BUFF"), SerializeField] private SO_DamageBuff damageBuff;
+    [BoxGroup("APPLY BUFF"), SerializeField] private SO_DefenseBuff defenseBuff;
+    [BoxGroup("VFX BUFF"), SerializeField] private ParticleSystem effectBuff;
+    [BoxGroup("VFX BUFF"), SerializeField] private ParticleSystem effectBuffLoop;
     
     // Variables
     private UserData _userData;
@@ -23,7 +29,10 @@ public class GUI_Bag : MonoBehaviour, IGUI
     private static ObjectPooler<UI_Item> _poolItem;
     private readonly Dictionary<ItemCustom, int> _itemData = new();
     private readonly string PP_SortOption = "SortOptionIndex";
-
+    private string _accountID;
+    private PlayerController _player;
+    private ParticleSystem _effectBU, _effectBULoop;
+    private Coroutine _useBuffCoroutine;
     
     private void OnEnable()
     {
@@ -33,7 +42,6 @@ public class GUI_Bag : MonoBehaviour, IGUI
     {
         UnRegisterEvent();
     }
-    
     private void RegisterEvent()
     {
         GUI_Manager.Add(this);
@@ -56,7 +64,6 @@ public class GUI_Bag : MonoBehaviour, IGUI
         GUI_Inputs.InputAction.UI.UseItem4.performed -= UseItem4;
     }
     
-    
     public void UseItem1(InputAction.CallbackContext _callback) => HandleUseItem(slots[0]);
     public void UseItem2(InputAction.CallbackContext _callback) => HandleUseItem(slots[1]);
     public void UseItem3(InputAction.CallbackContext _callback) => HandleUseItem(slots[2]);
@@ -64,12 +71,10 @@ public class GUI_Bag : MonoBehaviour, IGUI
     private void HandleUseItem(Slot _slot)
     {
         var _item = _slot.GetItem;
-        if(_item == null) 
-            return;
+        if(_item == null) return;
 
         var _itemNameCode = _item.GetItemCustom.code;
         _userData.IncreaseItemValue(_itemNameCode, -1);
-
         if (_userData.HasItemValue(_itemNameCode) <= 0)
         {
             PlayerPrefs.SetString(_slot.KeyPlayerPrefs, string.Empty);
@@ -77,16 +82,64 @@ public class GUI_Bag : MonoBehaviour, IGUI
         }
         
         GUI_Manager.UpdateGUIData();
+        UseBuffEffect(_itemNameCode);
     }
-
+    private void UseBuffEffect(ItemNameCode _codeItemBuff)
+    {
+        AudioManager.PlayOneShot(FMOD_Events.Instance.buffEffect, transform.position);
+        switch (_codeItemBuff)
+        {
+            case ItemNameCode.POHealth: 
+                healthBuff.Apply(_player);
+                _effectBU.gameObject.SetActive(true);
+                _effectBU.Play();
+                break;
+            
+            case ItemNameCode.POStamina: 
+                staminaBuff.Apply(_player);
+                _effectBU.gameObject.SetActive(true);
+                _effectBU.Play();
+                break;
+            
+            case ItemNameCode.PODamage: 
+                damageBuff.Apply(_player);
+                _effectBULoop.gameObject.SetActive(true);
+                _effectBULoop.Play();
+                
+                if (_useBuffCoroutine != null)
+                    StopCoroutine(_useBuffCoroutine);
+                _useBuffCoroutine = StartCoroutine(UseBuffCoroutine(damageBuff.buffTimeOut));
+                break;
+            
+            case ItemNameCode.PODefense: 
+                defenseBuff.Apply(_player);
+                _effectBULoop.gameObject.SetActive(true);
+                _effectBULoop.Play();
+                
+                if (_useBuffCoroutine != null)
+                    StopCoroutine(_useBuffCoroutine);
+                _useBuffCoroutine = StartCoroutine(UseBuffCoroutine(defenseBuff.buffTimeOut));
+                break;
+        }
+    }
+    private IEnumerator UseBuffCoroutine(float _buffDeactivateTime)
+    {
+        yield return new WaitForSeconds(_buffDeactivateTime);
+        _effectBULoop.Stop();
+        _effectBULoop.gameObject.SetActive(false);
+    }
   
+    
     public void GetRef(GameManager _gameManager)
     {
+        _player = _gameManager.Player;
         _userData = _gameManager.UserData;
         _gameItemData = _gameManager.GameItemData;
         _poolItem = new ObjectPooler<UI_Item>(itemPrefab, itemContent, _gameItemData.GameItemDatas.Count);
-        
+        _accountID = PlayFabController.Instance ? PlayFabController.Instance.userID : "";
+
         InitNewSlot();
+        InitVFXBuff();
         UpdateData();
     }
     private void InitNewSlot()
@@ -94,11 +147,22 @@ public class GUI_Bag : MonoBehaviour, IGUI
         for (var i = 0; i < slots.Length; i++)
         {
             slots[i].SetKeyText($"{i + 1}");
-            slots[i].SetKeyPlayerPrefs($"SlotSave_{i + 1}");
+            slots[i].SetKeyPlayerPrefs($"{_accountID}:Slot_{i + 1}");
             slots[i].OnSelectSlotEvent.AddListener(OnDropItem);
         }
     }
-    
+    private void InitVFXBuff()
+    {
+        _effectBU = Instantiate(effectBuff, _player.transform);
+        _effectBU.gameObject.SetActive(false);
+        _effectBU.transform.localPosition = new Vector3(0, 1, 0);
+        _effectBU.Stop();
+        
+        _effectBULoop = Instantiate(effectBuffLoop, _player.transform);
+        _effectBULoop.gameObject.SetActive(false);
+        _effectBULoop.transform.localPosition = new Vector3(0, 1, 0);
+        _effectBULoop.Stop();
+    }
 
     public void UpdateData()
     {

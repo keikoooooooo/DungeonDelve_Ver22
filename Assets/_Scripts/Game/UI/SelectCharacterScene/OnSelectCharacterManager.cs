@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class OnSelectCharacterManager : MonoBehaviour
 {
@@ -105,11 +107,15 @@ public class OnSelectCharacterManager : MonoBehaviour
     public void UpdateUserData()
     {
         if (_selectChar <= 0 || !PlayFabHandleUserData.Instance) return;
-        
-        _playerConfig = Instantiate(_selectChar == 1 ? char_01Config : char_02Config);
+
+        _playerConfig = _selectChar switch
+        {
+            1 => Instantiate(char_01Config),
+            2 => Instantiate(char_02Config),
+            _ => null
+        };
         PlayFabHandleUserData.Instance.PlayerConfig = _playerConfig;
         PlayFabHandleUserData.Instance.SaveData();
-        
         OpenPanelLoad(Random.Range(2f, 2.8f));
     }
 

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,14 @@ public class UI_ItemDescription : MonoBehaviour
     {
         _canvas = GetComponentInParent<Canvas>();
         _itemRectTransform = item.GetComponent<RectTransform>();
+        descriptionPanel.gameObject.SetActive(false);
+    }
+    private void OnEnable()
+    {
+        CloseDescriptionPanel();
+    }
+    private void OnDisable()
+    {
         descriptionPanel.gameObject.SetActive(false);
     }
 
@@ -62,7 +71,6 @@ public class UI_ItemDescription : MonoBehaviour
         descriptionPanel.transform.SetParent(_canvas.transform);
         descriptionPanel.gameObject.SetActive(true);
     }
-
     public void CloseDescriptionPanel()
     {
         descriptionPanel.gameObject.SetActive(false);

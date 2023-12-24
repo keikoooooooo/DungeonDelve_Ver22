@@ -45,27 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroy: 0
-  <walkFootsteps>k__BackingField:
+  <dungeonAmbience>k__BackingField:
     Guid:
-      Data1: -1745742970
-      Data2: 1318964976
-      Data3: -1233517172
-      Data4: -231885437
-    Path: event:/FOOTSTEPS/Footstep_WALK
-  <runFootsteps>k__BackingField:
-    Guid:
-      Data1: 1676470269
-      Data2: 1327417865
-      Data3: -803407196
-      Data4: -1306358993
-    Path: event:/FOOTSTEPS/Footstep_RUN
-  <runfastFootsteps>k__BackingField:
-    Guid:
-      Data1: -1778339730
-      Data2: 1156552251
-      Data3: -812750966
-      Data4: 525335354
-    Path: event:/FOOTSTEPS/Footstep_RUNFAST
+      Data1: -245987833
+      Data2: 1189204824
+      Data3: 828932529
+      Data4: -1061500155
+    Path: event:/AMBIENCE/Dungeon
   <menuOpen>k__BackingField:
     Guid:
       Data1: 1740733434
@@ -94,13 +80,34 @@ MonoBehaviour:
       Data3: 1584761731
       Data4: 606005094
     Path: event:/UI/UI_REWARD_01
-  <dungeonAmbience>k__BackingField:
+  <buffEffect>k__BackingField:
     Guid:
-      Data1: -245987833
-      Data2: 1189204824
-      Data3: 828932529
-      Data4: -1061500155
-    Path: event:/AMBIENCE/Dungeon
+      Data1: 808636966
+      Data2: 1199344371
+      Data3: -661528129
+      Data4: -430774772
+    Path: event:/EFFECTS/Item_BUFF_EFFECT
+  <walkFootsteps>k__BackingField:
+    Guid:
+      Data1: -1745742970
+      Data2: 1318964976
+      Data3: -1233517172
+      Data4: -231885437
+    Path: event:/FOOTSTEPS/Footstep_WALK
+  <runFootsteps>k__BackingField:
+    Guid:
+      Data1: 1676470269
+      Data2: 1327417865
+      Data3: -803407196
+      Data4: -1306358993
+    Path: event:/FOOTSTEPS/Footstep_RUN
+  <runfastFootsteps>k__BackingField:
+    Guid:
+      Data1: -1778339730
+      Data2: 1156552251
+      Data3: -812750966
+      Data4: 525335354
+    Path: event:/FOOTSTEPS/Footstep_RUNFAST
 --- !u!1 &4476319100527341716
 GameObject:
   m_ObjectHideFlags: 0

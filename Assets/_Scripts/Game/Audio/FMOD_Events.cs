@@ -11,6 +11,7 @@ public class FMOD_Events : Singleton<FMOD_Events>
     [field: SerializeField] public EventReference menuClose { get; private set; }
     [field: SerializeField] public EventReference chestOpen { get; private set; }
     [field: SerializeField] public EventReference rewards { get; private set; }
+    [field: SerializeField] public EventReference buffEffect { get; private set; }
     //
     [field: Header("PLAYER SFX")]
     [field: SerializeField] public EventReference walkFootsteps { get; private set; }

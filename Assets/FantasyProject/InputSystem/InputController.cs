@@ -439,6 +439,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tab"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ff5041e-d8a8-4477-8ea9-81b528007023"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -461,6 +470,17 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""ScalePanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c885361-70c5-45b9-ae2f-43d167638019"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Tab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -552,6 +572,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_TESTER = asset.FindActionMap("TESTER", throwIfNotFound: true);
         m_TESTER_Enter = m_TESTER.FindAction("Enter", throwIfNotFound: true);
         m_TESTER_ScalePanel = m_TESTER.FindAction("ScalePanel", throwIfNotFound: true);
+        m_TESTER_Tab = m_TESTER.FindAction("Tab", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -803,12 +824,14 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private List<ITESTERActions> m_TESTERActionsCallbackInterfaces = new List<ITESTERActions>();
     private readonly InputAction m_TESTER_Enter;
     private readonly InputAction m_TESTER_ScalePanel;
+    private readonly InputAction m_TESTER_Tab;
     public struct TESTERActions
     {
         private @Inputs m_Wrapper;
         public TESTERActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Enter => m_Wrapper.m_TESTER_Enter;
         public InputAction @ScalePanel => m_Wrapper.m_TESTER_ScalePanel;
+        public InputAction @Tab => m_Wrapper.m_TESTER_Tab;
         public InputActionMap Get() { return m_Wrapper.m_TESTER; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -824,6 +847,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @ScalePanel.started += instance.OnScalePanel;
             @ScalePanel.performed += instance.OnScalePanel;
             @ScalePanel.canceled += instance.OnScalePanel;
+            @Tab.started += instance.OnTab;
+            @Tab.performed += instance.OnTab;
+            @Tab.canceled += instance.OnTab;
         }
 
         private void UnregisterCallbacks(ITESTERActions instance)
@@ -834,6 +860,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @ScalePanel.started -= instance.OnScalePanel;
             @ScalePanel.performed -= instance.OnScalePanel;
             @ScalePanel.canceled -= instance.OnScalePanel;
+            @Tab.started -= instance.OnTab;
+            @Tab.performed -= instance.OnTab;
+            @Tab.canceled -= instance.OnTab;
         }
 
         public void RemoveCallbacks(ITESTERActions instance)
@@ -920,5 +949,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     {
         void OnEnter(InputAction.CallbackContext context);
         void OnScalePanel(InputAction.CallbackContext context);
+        void OnTab(InputAction.CallbackContext context);
     }
 }

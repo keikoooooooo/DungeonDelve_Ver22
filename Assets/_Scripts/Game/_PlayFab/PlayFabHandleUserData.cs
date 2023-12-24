@@ -15,7 +15,6 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     public UserData UserData;
     public SO_PlayerConfiguration PlayerConfig;
     
-  
     public enum PF_Key : byte // PlayerFab KeyValue
     {
         UserData_Key,
@@ -25,11 +24,11 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     private void Start()
     {
         _isLogin = false;
-        PlayFabController.Instance.OnLoginSuccessEvent.AddListener(OnLoginSuccess);
+        PlayFabController.Instance.OnLoginSuccessEvent += OnLoginSuccess;
     }
     private void OnDestroy()
     {
-        PlayFabController.Instance.OnLoginSuccessEvent.RemoveListener(OnLoginSuccess);
+        PlayFabController.Instance.OnLoginSuccessEvent -= OnLoginSuccess;
     }
 
     
@@ -52,16 +51,12 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     {
         if(!_isLogin) return;
 
-        var jsonText = "";
-        switch (_keySave)
+        var jsonText = _keySave switch
         {
-            case PF_Key.UserData_Key:
-                jsonText = JsonConvert.SerializeObject(UserData, Formatting.Indented);
-                break;
-            case PF_Key.PlayerConfigData_Key:
-                jsonText = JsonConvert.SerializeObject(PlayerConfig, Formatting.Indented);
-                break;
-        }
+            PF_Key.UserData_Key => JsonConvert.SerializeObject(UserData, Formatting.Indented),
+            PF_Key.PlayerConfigData_Key => JsonConvert.SerializeObject(PlayerConfig, Formatting.Indented),
+            _ => ""
+        };
 
         var request = new UpdateUserDataRequest
         {
@@ -70,7 +65,9 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
                 { _keySave.ToString(), jsonText }
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, _resul => { Debug.Log("Player Update User Data Success"); }, ErrorCallback);
+        PlayFabClientAPI.UpdateUserData(request, 
+            _ =>  Debug.Log("Update Data Success: " + _keySave) , 
+            _ => Debug.Log("Update Data Failure: " + _keySave) );
     }
     
     private void GetUserData()
@@ -100,7 +97,6 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
         OnLoadUserDataSuccessEvent?.Invoke();
         Debug.Log("Get Data Success");
     }
-    
     
     private static void ErrorCallback(PlayFabError _error) => Debug.LogWarning(_error.Error);
 }

@@ -1,4 +1,6 @@
 using System.Collections;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,24 +11,31 @@ public class GUI_AccountManager : MonoBehaviour
     [Space] 
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject panelAnimatedLoading;
-    [SerializeField] private LoadSceneButton loadSceneButton;
+    [SerializeField] private LoadSceneButton startGameButton;
     [Space]
     [SerializeField] private GUI_Login guiLogin;
     [SerializeField] private GUI_Register guiRegister;
     [SerializeField] private GUI_ForgotPW guiForgotPw;
-
+    [Space] 
+    [SerializeField] private RectTransform noticeFrame;
+    [SerializeField] private TextMeshProUGUI noticeText;
+    [Space] 
+    [SerializeField] private TextMeshProUGUI accountIDText;
+    [SerializeField] private TextMeshProUGUI mailText;
+    
     private Coroutine _handleCoroutine;
+    private Coroutine _noticeCoroutine;
     
     private void OnEnable()
     {
-        logoutBtt.onClick.AddListener(LogoutAccount);
-        accountBtt.onClick.AddListener(OpenPanelLogin);
-        
+        accountIDText.text = "";
+        mailText.text = "";
         panelAnimatedLoading.SetActive(true);
         accountBtt.gameObject.SetActive(true);
         logoutBtt.gameObject.SetActive(false);
-        loadSceneButton.gameObject.SetActive(false);
-        
+        startGameButton.gameObject.SetActive(false);
+        logoutBtt.onClick.AddListener(LogoutAccount);
+        accountBtt.onClick.AddListener(OpenPanelLogin);
         
         if(PlayFabHandleUserData.Instance)
         {
@@ -38,28 +47,28 @@ public class GUI_AccountManager : MonoBehaviour
         
         if(!PlayFabController.Instance) return;
         #region Login
-        guiLogin.StartgameBtt.onClick.AddListener(PlayFabController.Instance.OnLogin);
-        guiLogin.EnterEmailField.onEndEdit.AddListener(PlayFabController.Instance.GetUserEmail);
-        guiLogin.EnterPWField.onEndEdit.AddListener(PlayFabController.Instance.GetUserPassword);      
-        PlayFabController.Instance.OnLoginSuccessEvent.AddListener(HandleLoginSuccess);
-        PlayFabController.Instance.OnAccountHandleFailureEvent.AddListener(HandleLoginFailure);
-        PlayFabController.Instance.OnAccountHandleFailureEvent.AddListener(guiLogin.SetErrorText);
+        guiLogin.startgameBtt.onClick.AddListener(PlayFabController.Instance.OnLogin);
+        guiLogin.emailField.onValueChanged.AddListener(PlayFabController.Instance.SetUserEmail);
+        guiLogin.passwordField.onValueChanged.AddListener(PlayFabController.Instance.SetUserPassword);      
+        PlayFabController.Instance.OnLoginSuccessEvent += HandleLoginSuccess;
+        PlayFabController.Instance.OnLoginFailureEvent += HandleLoginFailure;
+        PlayFabController.Instance.OnLoginFailureEvent += guiLogin.SetErrorText;
         #endregion
 
         #region Register
-        guiRegister.RegisterBtt.onClick.AddListener(PlayFabController.Instance.OnRegister);
-        guiRegister.EnterUsernameField.onEndEdit.AddListener(PlayFabController.Instance.GetUserName);
-        guiRegister.EnterEmailField.onEndEdit.AddListener(PlayFabController.Instance.GetUserEmail);
-        guiRegister.EnterPWField.onEndEdit.AddListener(PlayFabController.Instance.GetUserPassword);
-        PlayFabController.Instance.OnRegisterSuccessEvent.AddListener(HandleRegisterSuccess);
-        PlayFabController.Instance.OnAccountHandleFailureEvent.AddListener(guiRegister.SetErrorText);
+        guiRegister.registerBtt.onClick.AddListener(PlayFabController.Instance.OnRegister);
+        guiRegister.usernameField.onValueChanged.AddListener(PlayFabController.Instance.SetUserName);
+        guiRegister.emailField.onValueChanged.AddListener(PlayFabController.Instance.SetUserEmail);
+        guiRegister.passwordField.onValueChanged.AddListener(PlayFabController.Instance.SetUserPassword);
+        PlayFabController.Instance.OnRegisterSuccessEvent += HandleRegisterSuccess;
+        PlayFabController.Instance.OnRegisterFailureEvent += guiRegister.SetErrorText;
         #endregion
 
         #region Forgot password
-        guiForgotPw.VerificationBtt.onClick.AddListener(PlayFabController.Instance.OnForgotPW);
-        guiForgotPw.EnterEmailField.onEndEdit.AddListener(PlayFabController.Instance.GetUserEmail);
-        PlayFabController.Instance.OnMailSendForgotPWSuccessEvent.AddListener(HandleRegisterSuccess);
-        PlayFabController.Instance.OnAccountHandleFailureEvent.AddListener(guiForgotPw.SetErrorText);
+        guiForgotPw.verificationBtt.onClick.AddListener(PlayFabController.Instance.OnForgotPW);
+        guiForgotPw.emailField.onValueChanged.AddListener(PlayFabController.Instance.SetUserEmail);
+        PlayFabController.Instance.OnMailSendForgotPWSuccessEvent += HandleForgotPWSuccess;
+        PlayFabController.Instance.OnMailSendForgotPWFailureEvent += guiForgotPw.SetErrorText;
         #endregion
 
         PlayFabController.Instance.OnLogin();
@@ -80,28 +89,28 @@ public class GUI_AccountManager : MonoBehaviour
         if(!PlayFabController.Instance) return;
         
         #region Login
-        guiLogin.StartgameBtt.onClick.RemoveListener(PlayFabController.Instance.OnLogin);
-        guiLogin.EnterEmailField.onEndEdit.RemoveListener(PlayFabController.Instance.GetUserEmail);
-        guiLogin.EnterPWField.onEndEdit.RemoveListener(PlayFabController.Instance.GetUserPassword);      
-        PlayFabController.Instance.OnLoginSuccessEvent.RemoveListener(HandleLoginSuccess);
-        PlayFabController.Instance.OnAccountHandleFailureEvent.RemoveListener(HandleLoginFailure);
-        PlayFabController.Instance.OnAccountHandleFailureEvent.RemoveListener(guiLogin.SetErrorText);
+        guiLogin.startgameBtt.onClick.RemoveListener(PlayFabController.Instance.OnLogin);
+        guiLogin.emailField.onValueChanged.RemoveListener(PlayFabController.Instance.SetUserEmail);
+        guiLogin.passwordField.onValueChanged.RemoveListener(PlayFabController.Instance.SetUserPassword);      
+        PlayFabController.Instance.OnLoginSuccessEvent -= HandleLoginSuccess;
+        PlayFabController.Instance.OnLoginFailureEvent -= HandleLoginFailure;
+        PlayFabController.Instance.OnLoginFailureEvent -= guiLogin.SetErrorText;
         #endregion
 
         #region Register
-        guiRegister.RegisterBtt.onClick.RemoveListener(PlayFabController.Instance.OnRegister);
-        guiRegister.EnterUsernameField.onEndEdit.RemoveListener(PlayFabController.Instance.GetUserName);
-        guiRegister.EnterEmailField.onEndEdit.RemoveListener(PlayFabController.Instance.GetUserEmail);
-        guiRegister.EnterPWField.onEndEdit.RemoveListener(PlayFabController.Instance.GetUserPassword);
-        PlayFabController.Instance.OnRegisterSuccessEvent.RemoveListener(HandleRegisterSuccess);
-        PlayFabController.Instance.OnAccountHandleFailureEvent.RemoveListener(guiRegister.SetErrorText);
+        guiRegister.registerBtt.onClick.RemoveListener(PlayFabController.Instance.OnRegister);
+        guiRegister.usernameField.onValueChanged.RemoveListener(PlayFabController.Instance.SetUserName);
+        guiRegister.emailField.onValueChanged.RemoveListener(PlayFabController.Instance.SetUserEmail);
+        guiRegister.passwordField.onValueChanged.RemoveListener(PlayFabController.Instance.SetUserPassword);
+        PlayFabController.Instance.OnRegisterSuccessEvent -= HandleRegisterSuccess;
+        PlayFabController.Instance.OnRegisterFailureEvent -= guiRegister.SetErrorText;
         #endregion
 
         #region Forgot password
-        guiForgotPw.VerificationBtt.onClick.RemoveListener(PlayFabController.Instance.OnForgotPW);
-        guiForgotPw.EnterEmailField.onEndEdit.RemoveListener(PlayFabController.Instance.GetUserEmail);
-        PlayFabController.Instance.OnMailSendForgotPWSuccessEvent.RemoveListener(HandleRegisterSuccess);
-        PlayFabController.Instance.OnAccountHandleFailureEvent.RemoveListener(guiForgotPw.SetErrorText);
+        guiForgotPw.verificationBtt.onClick.RemoveListener(PlayFabController.Instance.OnForgotPW);
+        guiForgotPw.emailField.onValueChanged.RemoveListener(PlayFabController.Instance.SetUserEmail);
+        PlayFabController.Instance.OnMailSendForgotPWSuccessEvent -= HandleForgotPWSuccess;
+        PlayFabController.Instance.OnMailSendForgotPWFailureEvent -= guiForgotPw.SetErrorText;
         #endregion
     }
 
@@ -113,9 +122,11 @@ public class GUI_AccountManager : MonoBehaviour
     public void LogoutAccount()
     {
         ClearAccountTemp();
+        accountIDText.text = "";
+        mailText.text = "";
         accountBtt.gameObject.SetActive(true);
         logoutBtt.gameObject.SetActive(false);
-        loadSceneButton.gameObject.SetActive(false);
+        startGameButton.gameObject.SetActive(false);
     }
     
     
@@ -132,14 +143,17 @@ public class GUI_AccountManager : MonoBehaviour
     private IEnumerator LoginSuccessCoroutine()
     {
         panelAnimatedLoading.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(Random.Range(1.25f, 1.85f));
         animator.Play("Disable");
         panelAnimatedLoading.SetActive(false);
         logoutBtt.gameObject.SetActive(true);
         accountBtt.gameObject.SetActive(false);
-        loadSceneButton.gameObject.SetActive(true);
+        startGameButton.gameObject.SetActive(true);
+        GetUserInfor();
+        if (_noticeCoroutine != null) 
+            StopCoroutine(_noticeCoroutine);
+        _noticeCoroutine = StartCoroutine(ShowNoticeText("Login successful"));
     }
-    
     private void HandleRegisterSuccess()
     {
         if(_handleCoroutine != null) StopCoroutine(_handleCoroutine);
@@ -148,30 +162,67 @@ public class GUI_AccountManager : MonoBehaviour
     private IEnumerator RegisterSuccessCoroutine()
     {
         panelAnimatedLoading.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(Random.Range(0.85f, 1.1f));
         animator.Play("OpenLoginPanel");
         panelAnimatedLoading.SetActive(false);
+        
+        if (_noticeCoroutine != null) StopCoroutine(_noticeCoroutine);
+        _noticeCoroutine = StartCoroutine(ShowNoticeText("Registration successful"));
     }
-
-
-    
-    /// <summary>
-    /// Nếu có dữ liệu người chơi trên PlayFab -> Load scene gameplay
-    /// </summary>
-    private void OnLoadUserDataSuccess()
+    private void HandleForgotPWSuccess()
     {
-        loadSceneButton.SceneName = "DungeonScene";
+        if(_handleCoroutine != null) StopCoroutine(_handleCoroutine);
+        _handleCoroutine = StartCoroutine(ForgotPWSuccessCoroutine());
     }
-    /// <summary>
-    /// Nếu chưa có dữ liệu -> Load scene chọn nhân vật mới
-    /// </summary>
-    private void OnLoadUserDataFailure()
+    private IEnumerator ForgotPWSuccessCoroutine()
     {
-        loadSceneButton.SceneName = "NewSelectCharacterScene";
+        panelAnimatedLoading.SetActive(true);
+        yield return new WaitForSeconds(Random.Range(0.85f, 1.1f));
+        animator.Play("OpenLoginPanel");
+        panelAnimatedLoading.SetActive(false);
+        
+        if (_noticeCoroutine != null) StopCoroutine(_noticeCoroutine);
+        _noticeCoroutine = StartCoroutine(ShowNoticeText("Password change request successful"));
     }
     
-    
+    private IEnumerator ShowNoticeText(string _text)
+    {
+        noticeFrame.anchoredPosition = new Vector2(0, 400f);
+        noticeFrame.DOAnchorPosY(350f, .35f);
+        noticeFrame.gameObject.SetActive(true);
+        noticeText.text = _text;
+        yield return new WaitForSeconds(3f);
+        noticeFrame.gameObject.SetActive(false);
+    }
+    private void GetUserInfor()
+    {
+        if (!PlayFabController.Instance) 
+            return;
+        
+        accountIDText.text = PlayFabController.Instance.userID;
+        var _mail = PlayFabController.Instance.userEmail;
+        var _mailTemp = $"{_mail[0]}{_mail[1]}";
+        var _lastId = 0;
+        for (var i = 2; i < _mail.Length; i++)
+        {
+            if (_mail[i] == '@')
+            {
+                _lastId = i;
+                break;
+            }
+            _mailTemp += '*';
+        }
 
+        _mailTemp += _mail.Substring(_lastId);
+        mailText.text = $"<color=#10C7FF>User</color> <color=#FFCD10>{_mailTemp}</color>";
+    }
+
+    
+    /// <summary> Nếu có dữ liệu người chơi trên PlayFab -> Load scene gameplay. </summary>
+    private void OnLoadUserDataSuccess() => startGameButton.SceneName = "DungeonScene";
+    /// <summary> Nếu chưa có dữ liệu -> Load scene chọn nhân vật mới. </summary>
+    private void OnLoadUserDataFailure() => startGameButton.SceneName = "NewSelectCharacterScene";
+    
     public void ClearAccountTemp()
     {
         if(PlayFabController.Instance) PlayFabController.Instance.ClearAccountTemp();

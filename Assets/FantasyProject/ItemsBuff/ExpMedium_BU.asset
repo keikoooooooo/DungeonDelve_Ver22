@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3a656301b83054e8f10b595b8d6d4f, type: 3}
   m_Name: ExpMedium_BU
   m_EditorClassIdentifier: 
-  NameCode: 0
+  NameCode: 11
   value: 5000
-  Value: 5000
   UpgradeCost: 1000

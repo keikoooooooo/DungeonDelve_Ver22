@@ -4,31 +4,27 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Buff Effect/Damage Buff", fileName = "DMG_BU")]
 public class SO_DamageBuff : SO_BuffEffect
 {
-    [Tooltip("Thời gian hủy Buff"), SerializeField]
-    private float buffTimeOut;
+    [field: Tooltip("Thời gian hủy Buff (s)"), SerializeField] public float buffTimeOut { get; private set; }
 
     private Coroutine _buffCoroutine;
     private int _currentDMG;
     
     public override void Apply(PlayerController _player)
     {
-        _currentDMG = _player.PlayerConfig.GetST();
-        
         if (_buffCoroutine != null)
         {
-            _player.StopCoroutine(_buffCoroutine);
+            return;
         }
-        else
-        {
-            _player.PlayerConfig.SetST(_currentDMG + Mathf.CeilToInt(Value));
-        }
+        _currentDMG = _player.PlayerConfig.GetATK();
+        var _valueBonus = _currentDMG * Value;
+        _player.PlayerConfig.SetATK(Mathf.CeilToInt(_currentDMG + _valueBonus));
         _buffCoroutine = _player.StartCoroutine(CooldownDeBuff(_player));
     }
 
     private IEnumerator CooldownDeBuff(PlayerStateMachine _player)
     {
         yield return new WaitForSeconds(buffTimeOut);
-        _player.PlayerConfig.SetST(_currentDMG);
+        _player.PlayerConfig.SetATK(_currentDMG);
         _buffCoroutine = null;
     }
     

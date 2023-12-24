@@ -25,8 +25,6 @@ public class AudioManager : Singleton<AudioManager>
     private static List<EventInstance> _eventInstances;
     private EventInstance _ambienceInstance;
     
-    
-    
     protected override void Awake()
     {
         base.Awake();
@@ -39,7 +37,8 @@ public class AudioManager : Singleton<AudioManager>
     private void Start()
     {
         LoadOldVolume();
-        InitializeAmbience(FMOD_Events.Instance.dungeonAmbience);
+        _ambienceInstance = CreateInstance(FMOD_Events.Instance.dungeonAmbience);
+        _ambienceInstance.start();
     }
     private void OnDestroy()
     {
@@ -60,13 +59,13 @@ public class AudioManager : Singleton<AudioManager>
     {
         masterVolume = PlayerPrefs.GetFloat(PP_VolumeIndex, .5f);
         musicVolume = PlayerPrefs.GetFloat(PP_MusicVolumeIndex, .3f);
-        sfxVolume = PlayerPrefs.GetFloat(PP_SFXVolumeIndex, .4f);
-        dialogueVolume = PlayerPrefs.GetFloat(PP_DialogueVolumeIndex, .45f);
+        dialogueVolume = PlayerPrefs.GetFloat(PP_DialogueVolumeIndex, .4f);
+        sfxVolume = PlayerPrefs.GetFloat(PP_SFXVolumeIndex, .5f);
 
         masterBus.setVolume(masterVolume);
         musicBus.setVolume(musicVolume);
-        sfxBus.setVolume(sfxVolume);
         dialogueBus.setVolume(dialogueVolume);
+        sfxBus.setVolume(sfxVolume);
     }
     
 
@@ -84,12 +83,8 @@ public class AudioManager : Singleton<AudioManager>
         return _instance;
     }
 
-    private void InitializeAmbience(EventReference _eventReference)
-    {
-        _ambienceInstance = CreateInstance(_eventReference);
-        _ambienceInstance.start();
-    } 
-    public void SetAmbienceParameter(string parameterName, float parameterValue) => _ambienceInstance.setParameterByName(parameterName, parameterValue);
+
+    public void SetParameter(string paraName, float paraValue) => _ambienceInstance.setParameterByName(paraName, paraValue);
 }
 
 
