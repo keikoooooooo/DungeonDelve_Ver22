@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
     
     private void Start()
     {
-        PP_SaveCurrentEnemy = behaviourID.ID + "Idx";
+        PP_SaveCurrentEnemy = behaviourID.GetID + "Idx";
         _yieldInstruction = new WaitForSeconds(waitSpawn);
         foreach (var prefab in enemiesPrefab)
         {
@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         
-        _lastTime = DateTime.Parse(PlayerPrefs.GetString(behaviourID.ID, DateTime.MinValue.ToString()));
+        _lastTime = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
         var _totalSeconds = DateTime.Now.Subtract(_lastTime).TotalSeconds;
         if (_totalSeconds < waitSpawn)
         {
@@ -85,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
                 _currentEnemy += _enemyNeed;
             }
             
-            PlayerPrefs.SetString(behaviourID.ID, DateTime.Now.ToString());
+            PlayerPrefs.SetString(behaviourID.GetID, DateTime.Now.ToString());
             yield return _yieldInstruction;
         }
     }

@@ -17,6 +17,7 @@ public class MenuController : Singleton<MenuController>
     private UserData _userData;
     private PlayerController _player;
     private GameManager _gameManager;
+    private PlayerHUD _playerHUD;
     
     private bool _isOpenMenu;
     private bool _isEventRegistered;
@@ -46,6 +47,7 @@ public class MenuController : Singleton<MenuController>
         GUI_Manager.SendRef(_gameManager);
 
         _player = _gameManager.Player;
+        _playerHUD = _gameManager.PlayerHUD;
         _userData = _gameManager.UserData;
         
         if (!_isEventRegistered)
@@ -92,6 +94,7 @@ public class MenuController : Singleton<MenuController>
     
     private void OpenMenu()
     {
+        _playerHUD.CloseHUD();
         GUI_Manager.UpdateGUIData();
         menuPanel.SetActive(true);
         _player.playerData.PlayerRenderTexture.OpenRenderUI(PlayerRenderTexture.RenderType.Character);
@@ -101,12 +104,13 @@ public class MenuController : Singleton<MenuController>
     }
     public void CloseMenu()
     {
+        _playerHUD.OpenHUD();
         Time.timeScale = 1;
+        CursorHandle.Locked();
         OnCloseMenuEvent?.Invoke();
         menuPanel.SetActive(false);
         _player.playerData.PlayerRenderTexture.CloseRenderUI();
         _isOpenMenu = false;
-        CursorHandle.Locked();
         
         AudioManager.PlayOneShot(FMOD_Events.Instance.menuClose, transform.position);
     }

@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     /// <summary> Dữ liệu người dùng </summary>
     public UserData UserData { get; private set; }
     public PlayerController Player { get; private set; }
+    public PlayerHUD PlayerHUD { get; private set; }
     private SO_PlayerConfiguration _playerConfig;
     private PlayerController _playerPrefab;
     
@@ -43,7 +44,7 @@ public class GameManager : Singleton<GameManager>
     {
         Player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
         Player.playerData.SetConfiguration(_playerConfig);
-
+        PlayerHUD = Player.GetComponentInChildren<PlayerHUD>();
         // Set Status Value
         var _value = _playerConfig.GetHP();
         Player.Health.InitValue(_value, _value);

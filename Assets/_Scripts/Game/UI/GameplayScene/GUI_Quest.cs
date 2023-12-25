@@ -35,6 +35,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
     private UserData _userData;
     private QuestBox _currentQuestBox;
     private Coroutine _completedPanelCoroutine;
+    private PlayerHUD _playerHUD;
     
     private bool _canPanelOpen;
     private bool _isAccept;
@@ -50,7 +51,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
     {
         _poolUIItem = new ObjectPooler<UI_Item>(itemPrefab, contentItem, 15);
         _poolQuestBoxText = new ObjectPooler<QuestBox>(barPrefab, contentQuest, 10);
-        _poolQuestBoxText.List.ForEach(box => box.OnQuestSelectEvent += OnSelectQuest);
+        _poolQuestBoxText.List.ForEach(box => box.OnQuestSelectedEvent += OnSelectedQuest);
     }
     private void OnDisable()
     {
@@ -58,7 +59,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
     }
     private void OnDestroy()
     {
-        _poolQuestBoxText.List.ForEach(box => box.OnQuestSelectEvent -= OnSelectQuest);
+        _poolQuestBoxText.List.ForEach(box => box.OnQuestSelectedEvent -= OnSelectedQuest);
     }
     
     private void Init()
@@ -72,8 +73,8 @@ public class GUI_Quest : MonoBehaviour, IGUI
     private void RegisterEvent()
     {
         GUI_Manager.Add(this);
-        QuestManager.OnPanelOpenEvent += OnOpenPanelEvent;
-        QuestManager.OnPanelCloseEvent += OnClosePanelEvent;
+        QuestManager.Instance.interactiveUI.OnPanelOpenEvent += OnOpenPanelEvent;
+        QuestManager.Instance.interactiveUI.OnPanelCloseEvent += OnClosePanelEvent;
         acceptBtt.onClick.AddListener(OnClickNoticeAcceptQuest);
         cancelBtt.onClick.AddListener(OnClickNoticeCancelQuest);
         reportBtt.onClick.AddListener(OnClickNoticeReportQuest);
@@ -81,11 +82,12 @@ public class GUI_Quest : MonoBehaviour, IGUI
     private void UnRegisterEvent()
     {
         GUI_Manager.Remove(this);
-        QuestManager.OnPanelOpenEvent -= OnOpenPanelEvent;
-        QuestManager.OnPanelCloseEvent -= OnClosePanelEvent;
         acceptBtt.onClick.RemoveListener(OnClickNoticeAcceptQuest);
         cancelBtt.onClick.RemoveListener(OnClickNoticeCancelQuest);
         reportBtt.onClick.RemoveListener(OnClickNoticeReportQuest);
+        if (!QuestManager.Instance) return;
+        QuestManager.Instance.interactiveUI.OnPanelOpenEvent -= OnOpenPanelEvent;
+        QuestManager.Instance.interactiveUI.OnPanelCloseEvent -= OnClosePanelEvent;
     }
     
     
@@ -93,6 +95,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
     {
         _itemData = _gameManager.GameItemData;
         _userData = _gameManager.UserData;
+        _playerHUD = _gameManager.PlayerHUD;
     }
     public void UpdateData()
     {
@@ -104,28 +107,28 @@ public class GUI_Quest : MonoBehaviour, IGUI
     {
         if (!_canPanelOpen) return;
         _canPanelOpen = false;
-        CursorHandle.NoneLocked();
-        GUI_Inputs.InputAction.UI.OpenBag.Disable();
-        Time.timeScale = 0;
-        
+        _playerHUD.CloseHUD();
         questPanel.SetActive(true);
         noticeQuestPanel.Play("Panel_Disable");
         ShowQuest();
+        CursorHandle.NoneLocked();
+        GUI_Inputs.InputAction.UI.OpenBag.Disable();
         AudioManager.PlayOneShot(FMOD_Events.Instance.menuOpen, transform.position);
+        Time.timeScale = 0;
     }
     private void OnClosePanelEvent()
     {
         if (_canPanelOpen) return;
         _canPanelOpen = true;
+        Time.timeScale = 1;
+        questPanel.SetActive(false);
+        _playerHUD.OpenHUD();
         CursorHandle.Locked();
         GUI_Inputs.InputAction.UI.OpenBag.Enable();
-        Time.timeScale = 1;
-        
-        questPanel.SetActive(false);
         AudioManager.PlayOneShot(FMOD_Events.Instance.menuClose, transform.position);
     }
 
-    public void OnClickClosePanelButton() => QuestManager.ClosePanel(default);
+    public void OnClickClosePanelButton() => QuestManager.Instance.interactiveUI.ClosePanel(default);
     
     private void ShowQuest()
     {
@@ -151,10 +154,9 @@ public class GUI_Quest : MonoBehaviour, IGUI
         }
         SetQuestProgressText();
     }
-    public void OnSelectQuest(QuestBox _questBox)
+    public void OnSelectedQuest(QuestBox _questBox)
     {
         _currentQuestBox = _questBox;
-        
         var _questSetup = _questBox.questSetup;
         titleQuest.text = _questSetup.GetTitle();
         descriptionQuest.text = _questSetup.GetDescription();
@@ -163,7 +165,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
         SpawnItemReward(_questSetup);
         SetItemReuired(_questSetup);
         SetButton(_questBox);
-        SelectQuestBox(_questBox);
+        SetAnimSelectedQuestBox(_questBox);
         CheckQuestReport(_questBox);
     }
     private void SetItemReuired(QuestSetup _questSetup)
@@ -199,9 +201,8 @@ public class GUI_Quest : MonoBehaviour, IGUI
             _count++;
         }
     }
-    private void SelectQuestBox(QuestBox _questSelected)
+    private void SetAnimSelectedQuestBox(QuestBox _questSelected)
     {
-        _currentQuestBox = _questSelected;
         var _currentList = _poolQuestBoxText.List.Where(box => box.gameObject.activeSelf);
         foreach (var _quest in _currentList)
         {
@@ -261,7 +262,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
             _isReportQuest = false;
             var _taskRequirement = _currentQuestBox.questSetup.GetRequirement();
             _userData.IncreaseItemValue(_taskRequirement.GetNameCode(), -_taskRequirement.GetValue());
-            QuestManager.OnCompletedQuest(_currentQuestBox.questSetup);
+            QuestManager.Instance.OnCompletedQuest(_currentQuestBox.questSetup);
             
             if (_completedPanelCoroutine != null)
                 StopCoroutine(_completedPanelCoroutine);

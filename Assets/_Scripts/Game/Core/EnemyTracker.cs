@@ -16,6 +16,8 @@ public static class EnemyTracker
         if(!EnemiesTracker.Contains(_transform)) return;
         EnemiesTracker.Remove(_transform);
     }
+    public static void Clear() => EnemiesTracker.Clear();
+
     public static bool FindClosestEnemy(Transform _transfLocal, out Vector3 _target)
     {
         _target = Vector3.zero;
@@ -27,5 +29,5 @@ public static class EnemyTracker
         _target = EnemiesTracker[0].transform.position;
         return true;
     }
-
+    
 }

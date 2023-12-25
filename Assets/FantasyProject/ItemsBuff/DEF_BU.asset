@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameCode: 3
   value: 0.25
-  buffTimeOut: 10
+  <buffTimeOut>k__BackingField: 15

@@ -7,7 +7,7 @@ public static class FileHandle
 {
     // Encrypt, Decrypt
     private const int lineLenght = 20;
-    private static readonly bool isEncrypt = true;
+    private static readonly bool isEncrypt = false;
     private static string Encrypt(string _jsonText)
     {
         var _bytes = Encoding.UTF8.GetBytes(_jsonText);

@@ -9,7 +9,7 @@ public class QuestBox : MonoBehaviour, IPooled<QuestBox>
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image iconAccept;
     [SerializeField] private Image iconReport;
-    public event Action<QuestBox> OnQuestSelectEvent;
+    public event Action<QuestBox> OnQuestSelectedEvent;
     
     
     /// <summary> Thông tin quest mà box đang giữ </summary>
@@ -39,7 +39,7 @@ public class QuestBox : MonoBehaviour, IPooled<QuestBox>
         SetReceivedQuestBox(IsReceived && !IsLocked);
     }
     
-    public void SelectQuest() =>  OnQuestSelectEvent?.Invoke(this);
+    public void SelectQuest() =>  OnQuestSelectedEvent?.Invoke(this);
     public void TriggerBoxQuest() => GUI_Quest.IsTriggerQuestBox(this, true);
     public void NonTriggerBoxQuest() =>  GUI_Quest.IsTriggerQuestBox(this, false);
 

@@ -18,7 +18,7 @@ public class MonoBehaviourID : MonoBehaviour
 
     
     [SerializeField] private UniqueID uniqueID;
-    public string ID => uniqueID.Value;
+    public string GetID => uniqueID.Value;
     
     
     [ContextMenu("Force Reset ID")]
@@ -27,8 +27,7 @@ public class MonoBehaviourID : MonoBehaviour
         uniqueID.Value = Guid.NewGuid().ToString();
         Debug.Log("Setting new ID on Object: " + gameObject.name, gameObject);
     }
-    public static bool IsUnique(string ID) => Resources.FindObjectsOfTypeAll<MonoBehaviourID>().Any(x => x.ID == ID);
-
+    public static bool IsUnique(string ID) => Resources.FindObjectsOfTypeAll<MonoBehaviourID>().Any(x => x.GetID == ID);
     protected void OnValidate()
     {
         if (!gameObject.scene.IsValid()) // Nếu Object chưa khởi tạo thì không tạo ID để tránh lỗi. Vd: Prefab
@@ -36,7 +35,7 @@ public class MonoBehaviourID : MonoBehaviour
             uniqueID.Value = string.Empty;
             return;
         }
-        if (string.IsNullOrEmpty(ID) || !IsUnique(ID)) // Nếu ID đang Null hoặc chưa có trong toàn bộ Script <MonoBehaviourID> đang có trên đối tượng
+        if (string.IsNullOrEmpty(GetID) || !IsUnique(GetID)) // Nếu ID đang Null hoặc chưa có trong toàn bộ Script <MonoBehaviourID> đang có trên đối tượng
         {
             ResetID();
         }

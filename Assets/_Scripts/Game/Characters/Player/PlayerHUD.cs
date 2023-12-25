@@ -48,16 +48,8 @@ public class PlayerHUD : MonoBehaviour, IGUI
 
     private void RegisterEvent()
     {
-        if (MenuController.Instance)
-        {
-            MenuController.Instance.OnClickEscOpenMenuEvent.AddListener(CloseHUD);
-            MenuController.Instance.OnClickBOpenMenuEvent.AddListener(CloseHUD);
-            MenuController.Instance.OnCloseMenuEvent.AddListener(OpenHUD);
-        }
         GUI_Manager.Add(this);
         GUI_Bag.OnItemChangedSlotEvent += UpdateItemSlot;
-        QuestManager.OnPanelCloseEvent += OpenHUD;
-        QuestManager.OnPanelOpenEvent += CloseHUD;
         
         player.OnElementalSkillCDEvent += elementalSkillCD.OnCooldownTime;
         player.OnElementalBurstCDEvent += elementalBurstCD.OnCooldownTime;
@@ -72,16 +64,8 @@ public class PlayerHUD : MonoBehaviour, IGUI
     }
     private void UnRegisterEvent()
     {
-        if (MenuController.Instance)
-        {
-            MenuController.Instance.OnClickEscOpenMenuEvent.RemoveListener(CloseHUD);
-            MenuController.Instance.OnClickBOpenMenuEvent.RemoveListener(CloseHUD);
-            MenuController.Instance.OnCloseMenuEvent.RemoveListener(OpenHUD);
-        }
         GUI_Manager.Remove(this);
         GUI_Bag.OnItemChangedSlotEvent -= UpdateItemSlot;
-        QuestManager.OnPanelCloseEvent -= OpenHUD;
-        QuestManager.OnPanelOpenEvent -= CloseHUD;
         
         player.OnElementalSkillCDEvent -= elementalSkillCD.OnCooldownTime;
         player.OnElementalBurstCDEvent -= elementalBurstCD.OnCooldownTime;

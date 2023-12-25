@@ -14,12 +14,10 @@ public class SwitchPanelControl : MonoBehaviour
     public static readonly int NameHashID_Trigger = Animator.StringToHash("Trigger");
     public static readonly int NameHashID_NonTrigger = Animator.StringToHash("NonTrigger");
     
-    
     public void SetActivePanel(GameObject _panelObject)
     { 
         Panels.ForEach(panel => panel.SetActive(panel == _panelObject));
     }
-    
     public void DeActiveAllPanel() => Panels.ForEach(panel => panel.SetActive(false));
     
     public void SelectButton(Animator _animatorCheck)
@@ -48,7 +46,6 @@ public class SwitchPanelControl : MonoBehaviour
             animator.Play(NameHashID_Trigger);
         }
     }
-    
     public void NonTriggerButton(Animator _animatorCheck)
     {
         var _animatorsCheck = Animators.Where(animator => animator == _animatorCheck && !animator.IsTag("Selected"));

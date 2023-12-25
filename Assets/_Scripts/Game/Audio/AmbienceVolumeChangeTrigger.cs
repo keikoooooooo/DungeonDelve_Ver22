@@ -17,6 +17,8 @@ public class AmbienceVolumeChangeTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!layerTrigger.Contains(other.gameObject)) return;
-        _eventInstance.setParameterByName(parameterName, parameterValue);
+        SetVolume(parameterValue);
     }
+    public void SetVolume(float _volume) =>  _eventInstance.setParameterByName(parameterName, _volume);
+
 }

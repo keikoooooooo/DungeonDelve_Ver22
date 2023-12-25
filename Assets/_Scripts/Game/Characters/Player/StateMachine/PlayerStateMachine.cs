@@ -338,6 +338,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     public async void ResetDeadState()
     {
+        EnemyTracker.Clear();
         HandleEnable();
         transform.position = Vector3.zero;
         model.rotation = Quaternion.Euler(Vector3.zero);

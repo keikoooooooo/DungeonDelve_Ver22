@@ -1,16 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using QuestInGame;
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : Singleton<QuestManager>
 {
     [SerializeField] private MonoBehaviourID behaviourID;
-    //
-    public static event Action OnPanelOpenEvent;
-    public static event Action OnPanelCloseEvent;
-    //
+    [field: SerializeField] public InteractiveUI interactiveUI { get; private set; }
     public static List<QuestSetup> QuestLists { get; } = new();
     
     public static int currentQuest { get; private set; } // Số lượng quest đang nhận.
@@ -19,7 +15,7 @@ public class QuestManager : MonoBehaviour
     private static readonly string _folderSave = "q_save";
     
     
-    private void OnApplicationQuit() => PlayerPrefs.SetString(behaviourID.ID, DateTime.Now.ToString());
+    private void OnApplicationQuit() => PlayerPrefs.SetString(behaviourID.GetID, DateTime.Now.ToString());
     private void Start()
     {
         var _quests = Resources.LoadAll<QuestSetup>("Quest Custom");
@@ -30,7 +26,7 @@ public class QuestManager : MonoBehaviour
         }
 
         currentQuest = 0;
-        var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.ID, DateTime.Now.ToString()));
+        var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.Now.ToString()));
         if (_lastDay <= DateTime.Today)
             LoadNewQuest();
         else
@@ -50,8 +46,8 @@ public class QuestManager : MonoBehaviour
         foreach (var questSetup in QuestLists)
         {
             var _task = questSetup.GetTask();
-            var _checkQuest = FileHandle.Load(_folderSave, _task.GetID, out Task _taskSave);
-            if (!_checkQuest) continue;
+            var _checkFile = FileHandle.Load(_folderSave, _task.GetID, out Task _taskSave);
+            if (!_checkFile) continue;
             
             _task.SetCompleted(_taskSave.IsCompleted);
             _task.SetState(_taskSave.IsLocked);
@@ -71,16 +67,15 @@ public class QuestManager : MonoBehaviour
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
     }
-    public static void OnCompletedQuest(QuestSetup _quest)
+    public void OnCompletedQuest(QuestSetup _quest)
     {
+        interactiveUI.ClosePanel(default);
         _quest.GetReward().ForEach(x => RewardManager.Instance.SetReward(x));
-        
         var _task = _quest.GetTask();
         _task.SetCompleted(true);
         _task.SetState(false);
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
-        ClosePanel(default);
         AudioManager.PlayOneShot(FMOD_Events.Instance.rewards, Vector3.zero);
     }
     public static void OnCancelQuest(QuestSetup _quest)
@@ -90,21 +85,5 @@ public class QuestManager : MonoBehaviour
         _task.SetState(true);
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
-    }
-    
-    
-    private static void OpenPanel(InputAction.CallbackContext _context) => OnPanelOpenEvent?.Invoke();
-    public static void ClosePanel(InputAction.CallbackContext _context) => OnPanelCloseEvent?.Invoke();
-    public void OnEnterPlayer()
-    {
-        GUI_Inputs.InputAction.UI.CollectItem.performed += OpenPanel;
-        GUI_Inputs.InputAction.UI.OpenMenu.performed += ClosePanel;
-        NoticeManager.Instance.CreateNoticeT3("[F] Open Quest.");
-    }
-    public void OnExitPlayer()
-    {
-        GUI_Inputs.InputAction.UI.CollectItem.performed -= OpenPanel;
-        GUI_Inputs.InputAction.UI.OpenMenu.performed -= ClosePanel;
-        NoticeManager.Instance.CloseNoticeT3();
     }
 }

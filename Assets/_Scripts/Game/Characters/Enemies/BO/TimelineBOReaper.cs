@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Threading.Tasks;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -12,40 +12,60 @@ public class TimelineBOReaper : MonoBehaviour
     [SerializeField] private Chest chest;
     [SerializeField] private PlayableDirector playableDirector;
     [SerializeField] private M_SetEmission setEmission;
+    [Tooltip("Thời gian kích lại BOSS (s)")] [SerializeField] private float bossActivationTime;
     
-    [Tooltip("Thời gian kích lại BOSS (s)")]
-    [SerializeField] private float bossActivationTime;
+    [BoxGroup("VOLUME CHANGE"), SerializeField] private AmbienceVolumeChangeTrigger ambienceVolumeChange;
+    [BoxGroup("VOLUME CHANGE"), SerializeField] private BackgroundAudio reaperBattleAudio;
     
     private bool _canTrigger;      // có được active BO lên k ?
     private bool _isTriggerPlayer; // có đang TriggerPlayer ?
-    
     private PlayerController _player;
     private PlayerHUD _playerHUD;
     private Coroutine _enableTimelineCoroutine;
+    private Coroutine _bossDieCoroutine;
+    private Coroutine _playerDieCoroutine;
     private DateTime _lastTime;
 
     
-    private void OnEnable()
-    {
-        reaperBOSS.OnDieEvent.AddListener(HandleBossDie);   
-    }
     private void Start()
     {
         _player = GameManager.Instance.Player;
-        _playerHUD = _player.GetComponentInChildren<PlayerHUD>();
+        _playerHUD =  GameManager.Instance.PlayerHUD;
+        _player.OnDieEvent += HandlePlayerDie;
+        reaperBOSS.OnDieEvent.AddListener(HandleBossDie);   
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
-        reaperBOSS.OnDieEvent.RemoveListener(HandleBossDie);   
+        _player.OnDieEvent -= HandlePlayerDie;
+        reaperBOSS.OnDieEvent.RemoveListener(HandleBossDie);
     }
 
     
-    private async void HandleBossDie(EnemyController _enemy)
+    private void HandleBossDie(EnemyController _enemy)
+    {
+        if (_bossDieCoroutine != null) StopCoroutine(_bossDieCoroutine);
+        _bossDieCoroutine = StartCoroutine(HandleBODieCoroutine());
+    }
+    private IEnumerator HandleBODieCoroutine()
     {
         ApplyEmission(15, 0);
-        await Task.Delay(3000);
+        yield return new WaitForSeconds(3f);
         chest.CreateChest();
     }
+    
+    private void HandlePlayerDie()
+    {
+        if (_playerDieCoroutine != null) StopCoroutine(_playerDieCoroutine); 
+        _playerDieCoroutine = StartCoroutine(HandlePlayerDieCoroutine());
+    }
+    private IEnumerator HandlePlayerDieCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        reaperBattleAudio.Stop();
+        ambienceVolumeChange.SetVolume(.3f);
+        reaperBOSS.gameObject.SetActive(false);
+    }
+    
     
     public void OnEnterPlayer(GameObject _gameObject)
     {
@@ -59,6 +79,20 @@ public class TimelineBOReaper : MonoBehaviour
     {
         _isTriggerPlayer = false;
     }
+    public void ExitBossActivationArea(bool _isExit) // Khi Player ra khỏi khu vực BossBattle 
+    {
+        if (!_isExit) return;
+        
+        // Check BO có đang được active?
+        if (!reaperBOSS.gameObject.activeSelf) return;
+        
+        _canTrigger = false;
+        PlayerPrefs.SetString(behaviourID.GetID, DateTime.Now.ToString("O"));
+        ambienceVolumeChange.SetVolume(.3f);
+        reaperBattleAudio.Stop();
+        ApplyEmission(15, 0);
+        reaperBOSS.gameObject.SetActive(false);
+    }
     
     private void ApplyEmission(float _currentVal, float SetVal)
     {
@@ -68,7 +102,7 @@ public class TimelineBOReaper : MonoBehaviour
     }
     private IEnumerator EnableTimelineCoroutine()
     {
-        _lastTime = DateTime.Parse(PlayerPrefs.GetString(behaviourID.ID, DateTime.Now.ToString()));
+        _lastTime = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
         _canTrigger = DateTime.Now.Subtract(_lastTime).TotalSeconds > bossActivationTime;
         if(!_canTrigger) yield break;
         
@@ -81,7 +115,9 @@ public class TimelineBOReaper : MonoBehaviour
             DeActiveControlPlayer();
             playableDirector.Play();
             _canTrigger = false;
-            PlayerPrefs.SetString(behaviourID.ID, DateTime.Now.ToString("O"));
+            PlayerPrefs.SetString(behaviourID.GetID, DateTime.Now.ToString("O"));
+            ambienceVolumeChange.SetVolume(.05f);
+            reaperBattleAudio.Play();
         }
         else
         {
@@ -107,5 +143,4 @@ public class TimelineBOReaper : MonoBehaviour
         _player.input.PlayerInput.Disable();
         _playerHUD.CloseHUD();
     }
-    
 }
