@@ -10,12 +10,12 @@ public class PlayerRunState : PlayerBaseState
     private float currentBlend;
     private float lastInputLeftShift; // thời gian nhấn phím shift 
     private bool isLeftShiftPressed; // có nhấn phím shift ?
-    //  
-    private PLAYBACK_STATE _playbackState;
+
     
     public override void EnterState()
     {
         _machine._footstepsInstance = _machine.runFootsteps;
+        _machine.CanFootstepsAudioPlay = true;
         currentBlend = _machine.animator.GetFloat(_machine.IDSpeed);
     }
     public override void UpdateState()
@@ -29,7 +29,8 @@ public class PlayerRunState : PlayerBaseState
     }
     protected override void ExitState()
     {
-        _machine._footstepsInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _machine.CanFootstepsAudioPlay = false;
+        _machine._footstepsInstance.stop(STOP_MODE.IMMEDIATE);
     }
     
     public override void CheckSwitchState()

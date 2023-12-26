@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using QuestInGame;
+using DungeonDelve.Project;
 
 public class QuestManager : Singleton<QuestManager>
 {
@@ -34,9 +35,9 @@ public class QuestManager : Singleton<QuestManager>
     }
     private static void LoadNewQuest()
     {
-        foreach (var questSetup in QuestLists)
+        var _tasks = QuestLists.Select(x => x.GetTask());
+        foreach (var _task in _tasks)
         {
-            var _task = questSetup.GetTask();
             _task.SetCompleted(false);
             FileHandle.Delete(_folderSave, _task.GetID);
         }

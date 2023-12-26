@@ -16,6 +16,7 @@ MonoBehaviour:
     id: 4f756bc1-5428-421f-811f-9626e7498baf
     isCompleted: 0
     isLocked: 0
+    isReceived: 0
   title: Quest 06
   description: Embark on a quest for the lost manuscript. According to a stranger,
     an adventurer ventured into the depths of a dark dungeon with this book.

@@ -58,8 +58,6 @@ public class CheatsManager : MonoBehaviour, IGUI
         _input = new Inputs();
         _input.Enable();
         _input.TESTER.Enter.performed += OnEnterChat;
-        _input.TESTER.ScalePanel.started += OnScalePanel;
-        _input.TESTER.ScalePanel.canceled += OnScalePanel;
     }
     private void Start()
     {
@@ -71,8 +69,6 @@ public class CheatsManager : MonoBehaviour, IGUI
     {
         GUI_Manager.Remove(this);
         _input.TESTER.Enter.performed -= OnEnterChat;
-        _input.TESTER.ScalePanel.started -= OnScalePanel;
-        _input.TESTER.ScalePanel.canceled -= OnScalePanel;
         _input.Disable();
     }
     public void GetRef(GameManager _gameManager)
@@ -121,6 +117,9 @@ public class CheatsManager : MonoBehaviour, IGUI
         CursorHandle.NoneLocked();
         GUI_Inputs.InputAction.UI.Disable();
         _player.input.PlayerInput.Disable();
+        _input.TESTER.ScalePanel.started += OnScalePanel;
+        _input.TESTER.ScalePanel.canceled += OnScalePanel;
+        
         //
         _isStarted = false;
         _checkType = false;
@@ -137,6 +136,8 @@ public class CheatsManager : MonoBehaviour, IGUI
         CursorHandle.Locked();
         GUI_Inputs.InputAction.UI.Enable();
         _player.input.PlayerInput.Enable();
+        _input.TESTER.ScalePanel.started -= OnScalePanel;
+        _input.TESTER.ScalePanel.canceled -= OnScalePanel;
         inputField.text = "";
         ResetAllTypeCoroutine();
     }
@@ -463,6 +464,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                         
                     case 2:
                         SpawnText($"Please enter in the following format: [KEY:x,VAL:x] to SET.");
+                        yield return _wait_100ms;
+                        scrollView.Scroll();
                         while (true)
                         {
                             if (_enter)
@@ -504,8 +507,8 @@ public class CheatsManager : MonoBehaviour, IGUI
                                     }
                                     yield return _wait_100ms;
                                     SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
-                                    SpawnText("0. GETTER");
-                                    SpawnText("1. SETTER");
+                                    SpawnText("1. GETTER");
+                                    SpawnText("2. SETTER");
                                     yield return _wait_100ms;
                                     scrollView.Scroll();
                                     break;

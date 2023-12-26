@@ -16,6 +16,7 @@ MonoBehaviour:
     id: dfdd6512-76ae-4ebe-b2ce-fe59864e8d5f
     isCompleted: 0
     isLocked: 0
+    isReceived: 0
   title: Quest 04
   description: Collect 5 Platinum Core.
   requirement:

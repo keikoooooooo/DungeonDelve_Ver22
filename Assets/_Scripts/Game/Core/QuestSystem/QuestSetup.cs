@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using QuestInGame;
+using DungeonDelve.Project;
 
-namespace QuestInGame
+namespace DungeonDelve.Project
 {
     [Serializable]
     public class Task
@@ -61,6 +61,7 @@ namespace QuestInGame
 [CreateAssetMenu(menuName = "Create Quest", fileName = "Quest_")]
 public class QuestSetup : ScriptableObject
 {
+    [HideInInspector]
     [SerializeField] private Task task;
     [SerializeField] private string title;
     [SerializeField] private string description;

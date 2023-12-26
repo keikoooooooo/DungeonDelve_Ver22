@@ -585,28 +585,32 @@ public class GameplayEditorWindow : EditorWindow
 
     #region GAMECUSTOM
     private int _selectedPanelGameCustomType = -1;
-    private readonly string[] _gameCustomtype = { "ITEM DATA" , "CHARACTER DATA", "QUESTS"};
+    private readonly string[] _gameCustomtype = { "ITEM DATA" , "CHARACTER DATA", "QUESTS", "SHOP"};
     
-    private SO_GameItemData _soGameItemData;
-    private SO_CharacterData _soCharacterData;
-    private QuestSetup[] _questSetupsList;
+    private SO_GameItemData _itemData;
+    private SO_CharacterData _characterData;
+    private QuestSetup[] _questSetups;
+    private ShopItemSetup[] _shopItemSetups;
     
     private void HandlePanelGameCustom()
     {
         Space(15);
         _selectedPanelGameCustomType = GUILayout.Toolbar(_selectedPanelGameCustomType, _gameCustomtype, Width(350), Height(35));
+        _itemData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Game Item Data.asset") as SO_GameItemData;
+        _characterData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Character Data.asset") as SO_CharacterData;
         switch (_selectedPanelGameCustomType)
         {
             case 0:
-                _soGameItemData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Game Item Data.asset") as SO_GameItemData;
-                ShowItemsDetails(_soGameItemData);
+                ShowItemsDetails(_itemData);
                 break;
             case 1:
-                _soCharacterData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Character Data.asset") as SO_CharacterData;
-                ShowCharacterData(_soCharacterData);
+                ShowCharacterData(_characterData);
                 break;
             case 2:
                 CustomQuest();
+                break;
+            case 3:
+                CustomItemPurchase();
                 break;
         }
     }
@@ -664,7 +668,8 @@ public class GameplayEditorWindow : EditorWindow
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
         
-        Space(10);
+        Space(20);
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(1, 2), Color.white);
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
@@ -709,7 +714,8 @@ public class GameplayEditorWindow : EditorWindow
         }
         GUILayout.EndScrollView();
         
-        Space(10);
+        Space(20);
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(1, 2), Color.white);
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", Width(45), Height(25)))
         {
@@ -717,7 +723,6 @@ public class GameplayEditorWindow : EditorWindow
         }
         GUILayout.Box("Add new Character");
         GUILayout.EndHorizontal();
-        
         
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("-", Width(45), Height(25)) && _characterData.CharactersData.Count != 0)
@@ -731,17 +736,17 @@ public class GameplayEditorWindow : EditorWindow
     }
     private void CustomQuest()
     {
-        _questSetupsList = Resources.LoadAll<QuestSetup>("Quest Custom");
+        _questSetups = Resources.LoadAll<QuestSetup>("Quest Custom");
         
         var _count = 0;
-        if (_questSetupsList != null && _questSetupsList.Any())
+        if (_questSetups != null && _questSetups.Any())
         {
             Space(25);
             GUILayout.Label( "CUSTOM QUESTS", BoxColorText(Color.red), Width(150));
             Space(5);
 
             scrollView = GUILayout.BeginScrollView(scrollView);
-            foreach (var questSetup in _questSetupsList)
+            foreach (var questSetup in _questSetups)
             {
                 GUILayout.BeginVertical(GUI.skin.box);
                 EditorGUI.BeginChangeCheck();
@@ -825,7 +830,9 @@ public class GameplayEditorWindow : EditorWindow
         #region Create/Remove Quest
         Space(20);
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(1, 2), Color.white);
-        if (GUILayout.Button("New Quest", Width(120), Height(40)))
+        
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
         {
             var _path = $"Assets/Resources/Quest Custom/Quest_{_count + 1}.asset";
             var _newQuest = CreateInstance<QuestSetup>();
@@ -834,7 +841,11 @@ public class GameplayEditorWindow : EditorWindow
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
-        if (GUILayout.Button("Remove Quest", Width(120), Height(35)))
+        GUILayout.Box("New Quest");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("-", Width(45), Height(25)))
         {
             var _path = $"Assets/Resources/Quest Custom/Quest_{_count}.asset";
             var _instanceDel = AssetDatabase.LoadAssetAtPath<QuestSetup>(_path);
@@ -842,6 +853,88 @@ public class GameplayEditorWindow : EditorWindow
             AssetDatabase.DeleteAsset(_path);
             AssetDatabase.Refresh();
         }
+        GUILayout.Box("Remove Quest");
+        GUILayout.EndHorizontal();
+        #endregion
+    }
+    private void CustomItemPurchase()
+    {
+        _shopItemSetups = Resources.LoadAll<ShopItemSetup>("Shop Custom");
+        var _count = 0;
+        if (_itemData == null) return;
+        if (_shopItemSetups != null && _shopItemSetups.Any())
+        {
+            Space(25);
+            GUILayout.Label( "CUSTOM ITEM PURCHASE", BoxColorText(Color.red), Width(250));
+            Space(5);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label( "Index", BoxColorText(Color.yellow), Width(70));
+            GUILayout.Label( "Name Code", BoxColorText(Color.yellow), Width(150));
+            GUILayout.Label( "Rarity", BoxColorText(Color.yellow), Width(150));
+            GUILayout.Label( "Price", BoxColorText(Color.yellow), Width(135));
+            GUILayout.Label( "Quantity Receive", BoxColorText(Color.yellow), Width(135));
+            GUILayout.Label( "Purchase Max in Day", BoxColorText(Color.yellow), Width(135));
+            GUILayout.Label( "", Width(10));
+            GUILayout.Label( "IDs", BoxColorText(Color.yellow), Width(340));
+            GUILayout.EndHorizontal();
+            Space(7);
+            scrollView = GUILayout.BeginScrollView(scrollView);
+            foreach (var _itemSetup in _shopItemSetups)
+            {
+                EditorGUI.BeginChangeCheck();
+                
+                GUILayout.BeginHorizontal();
+                GUILayout.Box( $"{_count}", Width(70));
+                _itemSetup.SetItemCode((ItemNameCode)EditorGUILayout.EnumPopup("", _itemSetup.GetItemCode(), Width(150)));
+                var _itemCustom = _itemData.GetItemCustom(_itemSetup.GetItemCode());
+                _itemSetup.SetRarity(_itemCustom.ratity);
+                _itemSetup.SetPurchaseCurrent(0);
+                GUILayout.Box( $"{_itemSetup.GetRarity()}", Width(150));
+                _itemSetup.SetPrice(EditorGUILayout.IntField("", _itemSetup.GetPrice(), Width(135)));
+                _itemSetup.SetQuantityReceive(EditorGUILayout.IntField("", _itemSetup.GetQuantityReceive(), Width(135)));
+                _itemSetup.SetPurchaseMax(EditorGUILayout.IntField("", _itemSetup.GetPurchaseMax(), Width(135)));
+                GUILayout.Label("", Width(10));
+                if (GUILayout.Button("Reset ID", Width(80), Height(15)))
+                {
+                    _itemSetup.SetID(null);
+                }
+                if (string.IsNullOrEmpty(_itemSetup.GetID())) _itemSetup.SetID(Guid.NewGuid().ToString());
+                EditorGUILayout.LabelField($"{_itemSetup.GetID()}", LabelColorText(Color.red), Width(260));
+                
+                GUILayout.EndHorizontal();
+                if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_itemSetup);
+                Space(2);
+                _count++;
+            }
+            GUILayout.EndScrollView();
+        }
+        
+        #region Create/Remove Quest
+        Space(20);
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(1, 2), Color.white);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("+", Width(45), Height(25)))
+        {
+            var _path = $"Assets/Resources/Shop Custom/Purchase_{_count + 1}.asset";
+            var _newItemPurchase = CreateInstance<ShopItemSetup>();
+            AssetDatabase.CreateAsset(_newItemPurchase, _path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+        GUILayout.Box("New Item Purchase");
+        GUILayout.EndHorizontal();
+        
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("-", Width(45), Height(25)))
+        {
+            var _path = $"Assets/Resources/Shop Custom/Purchase_{_count}.asset";
+            var _instanceDel = AssetDatabase.LoadAssetAtPath<ShopItemSetup>(_path);
+            if (_instanceDel == null) return;
+            AssetDatabase.DeleteAsset(_path);
+            AssetDatabase.Refresh();
+        }
+        GUILayout.Box("Remove Item Purchase");
+        GUILayout.EndHorizontal();
         #endregion
     }
     #endregion

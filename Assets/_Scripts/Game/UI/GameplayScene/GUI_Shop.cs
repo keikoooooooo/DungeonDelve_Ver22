@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class GUI_Shop : MonoBehaviour, IGUI
 {
     [SerializeField] private GameObject shopPanel;
-    [SerializeField] private ShopItemPurchase itemPurchase;
+    [SerializeField] private GUI_ShopItemPurchase itemPurchase;
     [SerializeField] private TextMeshProUGUI refreshesText;
     [SerializeField] private Button purchaseBtt;
     [Space]
@@ -44,8 +44,7 @@ public class GUI_Shop : MonoBehaviour, IGUI
     private static ObjectPooler<ShopItemBox> _poolItemBox;
     private List<ShopItemSetup> _shopData;
     private SO_GameItemData _itemData;
-    private UserData _userData;
-    private ShopItemBox _currentShopItem;
+    private ShopItemBox _currentShopItemBox;
     private bool _canPanelOpen;
     private Coroutine _timeCoroutine;
     private PlayerHUD _playerHUD;
@@ -58,8 +57,8 @@ public class GUI_Shop : MonoBehaviour, IGUI
     }
     private void Start()
     {
-        _shopData = ShopManager.Instance.shopData;
-        _poolItemBox = new ObjectPooler<ShopItemBox>(shopItemBoxPrefab, itemBoxContent, 10);
+        _shopData = ShopManager.ShopData;
+        _poolItemBox = new ObjectPooler<ShopItemBox>(shopItemBoxPrefab, itemBoxContent, _shopData.Count);
         _poolItemBox.List.ForEach(box => box.OnItemSelectedEvent += OnSelectedShopItem);
     }
     private void OnDisable()
@@ -75,7 +74,6 @@ public class GUI_Shop : MonoBehaviour, IGUI
     {
         GUI_Manager.Add(this);
         purchaseBtt.onClick.AddListener(OnClickPurchaseButton);
-        itemPurchase.OnConfirmPurchaseEvent += OnConfirmPurchaseButton;
         
         if (!ShopManager.Instance) return;
         ShopManager.Instance.interactiveUI.OnPanelOpenEvent += OnOpenPanelEvent;
@@ -85,7 +83,6 @@ public class GUI_Shop : MonoBehaviour, IGUI
     {
         GUI_Manager.Remove(this);
         purchaseBtt.onClick.RemoveListener(OnClickPurchaseButton);
-        itemPurchase.OnConfirmPurchaseEvent -= OnConfirmPurchaseButton;
 
         if (!ShopManager.Instance) return;
         ShopManager.Instance.interactiveUI.OnPanelOpenEvent -= OnOpenPanelEvent;
@@ -96,16 +93,12 @@ public class GUI_Shop : MonoBehaviour, IGUI
     public void GetRef(GameManager _gameManager)
     {
         _itemData = _gameManager.GameItemData;
-        _userData = _gameManager.UserData;
         _playerHUD = _gameManager.PlayerHUD;
     }
-    public void UpdateData()
-    {
-        
-    }
+    public void UpdateData() { }
     
     
-    public void OnOpenPanelEvent()
+    private void OnOpenPanelEvent()
     {
         if (!_canPanelOpen) return;
         _canPanelOpen = false;
@@ -146,7 +139,7 @@ public class GUI_Shop : MonoBehaviour, IGUI
             var _currentTime = DateTime.Now;
             var _nextMidnight = _currentTime.Date.AddDays(1);
             var _time = _nextMidnight - _currentTime;
-            refreshesText.text = $"The item refreshes after {_time.Hours} hours and {_time.Minutes} minutes.";
+            refreshesText.text = $"Items refresh in: {_time.Hours} hour and {_time.Minutes} minute.";
             yield return new WaitForSecondsRealtime(10f);
         }
     }
@@ -171,7 +164,7 @@ public class GUI_Shop : MonoBehaviour, IGUI
     }
     private void OnSelectedShopItem(ShopItemBox _shopItemBox)
     {
-        _currentShopItem = _shopItemBox;
+        _currentShopItemBox = _shopItemBox;
         purchaseBtt.interactable = _shopItemBox.shopItemSetup.CanBuyItem;
         inforItemPanel.SetActive(true);
         SetAnimSelectedShopItem(_shopItemBox);
@@ -183,7 +176,7 @@ public class GUI_Shop : MonoBehaviour, IGUI
         foreach (var _shopItem in _currentList)
         {
             var _animator = _shopItem.animator;
-            if (_animator.IsTag("Selected") && _shopItem != _currentShopItem)
+            if (_animator.IsTag("Selected") && _shopItem != _currentShopItemBox)
                 _shopItem.animator.Play(SwitchPanelControl.NameHashID_NonTrigger);
             else if (!_animator.IsTag("Selected") && _animator == _shopItemBox.animator)
                 _shopItem.animator.Play(SwitchPanelControl.NameHashID_Selected);
@@ -255,15 +248,26 @@ public class GUI_Shop : MonoBehaviour, IGUI
             }
         }
     }
-
     private void OnClickPurchaseButton()
     {
-        itemPurchase.SetPurchasePanel(_currentShopItem.shopItemSetup);
+        var _itemCustom = _itemData.GetItemCustom(_currentShopItemBox.shopItemSetup.GetItemCode());
+        itemPurchase.SetPurchasePanel(_currentShopItemBox, _itemCustom);
     }
-    private void OnConfirmPurchaseButton(ItemNameCode _itemNameCode, int _itemValue)
+    
+    public void HandleItemPurchaseSuccess()
     {
-        _userData.IncreaseItemValue(_itemNameCode, _itemValue);
+        purchaseBtt.interactable = _currentShopItemBox.shopItemSetup.CanBuyItem;
+        ShopManager.SortShopItemData();
+        ShowShop();
     }
-
+    public void OnOpenPurchasePanel()
+    {
+        ShopManager.Instance.interactiveUI.OnPanelCloseEvent -= OnClosePanelEvent;
+    }
+    public void OnClosePurchasePanel()
+    {
+        ShopManager.Instance.interactiveUI.OnPanelCloseEvent += OnClosePanelEvent;
+    }
+    
     
 }

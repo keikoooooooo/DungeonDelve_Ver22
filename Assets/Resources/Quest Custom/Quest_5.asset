@@ -16,6 +16,7 @@ MonoBehaviour:
     id: 40f2a96d-2d41-4f88-bb9e-e37ec9ccc71a
     isCompleted: 0
     isLocked: 0
+    isReceived: 0
   title: Quest 05
   description: Collect a large quantity of Goblin teeth. The required quantity is
     100.
@@ -23,10 +24,6 @@ MonoBehaviour:
     code: 400
     value: 100
   rewards:
-  - code: 20
-    value: 10000
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
   - code: 0
     value: 10
     isRandom: 0
@@ -57,6 +54,10 @@ MonoBehaviour:
     valueRandom: {x: 0, y: 0}
   - code: 12
     value: 5
+    isRandom: 0
+    valueRandom: {x: 0, y: 0}
+  - code: 20
+    value: 10000
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 200

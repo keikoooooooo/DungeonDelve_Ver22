@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public static class FileHandle
@@ -49,6 +50,11 @@ public static class FileHandle
         
         File.WriteAllText(_path, isEncrypt ? Encrypt(jsonText) : jsonText);
     }
+    private static void SaveToFile_JSON<T> (string _path, T _data)
+    {
+        var jsonText = JsonConvert.SerializeObject(_data, Formatting.Indented);
+        File.WriteAllText(_path, isEncrypt ? Encrypt(jsonText) : jsonText);
+    }
     
     public static bool Load<T>(string _fileName, out T _data)
     {
@@ -69,6 +75,17 @@ public static class FileHandle
         }
         var _jsonText = File.ReadAllText(_path);
         _data = JsonUtility.FromJson<T>(isEncrypt ? Decrypt(_jsonText) : _jsonText);
+        return true;
+    }
+    private static bool LoadFromFile_JSON<T>(string _path, out T _data)
+    {
+        if (!File.Exists(_path))
+        {
+            _data = default;
+            return false;
+        }
+        var _jsonText = File.ReadAllText(_path);
+        _data = JsonConvert.DeserializeObject<T>(isEncrypt ? Decrypt(_jsonText) : _jsonText);
         return true;
     }
     

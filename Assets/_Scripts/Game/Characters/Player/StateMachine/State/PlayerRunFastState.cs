@@ -10,12 +10,12 @@ public class PlayerRunFastState : PlayerBaseState
 
     private float currentBlend;
     private Coroutine _subtractSTCoroutine;
-    //
-    private PLAYBACK_STATE _playbackState;
+
    
     public override void EnterState()
     {
         _machine._footstepsInstance = _machine.runfastFootsteps;
+        _machine.CanFootstepsAudioPlay = true;
         currentBlend = _machine.animator.GetFloat(_machine.IDSpeed);
         _machine.animator.speed = 1.4f;
         _machine.CanIncreaseST = false;
@@ -35,7 +35,8 @@ public class PlayerRunFastState : PlayerBaseState
     }
     protected override void ExitState()
     {
-        _machine._footstepsInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _machine.CanFootstepsAudioPlay = false;
+        _machine._footstepsInstance.stop(STOP_MODE.IMMEDIATE);
         _machine.input.LeftShift = false;
         _machine.animator.speed = 1f;
         _machine.CanIncreaseST = true;

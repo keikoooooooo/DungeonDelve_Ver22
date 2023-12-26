@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-/// <summary>
-/// Danh sách NameCode để phân biệt/tìm thông tin của Item
-/// </summary>
+/// <summary> Danh sách NameCode để phân biệt/tìm thông tin của Item </summary>
 public enum ItemNameCode 
 {
     // Potion (PO)
@@ -60,9 +58,7 @@ public enum ItemNameCode
     
 }
 
-/// <summary>
-/// Độ hiếm của Item
-/// </summary>
+/// <summary> Độ hiếm của Item </summary>
 public enum ItemRarity
 {
     Common = 0,
@@ -72,6 +68,7 @@ public enum ItemRarity
     Legendary = 4
 }
 
+/// <summary> Phân loại Item </summary>
 public enum ItemType
 {
     Consumable,
@@ -81,9 +78,7 @@ public enum ItemType
 }
 
 
-/// <summary>
-/// Thông tin của từng Item
-/// </summary>
+/// <summary> Thông tin của Item </summary>
 [Serializable]
 public class ItemCustom
 {
@@ -98,9 +93,7 @@ public class ItemCustom
 }
 
 
-/// <summary>
-/// Dữ liệu tất cả các Item trong game: Type và Sprite
-/// </summary>
+/// <summary> Dữ liệu tất cả các Item trong game: Type và Sprite. </summary>
 [CreateAssetMenu(fileName = "Item Default Data", menuName = "Game Configuration/Game Item Data")]
 public class SO_GameItemData : ScriptableObject
 {
@@ -123,7 +116,6 @@ public class SO_GameItemData : ScriptableObject
     /// <param name="_nameCode"> Code của item cần tìm </param>
     /// <returns></returns>
     public ItemCustom GetItemCustom(ItemNameCode _nameCode) => ItemData[_nameCode];
-    
     
     
     private void OnEnable()

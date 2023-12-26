@@ -41,6 +41,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public bool IsRun => !IsIdle && IsGrounded && !input.LeftShift && _movementState == MovementState.StateRun;
     public bool IsDash => input.LeftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
+    public bool CanFootstepsAudioPlay { get; set; }
     #endregion
     
     #region Animation IDs Paramater
@@ -107,6 +108,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         HandleEnable();
         DamageableData.Add(gameObject, this);
     }
+    private void Start()
+    {
+        CreateAudioRef();
+    }
     protected virtual void Update()
     {
         HandleInput();
@@ -135,14 +140,16 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         _state = new PlayerStateFactory(this);
         Health = new StatusHandle();
         Stamina = new StatusHandle();
+    }
+    private void CreateAudioRef()
+    {
         walkFootsteps = AudioManager.CreateInstance(FMOD_Events.Instance.walkFootsteps);
         runFootsteps = AudioManager.CreateInstance(FMOD_Events.Instance.runFootsteps);
         runfastFootsteps = AudioManager.CreateInstance(FMOD_Events.Instance.runfastFootsteps);
     }
 
-    /// <summary>
-    /// Khởi tạo giá trị biến ban đầu, và sẽ gọi hàm mỗi lần object này được OnEnable
-    /// </summary>
+    
+    /// <summary> Khởi tạo giá trị biến ban đầu, và sẽ gọi hàm mỗi lần object này được OnEnable. </summary>
     protected virtual void SetVariables()
     { 
         // Set State
@@ -249,7 +256,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     private void HandleFootstepsAudio()
     {
-        if (IsGrounded && input.Move != Vector2.zero && !animator.IsTag("Attack"))
+        if (IsGrounded && !IsIdle && CanFootstepsAudioPlay)
         {
             _footstepsInstance.getPlaybackState(out _footstepsPLAYBACK_STATE);
             if (_footstepsPLAYBACK_STATE == PLAYBACK_STATE.STOPPED)
@@ -368,14 +375,10 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     #endregion
     
 
-    /// <summary>
-    /// Khi nhận sát thương, nếu nhân vật cần thực hiện hành vi thì Override lại
-    /// </summary>
+    /// <summary> Khi nhận sát thương, nếu nhân vật cần thực hiện hành vi thì Override lại. </summary>
     protected virtual void HandleDamage() { }
 
-    /// <summary>
-    /// Giải phóng tất cả trạng thái khi nhảy, lướt,
-    /// </summary>
+    /// <summary> Giải phóng tất cả trạng thái khi nhảy, lướt,... </summary>
     public abstract void ReleaseAction();
 }
 

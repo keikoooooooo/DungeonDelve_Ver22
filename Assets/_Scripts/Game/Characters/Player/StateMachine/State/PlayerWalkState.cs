@@ -5,14 +5,13 @@ public class PlayerWalkState : PlayerBaseState
 {
     public PlayerWalkState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) 
         : base(currentContext, playerStateFactory) {}
-
     
     private float currentBlend;
-    private PLAYBACK_STATE _playbackState;
     
     public override void EnterState()
     {
         _machine._footstepsInstance = _machine.walkFootsteps;
+        _machine.CanFootstepsAudioPlay = true;
         _machine.animator.speed = 1.25f;
         currentBlend = _machine.animator.GetFloat(_machine.IDSpeed);
     }
@@ -28,7 +27,8 @@ public class PlayerWalkState : PlayerBaseState
     protected override void ExitState()
     {
         _machine.animator.speed = 1f;
-        _machine._footstepsInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _machine.CanFootstepsAudioPlay = false;
+        _machine._footstepsInstance.stop(STOP_MODE.IMMEDIATE);
     }
     public override void CheckSwitchState()
     {

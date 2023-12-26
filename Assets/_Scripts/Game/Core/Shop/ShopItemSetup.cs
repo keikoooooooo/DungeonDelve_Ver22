@@ -1,23 +1,49 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 [Serializable]
-public class ShopItemSetup
+[CreateAssetMenu(menuName = "Create Item Purchase", fileName = "Purchase_")]
+public class ShopItemSetup : ScriptableObject
 {
+    [Serializable]
+    public class ItemPurchaseData
+    {
+        [field: SerializeField] public int currentValue { get; private set; }
+        public ItemPurchaseData() { }
+        public ItemPurchaseData(int _currentValue)
+        {
+            currentValue = _currentValue;
+        }
+    }
+    
+    [SerializeField, ReadOnly] private string id;
     [SerializeField, Tooltip("Loại Item")] private ItemNameCode itemNameCode;
-    [SerializeField, Tooltip("Giá bán")] private int price;
-    [SerializeField, Tooltip("Số lượng vật phậm nhận được")] private int quantityReceive;
+    [SerializeField, ReadOnly, Tooltip("Số lượng mua hiện tại trong ngày")] private int purchaseCurrent;
     [SerializeField, Tooltip("Số lượng được mua tối đa trong 1 ngày")] private int purchaseMax;
-    [field: SerializeField, HideInInspector] public int currentPurchase { get; private set; }
+    [SerializeField, Tooltip("Giá bán")] private int price;
+    [SerializeField, Tooltip("Số lượng vật phẩm nhận được")] private int quantityReceive;
+    [SerializeField, ReadOnly] private ItemRarity itemRarity;
+    public bool CanBuyItem => purchaseCurrent < purchaseMax;
     
-    public bool CanBuyItem => currentPurchase < purchaseMax;
     
+    // GETTER
+    public string GetID() => id;
     public ItemNameCode GetItemCode() => itemNameCode;
+    public int GetPurchaseMax() => purchaseMax;
+    public int GetPurchaseCurrent() => purchaseCurrent;
     public int GetPrice() => price;
     public int GetQuantityReceive() => quantityReceive;
-    public int GetPurchaseMax() => purchaseMax;
-
-    public void BuyItem() => currentPurchase = Mathf.Clamp(currentPurchase + 1, 0, purchaseMax);
-    public void SetCurrentPurchase(int _value) => currentPurchase = _value;
-    public int GetCurrentPurchase() => currentPurchase;
+    public ItemRarity GetRarity() => itemRarity;
+    
+    // SETTER
+    public void SetID(string _value) => id = _value; 
+    public void SetItemCode(ItemNameCode _itemNameCode) => itemNameCode = _itemNameCode;
+    public void SetPurchaseMax(int _value) => purchaseMax = _value;
+    public void SetPurchaseCurrent(int _value) => purchaseCurrent = _value;
+    public void SetPrice(int _value) => price = _value;
+    public void SetQuantityReceive(int _value) => quantityReceive = _value;
+    public void SetRarity(ItemRarity _itemRarity) => itemRarity = _itemRarity;
+    public void Purchase(int _value) => purchaseCurrent = Mathf.Clamp(purchaseCurrent + _value, 0, purchaseMax);
+    
 }
