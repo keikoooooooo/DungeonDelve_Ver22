@@ -11,10 +11,11 @@ public class ChestNoticeManager : MonoBehaviour
     private float borderHeightSize;
     
     private Camera _mainCam;
-    private Vector3 chestScreenPoint;
+    private Vector3 _chestScreenPoint;
+    private Vector3 _chestScreenPointNoOffset;
+    private readonly Vector3 _offsetIndicator = new(0, 1.75f, 0);
     private static Dictionary<Chest, IconIndicator> _chests;
     private static ObjectPooler<IconIndicator> _poolIndicator;
-    
     
     private void Awake()
     {
@@ -31,50 +32,48 @@ public class ChestNoticeManager : MonoBehaviour
 
         foreach (var (key, value) in _chests)
         {
-            chestScreenPoint = _mainCam.WorldToScreenPoint(key.transform.position + new Vector3(0, 1.75f, 0));
-            var isOffScreen = chestScreenPoint.x <= 0 || chestScreenPoint.x >= Screen.width ||
-                              chestScreenPoint.y <= 0 || chestScreenPoint.y >= Screen.height ||
-                              chestScreenPoint.z <= 0;
+            _chestScreenPoint = _mainCam.WorldToScreenPoint(key.transform.position + _offsetIndicator);
+            _chestScreenPointNoOffset = _mainCam.WorldToScreenPoint(key.transform.position);
             
+            _chestScreenPoint.z = 0;
+            var isOffScreen = _chestScreenPoint.x - borderWidthSize <= 0 || _chestScreenPoint.x + borderWidthSize >= Screen.width ||
+                              _chestScreenPoint.y - borderHeightSize <= 0 || _chestScreenPoint.y + borderHeightSize >= Screen.height ;
+
             if (isOffScreen) // Ra khỏi màn hình
             {
-                OffScreenIndicator(chestScreenPoint, value);
+                OffScreenIndicator(value);
             }
             else
             {
-                OnScreenIndicator(chestScreenPoint, value);
+                OnScreenIndicator(value);
             }
         }
     }
     
 
-    private void OffScreenIndicator(Vector3 _screenPoint, IconIndicator _indicator) 
+    private void OffScreenIndicator(IconIndicator _indicator) 
     {
-        var clampX = Mathf.Clamp(_screenPoint.x, borderWidthSize, Screen.width - borderWidthSize);
-        var clampY = Mathf.Clamp(_screenPoint.y, borderHeightSize, Screen.height - borderHeightSize);
-        _indicator.iconIndicator.position = new Vector3(clampX, clampY, 0);
+        var screenBound = new Vector2(Screen.width - borderWidthSize, Screen.height - borderHeightSize);
+        var clampScreenPoinnt = new Vector3(Mathf.Clamp(_chestScreenPoint.x, borderWidthSize, screenBound.x),
+                                            Mathf.Clamp(_chestScreenPoint.y, borderHeightSize, screenBound.y),
+                                            0f);
+        
+        _indicator.iconIndicator.position = clampScreenPoinnt;
         _indicator.arrowIndicator.gameObject.SetActive(true);
-        
-        #region Test 1
-        var direction = _indicator.iconIndicator.position - chestScreenPoint;
-        direction.Normalize();
-        _indicator.arrowIndicator.localPosition = direction * 55f;
-        _indicator.arrowIndicator.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-        #endregion
-        
-        #region Test 2
-        // var directionToArrow = (chestScreenPoint - _indicator.iconIndicator.position).normalized;
-        // var arrowPos = _indicator.iconIndicator.position + directionToArrow * distanceToParent;
-        // _indicator.arrowIndicator.position = arrowPos;
-        // _indicator.arrowIndicator.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(directionToArrow.y, directionToArrow.x) * Mathf.Rad2Deg);
-        #endregion
+
+        var directionToChest = _chestScreenPointNoOffset - clampScreenPoinnt;
+        directionToChest.Normalize();
+
+        _indicator.arrowIndicator.position = clampScreenPoinnt + directionToChest * 50f;
+        _indicator.arrowIndicator.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(directionToChest.y, directionToChest.x) * Mathf.Rad2Deg);
     }
-    private void OnScreenIndicator(Vector3 _screenPoint, IconIndicator _indicator)
+    private void OnScreenIndicator(IconIndicator _indicator)
     {
-       _indicator.iconIndicator.position = _screenPoint;
+       _indicator.iconIndicator.position = _chestScreenPoint;
        _indicator.arrowIndicator.gameObject.SetActive(false);
     }
     
+    //
     public static void AddChest(Chest _chest)
     {
         if (_chests.ContainsKey(_chest)) 

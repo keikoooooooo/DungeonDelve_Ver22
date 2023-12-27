@@ -14,8 +14,8 @@ public class PlayerDamageFallState : PlayerBaseState
     
     public override void EnterState()
     {
-        _canMoveBehind = !_machine.animator.IsTag("Damage", 1);
-        if (!_canMoveBehind) return;
+        // _canMoveBehind = !_machine.animator.IsTag("Damage", 1);
+        // if (!_canMoveBehind) return;
         _timePush = .35f;
         _machine.animator.SetTrigger(_machine.IDDamageFall);
         _machine.voice.PlayHeavyHit();
@@ -32,13 +32,13 @@ public class PlayerDamageFallState : PlayerBaseState
     }
     protected override void ExitState()
     {
-        _machine.animator.ResetTrigger(_machine.IDDamageFall);
+        _machine.SetPlayerInputState(true);
+        _machine.ResetDamageTrigger();
     }
     public override void CheckSwitchState()
     {
         if (!_machine.IsDash) return;
         SwitchState(_factory.Dash());
-        _machine.ReleaseDamageState();
     }
 
 }

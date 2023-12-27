@@ -20,10 +20,7 @@ public class PlayerIdleState : PlayerBaseState
         
         CheckSwitchState();
     }
-    protected override void ExitState()
-    {
-        
-    }
+    protected override void ExitState() { }
     public override void CheckSwitchState()
     {
         // // Kiểm tra các trạng thái khi nhân vật đang đứng dưới đất

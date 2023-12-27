@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PhysicsDetection : DetectionBase, IPooled<PhysicsDetection>
 {
-    [Tooltip("Bán kính kiểm tra va chạm"), Range(0.1f, 15f)]
+    [Tooltip("Bán kính kiểm tra va chạm"), Range(0.1f, 20f)]
     public float radiusCheck;
     
     [Tooltip("Layer cần kiểm tra va chạm")]

@@ -19,6 +19,10 @@ public class GUI_Register : MonoBehaviour
         GUI_Inputs.InputAction.TESTER.Enter.performed += OnEnterInput;
         GUI_Inputs.InputAction.UI.OpenMenu.performed += OnEscInput;
     }
+    private void Start()
+    {
+        passwordField.asteriskChar = '•';
+    }
     private void OnDisable()
     {
         GUI_Inputs.InputAction.TESTER.Enter.performed -= OnEnterInput;

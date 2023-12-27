@@ -241,6 +241,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1375346480814298, guid: 79aa51c10ea6d0a4ba4d89e4f54badf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6069913117391002723}
+    - targetCorrespondingSourceObject: {fileID: 1375346480814298, guid: 79aa51c10ea6d0a4ba4d89e4f54badf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7265543928700868413}
   m_SourcePrefab: {fileID: 100100000, guid: 79aa51c10ea6d0a4ba4d89e4f54badf6, type: 3}
 --- !u!1 &3898248889410936969 stripped
 GameObject:
@@ -275,6 +278,8 @@ MonoBehaviour:
   layerToCheck:
     serializedVersion: 2
     m_Bits: 128
+  drawGizmos: 0
+  drawColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &4195309142455664016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,3 +336,46 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7265543928700868413}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7265543928700868413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3898248889410936969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 347739664
+      Data2: 1282101541
+      Data3: 404040635
+      Data4: -1805248147
+    Path: event:/WEAPON/Magic_EXPLOSION_01
+  Event: 
+  PlayEvent: 0
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 6
+  OverrideMaxDistance: 15

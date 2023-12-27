@@ -40,22 +40,23 @@ public class PlayerDashState : PlayerBaseState
     protected override void ExitState()
     {
         _machine.input.LeftMouse = false;
-        _machine.ReleaseAction();
+        _machine.InputMovement = Vector3.zero;
+        _machine.AppliedMovement = Vector3.zero;
     }
     public override void CheckSwitchState()
     {
         // // Kiểm tra các trạng thái khi nhân vật đang đứng dưới đất
-        if (_machine.IsIdle)
-        {  
-            SwitchState(_factory.Idle());
-        }
-        else if (_machine.IsWalk)
+        if (_machine.IsWalk)
         {
             SwitchState(_factory.Walk());
         }
         else if (_machine.IsRun)
         {
             SwitchState(_factory.Run());
+        }
+        else
+        {
+            SwitchState(_factory.Idle());
         }
     }
     

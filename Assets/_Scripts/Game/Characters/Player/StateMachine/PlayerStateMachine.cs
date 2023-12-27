@@ -114,6 +114,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     protected virtual void Update()
     {
+        Debug.Log(CurrentState);
         HandleInput();
         
         CurrentState.UpdateState();
@@ -298,16 +299,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     public void TakeDMG(int _damage, bool _isCRIT) 
     {
-        ReleaseAction();
-        InputMovement = Vector3.zero;
-        AppliedMovement = Vector3.zero;
-        input.Move =Vector3.zero;
-        input.PlayerInput.Player.Move.Disable();
-        input.PlayerInput.Player.Jump.Disable();
-        input.PlayerInput.Player.NormalAttack.Disable();
-        input.PlayerInput.Player.ElementalSkill.Disable();
-        input.PlayerInput.Player.ElementalBurst.Disable();
-        
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.GetDEF() * 0.5f) : PlayerConfig.GetDEF();
         
@@ -324,7 +315,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
             return;
         }
         
+        if (animator.IsTag("Damage", 1)) return;
+        
         HandleDamage();
+        SetPlayerInputState(false);
+        InputMovement = Vector3.zero;
+        AppliedMovement = Vector3.zero;
+        input.Move =Vector3.zero;
         CurrentState.SwitchState(_isCRIT ? _state.DamageFall() : _state.DamageStand());
         CallbackTakeDMGEvent();
     }
@@ -337,11 +334,30 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     public void ReleaseDamageState() // gọi trên animationEvent để giải phóng trạng thái TakeDamage
     {
         CurrentState.SwitchState(_state.Idle());
-        input.PlayerInput.Player.Move.Enable();
-        input.PlayerInput.Player.Jump.Enable();
-        input.PlayerInput.Player.NormalAttack.Enable();
-        input.PlayerInput.Player.ElementalSkill.Enable();
-        input.PlayerInput.Player.ElementalBurst.Enable();
+        ResetDamageTrigger();
+        SetPlayerInputState(true);
+    }
+    public void SetPlayerInputState(bool _stateValue)
+    {
+        if (_stateValue)
+        {
+            input.PlayerInput.Player.Move.Enable();
+            input.PlayerInput.Player.Jump.Enable();
+            input.PlayerInput.Player.NormalAttack.Enable();
+            input.PlayerInput.Player.ElementalSkill.Enable();
+            input.PlayerInput.Player.ElementalBurst.Enable();
+            return;
+        }
+        input.PlayerInput.Player.Move.Disable();
+        input.PlayerInput.Player.Jump.Disable();
+        input.PlayerInput.Player.NormalAttack.Disable();
+        input.PlayerInput.Player.ElementalSkill.Disable();
+        input.PlayerInput.Player.ElementalBurst.Disable();
+    }
+    public void ResetDamageTrigger()
+    {
+        animator.ResetTrigger(IDDamageFall);
+        animator.ResetTrigger(IDDamageStand);
     }
     public async void ResetDeadState()
     {

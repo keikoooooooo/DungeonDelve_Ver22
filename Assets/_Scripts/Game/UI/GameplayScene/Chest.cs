@@ -61,9 +61,6 @@ public class Chest : MonoBehaviour
     }
     
     
-    /// <summary>
-    /// Tạo rương
-    /// </summary>
     public void CreateChest()
     {
         if(_activeCoroutine != null) 
@@ -81,9 +78,6 @@ public class Chest : MonoBehaviour
         SetDissolve(1, 0, 2f);
     }
     
-    /// <summary>
-    /// Mở rương
-    /// </summary>
     private void OpenChest()
     {
         if(_openCoroutine != null) 
@@ -102,9 +96,6 @@ public class Chest : MonoBehaviour
         OnOpenChestEvent?.Invoke();
     }
     
-    /// <summary>
-    /// Đóng rương
-    /// </summary>
     private void CloseChest()
     {
         if(_closeCoroutine != null) 
@@ -125,6 +116,7 @@ public class Chest : MonoBehaviour
         chestAnimator.SetBool(OpenChestID, false);
     }
     
+    
     private void SetDissolve(float _currentValue, float _setValue, float _duration)
     {
         setDissolve.ChangeCurrentValue(_currentValue);
@@ -135,9 +127,7 @@ public class Chest : MonoBehaviour
 
     
     #region Trigger Event
-    /// <summary>
-    /// Mở thông báo mở rương 
-    /// </summary>
+    /// <summary> Mở thông báo mở rương </summary>
     public void OnEnterPlayerCollision(GameObject _playerObject)
     {
         _detectPlayer = true;
@@ -147,27 +137,21 @@ public class Chest : MonoBehaviour
             _notice.CreateNoticeT3("[F] Open Chest.");
     }
     
-    /// <summary>
-    /// Đóng thông báo mở rương
-    /// </summary>
+    /// <summary> Đóng thông báo mở rương </summary>
     public void OnExitPlayerCollision() 
     {
         _detectPlayer = false;
         _notice.CloseNoticeT3();
     }
 
-    /// <summary>
-    /// Mở chỉ dẫn tới vị trí rương
-    /// </summary>
+    /// <summary> Mở chỉ dẫn tới vị trí rương </summary>
     public void OpenIndicator()
     {
         if (!_canReceived) return;
         ChestNoticeManager.AddChest(this);
     }
 
-    /// <summary>
-    /// Đóng chỉ dẫn tới vị trí rương
-    /// </summary>
+    /// <summary> Đóng chỉ dẫn tới vị trí rương </summary>
     public void CloseIndicator()
     {
         ChestNoticeManager.RemoveChest(this);

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,12 +12,17 @@ public class GUI_Login : MonoBehaviour
     [field: SerializeField] public Button startgameBtt {get; private set; }
     [field: SerializeField] public Button quitBtt {get; private set; }
     
+    
     private void OnEnable()
     {
         SetDefaultErrorText();
         SetDefaultFieldText();
         GUI_Inputs.InputAction.TESTER.Enter.performed += OnEnterInput;
         GUI_Inputs.InputAction.UI.OpenMenu.performed += OnEscInput;
+    }
+    private void Start()
+    {
+        passwordField.asteriskChar = '•';
     }
     private void OnDisable()
     {

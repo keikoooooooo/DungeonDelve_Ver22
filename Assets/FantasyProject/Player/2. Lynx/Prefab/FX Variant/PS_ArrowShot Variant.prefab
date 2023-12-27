@@ -250,14 +250,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6130567110401474471, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8632336510204603752}
+      addedObject: {fileID: 8172121235096215011}
   m_SourcePrefab: {fileID: 100100000, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
 --- !u!1 &2959334866490560796 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6130567110401474471, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}
   m_PrefabInstance: {fileID: 8936704270866394811}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8632336510204603752
+--- !u!114 &8172121235096215011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,30 +266,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 2959334866490560796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeed1aa4468ad10439f572b5baff58e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio:
+  CollisionTag: 
+  EventReference:
     Guid:
-      Data1: -252292361
-      Data2: 1280659724
-      Data3: 969808007
-      Data4: 1509572868
+      Data1: 2026477325
+      Data2: 1124761402
+      Data3: 687117485
+      Data4: 1224766455
     Path: event:/WEAPON/Bow_ARROW_SHOOT_02
-  isRandomAudio: 0
-  audios:
-  - Guid:
-      Data1: -670282731
-      Data2: 1294886589
-      Data3: 503706800
-      Data4: 420837329
-    Path: event:/WEAPON/Bow_ARROW_SHOOT_01
-  - Guid:
-      Data1: -252292361
-      Data2: 1280659724
-      Data3: 969808007
-      Data4: 1509572868
-    Path: event:/WEAPON/Bow_ARROW_SHOOT_02
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!198 &5468526304508266351 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4026665142206687700, guid: 4e8e5d46e5d5e86458b5ad6dc79fc0c0, type: 3}

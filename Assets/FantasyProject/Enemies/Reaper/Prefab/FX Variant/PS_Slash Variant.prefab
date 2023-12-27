@@ -306,6 +306,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3326623571134901291, guid: dbc0dcce824355241b18134252067338, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5771105848828200166}
+    - targetCorrespondingSourceObject: {fileID: 3326623571134901291, guid: dbc0dcce824355241b18134252067338, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7133972613613988119}
   m_SourcePrefab: {fileID: 100100000, guid: dbc0dcce824355241b18134252067338, type: 3}
 --- !u!1 &1490951448303014041 stripped
 GameObject:
@@ -352,3 +355,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7133972613613988119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490951448303014041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 121677352
+      Data2: 1324637761
+      Data3: 1258513312
+      Data4: -823708371
+    Path: event:/WEAPON/Sword_SLASH_01
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 2
+  OverrideMaxDistance: 10

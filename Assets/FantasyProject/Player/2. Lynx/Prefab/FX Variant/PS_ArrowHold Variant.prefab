@@ -372,12 +372,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isFromPool: 0
+  waitTime: 0
   audio:
     Guid:
-      Data1: -252292361
-      Data2: 1280659724
-      Data3: 969808007
-      Data4: 1509572868
+      Data1: 2026477325
+      Data2: 1124761402
+      Data3: 687117485
+      Data4: 1224766455
     Path: event:/WEAPON/Bow_ARROW_SHOOT_02
   audios:
   - Guid:

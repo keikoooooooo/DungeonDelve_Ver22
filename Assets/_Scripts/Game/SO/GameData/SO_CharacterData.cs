@@ -31,10 +31,6 @@ public class SO_CharacterData : ScriptableObject
         {
             _playerControllers.TryAdd(characterCustom.nameCode, characterCustom.prefab);
         }
-        foreach (var keyValuePair in _playerControllers)
-        {
-            Debug.Log(keyValuePair.Value);
-        }
     }
 
     public PlayerController GetPrefab(CharacterNameCode _characterNameCode) => _playerControllers[_characterNameCode];

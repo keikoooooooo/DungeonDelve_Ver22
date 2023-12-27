@@ -26,6 +26,7 @@ public class PlayerVoice : MonoBehaviour
     [BoxGroup("COMBAT"), SerializeField] private EventReference[] LightHitEvent;
     [BoxGroup("COMBAT"), SerializeField] private EventReference[] HeavyHitEvent;
     [BoxGroup("COMBAT"), SerializeField] private EventReference[] DieEvent;
+    
     private void OnEnable()
     {
         var _currentHour = DateTime.Now.Hour;

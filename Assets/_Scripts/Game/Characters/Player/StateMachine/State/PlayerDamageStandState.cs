@@ -11,14 +11,16 @@ public class PlayerDamageStandState : PlayerBaseState
     private Vector3 _pushVelocity;
     private readonly Vector3 _gravity = new(0f, -9.81f, 0f);
     private bool _canMoveBehind;
+
     
     public override void EnterState()
     {
-        _canMoveBehind = !_machine.animator.IsTag("Damage", 1);
-        if (!_canMoveBehind) return;
+        // _canMoveBehind = !_machine.animator.IsTag("Damage", 1);
+        // if (!_canMoveBehind) return;
         _timePush = .125f;
         _machine.animator.SetTrigger(_machine.IDDamageStand);   
         _machine.voice.PlayLightHit();
+    
     }
     public override void UpdateState()
     {
@@ -32,12 +34,12 @@ public class PlayerDamageStandState : PlayerBaseState
     }
     protected override void ExitState()
     {
-        _machine.animator.ResetTrigger(_machine.IDDamageStand);
+        _machine.SetPlayerInputState(true);
+        _machine.ResetDamageTrigger();
     }
     public override void CheckSwitchState()
     {
         if (!_machine.IsDash) return;
         SwitchState(_factory.Dash());
-        _machine.ReleaseDamageState();
     }
 }

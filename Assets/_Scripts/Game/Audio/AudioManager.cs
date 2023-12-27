@@ -58,8 +58,8 @@ public class AudioManager : Singleton<AudioManager>
     private void LoadOldVolume()
     {
         masterVolume = PlayerPrefs.GetFloat(PP_VolumeIndex, .5f);
-        musicVolume = PlayerPrefs.GetFloat(PP_MusicVolumeIndex, .3f);
-        dialogueVolume = PlayerPrefs.GetFloat(PP_DialogueVolumeIndex, .4f);
+        musicVolume = PlayerPrefs.GetFloat(PP_MusicVolumeIndex, .4f);
+        dialogueVolume = PlayerPrefs.GetFloat(PP_DialogueVolumeIndex, .5f);
         sfxVolume = PlayerPrefs.GetFloat(PP_SFXVolumeIndex, .5f);
 
         masterBus.setVolume(masterVolume);
@@ -82,9 +82,7 @@ public class AudioManager : Singleton<AudioManager>
         _eventInstances.Add(_instance);
         return _instance;
     }
-
-
-    public void SetParameter(string paraName, float paraValue) => _ambienceInstance.setParameterByName(paraName, paraValue);
+    
 }
 
 

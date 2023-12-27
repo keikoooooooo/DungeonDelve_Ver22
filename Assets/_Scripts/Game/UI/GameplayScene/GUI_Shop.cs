@@ -11,6 +11,7 @@ public class GUI_Shop : MonoBehaviour, IGUI
 {
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private GUI_ShopItemPurchase itemPurchase;
+    [SerializeField] private TextMeshProUGUI currencyText;
     [SerializeField] private TextMeshProUGUI refreshesText;
     [SerializeField] private Button purchaseBtt;
     [Space]
@@ -48,7 +49,8 @@ public class GUI_Shop : MonoBehaviour, IGUI
     private bool _canPanelOpen;
     private Coroutine _timeCoroutine;
     private PlayerHUD _playerHUD;
-    
+    private UserData _userData;
+     
     private void OnEnable()
     {
         _canPanelOpen = true;
@@ -83,7 +85,8 @@ public class GUI_Shop : MonoBehaviour, IGUI
     {
         GUI_Manager.Remove(this);
         purchaseBtt.onClick.RemoveListener(OnClickPurchaseButton);
-
+        _userData.OnCoinChangedEvent -= SetCurrencyText;
+        
         if (!ShopManager.Instance) return;
         ShopManager.Instance.interactiveUI.OnPanelOpenEvent -= OnOpenPanelEvent;
         ShopManager.Instance.interactiveUI.OnPanelCloseEvent -= OnClosePanelEvent;
@@ -94,6 +97,8 @@ public class GUI_Shop : MonoBehaviour, IGUI
     {
         _itemData = _gameManager.GameItemData;
         _playerHUD = _gameManager.PlayerHUD;
+        _userData = _gameManager.UserData;
+        _userData.OnCoinChangedEvent += SetCurrencyText;
     }
     public void UpdateData() { }
     
@@ -269,5 +274,5 @@ public class GUI_Shop : MonoBehaviour, IGUI
         ShopManager.Instance.interactiveUI.OnPanelCloseEvent += OnClosePanelEvent;
     }
     
-    
+    private void SetCurrencyText(int _value) => currencyText.text = $"{_value}";
 }

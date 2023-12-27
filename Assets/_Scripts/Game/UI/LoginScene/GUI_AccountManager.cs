@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GUI_AccountManager : MonoBehaviour
 {
@@ -25,8 +27,19 @@ public class GUI_AccountManager : MonoBehaviour
     
     private Coroutine _handleCoroutine;
     private Coroutine _noticeCoroutine;
+
     
     private void OnEnable()
+    {
+        Init();
+        RegisterEvent();
+    }
+    private void OnDisable()
+    {
+        UnRegisterEvent();
+    }
+
+    private void Init()
     {
         accountIDText.text = "";
         mailText.text = "";
@@ -34,6 +47,9 @@ public class GUI_AccountManager : MonoBehaviour
         accountBtt.gameObject.SetActive(true);
         logoutBtt.gameObject.SetActive(false);
         startGameButton.gameObject.SetActive(false);
+    }
+    private void RegisterEvent()
+    {
         logoutBtt.onClick.AddListener(LogoutAccount);
         accountBtt.onClick.AddListener(OpenPanelLogin);
         
@@ -73,7 +89,7 @@ public class GUI_AccountManager : MonoBehaviour
 
         PlayFabController.Instance.OnLogin();
     }
-    private void OnDisable()
+    private void UnRegisterEvent()
     {
         logoutBtt.onClick.RemoveListener(LogoutAccount);
         accountBtt.onClick.RemoveListener(OpenPanelLogin);
