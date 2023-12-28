@@ -42,36 +42,43 @@ public class GUI_Bag : MonoBehaviour, IGUI
     {
         UnRegisterEvent();
     }
+    
+
     private void RegisterEvent()
     {
         GUI_Manager.Add(this);
-        GUI_Inputs.InputAction.UI.UseItem1.performed += UseItem1;
-        GUI_Inputs.InputAction.UI.UseItem2.performed += UseItem2;
-        GUI_Inputs.InputAction.UI.UseItem3.performed += UseItem3;
-        GUI_Inputs.InputAction.UI.UseItem4.performed += UseItem4;
+        GUI_Inputs.InputAction.UI.Item1.performed += UseItem1;
+        GUI_Inputs.InputAction.UI.Item2.performed += UseItem2;
+        GUI_Inputs.InputAction.UI.Item3.performed += UseItem3;
+        GUI_Inputs.InputAction.UI.Item4.performed += UseItem4;
     }
     private void UnRegisterEvent()
     {
+        GUI_Manager.Remove(this);
+        GUI_Inputs.InputAction.UI.Item1.performed -= UseItem1;
+        GUI_Inputs.InputAction.UI.Item2.performed -= UseItem2;
+        GUI_Inputs.InputAction.UI.Item3.performed -= UseItem3;
+        GUI_Inputs.InputAction.UI.Item4.performed -= UseItem4;
+        
         foreach (var slot in slots)
         {
-            slot.OnSelectSlotEvent.AddListener(OnDropItem);
+            slot.OnSelectSlotEvent.RemoveListener(OnDropItem);
         }
-        
-        GUI_Manager.Remove(this);
-        GUI_Inputs.InputAction.UI.UseItem1.performed -= UseItem1;
-        GUI_Inputs.InputAction.UI.UseItem2.performed -= UseItem2;
-        GUI_Inputs.InputAction.UI.UseItem3.performed -= UseItem3;
-        GUI_Inputs.InputAction.UI.UseItem4.performed -= UseItem4;
     }
-    
+
     public void UseItem1(InputAction.CallbackContext _callback) => HandleUseItem(slots[0]);
     public void UseItem2(InputAction.CallbackContext _callback) => HandleUseItem(slots[1]);
     public void UseItem3(InputAction.CallbackContext _callback) => HandleUseItem(slots[2]);
     public void UseItem4(InputAction.CallbackContext _callback) => HandleUseItem(slots[3]);
     private void HandleUseItem(Slot _slot)
     {
+        
         var _item = _slot.GetItem;
-        if(_item == null) return;
+        if(_item == null)
+        {
+            Debug.Log("Non user item");
+            return;
+        }
 
         var _itemNameCode = _item.GetItemCustom.code;
         _userData.IncreaseItemValue(_itemNameCode, -1);

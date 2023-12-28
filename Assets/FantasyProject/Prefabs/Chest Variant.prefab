@@ -296,6 +296,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
+      propertyPath: detection
+      value: 
+      objectReference: {fileID: 1502323437311547928}
+    - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: rewardSetup
       value: 
       objectReference: {fileID: 5720154775632405224}

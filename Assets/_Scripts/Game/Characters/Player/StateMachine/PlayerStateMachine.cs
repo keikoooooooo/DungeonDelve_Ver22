@@ -114,7 +114,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     protected virtual void Update()
     {
-        Debug.Log(CurrentState);
         HandleInput();
         
         CurrentState.UpdateState();

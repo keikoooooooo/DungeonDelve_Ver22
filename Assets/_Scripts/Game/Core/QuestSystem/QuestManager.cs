@@ -27,7 +27,7 @@ public class QuestManager : Singleton<QuestManager>
         }
 
         currentQuest = 0;
-        var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.Now.ToString()));
+        var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
         if (_lastDay <= DateTime.Today)
             LoadNewQuest();
         else
@@ -41,6 +41,7 @@ public class QuestManager : Singleton<QuestManager>
             _task.SetCompleted(false);
             FileHandle.Delete(_folderSave, _task.GetID);
         }
+        NoticeManager.Instance.OpenNewQuestNoticePanel();
     }
     private static void LoadOldQuest()
     {
@@ -77,7 +78,7 @@ public class QuestManager : Singleton<QuestManager>
         _task.SetState(false);
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
-        AudioManager.PlayOneShot(FMOD_Events.Instance.rewards, Vector3.zero);
+        AudioManager.PlayOneShot(FMOD_Events.Instance.rewards_01, Vector3.zero);
     }
     public static void OnCancelQuest(QuestSetup _quest)
     {
@@ -87,4 +88,17 @@ public class QuestManager : Singleton<QuestManager>
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
     }
+
+
+#if UNITY_EDITOR
+    [ContextMenu("Reset Quest Key")]
+    private void OnResetQuestKey()
+    {
+        if (!PlayerPrefs.HasKey(behaviourID.GetID)) return;
+        PlayerPrefs.DeleteKey(behaviourID.GetID);
+        Debug.Log("DeleteKey PlayerPrefs Success");
+    }
+#endif
+    
+    
 }

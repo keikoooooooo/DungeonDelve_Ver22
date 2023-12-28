@@ -18,6 +18,9 @@ public class NoticeManager : Singleton<NoticeManager>
     //
     [SerializeField, BoxGroup("Notice type 3")] private GameObject noticeT3Panel;
     [SerializeField, BoxGroup("Notice type 3")] private TextMeshProUGUI noticeT3Text;
+    //
+    [SerializeField, BoxGroup("Notice type 4")] private Animator newQuestNotice;
+    
     
     private static ObjectPooler<TextBar_3> _pooltextBar1;
     private static ObjectPooler<TextBar_3> _pooltextBar2;
@@ -66,8 +69,7 @@ public class NoticeManager : Singleton<NoticeManager>
         _titleTween = titleText.DOColor(new Color(1, 1, 1, 0), _tweenDuration);
         
         // Khi tiêu đề được tắt sẽ bắt đầu save dữ liệu mới vào dữ liệu của User
-        if(PlayFabHandleUserData.Instance)
-            PlayFabHandleUserData.Instance.SaveData();
+        if(PlayFabHandleUserData.Instance) PlayFabHandleUserData.Instance.SaveData();
     }
     #endregion
 
@@ -127,9 +129,7 @@ public class NoticeManager : Singleton<NoticeManager>
         }
     }
     
-    /// <summary>
-    /// Giải phóng tất cả text thông báo nhận Item về Pool
-    /// </summary>
+    /// <summary> Giải phóng tất cả text thông báo nhận Item về Pool </summary>
     public static void ReleaseAllNoticeT2() => _pooltextBar2.List.ForEach(t => t.Release());
     #endregion
 
@@ -153,6 +153,10 @@ public class NoticeManager : Singleton<NoticeManager>
     #endregion
 
     
+    #region Notice Type 4
+    /// <summary> Mở thông báo nhiệm vụ mới mỗi ngày </summary>
+    public void OpenNewQuestNoticePanel() => newQuestNotice.Play("Panel_IN");
     
-    
+    #endregion
+
 }

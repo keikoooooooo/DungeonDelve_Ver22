@@ -302,36 +302,36 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""UseItem1"",
+                    ""name"": ""Item1"",
                     ""type"": ""Button"",
-                    ""id"": ""c66c31b4-6ee2-4fb6-9ef9-2752652d86a6"",
+                    ""id"": ""5b9007aa-42d0-477d-a2fb-1050a7071e0d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Use Item 2"",
+                    ""name"": ""Item2"",
                     ""type"": ""Button"",
-                    ""id"": ""d9a76726-5212-4fd9-9299-17c1a02362fd"",
+                    ""id"": ""6dd50be5-1451-458a-9823-50092390128e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Use Item 3"",
+                    ""name"": ""Item3"",
                     ""type"": ""Button"",
-                    ""id"": ""65ea2bc3-80bd-4f18-98c8-97825736f1f4"",
+                    ""id"": ""34989309-9c7d-4689-97f2-f091cd79ec72"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Use Item 4"",
+                    ""name"": ""Item4"",
                     ""type"": ""Button"",
-                    ""id"": ""6cc36dda-e272-4e7f-b1b9-7122dd0a0af0"",
+                    ""id"": ""350a75f2-fe1a-4b2e-b833-e321885370d4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -374,45 +374,45 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""76aaded6-3361-4a49-b25b-eccf588759b9"",
+                    ""id"": ""b758bd0f-6d52-4f44-badd-4b2c5b3067a3"",
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""UseItem1"",
+                    ""action"": ""Item1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""136559bd-e25e-4520-810a-4910a9b85037"",
+                    ""id"": ""eceb3d90-5b94-4570-b6ba-54457b6561e8"",
                     ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Use Item 2"",
+                    ""action"": ""Item2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0d4b54ca-0b3b-4d9f-bbb9-b7bf882fd3c8"",
+                    ""id"": ""8fdda826-1ba4-4d1c-9162-cc2afb520445"",
                     ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Use Item 3"",
+                    ""action"": ""Item3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7f2e2ea9-de48-4db6-aa76-5ab92d736170"",
+                    ""id"": ""caa5fa29-8b8c-4c0c-a0c2-aed6e18dc670"",
                     ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Use Item 4"",
+                    ""action"": ""Item4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -564,10 +564,10 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_UI_OpenMenu = m_UI.FindAction("OpenMenu", throwIfNotFound: true);
         m_UI_OpenBag = m_UI.FindAction("OpenBag", throwIfNotFound: true);
         m_UI_CollectItem = m_UI.FindAction("CollectItem", throwIfNotFound: true);
-        m_UI_UseItem1 = m_UI.FindAction("UseItem1", throwIfNotFound: true);
-        m_UI_UseItem2 = m_UI.FindAction("Use Item 2", throwIfNotFound: true);
-        m_UI_UseItem3 = m_UI.FindAction("Use Item 3", throwIfNotFound: true);
-        m_UI_UseItem4 = m_UI.FindAction("Use Item 4", throwIfNotFound: true);
+        m_UI_Item1 = m_UI.FindAction("Item1", throwIfNotFound: true);
+        m_UI_Item2 = m_UI.FindAction("Item2", throwIfNotFound: true);
+        m_UI_Item3 = m_UI.FindAction("Item3", throwIfNotFound: true);
+        m_UI_Item4 = m_UI.FindAction("Item4", throwIfNotFound: true);
         // TESTER
         m_TESTER = asset.FindActionMap("TESTER", throwIfNotFound: true);
         m_TESTER_Enter = m_TESTER.FindAction("Enter", throwIfNotFound: true);
@@ -731,10 +731,10 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_OpenMenu;
     private readonly InputAction m_UI_OpenBag;
     private readonly InputAction m_UI_CollectItem;
-    private readonly InputAction m_UI_UseItem1;
-    private readonly InputAction m_UI_UseItem2;
-    private readonly InputAction m_UI_UseItem3;
-    private readonly InputAction m_UI_UseItem4;
+    private readonly InputAction m_UI_Item1;
+    private readonly InputAction m_UI_Item2;
+    private readonly InputAction m_UI_Item3;
+    private readonly InputAction m_UI_Item4;
     public struct UIActions
     {
         private @Inputs m_Wrapper;
@@ -742,10 +742,10 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @OpenMenu => m_Wrapper.m_UI_OpenMenu;
         public InputAction @OpenBag => m_Wrapper.m_UI_OpenBag;
         public InputAction @CollectItem => m_Wrapper.m_UI_CollectItem;
-        public InputAction @UseItem1 => m_Wrapper.m_UI_UseItem1;
-        public InputAction @UseItem2 => m_Wrapper.m_UI_UseItem2;
-        public InputAction @UseItem3 => m_Wrapper.m_UI_UseItem3;
-        public InputAction @UseItem4 => m_Wrapper.m_UI_UseItem4;
+        public InputAction @Item1 => m_Wrapper.m_UI_Item1;
+        public InputAction @Item2 => m_Wrapper.m_UI_Item2;
+        public InputAction @Item3 => m_Wrapper.m_UI_Item3;
+        public InputAction @Item4 => m_Wrapper.m_UI_Item4;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -764,18 +764,18 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @CollectItem.started += instance.OnCollectItem;
             @CollectItem.performed += instance.OnCollectItem;
             @CollectItem.canceled += instance.OnCollectItem;
-            @UseItem1.started += instance.OnUseItem1;
-            @UseItem1.performed += instance.OnUseItem1;
-            @UseItem1.canceled += instance.OnUseItem1;
-            @UseItem2.started += instance.OnUseItem2;
-            @UseItem2.performed += instance.OnUseItem2;
-            @UseItem2.canceled += instance.OnUseItem2;
-            @UseItem3.started += instance.OnUseItem3;
-            @UseItem3.performed += instance.OnUseItem3;
-            @UseItem3.canceled += instance.OnUseItem3;
-            @UseItem4.started += instance.OnUseItem4;
-            @UseItem4.performed += instance.OnUseItem4;
-            @UseItem4.canceled += instance.OnUseItem4;
+            @Item1.started += instance.OnItem1;
+            @Item1.performed += instance.OnItem1;
+            @Item1.canceled += instance.OnItem1;
+            @Item2.started += instance.OnItem2;
+            @Item2.performed += instance.OnItem2;
+            @Item2.canceled += instance.OnItem2;
+            @Item3.started += instance.OnItem3;
+            @Item3.performed += instance.OnItem3;
+            @Item3.canceled += instance.OnItem3;
+            @Item4.started += instance.OnItem4;
+            @Item4.performed += instance.OnItem4;
+            @Item4.canceled += instance.OnItem4;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -789,18 +789,18 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @CollectItem.started -= instance.OnCollectItem;
             @CollectItem.performed -= instance.OnCollectItem;
             @CollectItem.canceled -= instance.OnCollectItem;
-            @UseItem1.started -= instance.OnUseItem1;
-            @UseItem1.performed -= instance.OnUseItem1;
-            @UseItem1.canceled -= instance.OnUseItem1;
-            @UseItem2.started -= instance.OnUseItem2;
-            @UseItem2.performed -= instance.OnUseItem2;
-            @UseItem2.canceled -= instance.OnUseItem2;
-            @UseItem3.started -= instance.OnUseItem3;
-            @UseItem3.performed -= instance.OnUseItem3;
-            @UseItem3.canceled -= instance.OnUseItem3;
-            @UseItem4.started -= instance.OnUseItem4;
-            @UseItem4.performed -= instance.OnUseItem4;
-            @UseItem4.canceled -= instance.OnUseItem4;
+            @Item1.started -= instance.OnItem1;
+            @Item1.performed -= instance.OnItem1;
+            @Item1.canceled -= instance.OnItem1;
+            @Item2.started -= instance.OnItem2;
+            @Item2.performed -= instance.OnItem2;
+            @Item2.canceled -= instance.OnItem2;
+            @Item3.started -= instance.OnItem3;
+            @Item3.performed -= instance.OnItem3;
+            @Item3.canceled -= instance.OnItem3;
+            @Item4.started -= instance.OnItem4;
+            @Item4.performed -= instance.OnItem4;
+            @Item4.canceled -= instance.OnItem4;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -940,10 +940,10 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnOpenMenu(InputAction.CallbackContext context);
         void OnOpenBag(InputAction.CallbackContext context);
         void OnCollectItem(InputAction.CallbackContext context);
-        void OnUseItem1(InputAction.CallbackContext context);
-        void OnUseItem2(InputAction.CallbackContext context);
-        void OnUseItem3(InputAction.CallbackContext context);
-        void OnUseItem4(InputAction.CallbackContext context);
+        void OnItem1(InputAction.CallbackContext context);
+        void OnItem2(InputAction.CallbackContext context);
+        void OnItem3(InputAction.CallbackContext context);
+        void OnItem4(InputAction.CallbackContext context);
     }
     public interface ITESTERActions
     {

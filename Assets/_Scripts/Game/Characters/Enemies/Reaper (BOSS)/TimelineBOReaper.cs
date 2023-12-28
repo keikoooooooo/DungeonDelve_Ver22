@@ -48,9 +48,9 @@ public class TimelineBOReaper : MonoBehaviour
     }
     private IEnumerator HandleBODieCoroutine()
     {
-        ApplyEmission(15, 0);
         yield return new WaitForSeconds(3f);
         chest.CreateChest();
+        HandleCommon();
     }
     
     private void HandlePlayerDie()
@@ -60,10 +60,15 @@ public class TimelineBOReaper : MonoBehaviour
     }
     private IEnumerator HandlePlayerDieCoroutine()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3.8f);
+        HandleCommon();
+    }
+    private void HandleCommon()
+    {
         reaperBattleAudio.Stop();
         ambienceVolumeChange.SetVolume(.3f);
         reaperBOSS.gameObject.SetActive(false);
+        ApplyEmission(15, 0);
     }
     
     

@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(RewardSetup))]
@@ -11,14 +11,16 @@ public class Chest : MonoBehaviour
     [Space]
     [SerializeField] private Animator chestAnimator;
     [SerializeField] private BoxCollider chestCollider;
+    [SerializeField] private GameObject detection;
     [SerializeField] private ParticleSystem chestVFX;
     [SerializeField] private M_SetFloat setDissolve;
     
-    private event Action OnOpenChestEvent;
+    public UnityEvent OnCreateChestEvent;
+    public UnityEvent OnOpenChestEvent;
     public IconIndicator Indicator { get; set; }
     
-    private readonly int OpenChestID = Animator.StringToHash("OpenChest");
-    private readonly int ActiveChestID = Animator.StringToHash("ActiveChest");
+    private static readonly int OpenChestID = Animator.StringToHash("OpenChest");
+    private static readonly int ActiveChestID = Animator.StringToHash("ActiveChest");
 
     private Coroutine _activeCoroutine;
     private Coroutine _openCoroutine;
@@ -31,21 +33,30 @@ public class Chest : MonoBehaviour
     private void OnEnable()
     {
         GUI_Inputs.InputAction.UI.CollectItem.performed += OnClickOpenChest;
-        OnOpenChestEvent += rewardSetup.SendRewardData;
+        OnOpenChestEvent.AddListener(rewardSetup.SendRewardData);
     }
     private void Start()
     {
         chestCollider.enabled = false;
         chestVFX.gameObject.SetActive(false);
+        detection.SetActive(false);
         _notice = NoticeManager.Instance;
         SetDissolve(0, 1, 0);
     }
     private void OnDisable()
     {
         GUI_Inputs.InputAction.UI.CollectItem.performed -= OnClickOpenChest;
-        OnOpenChestEvent -= rewardSetup.SendRewardData;
+        OnOpenChestEvent.RemoveListener(rewardSetup.SendRewardData);
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            CreateChest();
+        }
+    }
+
 
     /// <summary>
     /// Khi nhấn (Input) để mở rương
@@ -69,6 +80,8 @@ public class Chest : MonoBehaviour
     }
     private IEnumerator ActiveChestCoroutine()
     {
+        OnCreateChestEvent?.Invoke();
+        detection.SetActive(true);
         _canReceived = true;
         chestCollider.enabled = true;
         chestAnimator.Rebind();
@@ -104,6 +117,7 @@ public class Chest : MonoBehaviour
     }
     private IEnumerator CloseChestCoroutine()
     {
+        detection.SetActive(false);
         yield return new WaitForSeconds(4f);
         SetDissolve(0, 1, 1.5f);
         
@@ -149,6 +163,7 @@ public class Chest : MonoBehaviour
     {
         if (!_canReceived) return;
         ChestNoticeManager.AddChest(this);
+        AudioManager.PlayOneShot(FMOD_Events.Instance.notice_01, transform.position);
     }
 
     /// <summary> Đóng chỉ dẫn tới vị trí rương </summary>

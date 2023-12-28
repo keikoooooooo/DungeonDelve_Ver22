@@ -73,13 +73,20 @@ MonoBehaviour:
       Data3: 1006732479
       Data4: -139511635
     Path: event:/UI/UI_CHEST_OPEN_01
-  <rewards>k__BackingField:
+  <rewards_01>k__BackingField:
     Guid:
       Data1: -1543012482
       Data2: 1083742929
       Data3: 1584761731
       Data4: 606005094
     Path: event:/UI/UI_REWARD_01
+  <rewards_02>k__BackingField:
+    Guid:
+      Data1: -1572488855
+      Data2: 1278541422
+      Data3: 522068924
+      Data4: 553160286
+    Path: event:/UI/UI_REWARD_02
   <buffEffect>k__BackingField:
     Guid:
       Data1: 808636966
@@ -87,6 +94,13 @@ MonoBehaviour:
       Data3: -661528129
       Data4: -430774772
     Path: event:/EFFECTS/Item_BUFF_EFFECT
+  <notice_01>k__BackingField:
+    Guid:
+      Data1: 1950696306
+      Data2: 1232797040
+      Data3: -878068305
+      Data4: -1990491899
+    Path: event:/UI/UI_NOTICE_01
   <walkFootsteps>k__BackingField:
     Guid:
       Data1: -1745742970
