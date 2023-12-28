@@ -19,7 +19,7 @@ public class ShopManager : Singleton<ShopManager>
             ShopData.Add(Instantiate(shopItemSetup));
         }
         
-        var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.Now.ToString()));
+        var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
         if (_lastDay <= DateTime.Today)
             LoadNewShopItem();
         else
@@ -61,5 +61,15 @@ public class ShopManager : Singleton<ShopManager>
             return compareCanBuyItem == 0 ? x1.GetRarity().CompareTo(x2.GetRarity()) : compareCanBuyItem;
         });
     }
+    
+#if UNITY_EDITOR
+    [ContextMenu("Reset Quest Key")]
+    private void OnResetQuestKey()
+    {
+        if (!PlayerPrefs.HasKey(behaviourID.GetID)) return;
+        PlayerPrefs.DeleteKey(behaviourID.GetID);
+        Debug.Log("Delete PlayerPrefs Key Success !. \nKey: " + behaviourID.GetID);
+    }
+#endif
     
 }

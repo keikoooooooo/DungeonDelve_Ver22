@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
@@ -48,29 +49,75 @@ public class PlayerVoice : MonoBehaviour
     private void Play(EventReference _eventReference) => AudioManager.PlayOneShot(_eventReference, transform.position);
     
     #region STORY
-    public void PlayChat(int _audioIndex) => AudioManager.PlayOneShot(ChatEvent[_audioIndex], transform.position);
-    public void PlayChat() => AudioManager.PlayOneShot(ChatEvent[Random.Range(0, ChatEvent.Length)], transform.position);
-    
-    public void PlayOpenChest(int _audioIndex) => AudioManager.PlayOneShot(OpenChestEvent[_audioIndex], transform.position);
-    public void PlayOpenChest() => AudioManager.PlayOneShot(OpenChestEvent[Random.Range(0, OpenChestEvent.Length)], transform.position);
-    
-    public void PlayRelax(int _audioIndex) => AudioManager.PlayOneShot(RelaxEvent[_audioIndex], transform.position);
-    public void PlayRelax() => AudioManager.PlayOneShot(RelaxEvent[Random.Range(0, RelaxEvent.Length)], transform.position);
+    public void PlayChat()
+    {
+        if (!ChatEvent.Any()) return;
+        Play(ChatEvent[Random.Range(0, ChatEvent.Length)]);
+    }
+    public void PlayOpenChest()
+    {
+        if (!OpenChestEvent.Any()) return;
+        Play(OpenChestEvent[Random.Range(0, OpenChestEvent.Length)]);
+    }
+    public void PlayRelax()
+    {
+        if (!RelaxEvent.Any()) return;
+        Play(RelaxEvent[Random.Range(0, RelaxEvent.Length)]);
+    }
     #endregion
     
     #region COMBAT
-    public void PlayLightAttack() => Play(LightAttackEvent[Random.Range(0, LightAttackEvent.Length)]);
-    public void PlayMidAttack() => Play(MidAttackEvent[Random.Range(0, MidAttackEvent.Length)]);
-    
-    public void PlayHeavyAttack() => Play(HeavyAttackEvent[Random.Range(0, HeavyAttackEvent.Length)]);
-    public void PlayElementalSkill() => Play(ElementalSkillEvent[Random.Range(0, ElementalSkillEvent.Length)]);
-    public void PlayElementalBurstEvent() => Play(ElementalBurstEvent[Random.Range(0, ElementalBurstEvent.Length)]);
+    public void PlayLightAttack()
+    {
+        if (!LightHitEvent.Any()) return;
+        Play(LightAttackEvent[Random.Range(0, LightAttackEvent.Length)]);
+    }
+    public void PlayMidAttack()
+    {
+        if (!MidAttackEvent.Any()) return;
+        Play(MidAttackEvent[Random.Range(0, MidAttackEvent.Length)]);
+    }
+    public void PlayHeavyAttack()
+    {
+        if (!HeavyAttackEvent.Any()) return;
+        Play(HeavyAttackEvent[Random.Range(0, HeavyAttackEvent.Length)]);
+    }
+    public void PlayElementalSkill()
+    { 
+        if (!ElementalSkillEvent.Any()) return;
+        Play(ElementalSkillEvent[Random.Range(0, ElementalSkillEvent.Length)]);
+    }
+    public void PlayElementalBurstEvent()
+    {
+        if (!ElementalBurstEvent.Any()) return;
+        Play(ElementalBurstEvent[Random.Range(0, ElementalBurstEvent.Length)]);
+    }
     //
-    public void PlayJumping() => Play(JumpEvent[Random.Range(0, JumpEvent.Length)]);
-    public void PlayDash() => Play(DashEvent[Random.Range(0, DashEvent.Length)]);
-    public void PlayLightHit() => Play(LightHitEvent[Random.Range(0, LightHitEvent.Length)]);
-    public void PlayHeavyHit() => Play(HeavyHitEvent[Random.Range(0, HeavyHitEvent.Length)]);
-    public void PlayDie() => Play(DieEvent[Random.Range(0, DieEvent.Length)]);
+    public void PlayJumping()
+    {
+        if (!JumpEvent.Any()) return;
+        Play(JumpEvent[Random.Range(0, JumpEvent.Length)]);
+    }
+    public void PlayDash()
+    {
+        if (!DashEvent.Any()) return;
+        Play(DashEvent[Random.Range(0, DashEvent.Length)]);
+    }
+    public void PlayLightHit()
+    {
+        if (!LightHitEvent.Any()) return;
+        Play(LightHitEvent[Random.Range(0, LightHitEvent.Length)]);
+    }
+    public void PlayHeavyHit()
+    {
+        if (!HeavyHitEvent.Any()) return;
+        Play(HeavyHitEvent[Random.Range(0, HeavyHitEvent.Length)]);
+    }
+    public void PlayDie()
+    {
+        if (!DieEvent.Any()) return;
+        Play(DieEvent[Random.Range(0, DieEvent.Length)]);
+    }
     #endregion
     
 }

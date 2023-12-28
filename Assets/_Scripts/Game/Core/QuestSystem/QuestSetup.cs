@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DungeonDelve.Project;
+using NaughtyAttributes;
 
 namespace DungeonDelve.Project
 {
@@ -35,7 +36,7 @@ namespace DungeonDelve.Project
             
         public void SetID(string _value) => id = _value;
         public void SetCompleted(bool _value) => isCompleted = _value;
-        public bool SetState(bool _value) =>  isLocked = _value;
+        public bool SetTaskLocked(bool _value) =>  isLocked = _value;
         public bool SetReceived(bool _value) =>  isReceived = _value;
     } 
 
@@ -61,8 +62,7 @@ namespace DungeonDelve.Project
 [CreateAssetMenu(menuName = "Create Quest", fileName = "Quest_")]
 public class QuestSetup : ScriptableObject
 {
-    [HideInInspector]
-    [SerializeField] private Task task;
+    [SerializeField, ReadOnly] private Task task;
     [SerializeField] private string title;
     [SerializeField] private string description;
     [SerializeField] private TaskRequirement requirement;

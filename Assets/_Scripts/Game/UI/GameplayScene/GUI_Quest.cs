@@ -127,7 +127,6 @@ public class GUI_Quest : MonoBehaviour, IGUI
         GUI_Inputs.InputAction.UI.OpenBag.Enable();
         AudioManager.PlayOneShot(FMOD_Events.Instance.menuClose, transform.position);
     }
-
     public void OnClickClosePanelButton() => QuestManager.Instance.interactiveUI.ClosePanel(default);
     
     private void ShowQuest()
@@ -277,6 +276,7 @@ public class GUI_Quest : MonoBehaviour, IGUI
         else
         {
             _currentQuestBox.SetReceivedQuestBox(false);
+            _currentQuestBox.LockTask();
             QuestManager.OnCancelQuest(_currentQuestBox.questSetup);
         }
 

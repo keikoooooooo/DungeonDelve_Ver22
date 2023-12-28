@@ -49,14 +49,6 @@ public class Chest : MonoBehaviour
         OnOpenChestEvent.RemoveListener(rewardSetup.SendRewardData);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            CreateChest();
-        }
-    }
-
 
     /// <summary>
     /// Khi nhấn (Input) để mở rương
@@ -118,7 +110,7 @@ public class Chest : MonoBehaviour
     private IEnumerator CloseChestCoroutine()
     {
         detection.SetActive(false);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         SetDissolve(0, 1, 1.5f);
         
         yield return new WaitForSeconds(.5f);

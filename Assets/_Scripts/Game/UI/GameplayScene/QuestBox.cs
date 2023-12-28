@@ -52,6 +52,7 @@ public class QuestBox : MonoBehaviour, IPooled<QuestBox>
     {
         iconReport.enabled = _canCompleted && IsReceived;
     }
+    public void LockTask() => IsLocked = true;
     
     public void Release() => ReleaseCallback?.Invoke(this);
     public Action<QuestBox> ReleaseCallback { get; set; }

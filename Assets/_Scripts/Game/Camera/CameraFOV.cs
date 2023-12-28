@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class CameraFOV : MonoBehaviour
 {
-    [SerializeField] private CinemachineFreeLook cinemachineFreeLook;
+    [field: SerializeField] public CinemachineFreeLook cinemachineFreeLook { get; private set; }
+    [field: SerializeField] public float fovMin  { get; private set; } = 18;
+    [field: SerializeField] public float fovMax  { get; private set; } = 70;
     
-    [SerializeField] private float fovMin = 30;
-    [SerializeField] private float fovMax = 50;
-    [SerializeField] private float scrollSpeed = 10;
-    
+    [SerializeField] private float scrollSpeed = 13;
     private float _fovCurrent;  // giá trị scroll ban đầu
     private float _scrollInput; 
 

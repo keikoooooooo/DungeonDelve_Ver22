@@ -52,7 +52,7 @@ public class QuestManager : Singleton<QuestManager>
             if (!_checkFile) continue;
             
             _task.SetCompleted(_taskSave.IsCompleted);
-            _task.SetState(_taskSave.IsLocked);
+            _task.SetTaskLocked(_taskSave.IsLocked);
             _task.SetReceived(_taskSave.IsReceived);
             currentQuest++;
         }
@@ -65,7 +65,7 @@ public class QuestManager : Singleton<QuestManager>
         
         var _task = _quest.GetTask();
         _task.SetCompleted(false);
-        _task.SetState(false);
+        _task.SetTaskLocked(false);
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
     }
@@ -75,7 +75,7 @@ public class QuestManager : Singleton<QuestManager>
         _quest.GetReward().ForEach(x => RewardManager.Instance.SetReward(x));
         var _task = _quest.GetTask();
         _task.SetCompleted(true);
-        _task.SetState(false);
+        _task.SetTaskLocked(false);
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
         AudioManager.PlayOneShot(FMOD_Events.Instance.rewards_01, Vector3.zero);
@@ -84,7 +84,7 @@ public class QuestManager : Singleton<QuestManager>
     {
         var _task = _quest.GetTask();
         _task.SetCompleted(false);
-        _task.SetState(true);
+        _task.SetTaskLocked(true);
         _task.SetReceived(true);
         FileHandle.Save(_task, _folderSave, _task.GetID);
     }
@@ -96,7 +96,7 @@ public class QuestManager : Singleton<QuestManager>
     {
         if (!PlayerPrefs.HasKey(behaviourID.GetID)) return;
         PlayerPrefs.DeleteKey(behaviourID.GetID);
-        Debug.Log("DeleteKey PlayerPrefs Success");
+        Debug.Log("Delete PlayerPrefs Key Success !. \nKey: " + behaviourID.GetID);
     }
 #endif
     

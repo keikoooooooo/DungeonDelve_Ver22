@@ -1430,10 +1430,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eab04706c6fedc46ba89536bd97f493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cinemachineFreeLook: {fileID: 5122457800056933351}
-  fovMin: 15
-  fovMax: 70
-  scrollSpeed: 15
+  <cinemachineFreeLook>k__BackingField: {fileID: 5122457800056933351}
+  <fovMin>k__BackingField: 18.5
+  <fovMax>k__BackingField: 70
+  scrollSpeed: 13
 --- !u!1 &2095555826843730210
 GameObject:
   m_ObjectHideFlags: 0
@@ -4954,15 +4954,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.004876617
+      value: 0.004876613
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000030276595
+      value: -0.000000003087232
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.476491e-11
+      value: 1.5055417e-11
       objectReference: {fileID: 0}
     - target: {fileID: 5822535128316044608, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y
