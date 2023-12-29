@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Cinemachine;
 using FMOD.Studio;
 using UnityEngine;
@@ -68,8 +67,8 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     
     #region Events
     public event Action OnDashEvent;
-    public event Action OnTakeDMGEvent;
     public event Action OnDieEvent;
+    public event Action<float> OnRevivalTimeEvent;
     #endregion
 
     #region Variables Config
@@ -256,7 +255,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     private void HandleFootstepsAudio()
     {
-        if (IsGrounded && !IsIdle && CanFootstepsAudioPlay)
+        if (IsGrounded && !IsIdle && CanFootstepsAudioPlay && !animator.IsTag("Attack"))
         {
             _footstepsInstance.getPlaybackState(out _footstepsPLAYBACK_STATE);
             if (_footstepsPLAYBACK_STATE == PLAYBACK_STATE.STOPPED)
@@ -269,7 +268,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
             _footstepsInstance.stop(STOP_MODE.ALLOWFADEOUT);
         }
     }
-    
     
     #region Handle Damageable
     public void CauseDMG(GameObject _gameObject, AttackType _attackType)
@@ -298,10 +296,16 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     public void TakeDMG(int _damage, bool _isCRIT) 
     {
-        // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
+        if (CurrentState == _state.Dead()) return;
+        InputMovement = Vector3.zero;
+        AppliedMovement = Vector3.zero;
+        input.Move =Vector3.zero;
+        
+        // If (CRIT) -> lấy Random DEF từ 0 -> DEF ban đầu / 2.
+        // Else      -> lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, PlayerConfig.GetDEF() * 0.5f) : PlayerConfig.GetDEF();
         
-        // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
+        // Tính DMG thực nhận vào sau khi trừ đi lượng DEF
         var _finalDmg = (int)Mathf.Max(0, _damage - Mathf.Max(0, _valueDef));
         
         Health.Decreases(_finalDmg);
@@ -310,7 +314,6 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         if (Health.CurrentValue <= 0)
         {
             CurrentState.SwitchState(_state.Dead());
-            CallbackDieEvent();
             return;
         }
         
@@ -318,11 +321,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         
         HandleDamage();
         SetPlayerInputState(false);
-        InputMovement = Vector3.zero;
-        AppliedMovement = Vector3.zero;
-        input.Move =Vector3.zero;
         CurrentState.SwitchState(_isCRIT ? _state.DamageFall() : _state.DamageStand());
-        CallbackTakeDMGEvent();
     }
 
     public virtual float PercentDMG_NA() => PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
@@ -358,35 +357,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         animator.ResetTrigger(IDDamageFall);
         animator.ResetTrigger(IDDamageStand);
     }
-    public async void ResetDeadState()
-    {
-        EnemyTracker.Clear();
-        HandleEnable();
-        transform.position = Vector3.zero;
-        model.rotation = Quaternion.Euler(Vector3.zero);
-        animator.SetBool(IDDead,false);
-        setEmission.ChangeIntensitySet(0);
-        setEmission.ChangeDurationApply(0);
-        setEmission.Apply();
-        cinemachineFreeLook.m_XAxis.Value = 0;
-        cinemachineFreeLook.m_YAxis.Value = .5f;
-        cinemachineFreeLook.enabled = true;
-        characterController.enabled = true;
-
-        var _hp = PlayerConfig.GetHP();
-        var _st = PlayerConfig.GetST();
-        Health.InitValue(_hp, _hp);
-        Stamina.InitValue(_st, _st);
-        await Task.Delay(700);
-        ReleaseDamageState();
-    }
     #endregion
-
     
     #region Event Callback
     public void CallbackDashEvent() => OnDashEvent?.Invoke();
-    private void CallbackTakeDMGEvent() => OnTakeDMGEvent?.Invoke();
-    private void CallbackDieEvent() => OnDieEvent?.Invoke();
+    public void CallbackDieEvent() => OnDieEvent?.Invoke();
+    public void CallbackRevivalTimeEvent(float _time) => OnRevivalTimeEvent?.Invoke(_time);
     #endregion
     
 

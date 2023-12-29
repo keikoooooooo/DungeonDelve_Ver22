@@ -30,4 +30,10 @@ public class InteractiveUI : MonoBehaviour
         GUI_Inputs.InputAction.UI.OpenMenu.performed -= ClosePanel;
         NoticeManager.Instance.CloseNoticeT3();
     }
+
+    public void SetNoticeText(string _value)
+    {
+        noticePlayerTrigger = _value;
+        NoticeManager.Instance.CreateNoticeT3(noticePlayerTrigger);
+    }
 }

@@ -14,7 +14,7 @@ public class CameraFOV : MonoBehaviour
 
     private void Start()
     {
-        _fovCurrent = cinemachineFreeLook.m_Lens.FieldOfView;
+        SetCurrentFOV(cinemachineFreeLook.m_Lens.FieldOfView);
     }
 
     private void Update()
@@ -26,6 +26,7 @@ public class CameraFOV : MonoBehaviour
         _fovCurrent = Mathf.Clamp(_fovCurrent, fovMin, fovMax);
         cinemachineFreeLook.m_Lens.FieldOfView = _fovCurrent;
     }
-    
-    
+
+    public void SetCurrentFOV(float _fov) => _fovCurrent = _fov;
+
 }

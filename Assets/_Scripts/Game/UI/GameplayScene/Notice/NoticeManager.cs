@@ -20,6 +20,9 @@ public class NoticeManager : Singleton<NoticeManager>
     [SerializeField, BoxGroup("Notice type 3")] private TextMeshProUGUI noticeT3Text;
     //
     [SerializeField, BoxGroup("Notice type 4")] private Animator newQuestNotice;
+    [SerializeField, BoxGroup("Notice type 4")] private Animator successfulChallengeNotice;
+    //
+    [SerializeField, BoxGroup("Notice type 5")] private Animator bossClearNotice;
     
     
     private static ObjectPooler<TextBar_3> _pooltextBar1;
@@ -155,8 +158,16 @@ public class NoticeManager : Singleton<NoticeManager>
     
     #region Notice Type 4
     /// <summary> Mở thông báo nhiệm vụ mới mỗi ngày </summary>
-    public void OpenNewQuestNoticePanel() => newQuestNotice.Play("Panel_IN");
-    
+    public void OpenNewQuestNoticePanelT4() => newQuestNotice.Play("Panel_IN");
+    /// <summary> Mở thông báo hoàn thành 1 thử thách bất kì </summary>
+    public void OpenSuccessfulChallengeNoticePanelT4() => successfulChallengeNotice.Play("Panel_IN");
     #endregion
 
+    
+    #region Notice Type 5
+    /// <summary> Mở thông báo tiêu diệt thành công BOSS </summary>
+    public void OpenBossConqueredNoticeT5() => bossClearNotice.Play("BossConquered_IN");
+
+
+    #endregion
 }

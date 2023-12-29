@@ -14,6 +14,7 @@ public class PlayerHUD : MonoBehaviour, IGUI
     [SerializeField] private ProgressBar staminaBar;
     [SerializeField] private CooldownTime elementalSkillCD;
     [SerializeField] private CooldownTime elementalBurstCD;
+    [SerializeField] private CooldownTime revivalTimeCD;
     [Space] 
     [SerializeField] private Image chapterIcon;
     [SerializeField] private TextMeshProUGUI nameText;
@@ -23,6 +24,7 @@ public class PlayerHUD : MonoBehaviour, IGUI
 
     private SO_CharacterUpgradeData _characterUpgradeData;
     private bool _isEventRegistered;
+    private bool _isRevival;
     
     
     private void OnEnable()
@@ -39,6 +41,7 @@ public class PlayerHUD : MonoBehaviour, IGUI
         nameText.text = player.PlayerConfig.GetName();
         chapterIcon.sprite = player.PlayerConfig.ChapterIcon;
         expProgress.minValue = 0;
+        revivalTimeCD.gameObject.SetActive(false);
     }
     private void OnDisable()
     {
@@ -50,7 +53,8 @@ public class PlayerHUD : MonoBehaviour, IGUI
     {
         GUI_Manager.Add(this);
         GUI_Bag.OnItemChangedSlotEvent += UpdateItemSlot;
-        
+
+        player.OnRevivalTimeEvent += ActiveRevivalPanel;
         player.OnElementalSkillCDEvent += elementalSkillCD.OnCooldownTime;
         player.OnElementalBurstCDEvent += elementalBurstCD.OnCooldownTime;
 
@@ -67,6 +71,7 @@ public class PlayerHUD : MonoBehaviour, IGUI
         GUI_Manager.Remove(this);
         GUI_Bag.OnItemChangedSlotEvent -= UpdateItemSlot;
         
+        player.OnRevivalTimeEvent -= ActiveRevivalPanel; 
         player.OnElementalSkillCDEvent -= elementalSkillCD.OnCooldownTime;
         player.OnElementalBurstCDEvent -= elementalBurstCD.OnCooldownTime;
         
@@ -100,7 +105,17 @@ public class PlayerHUD : MonoBehaviour, IGUI
         expProgress.value = player.PlayerConfig.GetCurrentEXP();
     }
 
-
+    private void ActiveRevivalPanel(float _time)
+    {
+        if (_time == 0)
+        {
+            revivalTimeCD.OnCooldownTime(0);
+            revivalTimeCD.gameObject.SetActive(false);
+            return;
+        }
+        revivalTimeCD.gameObject.SetActive(true);
+        revivalTimeCD.OnCooldownTime(_time);
+    }
     public void OpenHUD()
     {
         panel.SetActive(true);

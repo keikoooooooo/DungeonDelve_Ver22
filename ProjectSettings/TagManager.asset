@@ -11,6 +11,8 @@ TagManager:
   - PlayerWeapon
   - SlotsVFX
   - Item
+  - Door
+  - Fire
   layers:
   - Default
   - TransparentFX
@@ -39,7 +41,7 @@ TagManager:
   - MeshWeapon_UI
   - 
   - 
-  - 
+  - Object Interactive
   - 
   - 
   - 

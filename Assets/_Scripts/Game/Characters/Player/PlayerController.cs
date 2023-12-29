@@ -208,6 +208,7 @@ public abstract class PlayerController : PlayerStateMachine
         CanAttack = true;
         CanMove = true;
         CanRotation = true;
+        CanFootstepsAudioPlay = true;
     }
     protected virtual void SkillEnd()
     {

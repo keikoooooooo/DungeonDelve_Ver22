@@ -19,6 +19,8 @@ public class GameManager : Singleton<GameManager>
     public UserData UserData { get; private set; }
     public PlayerController Player { get; private set; }
     public PlayerHUD PlayerHUD { get; private set; }
+    
+    //
     private SO_PlayerConfiguration _playerConfig;
     private PlayerController _playerPrefab;
     

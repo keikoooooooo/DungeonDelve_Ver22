@@ -7,11 +7,11 @@ using UnityEngine;
 public class GameplayEditorWindow : EditorWindow
 {
 
-    [MenuItem("Tools/GAMEPLAY CUSTOM")]
+    [MenuItem("Tools/DUNGEON DELVE - CUSTOM")]
     public static void ShowCustom()
     {
         var editor = GetWindow<GameplayEditorWindow>();
-        editor.titleContent = new GUIContent("Gameplay Custom");
+        editor.titleContent = new GUIContent("DUNGEON DELVE - GAMECUSTOM");
     }
 
     private readonly string[] _toolTitles = { "PLAYERS", "ENEMIES", "GAME CUSTOM" };
@@ -62,20 +62,20 @@ public class GameplayEditorWindow : EditorWindow
                 switch (_selectedPlayer)
                 {
                     case 0:
-                        _arlanConfig = EditorGUIUtility.Load("Assets/FantasyProject/Player/1. Arlan/Prefab/Arlan Config.asset") as SO_PlayerConfiguration;
-                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/FantasyProject/Player/1. Arlan/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
+                        _arlanConfig = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/Player/1. Arlan/Prefab/Arlan Config.asset") as SO_PlayerConfiguration;
+                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/Player/1. Arlan/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
                         ShowPlayerConfig(_arlanConfig);
                         break;
                     
                     case 1:
-                        _lynxConfig = EditorGUIUtility.Load("Assets/FantasyProject/Player/2. Lynx/Prefab/Lynx Config.asset") as SO_PlayerConfiguration;
-                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/FantasyProject/Player/2. Lynx/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
+                        _lynxConfig = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/Player/2. Lynx/Prefab/Lynx Config.asset") as SO_PlayerConfiguration;
+                        _requiresWeaponUpgrade = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/Player/2. Lynx/Prefab/Weapon Upgrade Config.asset") as SO_RequiresWeaponUpgradeConfiguration;
                         ShowPlayerConfig(_lynxConfig);
                         break;
                 }
                 break;
             case 1:
-                _characterUpgradeData = EditorGUIUtility.Load("Assets/FantasyProject/GameData/Character Upgrade Data.asset") as SO_CharacterUpgradeData;
+                _characterUpgradeData = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/GameData/Character Upgrade Data.asset") as SO_CharacterUpgradeData;
                 ShowUpgradeDetails(_characterUpgradeData);
                 break;
 
@@ -410,22 +410,22 @@ public class GameplayEditorWindow : EditorWindow
                 switch (_selectedTypeEnemy)
                 {
                     case 0:
-                        goblin_SwordConfig = EditorGUIUtility.Load("Assets/FantasyProject/Enemies/Goblin/Sword/Prefab/Goblin_Sword Config.asset") as SO_EnemyConfiguration;
+                        goblin_SwordConfig = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/Enemies/Goblin/Sword/Prefab/Goblin_Sword Config.asset") as SO_EnemyConfiguration;
                         ShowEnemyConfig(goblin_SwordConfig);
                         break;
                     case 1: 
-                        goblin_SlingshotConfig = EditorGUIUtility.Load("Assets/FantasyProject/Enemies/Goblin/Slingshot/Prefab/Goblin_Slingshot Config.asset") as SO_EnemyConfiguration;
+                        goblin_SlingshotConfig = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/Enemies/Goblin/Slingshot/Prefab/Goblin_Slingshot Config.asset") as SO_EnemyConfiguration;
                         ShowEnemyConfig(goblin_SlingshotConfig);
                         break;
                     case 2: 
-                        goblin_DaggersConfig = EditorGUIUtility.Load("Assets/FantasyProject/Enemies/Goblin/Daggers/Prefab/Goblin_Daggers Config.asset") as SO_EnemyConfiguration;
+                        goblin_DaggersConfig = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/Enemies/Goblin/Daggers/Prefab/Goblin_Daggers Config.asset") as SO_EnemyConfiguration;
                         ShowEnemyConfig(goblin_DaggersConfig);
                         break;
                 }
                 break;
             
             case 1: 
-                BOReaperCongfig = EditorGUIUtility.Load("Assets/FantasyProject/Enemies/Reaper/Prefab/BOReaper Config.asset") as SO_EnemyConfiguration;
+                BOReaperCongfig = EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/Enemies/Reaper/Prefab/BOReaper Config.asset") as SO_EnemyConfiguration;
                 ShowEnemyConfig(BOReaperCongfig);
                 break;
         }
@@ -596,8 +596,8 @@ public class GameplayEditorWindow : EditorWindow
     {
         Space(15);
         _selectedPanelGameCustomType = GUILayout.Toolbar(_selectedPanelGameCustomType, _gameCustomtype, Width(350), Height(35));
-        _itemData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Game Item Data.asset") as SO_GameItemData;
-        _characterData= EditorGUIUtility.Load("Assets/FantasyProject/GameData/Character Data.asset") as SO_CharacterData;
+        _itemData= EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/GameData/Game Item Data.asset") as SO_GameItemData;
+        _characterData= EditorGUIUtility.Load("Assets/Dungeon Delve - PROJECT/GameData/Character Data.asset") as SO_CharacterData;
         switch (_selectedPanelGameCustomType)
         {
             case 0:

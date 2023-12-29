@@ -11,6 +11,7 @@ public class PlayerIdleState : PlayerBaseState
     public override void EnterState()
     {
         _machine.AppliedMovement = Vector3.zero;
+        _machine.animator.SetFloat(_machine.IDSpeed, 0);
         currentBlend = _machine.animator.GetFloat(_machine.IDSpeed);
     }
     public override void UpdateState()

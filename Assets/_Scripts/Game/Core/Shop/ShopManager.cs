@@ -20,7 +20,7 @@ public class ShopManager : Singleton<ShopManager>
         }
         
         var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
-        if (_lastDay <= DateTime.Today)
+        if (_lastDay < DateTime.Today)
             LoadNewShopItem();
         else
             LoadOldShopItem();

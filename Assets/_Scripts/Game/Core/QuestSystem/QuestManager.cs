@@ -28,8 +28,8 @@ public class QuestManager : Singleton<QuestManager>
 
         currentQuest = 0;
         var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
-        if (_lastDay <= DateTime.Today)
-            LoadNewQuest();
+        if (_lastDay < DateTime.Today)
+            LoadNewQuest(); 
         else
             LoadOldQuest();
     }
@@ -41,7 +41,7 @@ public class QuestManager : Singleton<QuestManager>
             _task.SetCompleted(false);
             FileHandle.Delete(_folderSave, _task.GetID);
         }
-        NoticeManager.Instance.OpenNewQuestNoticePanel();
+        NoticeManager.Instance.OpenNewQuestNoticePanelT4();
     }
     private static void LoadOldQuest()
     {
