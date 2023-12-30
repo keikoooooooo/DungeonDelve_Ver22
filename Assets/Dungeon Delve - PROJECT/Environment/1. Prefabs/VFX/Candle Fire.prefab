@@ -4883,7 +4883,7 @@ MonoBehaviour:
       Data2: 1229517476
       Data3: -2068332391
       Data4: 714208585
-    Path: event:/ENVIRONMENT/Env_FIRE_LOOP_01
+    Path: event:/ENVIRONMENT/Env_FIRE_SMALL_LOOP_01
   Event: 
   PlayEvent: 3
   StopEvent: 4

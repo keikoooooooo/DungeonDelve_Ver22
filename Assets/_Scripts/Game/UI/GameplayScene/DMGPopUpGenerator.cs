@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DMGPopUpGenerator : Singleton<DMGPopUpGenerator>
 {
-    public DMGPopUp dmgPopUpPrefab;
+    [SerializeField] private DMGPopUp dmgPopUpPrefab;
     
     private Camera _mainCamera;
     private ObjectPooler<DMGPopUp> _poolDMGPopUp;

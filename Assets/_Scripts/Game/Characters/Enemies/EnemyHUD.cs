@@ -13,15 +13,18 @@ public class EnemyHUD : MonoBehaviour
     {
         if(nameText) nameText.text = enemy.EnemyConfig.GetName();
         
-        enemy.Health.OnInitValueEvent += healthBar.Init;
-        enemy.Health.OnInitValueEvent += (i1, i2) => levelText.text = $"Lv. {enemy.EnemyConfig.GetLevel()}";
+        enemy.Health.OnInitValueEvent += InitEnemyState;
         enemy.Health.OnCurrentValueChangeEvent += healthBar.OnCurrentValueChange;
     }
     private void OnDestroy()
     {
-        enemy.Health.OnInitValueEvent -= healthBar.Init;
-        enemy.Health.OnInitValueEvent -= (i1, i2) => levelText.text = $"Lv. {enemy.EnemyConfig.GetLevel()}";
+        enemy.Health.OnInitValueEvent -= InitEnemyState;
         enemy.Health.OnCurrentValueChangeEvent -= healthBar.OnCurrentValueChange;
+    }
+    private void InitEnemyState(int _currentValue, int _maxValue)
+    {
+        healthBar.Init(_currentValue, _maxValue);
+        levelText.text = $"Lv. {enemy.EnemyConfig.GetLevel()}";
     }
 
     

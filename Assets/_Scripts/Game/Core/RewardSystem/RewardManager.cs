@@ -57,7 +57,7 @@ public class RewardManager : Singleton<RewardManager>
         _poolItemUnCommon = new ObjectPooler<ItemDrop>(_itemDropUnCommonPrefab, transform, 10);
         _poolItemRare = new ObjectPooler<ItemDrop>(_itemDropRarePrefab, transform, 10);
         _poolItemEpic = new ObjectPooler<ItemDrop>(_itemDropEpicPrefab, transform, 10);
-        _poolItemLegendary = new ObjectPooler<ItemDrop>(_itemDropLegendaryPrefab, transform, 10);
+        _poolItemLegendary = new ObjectPooler<ItemDrop>(_itemDropLegendaryPrefab, transform, 1);
     }
     private void GetRef()
     {
@@ -109,21 +109,26 @@ public class RewardManager : Singleton<RewardManager>
                 _coin.OnMoveCompleteEvent += CoinMoveCompleted;
         }
     }
+    public void CreateReward(ItemReward _itemReward, Vector3 _itemPosition)
+    {
+        var _itemCustom = gameItemData.GetItemCustom(_itemReward.GetNameCode());
+        CreateItemDrop(_itemReward, _itemCustom, _itemPosition);
+    }
     private void CoinMoveCompleted(Coin _coin)
     {
         _coin.PlayAudio();
         _coin.OnMoveCompleteEvent -= CoinMoveCompleted;
         SetReward(_coinRewardData.Dequeue());
     }
-    private void CreateItemDrop(ItemReward _itemReward, ItemCustom _itemCustom, Vector3 _pos)
+    private void CreateItemDrop(ItemReward _itemReward, ItemCustom _itemCustom, Vector3 _itemPosition)
     {
         var _itemDrop = _itemCustom.ratity switch
         {
-            ItemRarity.Common => _poolItemCommon.Get(_pos),
-            ItemRarity.Uncommon => _poolItemUnCommon.Get(_pos),
-            ItemRarity.Rare => _poolItemRare.Get(_pos),
-            ItemRarity.Epic => _poolItemEpic.Get(_pos),
-            ItemRarity.Legendary => _poolItemLegendary.Get(_pos),
+            ItemRarity.Common => _poolItemCommon.Get(_itemPosition),
+            ItemRarity.Uncommon => _poolItemUnCommon.Get(_itemPosition),
+            ItemRarity.Rare => _poolItemRare.Get(_itemPosition),
+            ItemRarity.Epic => _poolItemEpic.Get(_itemPosition),
+            ItemRarity.Legendary => _poolItemLegendary.Get(_itemPosition),
             _ => null
         };
         _itemDrop!.SetItemDrop(_itemCustom.sprite, _itemReward);

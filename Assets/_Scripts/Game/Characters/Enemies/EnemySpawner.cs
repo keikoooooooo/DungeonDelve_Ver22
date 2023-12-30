@@ -9,8 +9,8 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private MonoBehaviourID behaviourID;
     
-    [Space] [SerializeField] 
-    private List<EnemyController> enemiesPrefab;
+    [Space] 
+    [SerializeField] private List<EnemyController> enemiesPrefab;
     
     [SerializeField, Tooltip("Danh sách các Waypoint trong khu vực này")]
     private Transform waypoints;
@@ -34,13 +34,12 @@ public class EnemySpawner : MonoBehaviour
     private YieldInstruction _yieldInstruction;
     private Coroutine _spawnCheckCoroutine;
     private DateTime _lastTime;
-    private string PP_SaveCurrentEnemy;
+    private string PP_SaveCurrentEnemy => behaviourID.GetID + "Idx";
     private int _currentEnemy;
     
     
     private void Start()
     {
-        PP_SaveCurrentEnemy = behaviourID.GetID + "Idx";
         _yieldInstruction = new WaitForSeconds(waitSpawn);
         foreach (var prefab in enemiesPrefab)
         {
@@ -139,4 +138,15 @@ public class EnemySpawner : MonoBehaviour
             Gizmos.DrawLine(_currentPoint, _nextPoint);
         }
     }
+
+
+#if UNITY_EDITOR
+    [ContextMenu("Delete PlayerPrefs Key")]
+    private void DeletePlayerPrefsKey()
+    {
+        PlayerPrefs.DeleteKey(behaviourID.GetID);
+        PlayerPrefs.DeleteKey(PP_SaveCurrentEnemy);
+        Debug.Log("Delete Key Success !");
+    }
+#endif
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlayerDeadState : PlayerBaseState
@@ -17,7 +16,10 @@ public class PlayerDeadState : PlayerBaseState
         _revivalCorouine = _machine.StartCoroutine(RevivalCoroutine());
     }
     public override void UpdateState() { }
-    protected override void ExitState() { }
+    protected override void ExitState()
+    {
+        _machine.animator.SetFloat(_machine.IDSpeed, 0);
+    }
     public override void CheckSwitchState() { }
     
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyController>
+public class EnemyController : Damageable, IPooled<EnemyController>
 {
     // Ref
     [field: SerializeField, Required] public Blackboard Blackboard { get; private set; }
@@ -40,13 +40,14 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         Health = new StatusHandle();
         EnemyConfig = Instantiate(enemyConfig);
     }
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        DamageableData.Add(gameObject, this);
+        base.OnEnable();
+        
         gameObject.SetObjectLayer(mainLayer.value);
         _player = GameManager.Instance.Player;
         _player.OnDieEvent += HandlePlayerDie;
-        
+        Health.OnDieEvent += Die;
         UpdateConfig();
         SetDie(false);
         SetTakeDMG(false);
@@ -65,13 +66,14 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         SetCDSkillAttack(EnemyConfig.GetSkillAttackCD());
         SetCDSpecialAttack(EnemyConfig.GetSpecialAttackCD());
     }
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        DamageableData.Remove(gameObject);
+        base.OnDisable();
+     
         _player.OnDieEvent -= HandlePlayerDie;
+        Health.OnDieEvent -= Die;
     }
-
-
+    
     public void UpdateConfig()
     {
         var _multiplier = 0f;   // Tỷ lệ tăng của enemy so với người chơi
@@ -122,7 +124,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
     #endregion
     
     #region HandleDMG
-    public void CauseDMG(GameObject _gameObject, AttackType _attackType)
+    public override void CauseDMG(GameObject _gameObject, AttackType _attackType)
     {
         if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
 
@@ -144,7 +146,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         } 
         iDamageable.TakeDMG( Mathf.CeilToInt(_damage), _isCrit);
     }
-    public void TakeDMG(int _damage, bool _isCRIT)
+    public override void TakeDMG(int _damage, bool _isCRIT)
     {  
         // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, EnemyConfig.GetDEF() * 0.5f) : EnemyConfig.GetDEF();
@@ -155,15 +157,8 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         Health.Decreases(_finalDmg);
         DMGPopUpGenerator.Instance.Create(transform.position, _finalDmg, _isCRIT, true);
         
-        if (Health.CurrentValue <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            SetTakeDMG(true);
-            OnTakeDamageEvent?.Invoke(this);
-        }
+        SetTakeDMG(true);
+        OnTakeDamageEvent?.Invoke(this);
     }
     private void Die()
     {
@@ -175,12 +170,21 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
         SetAttackSensor(false);
         SetTakeDMG(false);
     }
-
+    
     public void SetAttackCount(int _value) => _attackCount = _value;
-    public float PercentDMG_NA() => enemyConfig.GetNormalAttackMultiplier()[_attackCount].GetMultiplier()[FindMultiplierLevelIndex()];
-    public float PercentDMG_CA() => enemyConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
-    public float PercentDMG_ES() => enemyConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
-    public float PercentDMG_EB() => enemyConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override float PercentDMG_NA() => enemyConfig.GetNormalAttackMultiplier()[_attackCount].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override float PercentDMG_CA() => enemyConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override float PercentDMG_ES() => enemyConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override float PercentDMG_EB() => enemyConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override int CalculationDMG(float _percent)
+    {
+        var _playerATK = _player.PlayerConfig.GetATK();
+        var _currentATK = EnemyConfig.GetATK();
+        
+        // Set ATK
+        var modifiedEnemyATK = Mathf.CeilToInt(_currentATK * (_percent / 100.0f));
+        return modifiedEnemyATK * (_playerATK / _currentATK);
+    }
     private int FindMultiplierLevelIndex()  //Tìm Index của %ATK cộng thêm dựa trên level hiện tại của enemy 
     {
         var _level = _enemyLevel.Count - 1;
@@ -191,15 +195,6 @@ public class EnemyController : MonoBehaviour, IDamageable, IPooled<EnemyControll
             break;
         }
         return _level;
-    }
-    public int CalculationDMG(float _percent)
-    {
-        var _playerATK = _player.PlayerConfig.GetATK();
-        var _currentATK = EnemyConfig.GetATK();
-        
-        // Set ATK
-        var modifiedEnemyATK = Mathf.CeilToInt(_currentATK * (_percent / 100.0f));
-        return modifiedEnemyATK * (_playerATK / _currentATK);
     }
     #endregion
 

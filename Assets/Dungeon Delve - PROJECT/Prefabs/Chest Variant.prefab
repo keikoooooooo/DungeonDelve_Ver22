@@ -349,7 +349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: OnOpenChestEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5158897471623549979, guid: 6c5024aae7ea2ee4b9c06783f74d9cd9, type: 3}
       propertyPath: OnOpenChestEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

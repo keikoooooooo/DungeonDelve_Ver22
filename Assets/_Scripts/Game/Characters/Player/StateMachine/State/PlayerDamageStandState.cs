@@ -15,12 +15,9 @@ public class PlayerDamageStandState : PlayerBaseState
     
     public override void EnterState()
     {
-        // _canMoveBehind = !_machine.animator.IsTag("Damage", 1);
-        // if (!_canMoveBehind) return;
         _timePush = .125f;
         _machine.animator.SetTrigger(_machine.IDDamageStand);   
         _machine.voice.PlayLightHit();
-    
     }
     public override void UpdateState()
     {

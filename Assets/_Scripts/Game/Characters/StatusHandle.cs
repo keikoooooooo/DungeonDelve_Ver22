@@ -7,6 +7,7 @@ public class StatusHandle
    public event Action<int> OnCurrentValueChangeEvent;
    public event Action<int> OnMaxValueChangeEvent;
    public event Action<int, int> OnInitValueEvent;
+   public event Action OnDieEvent;
    
    public int MaxValue { get; private set; }
    public int CurrentValue { get; private set; }
@@ -42,6 +43,8 @@ public class StatusHandle
    {
       CurrentValue = Mathf.Clamp(CurrentValue - _amount, 0, MaxValue);
       OnCurrentValueChangeEvent?.Invoke(CurrentValue);
+      
+      if (CurrentValue <= 0) OnDieEvent?.Invoke();
    }
    
 }

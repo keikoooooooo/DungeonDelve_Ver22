@@ -66,15 +66,16 @@ public class LynxController : PlayerController
     {
         if (_lockCrosshair)
         {
-            worldPosition = Vector3.zero;
-            var screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            _ray = _mainCamera.ScreenPointToRay(screenCenterPoint);
-            worldPosition = _ray.GetPoint(400f);
-
-            if (Physics.Raycast(_ray, out var raycastHit, 400f, crosshairMask))
-                worldPosition = raycastHit.point;
-            
-            _effects.attackPoint.rotation = Quaternion.LookRotation(worldPosition - _effects.attackPoint.position);
+             worldPosition = Vector3.zero;
+             var screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+             _ray = _mainCamera.ScreenPointToRay(screenCenterPoint);
+             worldPosition = _ray.GetPoint(1000f);
+             
+             if (Physics.Raycast(_ray, out var raycastHit, 1000f, crosshairMask))
+             {
+                 worldPosition = raycastHit.point;
+             }
+             _effects.attackPoint.rotation = Quaternion.LookRotation(worldPosition - _effects.attackPoint.position);
         }
         else
         {

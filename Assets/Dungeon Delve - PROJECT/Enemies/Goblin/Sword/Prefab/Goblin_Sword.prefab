@@ -771,7 +771,7 @@ GameObject:
   - component: {fileID: 4505854519866438606}
   - component: {fileID: 5417786978086143105}
   - component: {fileID: 7974606280882882019}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Goblin_Sword
   m_TagString: Enemy
   m_Icon: {fileID: 0}

@@ -1,12 +1,15 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(SphereCollider))]
 public class CandlesFire : MonoBehaviour
 {
     [SerializeField] private new Light light;
     [SerializeField] private ParticleSystem fire;
+
+    public UnityEvent OnFireEnableEvent, OnFireDisableEvent;
     
     [SerializeField, Tooltip("Thời gian Object hoạt động (s)")]
     private float timeActive = 60;
@@ -30,6 +33,7 @@ public class CandlesFire : MonoBehaviour
     {
         if (!other.CompareTag("Fire")) return;
 
+        OnFireEnableEvent?.Invoke();
         fire.gameObject.SetActive(true);
         fire.Play();
         
@@ -54,6 +58,8 @@ public class CandlesFire : MonoBehaviour
         
         fire.gameObject.SetActive(false);
         fire.Stop();
+        
+        OnFireDisableEvent?.Invoke();
     }
     private void SetIntensity(float _value) => light.intensity = _value;
 }

@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.6455405, y: 2.6455405, z: 3.1360238}
+  m_LocalScale: {x: 2.8900228, y: 2.890023, z: 3.4258335}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5335160334060192917}
@@ -45,8 +45,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604952486478370565}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.0018492267, y: 0.18466744, z: 0.11231052}
-  m_Size: 0.36499542
+  m_LocalReferencePoint: {x: -0.0011287779, y: 0.010664254, z: 0.06551218}
+  m_Size: 0.37252742
   m_FadeMode: 1
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
@@ -68,9 +68,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3585f9b54ca1ef647ad6132d512e666b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectLayerMask:
-    serializedVersion: 2
-    m_Bits: 134217728
   light: {fileID: 1915595385012572058}
   fire: {fileID: 3587161566627220108}
   timeActive: 60
@@ -106,7 +103,7 @@ GameObject:
   - component: {fileID: 5335160334060192917}
   - component: {fileID: 1915595385012572058}
   - component: {fileID: 7025358724590828319}
-  m_Layer: 3
+  m_Layer: 27
   m_Name: Point Light_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +119,7 @@ Transform:
   m_GameObject: {fileID: 3573355953639811114}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.15, z: 0.411}
+  m_LocalPosition: {x: -0.046, y: 0.2, z: 0.405}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -139,9 +136,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.990566, g: 0.6587125, b: 0.21026169, a: 1}
-  m_Intensity: 2.5
-  m_Range: 5
+  m_Color: {r: 1, g: 0.6011123, b: 0, a: 1}
+  m_Intensity: 6
+  m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -182,7 +179,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 7.99
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -225,7 +222,7 @@ GameObject:
   - component: {fileID: 4501622475693731094}
   - component: {fileID: 5950311554162327087}
   - component: {fileID: 4081408805779744562}
-  m_Layer: 20
+  m_Layer: 27
   m_Name: Candles_4_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,13 +237,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5794666562412910929}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.0097, z: -0.0049}
+  m_LocalRotation: {x: -0.019844146, y: -0, z: 0.0000000018626447, w: 0.9998031}
+  m_LocalPosition: {x: -0, y: -0.025, z: -0.027}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2093680579518926271}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.274, y: 0, z: 0}
 --- !u!33 &4501622475693731094
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -275,7 +272,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1956eaecb28747c46987d046a7f607be, type: 2}
+  - {fileID: 2100000, guid: 7db0e7a657c8d314bbdcac1c3cb7ccb9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -336,7 +333,7 @@ MonoBehaviour:
       redoOperations: []
     objectMeshPairs:
       _Buckets: ffffffffffffffff00000000
-      _HashCodes: a06b08000000000000000000
+      _HashCodes: 5edbff7f0000000000000000
       _Next: ffffffff0000000000000000
       _Count: 1
       _Version: 1
@@ -580,8 +577,8 @@ MonoBehaviour:
     foldoutAutoLOD: 0
     foldoutBatchFew: 0
     foldoutAutoLODMultiple: 0
-    objPositionPrevFrame: {x: -85.36, y: 14.2203, z: -13.1849}
-    objScalePrevFrame: {x: 1, y: 1, z: 1}
+    objPositionPrevFrame: {x: -48.379795, y: 13.998245, z: 109.660385}
+    objScalePrevFrame: {x: 2.8900244, y: 2.8908665, z: 3.4249916}
     considerChildrenBatchFew: 1
     autoLODSavePath: Assets/
     foldoutAdditionalOpts: 0
@@ -611,7 +608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 614785526603604003, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
       propertyPath: m_Layer
-      value: 20
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 614785526603604003, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
       propertyPath: m_IsActive
@@ -677,9 +674,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4442575183726868553, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
+      propertyPath: PlayEvent
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4442575183726868553, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
+      propertyPath: StopEvent
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4442575183726868553, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4442575183726868553, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
+      propertyPath: OverrideMinDistance
+      value: 3.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5317316287689877368, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
       value: 0.005484611
+      objectReference: {fileID: 0}
+    - target: {fileID: 7044670338128434525, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
+      propertyPath: m_Radius
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7044670338128434525, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9150844784711069789, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
       propertyPath: InitialModule.maxNumParticles
@@ -697,7 +718,8 @@ PrefabInstance:
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7044670338128434525, guid: 0b68d506ba691b146929e4327ac1d18b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

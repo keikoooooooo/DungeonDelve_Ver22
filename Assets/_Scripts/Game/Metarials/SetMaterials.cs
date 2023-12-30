@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -34,7 +33,7 @@ public abstract class SetMaterials : MonoBehaviour
         Init();
     }
     
-    public void Init()
+    protected virtual void Init()
     {
         _copiesRenderer = new List<Renderers>(Renderers.Count); // tạo 1 danh sách RendererCopy 
         

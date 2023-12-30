@@ -16,7 +16,6 @@ public class ItemObtainedPanel : Singleton<ItemObtainedPanel>
         animator.Play("Panel_Disable");
         _yieldInstruction = new WaitForSecondsRealtime(disableTime);
     }
-    
     public void ClosePanel()
     {
         animator.Play("Panel_OUT");

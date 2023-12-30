@@ -5,7 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(PlayerDataHandle))]
-public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
+public abstract class PlayerStateMachine : Damageable
 {
     #region Variables
     #region Ref
@@ -101,11 +101,13 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     {
         GetReference();
     }
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+        
         SetVariables();
         HandleEnable();
-        DamageableData.Add(gameObject, this);
+        Health.OnDieEvent += () => CurrentState.SwitchState(_state.Dead());
     }
     private void Start()
     {
@@ -127,9 +129,11 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
 
         HandleFootstepsAudio();
     }
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        DamageableData.Remove(gameObject);
+        base.OnDisable();
+        
+        Health.OnDieEvent -= () => CurrentState.SwitchState(_state.Dead());
     }
 
 
@@ -270,7 +274,7 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
     }
     
     #region Handle Damageable
-    public void CauseDMG(GameObject _gameObject, AttackType _attackType)
+    public override void CauseDMG(GameObject _gameObject, AttackType _attackType)
     {
         if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
 
@@ -294,12 +298,12 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         // Gọi takeDMG trên đối tượng vừa va chạm
         iDamageable.TakeDMG(_damage, _isCrit);
     }
-    public void TakeDMG(int _damage, bool _isCRIT) 
+    public override void TakeDMG(int _damage, bool _isCRIT) 
     {
-        if (CurrentState == _state.Dead()) return;
         InputMovement = Vector3.zero;
         AppliedMovement = Vector3.zero;
         input.Move =Vector3.zero;
+        if (animator.IsTag("Dead", 1)) return;
         
         // If (CRIT) -> lấy Random DEF từ 0 -> DEF ban đầu / 2.
         // Else      -> lấy 100% DEF ban đầu
@@ -311,24 +315,17 @@ public abstract class PlayerStateMachine : MonoBehaviour, IDamageable
         Health.Decreases(_finalDmg);
         DMGPopUpGenerator.Instance.Create(transform.position, _finalDmg, _isCRIT, false);
         
-        if (Health.CurrentValue <= 0)
-        {
-            CurrentState.SwitchState(_state.Dead());
-            return;
-        }
-        
         if (animator.IsTag("Damage", 1)) return;
-        
         HandleDamage();
         SetPlayerInputState(false);
         CurrentState.SwitchState(_isCRIT ? _state.DamageFall() : _state.DamageStand());
     }
 
-    public virtual float PercentDMG_NA() => PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
-    public virtual float PercentDMG_CA() => PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
-    public virtual float PercentDMG_ES() => PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
-    public virtual float PercentDMG_EB() => PlayerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
-    public virtual int CalculationDMG(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
+    public override float PercentDMG_NA() => PlayerConfig.GetNormalAttackMultiplier()[_attackCounter].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
+    public override float PercentDMG_CA() => PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
+    public override float PercentDMG_ES() => PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
+    public override float PercentDMG_EB() => PlayerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
+    public override int CalculationDMG(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
     public void ReleaseDamageState() // gọi trên animationEvent để giải phóng trạng thái TakeDamage
     {
         CurrentState.SwitchState(_state.Idle());
