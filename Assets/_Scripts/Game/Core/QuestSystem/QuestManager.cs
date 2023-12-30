@@ -27,33 +27,34 @@ public class QuestManager : Singleton<QuestManager>
         }
 
         currentQuest = 0;
+        var _tasks = QuestLists.Select(x => x.GetTask());
         var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
         if (_lastDay < DateTime.Today)
-            LoadNewQuest(); 
+            LoadNewQuest(_tasks); 
         else
-            LoadOldQuest();
+            LoadOldQuest(_tasks);
     }
-    private static void LoadNewQuest()
+    private static void LoadNewQuest(IEnumerable<Task> _tasks)
     {
-        var _tasks = QuestLists.Select(x => x.GetTask());
         foreach (var _task in _tasks)
         {
             _task.SetCompleted(false);
-            FileHandle.Delete(_folderSave, _task.GetID);
+            _task.SetReceived(false);
+            _task.SetTaskLocked(false);
+            FileHandle.Save(_task, _folderSave, _task.GetID);
         }
         NoticeManager.Instance.OpenNewQuestNoticePanelT4();
     }
-    private static void LoadOldQuest()
+    private static void LoadOldQuest(IEnumerable<Task> _tasks)
     {
-        foreach (var questSetup in QuestLists)
+        foreach (var _task in _tasks)
         {
-            var _task = questSetup.GetTask();
-            var _checkFile = FileHandle.Load(_folderSave, _task.GetID, out Task _taskSave);
-            if (!_checkFile) continue;
-            
+            if (!FileHandle.Load(_folderSave, _task.GetID, out Task _taskSave)) continue;
             _task.SetCompleted(_taskSave.IsCompleted);
             _task.SetTaskLocked(_taskSave.IsLocked);
             _task.SetReceived(_taskSave.IsReceived);
+            
+            if (!_task.IsCompleted && !_task.IsLocked && !_task.IsReceived) continue;
             currentQuest++;
         }
     }

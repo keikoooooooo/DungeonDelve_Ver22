@@ -150,6 +150,7 @@ public class GUI_Shop : MonoBehaviour, IGUI
     }
     private void ShowShop()
     {
+        ShopManager.SortShopItemData();
         inforItemPanel.SetActive(false);
         _poolItemBox.List.ForEach(x => x.Release());
         var _itemCount = _shopData.Count;
@@ -262,7 +263,6 @@ public class GUI_Shop : MonoBehaviour, IGUI
     public void HandleItemPurchaseSuccess()
     {
         purchaseBtt.interactable = _currentShopItemBox.shopItemSetup.CanBuyItem;
-        ShopManager.SortShopItemData();
         ShowShop();
     }
     public void OnOpenPurchasePanel()

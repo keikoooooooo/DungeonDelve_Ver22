@@ -116,8 +116,6 @@ public class GUI_ShopItemPurchase : MonoBehaviour, IGUI
     private void OnClickPurchaseButton()
     {
         OnClickCancelButton();
-        guiShop.HandleItemPurchaseSuccess();
-        
         var _totalReceive = (int)_quantityPurchase * _quantityReceive;
         _userData.IncreaseCoin(-_price * (int)_quantityPurchase);
         _userData.IncreaseItemValue(_itemCustom.code, _totalReceive);
@@ -126,6 +124,7 @@ public class GUI_ShopItemPurchase : MonoBehaviour, IGUI
         _shopItemBox.SetShopItem(_itemCustom, _shopItemSetup);
         //
         ItemObtainedPanel.Instance.OpenPanel(_itemCustom, _totalReceive);
+        guiShop.HandleItemPurchaseSuccess();
     }
 
     

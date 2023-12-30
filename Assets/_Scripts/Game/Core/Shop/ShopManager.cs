@@ -48,8 +48,7 @@ public class ShopManager : Singleton<ShopManager>
     {
         foreach (var _itemPurchase in ShopData)
         {
-            var _checkFile = FileHandle.Load(_folderSave, _itemPurchase.GetID(), out ShopItemSetup.ItemPurchaseData _currentPurchaseData);
-            if (!_checkFile) continue;
+            if (!FileHandle.Load(_folderSave, _itemPurchase.GetID(), out ShopItemSetup.ItemPurchaseData _currentPurchaseData)) continue;
             _itemPurchase.SetPurchaseCurrent(_currentPurchaseData.currentValue);
         }
     }

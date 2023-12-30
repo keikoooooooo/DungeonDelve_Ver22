@@ -5,9 +5,7 @@ using System;
 using Random = UnityEngine.Random;
 
 
-/// <summary>
-/// Custom Item làm phần thưởng
-/// </summary>
+/// <summary> Custom Item làm phần thưởng </summary>
 [Serializable]
 public class ItemReward
 {

@@ -89,7 +89,7 @@ MonoBehaviour:
   RunSpeed: 5.1
   HPRatio: 12.5
   DEFRatio: 0.85
-  LevelRatio: 15
-  NormalAttackCD: 3.38
-  SkillAttackCD: 5
-  SpecialAttackCD: 6
+  LevelRatio: 5
+  NormalAttackCD: 3
+  SkillAttackCD: 4
+  SpecialAttackCD: 5

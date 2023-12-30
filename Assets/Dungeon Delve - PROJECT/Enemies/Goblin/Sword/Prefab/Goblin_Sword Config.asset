@@ -66,6 +66,6 @@ MonoBehaviour:
   HPRatio: 1.5
   DEFRatio: 0.65
   LevelRatio: 1.6
-  NormalAttackCD: 4
-  SkillAttackCD: 5.5
-  SpecialAttackCD: 8
+  NormalAttackCD: 3
+  SkillAttackCD: 4
+  SpecialAttackCD: 4

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -16,7 +17,7 @@ public class TimelineBOReaper : MonoBehaviour
 
     [Space]
     [SerializeField] private M_SetEmission setEmission;
-    [Tooltip("Thời gian kích lại BOSS (s)")] [SerializeField] private float bossActivationTime;
+    [SerializeField] private EventReference onClickSoundRef;
     
     [BoxGroup("VOLUME CHANGE"), SerializeField] private AmbienceVolumeChangeTrigger ambienceVolumeChange;
     [BoxGroup("VOLUME CHANGE"), SerializeField] private BackgroundAudio reaperBattleAudio;
@@ -182,10 +183,13 @@ public class TimelineBOReaper : MonoBehaviour
     {
         if(!_canTrigger) yield break;
         
+        DeactiveControl();
+        interactiveUI.OnExitPlayer();
         ApplyEmission(0, 15);
         MuteGroupTrack(0, false);
         MuteGroupTrack(1, true);
-        
+        AudioManager.PlayOneShot(onClickSoundRef, transform.position);
+
         yield return new WaitForSeconds(2f);
         if (_isTriggerPlayer)
         {
@@ -193,7 +197,6 @@ public class TimelineBOReaper : MonoBehaviour
             _canTrigger = false;
             ambienceVolumeChange.SetVolume(.05f);
             reaperBattleAudio.Play();
-            interactiveUI.OnExitPlayer();
         }
         else
         {

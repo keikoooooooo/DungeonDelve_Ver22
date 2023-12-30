@@ -26,8 +26,8 @@ public class Chest : MonoBehaviour
     private Coroutine _openCoroutine;
     private Coroutine _closeCoroutine;
     private NoticeManager _notice;
-    private bool _detectPlayer; // Có trigger với Player ?
-    private bool _canReceived;  // Có thể nhận thưởng ?
+    [SerializeField, ReadOnly] private bool _detectPlayer; // Có trigger với Player ?
+    [SerializeField, ReadOnly] private bool _canReceived;  // Có thể nhận thưởng ?
     
     
     private void OnEnable()
@@ -120,6 +120,7 @@ public class Chest : MonoBehaviour
         yield return new WaitForSeconds(.4f);
         chestCollider.enabled = false;
         chestAnimator.SetBool(OpenChestID, false);
+        _detectPlayer = false;
     }
     
     

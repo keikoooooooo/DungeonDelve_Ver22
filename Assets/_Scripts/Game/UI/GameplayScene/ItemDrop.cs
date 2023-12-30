@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -25,8 +24,8 @@ public class ItemDrop : MonoBehaviour, IPooled<ItemDrop>
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         
-        var jumpDirection = new Vector3(Random.Range(-1f, 1f), 1.2f, Random.Range(-1f, 1f)).normalized;
-        rb.velocity = jumpDirection * _jumpForce;
+        var jumpDirection = new Vector3(Random.Range(-.4f, .4f), 1f, Random.Range(-.4f, .4f)).normalized;
+        rb.velocity = jumpDirection * (_jumpForce + Random.Range(0, 1.5f));
         rb.useGravity = true;
         
         if(_timeActiveCoroutine != null) StopCoroutine(TimerCoroutine());

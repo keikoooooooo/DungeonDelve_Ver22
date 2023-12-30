@@ -53,9 +53,9 @@ public class GameManager : Singleton<GameManager>
         _value = _playerConfig.GetST();
         Player.Stamina.InitValue(_value, _value);
     }
-
     private void Start()
     {
         fmodListener.SetAttenuationObject(Player.gameObject);
     }
+    private void OnApplicationQuit() => EnemyTracker.Clear();
 }

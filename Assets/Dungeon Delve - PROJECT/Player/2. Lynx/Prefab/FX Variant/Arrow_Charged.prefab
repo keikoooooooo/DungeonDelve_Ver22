@@ -106,7 +106,7 @@ MonoBehaviour:
   rb: {fileID: 2079600839820258017}
   sphereCollider: {fileID: 7415065502757500317}
   force: 25
-  delayGravity: 5
+  delayGravity: 2
 --- !u!114 &1378209784863275921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
       m_Calls: []
   layerToCheck:
     serializedVersion: 2
-    m_Bits: 5246984
+    m_Bits: 139464712
 --- !u!114 &2216585458045715208
 MonoBehaviour:
   m_ObjectHideFlags: 0

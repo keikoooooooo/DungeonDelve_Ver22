@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
             for (var i = 0; i < _currentEnemy; i++)
             {
                 Spawn();
-                yield return new WaitForSeconds(Random.Range(1f, 2f));
+                yield return new WaitForSeconds(Random.value);
             }
         }
         
@@ -67,7 +67,6 @@ public class EnemySpawner : MonoBehaviour
         var _totalSeconds = DateTime.Now.Subtract(_lastTime).TotalSeconds;
         if (_totalSeconds < waitSpawn)
         {
-            Debug.Log($"Không thể Spawn, Vui lòng chờ trong: {waitSpawn - _totalSeconds}s");
             yield return new WaitForSeconds((float)(waitSpawn - _totalSeconds));
         }
         
@@ -79,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
                 for (var i = 0; i < _enemyNeed; i++)
                 {
                     Spawn();
-                    yield return new WaitForSeconds(Random.Range(1f, 2f));
+                    yield return new WaitForSeconds(Random.value);
                 }
                 _currentEnemy += _enemyNeed;
             }
