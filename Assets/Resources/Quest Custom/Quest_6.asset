@@ -24,10 +24,6 @@ MonoBehaviour:
     code: 401
     value: 1
   rewards:
-  - code: 0
-    value: 5
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
   - code: 3
     value: 5
     isRandom: 0

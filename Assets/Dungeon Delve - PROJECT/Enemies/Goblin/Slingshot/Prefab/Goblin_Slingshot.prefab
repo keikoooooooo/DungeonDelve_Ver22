@@ -1513,6 +1513,10 @@ MonoBehaviour:
     value: 0
     isRandom: 1
     valueRandom: {x: 1, y: 5}
+  - code: 400
+    value: 0
+    isRandom: 1
+    valueRandom: {x: 1, y: 8}
 --- !u!1 &3436336622226590615
 GameObject:
   m_ObjectHideFlags: 0

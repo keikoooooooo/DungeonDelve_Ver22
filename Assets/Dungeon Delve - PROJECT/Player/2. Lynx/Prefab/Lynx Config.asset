@@ -139,7 +139,7 @@ MonoBehaviour:
   ChargedAttackStaminaCost: 20
   RunFastSpeed: 8
   DashStaminaCost: 25
-  JumpHeight: 1.4
+  JumpHeight: 1
   JumpCD: 0.38
   ElementalSkillCD: 3
   ElementalBurstCD: 3

@@ -25,50 +25,57 @@ MonoBehaviour:
     value: 100
   rewards:
   - code: 0
+    rarity: 1
     value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 1
+    rarity: 1
     value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 2
+    rarity: 2
     value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 3
-    value: 10
-    isRandom: 0
-    valueRandom: {x: 0, y: 0}
-  - code: 4
+    rarity: 2
     value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 10
+    rarity: 1
     value: 10
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 11
+    rarity: 2
     value: 5
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 12
+    rarity: 3
     value: 5
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 20
+    rarity: 0
     value: 10000
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 200
-    value: 4
+    rarity: 1
+    value: 6
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 201
+    rarity: 2
     value: 4
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 202
+    rarity: 3
     value: 2
     isRandom: 0
     valueRandom: {x: 0, y: 0}

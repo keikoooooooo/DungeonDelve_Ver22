@@ -1122,7 +1122,11 @@ MonoBehaviour:
   - code: 12
     value: 0
     isRandom: 1
-    valueRandom: {x: 1, y: 3}
+    valueRandom: {x: 0, y: 3}
+  - code: 400
+    value: 0
+    isRandom: 1
+    valueRandom: {x: 1, y: 8}
 --- !u!1 &2195668644245869938
 GameObject:
   m_ObjectHideFlags: 0

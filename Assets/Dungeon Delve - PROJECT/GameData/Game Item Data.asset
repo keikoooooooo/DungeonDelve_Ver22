@@ -37,12 +37,6 @@ MonoBehaviour:
     ratity: 2
     type: 0
     description: Increases DEF by 25% for 150s.
-  - code: 4
-    nameItem: Ice Resist Essential Oil
-    sprite: {fileID: 21300000, guid: 845171c867b0d444099c47f5fd21a94e, type: 3}
-    ratity: 2
-    type: 0
-    description: 
   - code: 10
     nameItem: Growth Orb - Small
     sprite: {fileID: 21300000, guid: 0cc10918b747c234397ad20ff7e34a06, type: 3}
