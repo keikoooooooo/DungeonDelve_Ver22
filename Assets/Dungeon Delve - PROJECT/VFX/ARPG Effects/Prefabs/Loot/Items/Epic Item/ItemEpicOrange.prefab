@@ -9868,10 +9868,10 @@ GameObject:
   - component: {fileID: 8250302192196525216}
   - component: {fileID: 8250302192183399554}
   - component: {fileID: 8250302192182452848}
-  - component: {fileID: 4941361392856567162}
   - component: {fileID: 6088155241090376003}
   - component: {fileID: 3432229071243543284}
   - component: {fileID: 7798020674540290881}
+  - component: {fileID: 4941361392856567162}
   m_Layer: 21
   m_Name: ItemEpicOrange
   m_TagString: Untagged
@@ -14690,22 +14690,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &4941361392856567162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8250302192196887184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 131cab19ceee06642bfe27a9d2887ca6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  studioEventEmitter: {fileID: 7798020674540290881}
-  spriteRender: {fileID: 7238013947385707229}
-  rb: {fileID: 6088155241090376003}
-  _jumpForce: 3.5
 --- !u!54 &6088155241090376003
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14785,6 +14769,22 @@ MonoBehaviour:
   OverrideAttenuation: 1
   OverrideMinDistance: 2.3
   OverrideMaxDistance: 4
+--- !u!114 &4941361392856567162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8250302192196887184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131cab19ceee06642bfe27a9d2887ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  studioEventEmitter: {fileID: 7798020674540290881}
+  spriteRender: {fileID: 7238013947385707229}
+  rb: {fileID: 6088155241090376003}
+  _jumpForce: 3.5
 --- !u!1 &8250302192196902414
 GameObject:
   m_ObjectHideFlags: 0

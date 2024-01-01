@@ -19,9 +19,11 @@ public class CandlesFire : MonoBehaviour
     private readonly float _enableDuration = 1.4f;
     private readonly float _disableDuration = .5f;
     private float _currentIntensity;
+    private bool _canEnable;
     
     private void Start()
     {
+        _canEnable = true;
         _currentIntensity = light.intensity;
         light.intensity = 0;
         light.gameObject.SetActive(false);
@@ -31,8 +33,9 @@ public class CandlesFire : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Fire")) return;
+        if (!other.CompareTag("Fire") || !_canEnable) return;
 
+        _canEnable = false;
         OnFireEnableEvent?.Invoke();
         fire.gameObject.SetActive(true);
         fire.Play();
@@ -50,15 +53,14 @@ public class CandlesFire : MonoBehaviour
     {
         yield return new WaitForSeconds(timeActive);
         
+        _canEnable = true;
         _lightTween?.Kill();
         _lightTween = DOVirtual.Float(_currentIntensity, 0, _disableDuration, SetIntensity).OnComplete(() =>
         {
             light.gameObject.SetActive(false);
         });
-        
         fire.gameObject.SetActive(false);
         fire.Stop();
-        
         OnFireDisableEvent?.Invoke();
     }
     private void SetIntensity(float _value) => light.intensity = _value;

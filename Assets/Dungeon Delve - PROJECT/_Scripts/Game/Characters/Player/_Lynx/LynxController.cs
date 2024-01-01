@@ -118,8 +118,8 @@ public class LynxController : PlayerController
         
         // Aim Camera
         aimCam.gameObject.SetActive(true);
-        xAxis.Value = cinemachineFreeLook.m_XAxis.Value;
-        yAxis.Value = cinemachineFreeLook.m_YAxis.Value;
+        xAxis.Value = FreeLookCamera.m_XAxis.Value;
+        yAxis.Value = FreeLookCamera.m_YAxis.Value;
         targetCameraFocus.rotation = _mainCamera.transform.rotation;
         
         // Crosshair
@@ -141,7 +141,7 @@ public class LynxController : PlayerController
     {
         _movementState = MovementState.StateRun;
         animator.SetBool(ID4Direction, false);
-        cinemachineFreeLook.m_XAxis.Value = xAxis.Value;
+        FreeLookCamera.m_XAxis.Value = xAxis.Value;
         
         if(IsJump || IsDash) return;
         CanMove = false;

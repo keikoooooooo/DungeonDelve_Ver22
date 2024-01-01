@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 120018264447229112}
   - component: {fileID: 120018264462480538}
   - component: {fileID: 120018264461337192}
-  - component: {fileID: 5529632765709116827}
   - component: {fileID: 1218186643094123406}
   - component: {fileID: 1604837074627196607}
   - component: {fileID: 2719149692487354183}
+  - component: {fileID: 5529632765709116827}
   m_Layer: 21
   m_Name: ItemEpicModular
   m_TagString: Untagged
@@ -4833,22 +4833,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &5529632765709116827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 120018264446870152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 131cab19ceee06642bfe27a9d2887ca6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  studioEventEmitter: {fileID: 2719149692487354183}
-  spriteRender: {fileID: 3406581717176258060}
-  rb: {fileID: 1218186643094123406}
-  _jumpForce: 3.5
 --- !u!54 &1218186643094123406
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4928,6 +4912,22 @@ MonoBehaviour:
   OverrideAttenuation: 1
   OverrideMinDistance: 2.3
   OverrideMaxDistance: 4
+--- !u!114 &5529632765709116827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120018264446870152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131cab19ceee06642bfe27a9d2887ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  studioEventEmitter: {fileID: 2719149692487354183}
+  spriteRender: {fileID: 3406581717176258060}
+  rb: {fileID: 1218186643094123406}
+  _jumpForce: 3.5
 --- !u!1 &120018264446885398
 GameObject:
   m_ObjectHideFlags: 0

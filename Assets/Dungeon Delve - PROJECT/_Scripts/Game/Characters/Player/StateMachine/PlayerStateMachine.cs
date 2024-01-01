@@ -14,7 +14,7 @@ public abstract class PlayerStateMachine : Damageable
     [field: SerializeField] public Transform model { get; private set; }
     [field: SerializeField] public Animator animator { get; private set; }
     [field: SerializeField] public CharacterController characterController { get; private set; }
-    [field: SerializeField] public CinemachineFreeLook cinemachineFreeLook { get; private set; }
+    [field: SerializeField] public CameraFOV cameraFOV { get; private set; }
     [field: SerializeField] public ParticleSystem enableEffect { get; private set; }
     [field: SerializeField] public PlayerDataHandle playerData { get; private set; }
     [field: SerializeField] public PlayerVoice voice { get; private set; }
@@ -25,6 +25,7 @@ public abstract class PlayerStateMachine : Damageable
 
     #region Get & Set Property
     public SO_PlayerConfiguration PlayerConfig => playerData.PlayerConfig;
+    public CinemachineFreeLook FreeLookCamera => cameraFOV.cinemachineFreeLook;
     public StatusHandle Health { get; private set; }
     public StatusHandle Stamina { get; private set; }
     public PlayerBaseState CurrentState { get; set; }
@@ -105,6 +106,7 @@ public abstract class PlayerStateMachine : Damageable
         
         SetVariables();
         HandleEnable();
+        Health.OnDieEvent += () => CurrentState.ChildState.SwitchState(_state.Dead());
     }
     private void Start()
     {
@@ -122,8 +124,13 @@ public abstract class PlayerStateMachine : Damageable
 
         HandleFootstepsAudio();
     }
- 
-    
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        
+        Health.OnDieEvent -= () => CurrentState.ChildState.SwitchState(_state.Dead());
+    }
+
     private void GetReference()
     {
         _mainCamera = Camera.main;

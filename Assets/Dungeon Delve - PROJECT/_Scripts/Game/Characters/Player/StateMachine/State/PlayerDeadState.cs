@@ -48,6 +48,7 @@ public class PlayerDeadState : PlayerBaseState
         yield return new WaitForSeconds(1f);
         SetInputState(true);
         _machine.ReleaseDamageState();
+        _machine.cameraFOV.FOVStart();
     }
     private void InitDeadState()
     {
@@ -56,7 +57,7 @@ public class PlayerDeadState : PlayerBaseState
         _machine.CanFootstepsAudioPlay = false;
         _machine.animator.SetBool(_machine.IDDead, true);
         _machine.animator.SetFloat(_machine.IDSpeed, 0);
-        _machine.cinemachineFreeLook.enabled = false;
+        _machine.FreeLookCamera.enabled = false;
         _machine.CurrentState = _factory.Grounded();
     }
     private void DeadDissolve()
@@ -86,14 +87,14 @@ public class PlayerDeadState : PlayerBaseState
     {
         if (_state)
         {
-            _machine.cinemachineFreeLook.m_XAxis.Value = 0;
-            _machine.cinemachineFreeLook.m_YAxis.Value = .5f;
-            _machine.cinemachineFreeLook.enabled = true;
+            _machine.FreeLookCamera.m_XAxis.Value = 0;
+            _machine.FreeLookCamera.m_YAxis.Value = .5f;
+            _machine.FreeLookCamera.enabled = true;
             _machine.input.PlayerInput.Enable();
             GUI_Inputs.InputAction.Enable();
             return;
         }
-        _machine.cinemachineFreeLook.enabled = false;
+        _machine.FreeLookCamera.enabled = false;
         _machine.input.PlayerInput.Disable();
         GUI_Inputs.InputAction.Disable();
     }

@@ -93,15 +93,15 @@ public class TimelineBOReaper : MonoBehaviour
         _player.input.PlayerInput.Disable();
         
         yield return new WaitForSeconds(.9f);
-        _player.cinemachineFreeLook.m_YAxis.Value = .5f;
+        _player.FreeLookCamera.m_YAxis.Value = .5f;
         var _currentAng = _player.model.eulerAngles.y;
         var angle = _currentAng >= 180 ? Mathf.Abs(180 - _currentAng) : -Mathf.Abs(180 - _currentAng);
-        _player.cinemachineFreeLook.m_XAxis.Value = angle;
-        _player.cinemachineFreeLook.m_Lens.FieldOfView = 35f;
+        _player.FreeLookCamera.m_XAxis.Value = angle;
+        _player.FreeLookCamera.m_Lens.FieldOfView = 35f;
         
         
         yield return new WaitForSeconds(.15f);
-        _player.cinemachineFreeLook.enabled = false;
+        _player.FreeLookCamera.enabled = false;
         
         yield return new WaitForSeconds(.8f);
         NoticeManager.Instance.OpenBossConqueredNoticeT5();
@@ -208,8 +208,8 @@ public class TimelineBOReaper : MonoBehaviour
 
     public void SetCamFOV()
     {
-        _cameraFOV.SetCurrentFOV(_player.cinemachineFreeLook.m_Lens.FieldOfView);
-        _player.cinemachineFreeLook.enabled = true;
+        _cameraFOV.SetCurrentFOV(_player.FreeLookCamera.m_Lens.FieldOfView);
+        _player.FreeLookCamera.enabled = true;
     }
     public void ActiveControl()
     {

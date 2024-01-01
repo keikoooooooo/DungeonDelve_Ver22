@@ -3019,45 +3019,285 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GoodMorningEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1104119471
+      Data2: 1274050460
+      Data3: 22737838
+      Data4: -1485435661
+    Path: event:/PLAYER/Arlan/Story/Arlan_GOOD_MORNING
   GoodAfternoonEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -518587835
+      Data2: 1273219916
+      Data3: 1478817965
+      Data4: 1481585055
+    Path: event:/PLAYER/Arlan/Story/Arlan_GOOD_AFTERNOON
   GoodEveningEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -585314230
+      Data2: 1229066483
+      Data3: 653384883
+      Data4: 1811631519
+    Path: event:/PLAYER/Arlan/Story/Arlan_GOOD_EVENING
   GoodNightEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1764077759
+      Data2: 1254676927
+      Data3: 2035818406
+      Data4: 235233951
+    Path: event:/PLAYER/Arlan/Story/Arlan_GOOD_NIGHT
   ChatEvent: []
-  OpenChestEvent: []
-  RelaxEvent: []
-  JumpEvent: []
-  DashEvent: []
-  LightAttackEvent: []
-  MidAttackEvent: []
-  HeavyAttackEvent: []
+  OpenChestEvent:
+  - Guid:
+      Data1: 1905371080
+      Data2: 1308573737
+      Data3: -2072714368
+      Data4: -848550512
+    Path: event:/PLAYER/Arlan/Story/Arlan_OPEN_CHEST_01
+  - Guid:
+      Data1: 1369571189
+      Data2: 1178435397
+      Data3: 2090966188
+      Data4: 238695336
+    Path: event:/PLAYER/Arlan/Story/Arlan_OPEN_CHEST_02
+  - Guid:
+      Data1: -780650313
+      Data2: 1109507870
+      Data3: -1741993544
+      Data4: 434825036
+    Path: event:/PLAYER/Arlan/Story/Arlan_OPEN_CHEST_03
+  RelaxEvent:
+  - Guid:
+      Data1: -624779451
+      Data2: 1225931847
+      Data3: 953352379
+      Data4: -619655461
+    Path: event:/PLAYER/Arlan/Story/Arlan_RELAX_01
+  JumpEvent:
+  - Guid:
+      Data1: 2038309799
+      Data2: 1316895195
+      Data3: -2018849624
+      Data4: -1137135446
+    Path: event:/PLAYER/Arlan/Combat/Arlan_JUMPING_01
+  - Guid:
+      Data1: 782918138
+      Data2: 1082562570
+      Data3: 400048269
+      Data4: 1132546768
+    Path: event:/PLAYER/Arlan/Combat/Arlan_JUMPING_02
+  - Guid:
+      Data1: -558902171
+      Data2: 1197185981
+      Data3: 161444270
+      Data4: 2099915130
+    Path: event:/PLAYER/Arlan/Combat/Arlan_JUMPING_03
+  - Guid:
+      Data1: 657586354
+      Data2: 1179427465
+      Data3: -2054854272
+      Data4: 618215881
+    Path: event:/PLAYER/Arlan/Combat/Arlan_JUMPING_04
+  - Guid:
+      Data1: -458756456
+      Data2: 1178121335
+      Data3: 1659612596
+      Data4: 1782812493
+    Path: event:/PLAYER/Arlan/Combat/Arlan_JUMPING_05
+  DashEvent:
+  - Guid:
+      Data1: 1317107135
+      Data2: 1151352162
+      Data3: 1513815450
+      Data4: -908394805
+    Path: event:/PLAYER/Arlan/Combat/Arlan_DASH_01
+  - Guid:
+      Data1: 1206944418
+      Data2: 1087921380
+      Data3: -200638591
+      Data4: -98984408
+    Path: event:/PLAYER/Arlan/Combat/Arlan_DASH_02
+  - Guid:
+      Data1: 1955195576
+      Data2: 1308189661
+      Data3: 1237036205
+      Data4: 299771356
+    Path: event:/PLAYER/Arlan/Combat/Arlan_DASH_03
+  LightAttackEvent:
+  - Guid:
+      Data1: 17689097
+      Data2: 1122401563
+      Data3: -304913250
+      Data4: -1850770377
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_ATTACK_01
+  - Guid:
+      Data1: -1436219495
+      Data2: 1296231481
+      Data3: 2081287578
+      Data4: -763815408
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_ATTACK_02
+  - Guid:
+      Data1: 1907603589
+      Data2: 1326899971
+      Data3: 1301662118
+      Data4: 2090611327
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_ATTACK_03
+  - Guid:
+      Data1: 832859188
+      Data2: 1328236330
+      Data3: 795660976
+      Data4: -1711560022
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_ATTACK_04
+  MidAttackEvent:
+  - Guid:
+      Data1: 468953429
+      Data2: 1186252012
+      Data3: -1874836299
+      Data4: 1059567132
+    Path: event:/PLAYER/Arlan/Combat/Arlan_MID_ATTACK_01
+  - Guid:
+      Data1: 1594232918
+      Data2: 1236239362
+      Data3: 1798494892
+      Data4: -799202212
+    Path: event:/PLAYER/Arlan/Combat/Arlan_MID_ATTACK_02
+  - Guid:
+      Data1: 1895551519
+      Data2: 1236165995
+      Data3: -275969361
+      Data4: -1662073910
+    Path: event:/PLAYER/Arlan/Combat/Arlan_MID_ATTACK_03
+  HeavyAttackEvent:
+  - Guid:
+      Data1: -102740670
+      Data2: 1324367328
+      Data3: 1405838761
+      Data4: -1054132474
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_ATTACK_01
+  - Guid:
+      Data1: -357097262
+      Data2: 1239940277
+      Data3: 529281680
+      Data4: 2008636145
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_ATTACK_02
+  - Guid:
+      Data1: -1826965939
+      Data2: 1157887885
+      Data3: -1661685628
+      Data4: -446218788
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_ATTACK_03
   ElementalSkillEvent: []
-  ElementalBurstEvent: []
-  LightHitEvent: []
-  HeavyHitEvent: []
-  DieEvent: []
+  ElementalBurstEvent:
+  - Guid:
+      Data1: -1269986148
+      Data2: 1334197951
+      Data3: -865948534
+      Data4: -1940116905
+    Path: event:/PLAYER/Arlan/Combat/Arlan_ELEMENTAL_BURST_01
+  - Guid:
+      Data1: 499847232
+      Data2: 1243153465
+      Data3: 1258931087
+      Data4: -2042092503
+    Path: event:/PLAYER/Arlan/Combat/Arlan_ELEMENTAL_BURST_02
+  - Guid:
+      Data1: -924221159
+      Data2: 1251902299
+      Data3: -242222942
+      Data4: -978303293
+    Path: event:/PLAYER/Arlan/Combat/Arlan_ELEMENTAL_BURST_03
+  LightHitEvent:
+  - Guid:
+      Data1: -219566549
+      Data2: 1100766711
+      Data3: -1400420181
+      Data4: -1480237438
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_HIT_01
+  - Guid:
+      Data1: -1919450064
+      Data2: 1194182420
+      Data3: 1910260114
+      Data4: -1580468719
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_HIT_02
+  - Guid:
+      Data1: -1597495737
+      Data2: 1266452781
+      Data3: -1182129518
+      Data4: 280009032
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_HIT_03
+  - Guid:
+      Data1: -106442629
+      Data2: 1266450769
+      Data3: -1006368367
+      Data4: 1907457643
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_HIT_04
+  - Guid:
+      Data1: -2031755292
+      Data2: 1103074549
+      Data3: -1858222934
+      Data4: -1819665611
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_HIT_05
+  - Guid:
+      Data1: 1237629438
+      Data2: 1316798967
+      Data3: 490248064
+      Data4: -1814812831
+    Path: event:/PLAYER/Arlan/Combat/Arlan_LIGHT_HIT_06
+  HeavyHitEvent:
+  - Guid:
+      Data1: 1713854263
+      Data2: 1300070127
+      Data3: 1054371225
+      Data4: 294570207
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_HIT_01
+  - Guid:
+      Data1: 247508539
+      Data2: 1096538593
+      Data3: 980240570
+      Data4: 1435565088
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_HIT_02
+  - Guid:
+      Data1: 1804678159
+      Data2: 1329560183
+      Data3: -1210602080
+      Data4: -1131724228
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_HIT_03
+  - Guid:
+      Data1: -89329657
+      Data2: 1182363996
+      Data3: -695939916
+      Data4: 705721081
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_HIT_04
+  - Guid:
+      Data1: -1152155449
+      Data2: 1335031035
+      Data3: 609379457
+      Data4: 222554899
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_HIT_05
+  - Guid:
+      Data1: -1809882512
+      Data2: 1151477857
+      Data3: 319707036
+      Data4: -651820687
+    Path: event:/PLAYER/Arlan/Combat/Arlan_HEAVY_HIT_06
+  DieEvent:
+  - Guid:
+      Data1: -737950058
+      Data2: 1106293733
+      Data3: 970345123
+      Data4: 1642798307
+    Path: event:/PLAYER/Arlan/Combat/Arlan_DIE_01
+  - Guid:
+      Data1: -1417185450
+      Data2: 1095582493
+      Data3: -682736236
+      Data4: 329799508
+    Path: event:/PLAYER/Arlan/Combat/Arlan_DIE_02
+  - Guid:
+      Data1: 1202488633
+      Data2: 1179456679
+      Data3: 377190566
+      Data4: -505045478
+    Path: event:/PLAYER/Arlan/Combat/Arlan_DIE_03
 --- !u!114 &5139688112690164920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3089,7 +3329,7 @@ MonoBehaviour:
   <model>k__BackingField: {fileID: 7101714960535657653}
   <animator>k__BackingField: {fileID: 1787091444842432457}
   <characterController>k__BackingField: {fileID: 1802613745807339804}
-  <cinemachineFreeLook>k__BackingField: {fileID: 5122457800056933351}
+  <cameraFOV>k__BackingField: {fileID: 2709976791622902034}
   <enableEffect>k__BackingField: {fileID: 4137938532677343948}
   <playerData>k__BackingField: {fileID: 5139688112690164920}
   <voice>k__BackingField: {fileID: 1060547604585890178}
@@ -4954,15 +5194,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0048766164
+      value: 0.004876614
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000027056724
+      value: 5.183708e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5805932242706813739, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.3194686e-11
+      value: -2.527927e-12
       objectReference: {fileID: 0}
     - target: {fileID: 5822535128316044608, guid: 46566ba95817ace4b967005718973db5, type: 3}
       propertyPath: m_FollowOffset.y

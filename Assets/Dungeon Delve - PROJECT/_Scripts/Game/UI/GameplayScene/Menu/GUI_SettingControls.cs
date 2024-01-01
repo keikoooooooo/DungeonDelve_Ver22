@@ -21,7 +21,7 @@ public class GUI_SettingControls : MonoBehaviour, IGUI
     
     public void GetRef(GameManager _gameManager)
     {
-        _cinemachineFreeLook = _gameManager.Player.cinemachineFreeLook;
+        _cinemachineFreeLook = _gameManager.Player.FreeLookCamera;
         
         var sensitivityValue = PlayerPrefs.GetFloat(PP_SensitivityIndex, 150);
         SetCameraSensitivity(sensitivityValue);

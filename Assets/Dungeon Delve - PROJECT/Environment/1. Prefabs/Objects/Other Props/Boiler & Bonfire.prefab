@@ -306,8 +306,8 @@ MonoBehaviour:
   AllowNonRigidbodyDoppler: 0
   Params: []
   OverrideAttenuation: 1
-  OverrideMinDistance: 2.5
-  OverrideMaxDistance: 10
+  OverrideMinDistance: 1.5
+  OverrideMaxDistance: 15
 --- !u!198 &7527556586333052175 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 8733960161316991500, guid: 1ec1190b22a54f24693657572e49fc6b, type: 3}
