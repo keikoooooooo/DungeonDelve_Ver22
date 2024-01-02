@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 public class Chest : MonoBehaviour
 {
     [SerializeField, Required] private RewardSetup rewardSetup;
+    [SerializeField, Tooltip("Có tạo rương khi bắt đầu game ?")]
+    private bool isCreateStart;
     [Space]
     [SerializeField] private Animator chestAnimator;
     [SerializeField] private BoxCollider chestCollider;
@@ -42,6 +44,11 @@ public class Chest : MonoBehaviour
         detection.SetActive(false);
         _notice = NoticeManager.Instance;
         SetDissolve(0, 1, 0);
+        
+        if (isCreateStart)
+        {
+            CreateChest();
+        }
     }
     private void OnDisable()
     {
@@ -151,7 +158,7 @@ public class Chest : MonoBehaviour
         _notice.CloseNoticeT3();
     }
 
-    /// <summary> Mở chỉ dẫn tới vị trí rương </summary>
+    /// <summary> Mở chỉ dẫn vị trí rương </summary>
     public void OpenIndicator()
     {
         if (!_canReceived) return;
@@ -159,7 +166,7 @@ public class Chest : MonoBehaviour
         AudioManager.PlayOneShot(FMOD_Events.Instance.notice_01, transform.position);
     }
 
-    /// <summary> Đóng chỉ dẫn tới vị trí rương </summary>
+    /// <summary> Đóng chỉ dẫn </summary>
     public void CloseIndicator()
     {
         ChestNoticeManager.RemoveChest(this);

@@ -4621,7 +4621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798947985525526231, guid: 21e78ea8173452142a495bef5c66c372, type: 3}
       propertyPath: m_text
-      value: Switch Walk/Run
+      value: Switch Walk / Run
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5878,7 +5878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798947985525526231, guid: 21e78ea8173452142a495bef5c66c372, type: 3}
       propertyPath: m_text
-      value: Pick Up/Interact
+      value: Pick Up / Interact
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8263384804138383061, guid: 21e78ea8173452142a495bef5c66c372, type: 3}

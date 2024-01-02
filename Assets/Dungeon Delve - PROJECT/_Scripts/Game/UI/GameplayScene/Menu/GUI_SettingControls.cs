@@ -14,7 +14,7 @@ public class GUI_SettingControls : MonoBehaviour, IGUI
     private void OnEnable()
     {
         GUI_Manager.Add(this);
-        cameraSensitivity.InitValue(100, 500, PlayerPrefs.GetFloat(PP_SensitivityIndex, 150));
+        cameraSensitivity.InitValue(100, 500, PlayerPrefs.GetInt(PP_SensitivityIndex, 222));
     }
     private void OnDisable() => GUI_Manager.Remove(this);
     
@@ -33,7 +33,7 @@ public class GUI_SettingControls : MonoBehaviour, IGUI
     {
         if (!_cinemachineFreeLook) return;
         
-        PlayerPrefs.SetFloat(PP_SensitivityIndex, _value);
+        PlayerPrefs.SetInt(PP_SensitivityIndex, (int)_value);
         _cinemachineFreeLook.m_XAxis.m_MaxSpeed = _value;
     }
     

@@ -43,7 +43,9 @@ public class UserData
             { ItemNameCode.EXPSmall, 5},
             { ItemNameCode.EXPMedium, 5},
             { ItemNameCode.JASliver1, 5},
-            { ItemNameCode.JASliver2, 5}
+            { ItemNameCode.JASliver2, 5},
+            { ItemNameCode.UPSpearhead1, 5},
+            { ItemNameCode.UPSpearhead2, 5}
         };
     }
 

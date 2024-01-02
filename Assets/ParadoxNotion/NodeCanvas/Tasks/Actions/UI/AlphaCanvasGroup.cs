@@ -1,3 +1,4 @@
+using System;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
@@ -31,6 +32,8 @@ namespace NodeCanvas.Tasks.Actions
             }
 
             currentValue = Get();
+            if (Math.Abs(currentValue - setTo.value) <= .1) 
+                EndAction();
         }
 
         protected override void OnUpdate()

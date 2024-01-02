@@ -141,8 +141,8 @@ MonoBehaviour:
   DashStaminaCost: 25
   JumpHeight: 1
   JumpCD: 0.38
-  ElementalSkillCD: 3
-  ElementalBurstCD: 3
+  ElementalSkillCD: 10
+  ElementalBurstCD: 15
   WeaponName: Twilight
   WeaponInfo: Increases Elemental Skill and Elemental Burst DMG by 36%
   WeaponLevel: 1

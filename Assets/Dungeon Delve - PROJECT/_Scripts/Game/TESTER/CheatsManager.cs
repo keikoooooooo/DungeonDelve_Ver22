@@ -29,7 +29,7 @@ public class CheatsManager : MonoBehaviour, IGUI
     private readonly Vector3[] _waypoints = {
         Vector3.zero, 
         new (2.22f, 11f, 55f),
-        new (-50f, 10.9f, 94.5f),
+        new (24.37f, 12.8f, 165f),
         new (14.3f, -30.3f, 176.5f),
     };
     //

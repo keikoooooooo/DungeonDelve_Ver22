@@ -12,8 +12,8 @@ public class EnemySpawner : MonoBehaviour
     [Space] 
     [SerializeField] private List<EnemyController> enemiesPrefab;
     
-    [SerializeField, Tooltip("Danh sách các Waypoint trong khu vực này")]
-    private Transform waypoints;
+    [SerializeField, Tooltip("Khu vực sinh sản Enemy")]
+    private Transform areaSpawn;
     
     [SerializeField, Tooltip("Số lượng tối đa khu vực này Spawn được")] 
     private int maxCountSpawn;
@@ -27,12 +27,14 @@ public class EnemySpawner : MonoBehaviour
     [Space][Tooltip("Khi tiêu diệt toàn bộ Enemy trong khu vực, sẽ gọi Event.")] 
     public UnityEvent AreaCleanedEvent;
     
-    [SerializeField, Space] private bool drawGizmos;
+    [SerializeField, Space] private bool drawAreaSpawnGizmos;
 
 
     private readonly List<ObjectPooler<EnemyController>> _poolEnemies = new();
     private YieldInstruction _yieldInstruction;
     private Coroutine _spawnCheckCoroutine;
+    private Coroutine _checkAreaCoroutine;
+    private readonly YieldInstruction _yieldCheck = new WaitForSeconds(1.2f);
     private DateTime _lastTime;
     private string PP_SaveCurrentEnemy => behaviourID.GetID + "Idx";
     private int _currentEnemy;
@@ -89,8 +91,8 @@ public class EnemySpawner : MonoBehaviour
     }
     private void Spawn()
     {
-        var _waypointRand = Random.Range(0, waypoints.childCount);
-        var _posRand = GetRandomPoint(waypoints.GetChild(_waypointRand).position);
+        var _waypointRand = Random.Range(0, areaSpawn.childCount);
+        var _posRand = GetRandomPoint(areaSpawn.GetChild(_waypointRand).position);
         
         var _enemyPrefabIdx = Random.Range(0, _poolEnemies.Count);
         var _poolEnemy = _poolEnemies[_enemyPrefabIdx];
@@ -111,8 +113,13 @@ public class EnemySpawner : MonoBehaviour
     }
     private void CheckReward()
     {
-        if (_currentEnemy > 0)
-            return; 
+        if (_checkAreaCoroutine != null) StopCoroutine(_checkAreaCoroutine);
+        _checkAreaCoroutine = StartCoroutine(CheckCoroutine());
+    }
+    private IEnumerator CheckCoroutine()
+    {
+        yield return _yieldCheck;
+        if (_currentEnemy > 0) yield break; 
         AreaCleanedEvent?.Invoke();
     }
 
@@ -122,13 +129,13 @@ public class EnemySpawner : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        if(!waypoints || waypoints.childCount == 0 || !drawGizmos) return;
+        if(!areaSpawn || areaSpawn.childCount == 0 || !drawAreaSpawnGizmos) return;
         
-        for (var i = 0; i < waypoints.transform.childCount; i++)
+        for (var i = 0; i < areaSpawn.transform.childCount; i++)
         {
-            var _currentPoint = waypoints.transform.GetChild(i).position + new Vector3(0, .5f, 0);
-            var _nextChildIndex = (i + 1) % waypoints.transform.childCount;
-            var _nextPoint = waypoints.transform.GetChild(_nextChildIndex).position + new Vector3(0, .5f, 0);
+            var _currentPoint = areaSpawn.transform.GetChild(i).position + new Vector3(0, .5f, 0);
+            var _nextChildIndex = (i + 1) % areaSpawn.transform.childCount;
+            var _nextPoint = areaSpawn.transform.GetChild(_nextChildIndex).position + new Vector3(0, .5f, 0);
             Gizmos.color = Color.yellow;
             Gizmos.DrawSphere(_currentPoint, .35f);
             Gizmos.color = new Color(1, .5f, .5f, 1f);

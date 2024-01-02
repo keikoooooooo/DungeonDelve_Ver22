@@ -129,8 +129,8 @@ MonoBehaviour:
   DashStaminaCost: 25
   JumpHeight: 1
   JumpCD: 0.37
-  ElementalSkillCD: 20
-  ElementalBurstCD: 17
+  ElementalSkillCD: 3
+  ElementalBurstCD: 3
   WeaponName: Fillet Blade
   WeaponInfo: Normal attack DMG is increased by 33% DEF.
   WeaponLevel: 1

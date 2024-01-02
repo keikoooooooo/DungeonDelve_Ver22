@@ -12,7 +12,7 @@ public class ItemReward
     [SerializeField, Tooltip("Loại phần thưởng, được phân loại bởi Item Namecode")]
     private ItemNameCode code;
 
-    [SerializeField, ReadOnly] 
+    [SerializeField, ReadOnly, HideInInspector] 
     private ItemRarity rarity;
     
     [SerializeField, Tooltip("Giá trị phần thưởng")]

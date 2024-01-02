@@ -9,14 +9,11 @@ public class PlayerGroundedState : PlayerBaseState
         SetChildState(_factory.Idle());
     }
 
-    public override void EnterState()
-    {
-        _machine.JumpVelocity = -9.81f;
-    }
     protected override void UpdateState()
     {
-        HandleRotation();
+        _machine.JumpVelocity = _machine.IsGrounded ? -9.81f : -30f;
         
+        HandleRotation();
         CheckSwitchState();
     }
     public override void CheckSwitchState()
@@ -26,6 +23,7 @@ public class PlayerGroundedState : PlayerBaseState
             SwitchState(_factory.Jump());
         }
     }
+    
     private void HandleRotation()
     {
         if (_machine.InputMovement == Vector3.zero || !_machine.CanRotation)
