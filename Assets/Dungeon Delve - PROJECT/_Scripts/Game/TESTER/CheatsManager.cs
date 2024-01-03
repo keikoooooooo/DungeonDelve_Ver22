@@ -39,6 +39,7 @@ public class CheatsManager : MonoBehaviour, IGUI
     private Coroutine _itemHandleCoroutine;
     private Coroutine _characterHandleCoroutine;
     private Coroutine _positionHandleCoroutine;
+    private Coroutine _playerPrefsCoroutine;
     //
     [HideInInspector] private bool _isOpen;
     private readonly int _maxLimit = 50;
@@ -181,6 +182,8 @@ public class CheatsManager : MonoBehaviour, IGUI
         await Task.Delay(100);
         SpawnText("3. Transform Position");
         await Task.Delay(100);
+        SpawnText("4. PlayerPrefs");
+        await Task.Delay(100);
         scrollView.Scroll();
     }
     
@@ -208,6 +211,10 @@ public class CheatsManager : MonoBehaviour, IGUI
             case 3:
                 _positionHandleCoroutine ??= StartCoroutine(PositionHandleCoroutine());
                 return;
+            
+            case 4:
+                _playerPrefsCoroutine ??= StartCoroutine(PlayerPrefsCoroutine());
+                return;
             default:
                 SpawnText($"Option not found. Error option: <color=#FF3434>{inputField.text}</color>");
                 _checkType = false;
@@ -223,13 +230,15 @@ public class CheatsManager : MonoBehaviour, IGUI
         {
             if (_enter && inputField.text.Length != 0)
             {
+                if (CheckPattern(inputField.text, _pattern_RETURN))
+                {
+                    SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
+                    ShowTypeStart();
+                    ResetAllTypeCoroutine();
+                    yield break;
+                }
                 switch (inputField.text)
                 {
-                    case "/b" or "/B":
-                        SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
-                        ShowTypeStart();
-                        ResetAllTypeCoroutine();
-                        yield break;
                     case "a" or "A":
                         GETPlayerConfig();
                         break;
@@ -637,6 +646,51 @@ public class CheatsManager : MonoBehaviour, IGUI
             yield return _waitNull;
         }
     }
+    private IEnumerator PlayerPrefsCoroutine()
+    {
+        yield return _wait_100ms;
+        SpawnText($"<color=#F377FF>Delete All PlayerPrefs Key.</color>");
+        yield return _wait_100ms;
+        SpawnText($"The application will restart when you delete all keys in PlayerPrefs. Press <color=#0BFF7D>Y</color> to continue and <color=#FF3434>N</color> to exit.");
+        yield return _wait_100ms;
+        scrollView.Scroll();
+        
+        while (true)
+        {
+            if (_enter && inputField.text.Length != 0)
+            {
+                if (CheckPattern(inputField.text, _pattern_RETURN))
+                {
+                    SpawnText($"{inputField.text} <color=#0BFF7D>Return</color>");
+                    ShowTypeStart();
+                    ResetAllTypeCoroutine();
+                    yield break;
+                }
+
+                switch (inputField.text)
+                {
+                    case "y" or "Y":
+#if !UNITY_EDITOR
+                        PlayerPrefs.DeleteAll();
+                        Application.Quit();
+                        yield break;
+#endif
+                        break;
+                    
+                    case "n" or "N":
+                        SpawnText($"<color=#0BFF7D>Return</color>");
+                        ShowTypeStart();
+                        ResetAllTypeCoroutine();
+                        break;
+                    
+                    default:
+                        SpawnText($"Error option: <color=#FF3434>{inputField.text}</color>"); 
+                        break;
+                }
+            }
+            yield return _waitNull;
+        }
+    }
     private async void GETPlayerConfig()
     {
         SpawnText($"<color=#2F6CFF>===== PLAYER STATS =====</color>");
@@ -913,6 +967,8 @@ public class CheatsManager : MonoBehaviour, IGUI
         _characterHandleCoroutine = null;
         if (_positionHandleCoroutine != null) StopCoroutine(_positionHandleCoroutine);
         _positionHandleCoroutine = null;
+        if (_playerPrefsCoroutine != null) StopCoroutine(_playerPrefsCoroutine);
+        _playerPrefsCoroutine = null;
     }
 
  

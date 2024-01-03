@@ -172,7 +172,7 @@ public class GUI_WeaponUpgrade : MonoBehaviour, IGUI
         _playerConfig.SetCRITDMG(currentCRITDMG);
         
         GUI_Manager.UpdateGUIData();
-        if(PlayFabHandleUserData.Instance) PlayFabHandleUserData.Instance.SaveData();
+        if(PlayFabHandleUserData.Instance) PlayFabHandleUserData.Instance.UpdateAllData();
     }
 
 

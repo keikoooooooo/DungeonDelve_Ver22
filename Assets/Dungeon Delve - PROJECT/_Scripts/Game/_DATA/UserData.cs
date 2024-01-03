@@ -11,29 +11,21 @@ public class UserData
     private string _username;
     [SerializeField, JsonProperty]
     private int _coin;
+    //
+    [JsonIgnore] public string Username => _username;
+    [JsonIgnore] public int Coin => _coin;
 
-    public string username
-    {
-        get => _username;
-        private set => _username = value;
-    }
-    public int coin
-    {
-        get => _coin;
-        private set => _coin = value;
-    }
     
     [Tooltip("Dữ liệu item mà người dùng sở hữu"), SerializeField, JsonProperty] 
     private Dictionary<ItemNameCode, int> _itemInventory;
-    
     public event Action<int> OnCoinChangedEvent;
     
     
     public UserData() { }
     public UserData(string _username, int _coin)
     {
-        username = _username;
-        coin = _coin;
+        this._username = _username;
+        this._coin = _coin;
         _itemInventory = new Dictionary<ItemNameCode, int>()
         {
             { ItemNameCode.POHealth , 5},
@@ -44,14 +36,16 @@ public class UserData
             { ItemNameCode.EXPMedium, 5},
             { ItemNameCode.JASliver1, 5},
             { ItemNameCode.JASliver2, 5},
+            { ItemNameCode.JASliver3, 5},
             { ItemNameCode.UPSpearhead1, 5},
-            { ItemNameCode.UPSpearhead2, 5}
+            { ItemNameCode.UPSpearhead2, 5},
+            { ItemNameCode.UPSpearhead3, 5}
         };
     }
-
     
     /// <summary> Danh sách các Item mà người dùng đang có </summary>
     public Dictionary<ItemNameCode, int> GetItemInInventory() => _itemInventory;
+    
     
     /// <summary>
     /// Check trong inventory của User có vật phẩm theo nameCode không, nếu có trả về số lượng của vật phẩm
@@ -60,7 +54,6 @@ public class UserData
     /// <param name="_value"> Giá trị trả về </param>
     /// <returns></returns>
     public int HasItemValue(ItemNameCode _itemCode) => _itemInventory.TryGetValue(_itemCode, out var value) ? value : 0;
-    
     
     /// <summary>
     /// Tăng/Giảm Coin, nếu giá trị truyền vào là âm(-) sẽ DecreaseCoin
@@ -71,7 +64,6 @@ public class UserData
         _coin = Mathf.Clamp(_coin + _amount, 0, _coin + _amount);
         SendEventCoinChaged();
     }
-    
 
     /// <summary>
     /// Tăng/Giảm value của Item, nếu giá trị truyền vào là âm(-) sẽ Decrease value của Item
@@ -89,7 +81,6 @@ public class UserData
         if (_itemInventory[_itemCode] > 0) return;
         _itemInventory.Remove(_itemCode);
     }
-    
     
     /// <summary>
     /// Gọi Event để gửi giá trị Coin đi

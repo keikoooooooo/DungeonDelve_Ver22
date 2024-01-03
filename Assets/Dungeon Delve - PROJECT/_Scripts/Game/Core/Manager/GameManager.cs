@@ -1,4 +1,6 @@
+using System;
 using FMODUnity;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -57,4 +59,14 @@ public class GameManager : Singleton<GameManager>
         fmodListener.SetAttenuationObject(Player.gameObject);
     }
     private void OnApplicationQuit() => EnemyTracker.Clear();
+
+    
+    
+    [ContextMenu("Delete All PlayerPrefs Key")]
+    private void DeleteAllPlayerPrefsKey()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("Delete PlayerPrefs Key Success !");
+    }
+    
 }

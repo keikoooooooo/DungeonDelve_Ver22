@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using DungeonDelve.Project;
 using TMPro;
@@ -32,7 +33,7 @@ public class MenuController : Singleton<MenuController>
     {
         _isOpenMenu = false;
         CursorHandle.Locked();
-        CheckGuidance();
+        StartCoroutine(CheckGuidance());
     }
     private void OnDisable()
     {
@@ -69,27 +70,17 @@ public class MenuController : Singleton<MenuController>
         _isEventRegistered = false;
     }
     
-    #region GUIDANCE PANEL
-    private void CheckGuidance()
+    private IEnumerator CheckGuidance()
     {
-        if (PlayerPrefs.HasKey(PP_CanGuidance))
-            return;
-        PlayerPrefs.SetString(PP_CanGuidance, "No");
+        yield return null;
+        if (PlayerPrefs.HasKey(PP_CanGuidance)) yield break;
         
         var _guidence = Instantiate(guidancePanel, transform);
         _guidence.OpenGuidancePanel();
         HandleMenuOpen();
+        PlayerPrefs.SetString(PP_CanGuidance, "No");
     }
-#if UNITY_EDITOR
-    [ContextMenu("Reset Guidance Panel")]
-    private void ResetGuidancePanel()
-    {
-        if (!PlayerPrefs.HasKey(PP_CanGuidance)) return;
-        PlayerPrefs.DeleteKey(PP_CanGuidance);
-        Debug.Log("Delete Key Success.");
-    }
-#endif
-    #endregion
+
     
     
     private void OpenMenu(InputAction.CallbackContext _context)

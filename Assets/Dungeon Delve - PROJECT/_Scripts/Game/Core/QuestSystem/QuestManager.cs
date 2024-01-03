@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,7 +17,6 @@ public class QuestManager : Singleton<QuestManager>
     private static readonly string _folderSave = "q_save";
     
     
-    private void OnApplicationQuit() => PlayerPrefs.SetString(behaviourID.GetID, DateTime.Now.ToString());
     private void Start()
     {
         var _quests = Resources.LoadAll<QuestSetup>("Quest Custom");
@@ -30,14 +30,17 @@ public class QuestManager : Singleton<QuestManager>
         var _tasks = QuestLists.Select(x => x.GetTask());
         var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
         if (_lastDay < DateTime.Today)
-            LoadNewQuest(_tasks); 
-        else
-            LoadOldQuest(_tasks);
-        
-        foreach (var questSetup in QuestLists)
         {
-            questSetup.GetRewards().Sort((x1, x2) => x1.GetRarity().CompareTo(x2.GetRarity()));
+            LoadNewQuest(_tasks);
+            StartCoroutine(NoticeCoroutine());
+            PlayerPrefs.SetString(behaviourID.GetID, DateTime.Now.ToString());
         }
+        else
+        {
+            LoadOldQuest(_tasks);
+        }
+        
+        QuestLists.ForEach(x => SordItemReward(x.GetRewards()));
     }
     private static void LoadNewQuest(IEnumerable<Task> _tasks)
     {
@@ -48,7 +51,6 @@ public class QuestManager : Singleton<QuestManager>
             _task.SetTaskLocked(false);
             FileHandle.Save(_task, _folderSave, _task.GetID);
         }
-        NoticeManager.Instance.OpenNewQuestNoticePanelT4();
     }
     private static void LoadOldQuest(IEnumerable<Task> _tasks)
     {
@@ -63,7 +65,11 @@ public class QuestManager : Singleton<QuestManager>
             currentQuest++;
         }
     }
-    
+    private static IEnumerator NoticeCoroutine()
+    {
+        yield return new WaitForSeconds(.5f);
+        NoticeManager.Instance.OpenNewQuestNoticePanelT4();
+    }
     
     public static void OnStartedQuest(QuestSetup _quest)
     {
@@ -96,24 +102,9 @@ public class QuestManager : Singleton<QuestManager>
     }
     private static void SordItemReward(List<ItemReward> _rewards)
     {
-        //_rewards.Sort((x1 , x2 ) => x1.GetRarity().CompareTo(x2.GetRarity()));
-        _rewards.Sort((x1 , x2 ) => x1.GetRarity().CompareTo(x2.GetRarity()));
-        foreach (var itemReward in _rewards)
-        {
-            Debug.Log(itemReward.GetRarity());
-        }
+        _rewards.Sort((x1, x2) => x1.GetRarity().CompareTo(x2.GetRarity()));
     }
     
 
-#if UNITY_EDITOR
-    [ContextMenu("Reset Quest Key")]
-    private void OnResetQuestKey()
-    {
-        if (!PlayerPrefs.HasKey(behaviourID.GetID)) return;
-        PlayerPrefs.DeleteKey(behaviourID.GetID);
-        Debug.Log("Delete PlayerPrefs Key Success !. \nKey: " + behaviourID.GetID);
-    }
-#endif
-    
     
 }

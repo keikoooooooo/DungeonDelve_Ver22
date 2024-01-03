@@ -8,46 +8,64 @@ public class CooldownTime : MonoBehaviour
     [SerializeField] private Image fill;
     [SerializeField] private TextMeshProUGUI valueText;
 
+    /// <summary> Kết thúc việc đếm ngược thời gian chưa ? </summary>
+    public bool IsEndCD { get; private set; } = true;
+    
+    public float DurationTotalTemp { get; private set; }
+    public float LastDurationTemp { get; private set; }
+    //
     private bool _valueTextNotNull;
-    private float _durationTemp;
-    private float _lastDuration;
     private Coroutine _cooldownCoroutine;
 
     private void Start()
     {
         _valueTextNotNull = valueText != null;
         ActiveFill(false);
+        IsEndCD = true;
     }
-    
-    public void OnCooldownTime(float duration)
+
+    public void SetDuration(float _durationTotal, float _lastDuration)
     {
-        _durationTemp = duration;
-        _lastDuration = duration;
+        DurationTotalTemp = _durationTotal;
+        LastDurationTemp = _lastDuration;
+    }
+    public void StartCooldownTime(float duration)
+    {
+        SetDuration(duration, duration);
         if(_cooldownCoroutine != null) StopCoroutine(_cooldownCoroutine);
         _cooldownCoroutine = StartCoroutine(CooldownCoroutine());
     }
     public void ContinueCooldownTime()
     {
-        if (_lastDuration == 0)
+        if (LastDurationTemp == 0)
             return;
         if(_cooldownCoroutine != null) StopCoroutine(_cooldownCoroutine);
         _cooldownCoroutine = StartCoroutine(CooldownCoroutine());
     }
+    public void StopCooldownTime()
+    {
+        IsEndCD = true;
+        LastDurationTemp = 0;
+        ActiveFill(false);
+        if(_cooldownCoroutine != null) StopCoroutine(_cooldownCoroutine);
+    }
+    
     private IEnumerator CooldownCoroutine()
     {
         ActiveFill(true);
-        while (_lastDuration >= 0)
+        IsEndCD = false;
+        while (LastDurationTemp >= 0)
         {
-            var _currentTime = _lastDuration / _durationTemp;
+            var _currentTime = LastDurationTemp / DurationTotalTemp;
             SetFill(_currentTime);
             SetValueText();
-            _lastDuration -= Time.deltaTime;
+            LastDurationTemp -= Time.deltaTime;
             yield return null;
         }
-        _lastDuration = 0;
+        IsEndCD = true;
+        LastDurationTemp = 0;
         ActiveFill(false);
     }
-    
     private void ActiveFill(bool _canActive)
     {
         if (fill) 
@@ -61,7 +79,7 @@ public class CooldownTime : MonoBehaviour
     }
     private void SetValueText()
     {
-        if (_valueTextNotNull) valueText.text = _lastDuration.ToString("F1");
+        if (_valueTextNotNull) valueText.text = LastDurationTemp.ToString("F1");
     }
     
 }

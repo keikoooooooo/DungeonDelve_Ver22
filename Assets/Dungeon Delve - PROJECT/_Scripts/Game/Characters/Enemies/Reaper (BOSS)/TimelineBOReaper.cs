@@ -12,7 +12,7 @@ public class TimelineBOReaper : MonoBehaviour
     [Space] 
     [SerializeField] private InteractiveUI interactiveUI;
     [SerializeField] private EnemyController reaperBOSS;
-    [SerializeField] private Chest chest;
+    [SerializeField] private Chest reaperChestReward;
     [SerializeField] private PlayableDirector playableDirector;
 
     [Space]
@@ -57,17 +57,6 @@ public class TimelineBOReaper : MonoBehaviour
     }
     
     
-#if UNITY_EDITOR
-    [ContextMenu("Reset Timeline Key")]
-    private void OnResetQuestKey()
-    {
-        if (!PlayerPrefs.HasKey(behaviourID.GetID)) return;
-        PlayerPrefs.DeleteKey(behaviourID.GetID);
-        Debug.Log("Delete PlayerPrefs Key Success !. \nKey: " + behaviourID.GetID);
-    }
-#endif
-
-    
     private void HandlePlayerDie(float _timeRevival)
     {
         if (_timeRevival != 0) return;
@@ -99,7 +88,6 @@ public class TimelineBOReaper : MonoBehaviour
         _player.FreeLookCamera.m_XAxis.Value = angle;
         _player.FreeLookCamera.m_Lens.FieldOfView = 35f;
         
-        
         yield return new WaitForSeconds(.15f);
         _player.FreeLookCamera.enabled = false;
         
@@ -112,7 +100,7 @@ public class TimelineBOReaper : MonoBehaviour
         playableDirector.Play();
         
         yield return new WaitForSeconds(2f);
-        chest.CreateChest();
+        reaperChestReward.CreateChest();
     }
     
     
@@ -138,12 +126,13 @@ public class TimelineBOReaper : MonoBehaviour
     {
         _canTrigger = false;
         _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
-        if (_lastDay >= DateTime.Today)
+        if (_lastDay >= DateTime.Today || reaperBOSS.gameObject.activeSelf)
         {
             if (_timeCoroutine != null) StopCoroutine(_timeCoroutine);
             _timeCoroutine = StartCoroutine(TimeCoroutine());
            return;
         }
+        
         _canTrigger = true;
         interactiveUI.SetNoticeText("[F] Start.");
     }
@@ -206,6 +195,7 @@ public class TimelineBOReaper : MonoBehaviour
         }
     }
 
+    // Animation Event
     public void SetCamFOV()
     {
         _cameraFOV.SetCurrentFOV(_player.FreeLookCamera.m_Lens.FieldOfView);
@@ -227,6 +217,7 @@ public class TimelineBOReaper : MonoBehaviour
         _player.input.PlayerInput.Disable();
         _playerHUD.CloseHUD();
     }
+  
     
     private void MuteGroupTrack(int _trackIndex, bool _isMute)
     {

@@ -3,29 +3,29 @@ using UnityEngine.UI;
 
 public class LoadSceneButton : MonoBehaviour
 {
-    [SerializeField] private Button _button;
-    [Tooltip("Tên Scene cần Load")]
-    public string SceneName;
+    [field: SerializeField] public Button btt { get; private set; }
+    [SerializeField, Tooltip("Tên Scene cần Load")] private string SceneName;
 
     private bool _nullBtt;
+    public string SetSceneName(string _sceneNameSet) => SceneName = _sceneNameSet;
     private void OnEnable()
     {
-        _nullBtt = _button != null;
+        _nullBtt = btt != null;
         
         if(!_nullBtt) return;
-        _button.onClick.AddListener(LoadScene);
+        btt.onClick.AddListener(LoadScene);
     }
     private void OnDisable()
     {
         if(!_nullBtt) return;
-        _button.onClick.RemoveListener(LoadScene);
+        btt.onClick.RemoveListener(LoadScene);
     }
-
-    public void LoadScene()
+    private void LoadScene()
     {
-        if(!LoadSceneManager.Instance) return;
-        
-        LoadSceneManager.Instance.LoadScene(SceneName);
+        if (LoadSceneManager.Instance)
+        {
+            LoadSceneManager.Instance.LoadScene(SceneName);
+        }
     }
     
 }

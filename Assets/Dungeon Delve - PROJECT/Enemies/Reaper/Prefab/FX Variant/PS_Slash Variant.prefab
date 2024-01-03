@@ -384,5 +384,5 @@ MonoBehaviour:
   AllowNonRigidbodyDoppler: 0
   Params: []
   OverrideAttenuation: 1
-  OverrideMinDistance: 2
-  OverrideMaxDistance: 10
+  OverrideMinDistance: 4
+  OverrideMaxDistance: 13

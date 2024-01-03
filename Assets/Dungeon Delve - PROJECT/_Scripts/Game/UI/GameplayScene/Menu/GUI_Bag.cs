@@ -8,13 +8,20 @@ using UnityEngine.InputSystem;
 
 public class GUI_Bag : MonoBehaviour, IGUI
 {
-    [SerializeField] private Slot[] slots;
     [SerializeField] private DropdownBar sortDropdown;
-    public static event Action<Slot[]> OnItemChangedSlotEvent;
     
     [Space]
-    [SerializeField] private UI_Item itemPrefab;
-    [SerializeField] private Transform itemContent;
+    [SerializeField, BoxGroup("ITEM")] private UI_Item itemPrefab;
+    [SerializeField, BoxGroup("ITEM")] private Transform itemContent;
+
+    [Space] 
+    [SerializeField, BoxGroup("SLOT")] private int slotCount;
+    [SerializeField, BoxGroup("SLOT")] private float itemDurationInSlot = 1f;
+    [SerializeField, BoxGroup("SLOT")] private Slot slotPrefab;
+    [SerializeField, BoxGroup("SLOT")] private Transform slotContent;
+    public static Slot[] Slots;
+    public static event Action<Slot[]> OnInitSlotEvent; 
+    public static event Action<Slot[]> OnItemChangedSlotEvent;
     
     [BoxGroup("APPLY BUFF"), SerializeField] private SO_HealthBuff healthBuff;
     [BoxGroup("APPLY BUFF"), SerializeField] private SO_StaminaBuff staminaBuff;
@@ -31,6 +38,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
     private readonly string PP_SortOption = "SortOptionIndex";
     private string _accountID;
     private PlayerController _player;
+    private PlayerHUD _playerHUD;
     private ParticleSystem _effectBU, _effectBULoop;
     private Coroutine _useBuffCoroutine;
     
@@ -47,45 +55,44 @@ public class GUI_Bag : MonoBehaviour, IGUI
     private void RegisterEvent()
     {
         GUI_Manager.Add(this);
-        GUI_Inputs.InputAction.UI.Item1.performed += UseItem1;
-        GUI_Inputs.InputAction.UI.Item2.performed += UseItem2;
-        GUI_Inputs.InputAction.UI.Item3.performed += UseItem3;
-        GUI_Inputs.InputAction.UI.Item4.performed += UseItem4;
+        GUI_Inputs.InputAction.UI.Item1.performed += _ => HandleUseItem(0);
+        GUI_Inputs.InputAction.UI.Item2.performed += _ => HandleUseItem(1);
+        GUI_Inputs.InputAction.UI.Item3.performed += _ => HandleUseItem(2);
+        GUI_Inputs.InputAction.UI.Item4.performed += _ => HandleUseItem(3);
     }
     private void UnRegisterEvent()
     {
         GUI_Manager.Remove(this);
-        GUI_Inputs.InputAction.UI.Item1.performed -= UseItem1;
-        GUI_Inputs.InputAction.UI.Item2.performed -= UseItem2;
-        GUI_Inputs.InputAction.UI.Item3.performed -= UseItem3;
-        GUI_Inputs.InputAction.UI.Item4.performed -= UseItem4;
+        GUI_Inputs.InputAction.UI.Item1.performed -= _ => HandleUseItem(0);
+        GUI_Inputs.InputAction.UI.Item2.performed -= _ => HandleUseItem(1);
+        GUI_Inputs.InputAction.UI.Item3.performed -= _ => HandleUseItem(2);
+        GUI_Inputs.InputAction.UI.Item4.performed -= _ => HandleUseItem(3);
         
-        foreach (var slot in slots)
+        foreach (var slot in Slots)
         {
             slot.OnSelectSlotEvent.RemoveListener(OnDropItem);
         }
     }
-
-    public void UseItem1(InputAction.CallbackContext _callback) => HandleUseItem(slots[0]);
-    public void UseItem2(InputAction.CallbackContext _callback) => HandleUseItem(slots[1]);
-    public void UseItem3(InputAction.CallbackContext _callback) => HandleUseItem(slots[2]);
-    public void UseItem4(InputAction.CallbackContext _callback) => HandleUseItem(slots[3]);
-    private void HandleUseItem(Slot _slot)
+    private void HandleUseItem(int _slotIndex)
     {
-        
-        var _item = _slot.GetItem;
-        if(_item == null)
-        {
-            Debug.Log("Non user item");
+        if (Time.timeScale == 0)
             return;
-        }
-
+        
+        var _slot = _playerHUD.slots[_slotIndex];
+        var _item = _slot.Item;
+        if(_item == null || !_slot.cooldownTime.IsEndCD) 
+            return;
+        
         var _itemNameCode = _item.GetItemCustom.code;
         _userData.IncreaseItemValue(_itemNameCode, -1);
         if (_userData.HasItemValue(_itemNameCode) <= 0)
         {
-            PlayerPrefs.SetString(_slot.KeyPlayerPrefs, string.Empty);
-            _slot.SetSlot(null);
+            Slots[_slotIndex].SetSlot(null);
+            PlayerPrefs.SetString(Slots[_slotIndex].KeyPlayerPrefs, string.Empty);
+        }
+        else
+        {
+            _slot.cooldownTime.StartCooldownTime(itemDurationInSlot);
         }
         
         GUI_Manager.UpdateGUIData();
@@ -140,23 +147,28 @@ public class GUI_Bag : MonoBehaviour, IGUI
     public void GetRef(GameManager _gameManager)
     {
         _player = _gameManager.Player;
+        _playerHUD = _gameManager.PlayerHUD;
         _userData = _gameManager.UserData;
         _gameItemData = _gameManager.GameItemData;
         _poolItem = new ObjectPooler<UI_Item>(itemPrefab, itemContent, _gameItemData.GameItemDatas.Count);
         _accountID = PlayFabController.Instance ? PlayFabController.Instance.userID : "";
-
+        
         InitNewSlot();
         InitVFXBuff();
         UpdateData();
     }
     private void InitNewSlot()
     {
-        for (var i = 0; i < slots.Length; i++)
+        Slots = new Slot[slotCount];
+        for (var i = 0; i < slotCount; i++)
         {
-            slots[i].SetKeyText($"{i + 1}");
-            slots[i].SetKeyPlayerPrefs($"{_accountID}:Slot_{i + 1}");
-            slots[i].OnSelectSlotEvent.AddListener(OnDropItem);
+            var slot = Instantiate(slotPrefab, slotContent);
+            slot.SetKeyText($"{i + 1}");
+            slot.SetKeyPlayerPrefs($"{_accountID}:Slot_{i + 1}");
+            slot.OnSelectSlotEvent.AddListener(OnDropItem);
+            Slots[i] = slot;
         }
+        OnInitSlotEvent?.Invoke(Slots);
     }
     private void InitVFXBuff()
     {
@@ -248,7 +260,7 @@ public class GUI_Bag : MonoBehaviour, IGUI
         
         return _guiItems;
     }
-    private void SortItem(IDictionary<ItemCustom, int> _data)
+    private static void SortItem(IDictionary<ItemCustom, int> _data)
     {
         foreach (var guiItem in _poolItem.List.Where(item => item.gameObject.activeSelf))
         {
@@ -259,9 +271,9 @@ public class GUI_Bag : MonoBehaviour, IGUI
             _data.Remove(keyValuePair.Key);
         }
     }
-    private void LoadOldSlot()
+    private static void LoadOldSlot()
     {
-        foreach (var _slot in slots)
+        foreach (var _slot in Slots)
         {
             var _data = JsonUtility.FromJson<ItemCustom>(PlayerPrefs.GetString(_slot.KeyPlayerPrefs, null));
             if(_data == null)
@@ -271,9 +283,9 @@ public class GUI_Bag : MonoBehaviour, IGUI
             }
             _slot.SetSlot(GetGUIItem(_data.code));
         }
-        OnItemChangedSlotEvent?.Invoke(slots);
+        OnItemChangedSlotEvent?.Invoke(Slots);
     }
-    public static UI_Item GetGUIItem(ItemNameCode _itemNameCode)
+    private static UI_Item GetGUIItem(ItemNameCode _itemNameCode)
     {
         UI_Item uiItem = null;
         foreach (var guiItem in _poolItem.List.Where(item => item.gameObject.activeSelf))
@@ -286,34 +298,41 @@ public class GUI_Bag : MonoBehaviour, IGUI
         return uiItem;
     } 
     
-    
     public void OnDropItem(Slot _slot, UI_Item _item)
     {
-        var _slotEmptyIdx = -1;
-        var _sameSlotItem = -1;
+        var _indexSlot = -1;
+        var _sameSlot = -1;
         
-        for (var i = 0; i < slots.Length; i++)
+        for (var i = 0; i < Slots.Length; i++)
         {
-            if (slots[i] == _slot)
+            if (Slots[i] == _slot)
             {
-                _slotEmptyIdx = i;
+                _indexSlot = i;
             }
-            if (slots[i].GetItem == _item)
+            if (Slots[i].Item == _item)
             {
-                _sameSlotItem = i;
+                _sameSlot = i;
             }
+        }
+        
+        var _durationTotal = 0f;
+        var _lastOldDuration = 0f;
+        if (_sameSlot != -1)
+        {
+            PlayerPrefs.SetString(Slots[_sameSlot].KeyPlayerPrefs, null);
+
+            var _cdTime = _playerHUD.slots[_sameSlot].cooldownTime;
+            _lastOldDuration = _cdTime.LastDurationTemp;
+            _durationTotal = _cdTime.DurationTotalTemp;
+            _cdTime.StopCooldownTime();
+            Slots[_sameSlot].SetSlot(null);
         }
 
-        if (_sameSlotItem != -1)
-        {
-            PlayerPrefs.SetString( slots[_sameSlotItem].KeyPlayerPrefs, null);
-            slots[_sameSlotItem].SetSlot(null);
-        }
+        _playerHUD.slots[_indexSlot].cooldownTime.SetDuration(_durationTotal, _lastOldDuration);
+        Slots[_indexSlot].SetSlot(_item);
+        PlayerPrefs.SetString(Slots[_indexSlot].KeyPlayerPrefs, _item != null ? JsonUtility.ToJson(_item.GetItemCustom) : string.Empty);
         
-        slots[_slotEmptyIdx].SetSlot(_item);
-        PlayerPrefs.SetString(slots[_slotEmptyIdx].KeyPlayerPrefs, _item != null ? JsonUtility.ToJson(_item.GetItemCustom) : string.Empty);
-        
-        OnItemChangedSlotEvent?.Invoke(slots);
+        OnItemChangedSlotEvent?.Invoke(Slots);
     }
     
 }

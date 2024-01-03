@@ -55,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
     
     private IEnumerator SpawnCoroutine()
     {
+        yield return new WaitForSeconds(2f);
         _currentEnemy = PlayerPrefs.GetInt(PP_SaveCurrentEnemy, maxCountSpawn);
         if (_currentEnemy > 0)
         {
@@ -145,14 +146,5 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-
-#if UNITY_EDITOR
-    [ContextMenu("Delete PlayerPrefs Key")]
-    private void DeletePlayerPrefsKey()
-    {
-        PlayerPrefs.DeleteKey(behaviourID.GetID);
-        PlayerPrefs.DeleteKey(PP_SaveCurrentEnemy);
-        Debug.Log("Delete Key Success !");
-    }
-#endif
+    
 }

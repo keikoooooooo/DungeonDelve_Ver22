@@ -72,7 +72,7 @@ public class NoticeManager : Singleton<NoticeManager>
         _titleTween = titleText.DOColor(new Color(1, 1, 1, 0), _tweenDuration);
         
         // Khi tiêu đề được tắt sẽ bắt đầu save dữ liệu mới vào dữ liệu của User
-        if(PlayFabHandleUserData.Instance) PlayFabHandleUserData.Instance.SaveData();
+        if(PlayFabHandleUserData.Instance) PlayFabHandleUserData.Instance.UpdateAllData();
     }
     #endregion
 

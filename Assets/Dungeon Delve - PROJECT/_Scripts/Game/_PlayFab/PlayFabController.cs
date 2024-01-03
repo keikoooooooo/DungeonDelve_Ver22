@@ -123,9 +123,7 @@ public class PlayFabController : Singleton<PlayFabController>
 
     
     
-    /// <summary>
-    /// Lưu tài khoản vào bộ nhớ đệm
-    /// </summary>
+    /// <summary> Lưu tài khoản vào bộ nhớ đệm </summary>
     private void SaveAccount()
     {
         PlayerPrefs.SetString(USERNAME_Key, username);
@@ -133,9 +131,7 @@ public class PlayFabController : Singleton<PlayFabController>
         PlayerPrefs.SetString(PW_Key, userPassword);
     }
     
-    /// <summary>
-    /// Tải tài khoản từ bộ nhớ đệm 
-    /// </summary>
+    /// <summary> Tải tài khoản từ bộ nhớ đệm </summary>
     private void LoadAccount()
     {
         if (!PlayerPrefs.HasKey(EMAIL_Key))
@@ -149,9 +145,7 @@ public class PlayFabController : Singleton<PlayFabController>
         userPassword = PlayerPrefs.GetString(PW_Key);
     }
     
-    /// <summary>
-    /// Xóa tài khoản đang lưu trong script
-    /// </summary>
+    /// <summary> Xóa tài khoản đang lưu trong script </summary>
     public void ClearAccountTemp()
     {
         userID = "";

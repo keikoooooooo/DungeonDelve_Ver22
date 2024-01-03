@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3bd24916304e4459e5edb4b4091049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 50985964}
+  <btt>k__BackingField: {fileID: 50985964}
   SceneName: DungeonScene
 --- !u!114 &50985963
 MonoBehaviour:
@@ -6336,7 +6336,7 @@ MonoBehaviour:
   accountBtt: {fileID: 1420499449}
   animator: {fileID: 1347155542}
   panelAnimatedLoading: {fileID: 143547778}
-  startGameButton: {fileID: 50985962}
+  startGameBtt: {fileID: 50985962}
   guiLogin: {fileID: 560234202}
   guiRegister: {fileID: 893655990}
   guiForgotPw: {fileID: 103304324}

@@ -1,4 +1,5 @@
 using FMODUnity;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,17 +9,18 @@ using UnityEngine.UI;
 public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
     public UnityEvent<Slot, UI_Item> OnSelectSlotEvent;
-    
+
+    [field: SerializeField] public CooldownTime cooldownTime { get; private set; }
     [SerializeField] private TextMeshProUGUI keyText;
     [SerializeField] private EventReference setSlotAudio;
     [SerializeField] private Image iconItem;
+    [field: SerializeField, ReadOnly] public string KeyPlayerPrefs { get; private set; }
 
     private int _clickCount;
     private float _lastClickTimer;
     private readonly float _doubleClickDelay = .3f;
     
-    public UI_Item GetItem { get; private set; }
-    public string KeyPlayerPrefs { get; private set; }
+    public UI_Item Item { get; private set; }
 
     
     public void OnDrop(PointerEventData eventData)
@@ -27,7 +29,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
             return;
 
         var _item = draggableItem.GetItem();
-        if(_item.GetItemCustom.type != ItemType.Consumable || _item == GetItem) 
+        if(_item.GetItemCustom.type != ItemType.Consumable || _item == Item) 
             return;
         
         AudioManager.PlayOneShot(setSlotAudio, transform.position);
@@ -59,10 +61,10 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler
     /// <param name="_newItem"> Item cần set </param>
     public void SetSlot(UI_Item _newItem)
     {
-        GetItem = _newItem;
-        if (GetItem != null)
+        Item = _newItem;
+        if (Item != null)
         {
-            iconItem.sprite = GetItem.GetItemCustom.sprite;
+            iconItem.sprite = Item.GetItemCustom.sprite;
             iconItem.enabled = true;
             return;
         }

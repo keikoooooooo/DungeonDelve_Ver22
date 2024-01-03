@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -7,7 +9,6 @@ public class PlayerHUD : MonoBehaviour, IGUI
 {
     [SerializeField, Required] private PlayerController player;
     [Space]
-    [SerializeField] private GameObject panel;
     [SerializeField] private Animator hudAnimator;
     [Space]
     [SerializeField] private ProgressBar healthBar;
@@ -20,9 +21,11 @@ public class PlayerHUD : MonoBehaviour, IGUI
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Slider expProgress;
-    [SerializeField] private Slot[] slots;
-
+    //
+    [SerializeField, BoxGroup("UI")] private Transform slotContent;
+    
     private SO_CharacterUpgradeData _characterUpgradeData;
+    public Slot[] slots { get; private set; } = Array.Empty<Slot>();
     private bool _isEventRegistered;
     private bool _isRevival;
     
@@ -34,10 +37,6 @@ public class PlayerHUD : MonoBehaviour, IGUI
     }
     private void Start()
     {
-        for (var i = 0; i < slots.Length; i++)
-        {
-            slots[i].SetKeyText($"{i + 1}");
-        }
         nameText.text = player.PlayerConfig.GetName();
         chapterIcon.sprite = player.PlayerConfig.ChapterIcon;
         expProgress.minValue = 0;
@@ -52,11 +51,12 @@ public class PlayerHUD : MonoBehaviour, IGUI
     private void RegisterEvent()
     {
         GUI_Manager.Add(this);
+        GUI_Bag.OnInitSlotEvent += CreateSlot;
         GUI_Bag.OnItemChangedSlotEvent += UpdateItemSlot;
 
         player.OnRevivalTimeEvent += ActiveRevivalPanel;
-        player.OnElementalSkillCDEvent += elementalSkillCD.OnCooldownTime;
-        player.OnElementalBurstCDEvent += elementalBurstCD.OnCooldownTime;
+        player.OnElementalSkillCDEvent += elementalSkillCD.StartCooldownTime;
+        player.OnElementalBurstCDEvent += elementalBurstCD.StartCooldownTime;
 
         player.Health.OnInitValueEvent += healthBar.Init;
         player.Health.OnCurrentValueChangeEvent += healthBar.OnCurrentValueChange;
@@ -69,11 +69,12 @@ public class PlayerHUD : MonoBehaviour, IGUI
     private void UnRegisterEvent()
     {
         GUI_Manager.Remove(this);
+        GUI_Bag.OnInitSlotEvent -= CreateSlot;
         GUI_Bag.OnItemChangedSlotEvent -= UpdateItemSlot;
         
         player.OnRevivalTimeEvent -= ActiveRevivalPanel; 
-        player.OnElementalSkillCDEvent -= elementalSkillCD.OnCooldownTime;
-        player.OnElementalBurstCDEvent -= elementalBurstCD.OnCooldownTime;
+        player.OnElementalSkillCDEvent -= elementalSkillCD.StartCooldownTime;
+        player.OnElementalBurstCDEvent -= elementalBurstCD.StartCooldownTime;
         
         player.Health.OnInitValueEvent -= healthBar.Init;
         player.Health.OnCurrentValueChangeEvent -= healthBar.OnCurrentValueChange;
@@ -83,14 +84,23 @@ public class PlayerHUD : MonoBehaviour, IGUI
         player.Stamina.OnCurrentValueChangeEvent -= staminaBar.OnCurrentValueChange;
         player.Stamina.OnMaxValueChangeEvent -= staminaBar.OnMaxValueChange;
     }
+
+    private void CreateSlot(Slot[] _slots)
+    {
+        slots = new Slot[_slots.Length];
+        for (var i = 0; i < _slots.Length; i++)
+        {
+            slots[i] = Instantiate(_slots[i], slotContent);
+        }
+    }
     private void UpdateItemSlot(Slot[] _slots)
     {
         for (var i = 0; i < _slots.Length; i++)
         {
-            slots[i].SetSlot(_slots[i].GetItem);
+            slots[i].SetSlot(_slots[i].Item);
         }
     }
-    
+
     
     public void GetRef(GameManager _gameManager)
     {
@@ -109,19 +119,23 @@ public class PlayerHUD : MonoBehaviour, IGUI
     {
         if (_time == 0)
         {
-            revivalTimeCD.OnCooldownTime(0);
+            revivalTimeCD.StartCooldownTime(0);
             revivalTimeCD.gameObject.SetActive(false);
             return;
         }
         revivalTimeCD.gameObject.SetActive(true);
-        revivalTimeCD.OnCooldownTime(_time);
+        revivalTimeCD.StartCooldownTime(_time);
     }
-    public void OpenHUD()
+    public async void OpenHUD()
     {
-        panel.SetActive(true);
         hudAnimator.Play("Panel_IN");
+        await Task.Delay(100);
         elementalSkillCD.ContinueCooldownTime();
         elementalBurstCD.ContinueCooldownTime();
+         foreach (var slot in slots)
+         {
+             slot.cooldownTime.ContinueCooldownTime();
+         }
     }
     public void CloseHUD()
     {

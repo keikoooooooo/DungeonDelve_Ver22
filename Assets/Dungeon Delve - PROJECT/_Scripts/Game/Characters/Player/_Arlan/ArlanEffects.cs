@@ -108,7 +108,7 @@ public class ArlanEffects : MonoBehaviour, IAttack
     {
         arlanController.BuffSkill();
         var shieldTime = 15f;
-        shieldCooldownTime.OnCooldownTime(shieldTime);
+        shieldCooldownTime.StartCooldownTime(shieldTime);
         yield return new WaitForSeconds(shieldTime);
         skill.Stop();
         skill.gameObject.SetActive(false);

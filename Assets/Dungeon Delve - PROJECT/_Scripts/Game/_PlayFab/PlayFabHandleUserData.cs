@@ -40,12 +40,12 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
 
 
     /// <summary> Lưu dữ liệu người dùng. </summary>
-    public void SaveData()
+    public void UpdateAllData()
     {
-        SetUserData(PF_Key.UserData_Key);
-        SetUserData(PF_Key.PlayerConfigData_Key);
+        UpdateData(PF_Key.UserData_Key);
+        UpdateData(PF_Key.PlayerConfigData_Key);
     }
-    private void SetUserData(PF_Key _keySave)
+    public void UpdateData(PF_Key _keySave)
     {
         if(!_isLogin) return;
 
@@ -71,13 +71,16 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
     private void GetUserData()
     {
         if(!_isLogin) return;
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetUserDataSuccess, ErrorCallback);
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnGetUserDataResult, ErrorCallback);
     }
-    private void OnGetUserDataSuccess(GetUserDataResult _result)
+    private void OnGetUserDataResult(GetUserDataResult _result)
     {
-        if (_result.Data == null || !_result.Data.ContainsKey($"{PF_Key.UserData_Key}")) 
+        if (_result.Data == null || (!_result.Data.ContainsKey($"{PF_Key.UserData_Key}") && 
+                                     !_result.Data.ContainsKey($"{PF_Key.PlayerConfigData_Key}"))
+            )
         {
-            UserData = new UserData(PlayFabController.Instance.username, 5000);
+            UserData = new UserData(PlayFabController.Instance.username, 25000);
+            UpdateData(PF_Key.UserData_Key);
             OnLoadUserDataFailureEvent?.Invoke();
             return;
         }
@@ -92,7 +95,6 @@ public class PlayFabHandleUserData : Singleton<PlayFabHandleUserData>
         }
         
         OnLoadUserDataSuccessEvent?.Invoke();
-        Debug.Log("Get Data Success");
     }
     
     private static void ErrorCallback(PlayFabError _error) => Debug.LogWarning(_error.Error);

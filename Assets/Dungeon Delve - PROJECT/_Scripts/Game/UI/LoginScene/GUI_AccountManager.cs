@@ -13,7 +13,7 @@ public class GUI_AccountManager : MonoBehaviour
     [Space] 
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject panelAnimatedLoading;
-    [SerializeField] private LoadSceneButton startGameButton;
+    [SerializeField] private LoadSceneButton startGameBtt;
     [Space]
     [SerializeField] private GUI_Login guiLogin;
     [SerializeField] private GUI_Register guiRegister;
@@ -46,7 +46,7 @@ public class GUI_AccountManager : MonoBehaviour
         panelAnimatedLoading.SetActive(true);
         accountBtt.gameObject.SetActive(true);
         logoutBtt.gameObject.SetActive(false);
-        startGameButton.gameObject.SetActive(false);
+        startGameBtt.gameObject.SetActive(false);
     }
     private void RegisterEvent()
     {
@@ -142,7 +142,7 @@ public class GUI_AccountManager : MonoBehaviour
         mailText.text = "";
         accountBtt.gameObject.SetActive(true);
         logoutBtt.gameObject.SetActive(false);
-        startGameButton.gameObject.SetActive(false);
+        startGameBtt.gameObject.SetActive(false);
     }
     
     
@@ -164,7 +164,7 @@ public class GUI_AccountManager : MonoBehaviour
         panelAnimatedLoading.SetActive(false);
         logoutBtt.gameObject.SetActive(true);
         accountBtt.gameObject.SetActive(false);
-        startGameButton.gameObject.SetActive(true);
+        startGameBtt.gameObject.SetActive(true);
         GetUserInfor();
         if (_noticeCoroutine != null) 
             StopCoroutine(_noticeCoroutine);
@@ -235,9 +235,9 @@ public class GUI_AccountManager : MonoBehaviour
 
     
     /// <summary> Nếu có dữ liệu người chơi trên PlayFab -> Load scene gameplay. </summary>
-    private void OnLoadUserDataSuccess() => startGameButton.SceneName = "DungeonScene";
+    private void OnLoadUserDataSuccess() => startGameBtt.SetSceneName("DungeonScene");
     /// <summary> Nếu chưa có dữ liệu -> Load scene chọn nhân vật mới. </summary>
-    private void OnLoadUserDataFailure() => startGameButton.SceneName = "NewSelectCharacterScene";
+    private void OnLoadUserDataFailure() => startGameBtt.SetSceneName("NewSelectCharacterScene");
     
     public void ClearAccountTemp()
     {

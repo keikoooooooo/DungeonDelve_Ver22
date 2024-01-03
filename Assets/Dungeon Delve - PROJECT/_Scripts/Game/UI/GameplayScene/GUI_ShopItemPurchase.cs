@@ -133,7 +133,7 @@ public class GUI_ShopItemPurchase : MonoBehaviour, IGUI
         decreaseBtt.interactable = _quantityPurchase > _minPurchase;
         increaseBtt.interactable = _quantityPurchase < _maxPurchase;
     }
-    private void SetPurchaseButtonState() => purchaseBtt.interactable = _userData.coin >= _price * _quantityPurchase;
+    private void SetPurchaseButtonState() => purchaseBtt.interactable = _userData.Coin >= _price * _quantityPurchase;
     private void SetQuantityUseText() => quantityUseText.text = $"Qty.\n{_quantityPurchase}";
     private void SetPriceText() => costText.text = $"{_price * _quantityPurchase}";
     
