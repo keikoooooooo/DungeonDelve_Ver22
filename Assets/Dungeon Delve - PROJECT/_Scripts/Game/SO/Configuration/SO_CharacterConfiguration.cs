@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Newtonsoft.Json;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public class FloatMultiplier
@@ -85,7 +86,8 @@ public class SO_CharacterConfiguration : ScriptableObject
     
     public int GetATK() => ATK;
     public int SetATK(int _value) => ATK = _value;
-    
+
+    public bool IsCRIT => Random.value <= GetCRITRate() / 100.0f;
     public float GetCRITRate() => CRITRate;
     public float SetCRITRate(float _value) => CRITRate = _value;
     

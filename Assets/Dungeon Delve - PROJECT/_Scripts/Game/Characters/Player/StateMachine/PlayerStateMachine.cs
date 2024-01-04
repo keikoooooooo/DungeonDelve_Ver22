@@ -18,7 +18,7 @@ public abstract class PlayerStateMachine : Damageable
     [field: SerializeField] public ParticleSystem enableEffect { get; private set; }
     [field: SerializeField] public PlayerDataHandle playerData { get; private set; }
     [field: SerializeField] public PlayerVoice voice { get; private set; }
-    [field: Header("BaseClass/Set Material")]
+    [field: Space]
     [field: SerializeField] public M_SetEmission setEmission { get; private set; }
     [field: SerializeField] public M_SetFloat setDissolve { get; private set; }
     #endregion
@@ -44,28 +44,31 @@ public abstract class PlayerStateMachine : Damageable
     public bool IsDash => input.LeftShift && IsGrounded && Stamina.CurrentValue >= PlayerConfig.GetDashSTCost();
     public bool CanIncreaseST { get; set; } // có thể tăng ST không ?
     public bool CanFootstepsAudioPlay { get; set; }
+    public EventInstance walkFootsteps { get; private set; }
+    public EventInstance runFootsteps { get; private set; }
+    public EventInstance runfastFootsteps { get; private set; }
     #endregion
     
     #region Animation IDs Paramater
     // FLOAT
-    [HideInInspector] public int IDSpeed = Animator.StringToHash("Speed");                  //  idle, walk, run, 
-    [HideInInspector] public int IDHorizontal = Animator.StringToHash("Horizontal");        //  trục x: Left & Right
-    [HideInInspector] public int IDVertical = Animator.StringToHash("Vertical");            //  trục z: Fornt & Back
-    [HideInInspector] public int IDStateTime = Animator.StringToHash("StateTime");          //  thời gian phát animation đã trôi qua
+    [HideInInspector] public int IDSpeed = Animator.StringToHash("Speed");                
+    [HideInInspector] public int IDHorizontal = Animator.StringToHash("Horizontal");       
+    [HideInInspector] public int IDVertical = Animator.StringToHash("Vertical");          
+    [HideInInspector] public int IDStateTime = Animator.StringToHash("StateTime");         
     // BOOL
-    [HideInInspector] public int IDJump = Animator.StringToHash("Jump");                    //  nhảy
-    [HideInInspector] public int IDFall = Animator.StringToHash("Fall");                    //  rơi
-    [HideInInspector] public int IDWeaponEquip = Animator.StringToHash("WeaponEquipped ");  //  switchMode: cầm / không cầm vũ khí
-    [HideInInspector] public int ID4Direction = Animator.StringToHash("4Direction");        //  di chuyển 4 hướng: LFRB
-    [HideInInspector] public int IDDead = Animator.StringToHash("Dead");                    //  die
+    [HideInInspector] public int IDJump = Animator.StringToHash("Jump");                   
+    [HideInInspector] public int IDFall = Animator.StringToHash("Fall");                    
+    [HideInInspector] public int IDWeaponEquip = Animator.StringToHash("WeaponEquipped "); 
+    [HideInInspector] public int ID4Direction = Animator.StringToHash("4Direction");        
+    [HideInInspector] public int IDDead = Animator.StringToHash("Dead");                  
     // TRIGGER
-    [HideInInspector] public int IDDamageFall = Animator.StringToHash("Damage_Fall");       //  nhận sát thương (ngã)
-    [HideInInspector] public int IDDamageStand = Animator.StringToHash("Damage_Stand");     //  nhận sát thương (đứng)
-    [HideInInspector] public int IDDash = Animator.StringToHash("Dash");                    //  lướt
-    [HideInInspector] public int IDNormalAttack = Animator.StringToHash("NormalAttack");    //  tấn công
-    [HideInInspector] public int IDChargedAttack = Animator.StringToHash("ChargedAttack");  //  tấn công
-    [HideInInspector] public int IDSkill = Animator.StringToHash("Skill");                  //  kỹ năng
-    [HideInInspector] public int IDSpecial = Animator.StringToHash("Special");              //  kỹ năng đặc biệt
+    [HideInInspector] public int IDDamageFall = Animator.StringToHash("Damage_Fall");       
+    [HideInInspector] public int IDDamageStand = Animator.StringToHash("Damage_Stand");    
+    [HideInInspector] public int IDDash = Animator.StringToHash("Dash");                    
+    [HideInInspector] public int IDNormalAttack = Animator.StringToHash("NormalAttack");   
+    [HideInInspector] public int IDChargedAttack = Animator.StringToHash("ChargedAttack");  
+    [HideInInspector] public int IDSkill = Animator.StringToHash("Skill");                  
+    [HideInInspector] public int IDSpecial = Animator.StringToHash("Special");             
     #endregion
     
     #region Events
@@ -90,9 +93,6 @@ public abstract class PlayerStateMachine : Damageable
     [HideInInspector] private int _currentHP;
     [HideInInspector] private PLAYBACK_STATE _footstepsPLAYBACK_STATE;
     [HideInInspector] public EventInstance _footstepsInstance;
-    public EventInstance walkFootsteps { get; private set; }
-    public EventInstance runFootsteps { get; private set; }
-    public EventInstance runfastFootsteps { get; private set; }
     #endregion
     #endregion
 
@@ -227,25 +227,26 @@ public abstract class PlayerStateMachine : Damageable
     public override void CauseDMG(GameObject _gameObject, AttackType _attackType)
     {
         if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
-        var _damage = _attackType switch
+        var _percentDMG = _attackType switch
         {
-            AttackType.NormalAttack => CalculationDMG(PercentDMG_NA()),
-            AttackType.ChargedAttack => CalculationDMG(PercentDMG_CA()),
-            AttackType.ElementalSkill => CalculationDMG(PercentDMG_ES()),
-            AttackType.ElementalBurst => CalculationDMG(PercentDMG_EB()),
+            AttackType.NormalAttack => PercentDMG_NA(),
+            AttackType.ChargedAttack => PercentDMG_CA(),
+            AttackType.ElementalSkill => PercentDMG_ES(),
+            AttackType.ElementalBurst => PercentDMG_EB(),
             _ => 1
         };
+        var _finalDMG = Mathf.CeilToInt(PlayerConfig.GetATK() * (1 + _percentDMG / 100.0f));
 
         var _isCrit = false;  // Có kích CRIT không ?
-        if (Random.value <= PlayerConfig.GetCRITRate() / 100)
+        if (PlayerConfig.IsCRIT)
         {
-            var critDMG = (PlayerConfig.GetCRITDMG() + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
-            _damage = Mathf.CeilToInt(_damage * critDMG);
+            var _percentCritDMG = 1 + PlayerConfig.GetCRITDMG() / 100.0f;
+            _finalDMG = Mathf.CeilToInt(_finalDMG * _percentCritDMG);
             _isCrit = true;
         } 
         
         // Gọi takeDMG trên đối tượng vừa va chạm
-        iDamageable.TakeDMG(_damage, _isCrit);
+        iDamageable.TakeDMG(_finalDMG, _isCrit);
     }
     public override void TakeDMG(int _damage, bool _isCRIT) 
     {
@@ -280,7 +281,6 @@ public abstract class PlayerStateMachine : Damageable
     public override float PercentDMG_CA() => PlayerConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
     public override float PercentDMG_ES() => PlayerConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1]; 
     public override float PercentDMG_EB() => PlayerConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[PlayerConfig.GetWeaponLevel() - 1];
-    public override int CalculationDMG(float _percent) => Mathf.CeilToInt(PlayerConfig.GetATK() * (_percent / 100.0f)); 
     public void ReleaseDamageState() // gọi trên animationEvent để giải phóng trạng thái TakeDamage
     {
         CanMove = true;

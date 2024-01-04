@@ -19,13 +19,13 @@ public enum PushDirectionEnum
 [Serializable]
 public class AttackCustom
 {
-    [Tooltip("Các lực đẩy mỗi khi attack, lực áp dụng tương ứng thứ n của animationClip Attack, vd: Attack2 -> lấy giá trị thứ 2 áp dụng vào")]
+    [Tooltip("Các lực đẩy mỗi khi attack, lực áp dụng tương ứng thứ n của animationClip Attack")]
     public List<float> pushForce;
     
     [Tooltip("Đẩy đi trong bao lâu"), Range(0f, 1f)]
     public float pushTime;
     
-    [Tooltip("Hướng đẩy: Forward -> đẩy tới trước, Behind -> đẩy ra sau")]
+    [Tooltip("Hướng đẩy: Forward -> trước, Behind -> sau")]
     public PushDirectionEnum pushDirectionEnum;
 }
 
@@ -33,8 +33,7 @@ public class AttackCustom
 public abstract class PlayerController : PlayerStateMachine
 {
     
-    [Tooltip("Thêm lực đẩy vào character khi tấn công"), SerializeField] 
-    private AttackCustom attackCustom;
+    [SerializeField] private AttackCustom attackCustom;
     public event Action<float> OnElementalSkillCDEvent; 
     public event Action<float> OnElementalBurstCDEvent;
 
@@ -42,7 +41,7 @@ public abstract class PlayerController : PlayerStateMachine
     protected bool IsElementalSkill => input.E && _skillCD_Temp <= 0;
     protected bool IsElementalBurst => input.Q && _burstCD_Temp <= 0;
     
-    public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> nếu hơn .3s -> attackHolding
+    public float MouseHoldTime { get; private set; }       // thời gian giữ chuột -> >= .4s -> charged Attack
     
     
     // Player
@@ -61,7 +60,7 @@ public abstract class PlayerController : PlayerStateMachine
         
         CanAttack = true;
         
-        _directionPushVelocity = attackCustom.pushDirectionEnum switch // tìm hướng đẩy mỗi khi tấn công?
+        _directionPushVelocity = attackCustom.pushDirectionEnum switch 
         {
             PushDirectionEnum.Forward => 1, 
             PushDirectionEnum.Behind => -1,   
@@ -96,11 +95,11 @@ public abstract class PlayerController : PlayerStateMachine
         
         switch (_isAttackPressed)
         {
-            case true when !IsNormalAttack && MouseHoldTime < .5f:
+            case true when !IsNormalAttack && MouseHoldTime < .4f:
                 NormalAttack();
                 break;
             
-            case true when IsNormalAttack && MouseHoldTime >= .5f:
+            case true when IsNormalAttack && MouseHoldTime >= .4f:
                 CanAttack = false;
                 _isAttackPressed = false;
                 ChargedAttack();

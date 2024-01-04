@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
         CharacterUpgradeData.RenewValue();
         if(!PlayFabHandleUserData.Instance)
         {
-            UserData = new UserData("Test Editor", 500);
+            UserData = new UserData("Test Editor", 500000);
             _playerPrefab = CharacterData.GetPrefab(CharacterNameCode.Lynx);
             _playerConfig = Instantiate(_playerPrefab.PlayerConfig);
         }

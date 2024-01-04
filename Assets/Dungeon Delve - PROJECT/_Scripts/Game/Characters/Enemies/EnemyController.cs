@@ -128,7 +128,7 @@ public class EnemyController : Damageable, IPooled<EnemyController>
     {
         if (!DamageableData.Contains(_gameObject, out var iDamageable)) return;
 
-        var _damage = _attackType switch
+        var _percentDMG = _attackType switch
         {
             AttackType.NormalAttack => PercentDMG_NA(),
             AttackType.ChargedAttack => PercentDMG_CA(),
@@ -136,22 +136,24 @@ public class EnemyController : Damageable, IPooled<EnemyController>
             AttackType.ElementalBurst => PercentDMG_EB(),
             _ => 1
         };
-       
+
+        var _finalDMG = CalculationDMG(_percentDMG);
         var _isCrit = false;  // Có kích CRIT không ?
-        if (Random.value <= EnemyConfig.GetCRITRate() / 100)
+        if (EnemyConfig.IsCRIT)
         {
-            var critDMG = (EnemyConfig.GetCRITDMG() + 100.0f) / 100.0f; // vì là DMG cộng thêm nên cần phải +100%DMG vào
-            _damage *= critDMG;
+            var _percentCritDMG = 1 + EnemyConfig.GetCRITDMG() / 100.0f; 
+            _finalDMG = Mathf.CeilToInt(_finalDMG * _percentCritDMG);
             _isCrit = true;
-        } 
-        iDamageable.TakeDMG( Mathf.CeilToInt(_damage), _isCrit);
+        }
+        iDamageable.TakeDMG( Mathf.CeilToInt(_finalDMG), _isCrit);
     }
     public override void TakeDMG(int _damage, bool _isCRIT)
     {  
-        // Nếu đòn đánh là CRIT thì sẽ nhận Random DEF từ giá trị 0 -> DEF ban đầu / 2, nếu không sẽ lấy 100% DEF ban đầu
+        // If (CRIT) -> lấy Random DEF từ 0 -> DEF ban đầu / 2.
+        // Else      -> lấy 100% DEF ban đầu
         var _valueDef = _isCRIT ? Random.Range(0, EnemyConfig.GetDEF() * 0.5f) : EnemyConfig.GetDEF();
         
-        // Tính lượng DMG thực nhận vào sau khi trừ đi lượng DEF
+        // Tính DMG thực nhận vào sau khi trừ đi lượng DEF
         var _finalDmg = (int)Mathf.Max(0, _damage - Mathf.Max(0, _valueDef));
         
         Health.Decreases(_finalDmg);
@@ -172,18 +174,18 @@ public class EnemyController : Damageable, IPooled<EnemyController>
     }
     
     public void SetAttackCount(int _value) => _attackCount = _value;
-    public override float PercentDMG_NA() => enemyConfig.GetNormalAttackMultiplier()[_attackCount].GetMultiplier()[FindMultiplierLevelIndex()];
-    public override float PercentDMG_CA() => enemyConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
-    public override float PercentDMG_ES() => enemyConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
-    public override float PercentDMG_EB() => enemyConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override float PercentDMG_NA() => EnemyConfig.GetNormalAttackMultiplier()[_attackCount].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override float PercentDMG_CA() => EnemyConfig.GetChargedAttackMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override float PercentDMG_ES() => EnemyConfig.GetElementalSkillMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
+    public override float PercentDMG_EB() => EnemyConfig.GetElementalBurstMultiplier()[0].GetMultiplier()[FindMultiplierLevelIndex()];
     public override int CalculationDMG(float _percent)
     {
-        var _playerATK = _player.PlayerConfig.GetATK();
-        var _currentATK = EnemyConfig.GetATK();
+        var _enemyATK = EnemyConfig.GetATK();
+        var _minEnemyATK = _player.PlayerConfig.GetDEF() + Random.Range(10, _enemyATK / 2);
         
         // Set ATK
-        var modifiedEnemyATK = Mathf.CeilToInt(_currentATK * (_percent / 100.0f));
-        return modifiedEnemyATK * (_playerATK / _currentATK);
+        var modifiedEnemyATK = Mathf.CeilToInt(_enemyATK * (_percent / 100.0f));
+        return Mathf.Max(_minEnemyATK, modifiedEnemyATK);
     }
     private int FindMultiplierLevelIndex()  //Tìm Index của %ATK cộng thêm dựa trên level hiện tại của enemy 
     {
