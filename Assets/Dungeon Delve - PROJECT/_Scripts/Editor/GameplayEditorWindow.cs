@@ -749,18 +749,6 @@ public class GameplayEditorWindow : EditorWindow
             {
                 GUILayout.BeginVertical(GUI.skin.box);
                 EditorGUI.BeginChangeCheck();
-                
-                GUILayout.BeginHorizontal();
-                var _task = questSetup.GetTask();
-                if (string.IsNullOrEmpty(_task.GetID))_task.SetID(Guid.NewGuid().ToString());
-                EditorGUILayout.LabelField($"Quest ID:", Width(75));
-                EditorGUILayout.LabelField($"{_task.GetID}", LabelColorText(Color.red), Width(300));
-                if (GUILayout.Button("Reset ID", Width(80), Height(15)))
-                {
-                    _task.SetID(Guid.NewGuid().ToString());
-                }
-                GUILayout.EndHorizontal();
-                
                 questSetup.SetTitle(EditorGUILayout.TextField("Title", questSetup.GetTitle(), Width(1000)));
                 questSetup.SetDescription(EditorGUILayout.TextField("Description", questSetup.GetDescription(), Width(1000)));
 
@@ -890,8 +878,6 @@ public class GameplayEditorWindow : EditorWindow
             GUILayout.Label( "Price", BoxColorText(Color.yellow), Width(135));
             GUILayout.Label( "Quantity Receive", BoxColorText(Color.yellow), Width(135));
             GUILayout.Label( "Purchase Max in Day", BoxColorText(Color.yellow), Width(135));
-            GUILayout.Label( "", Width(10));
-            GUILayout.Label( "IDs", BoxColorText(Color.yellow), Width(340));
             GUILayout.EndHorizontal();
             Space(7);
             scrollView = GUILayout.BeginScrollView(scrollView);
@@ -909,14 +895,7 @@ public class GameplayEditorWindow : EditorWindow
                 _itemSetup.SetPrice(EditorGUILayout.IntField("", _itemSetup.GetPrice(), Width(135)));
                 _itemSetup.SetQuantityReceive(EditorGUILayout.IntField("", _itemSetup.GetQuantityReceive(), Width(135)));
                 _itemSetup.SetPurchaseMax(EditorGUILayout.IntField("", _itemSetup.GetPurchaseMax(), Width(135)));
-                GUILayout.Label("", Width(10));
-                if (GUILayout.Button("Reset ID", Width(80), Height(15)))
-                {
-                    _itemSetup.SetID(null);
-                }
-                if (string.IsNullOrEmpty(_itemSetup.GetID())) _itemSetup.SetID(Guid.NewGuid().ToString());
-                EditorGUILayout.LabelField($"{_itemSetup.GetID()}", LabelColorText(Color.red), Width(260));
-                
+               
                 GUILayout.EndHorizontal();
                 if(EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(_itemSetup);
                 Space(2);

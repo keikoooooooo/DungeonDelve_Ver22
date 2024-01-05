@@ -23,7 +23,7 @@ public class ShopItemBox : MonoBehaviour, IPooled<ShopItemBox>
         
         itemName.text = _itemCustom.nameItem;
         priceText.text = $"{_shopItemSetup.GetPrice()}";
-        purchaseUpToText.text = !shopItemSetup.CanBuyItem ? "<color=#FF0500>Sold out</color>" : 
+        purchaseUpToText.text = !shopItemSetup.CanBuyItem() ? "<color=#FF0500>Sold out</color>" : 
             $"Purchase up to {shopItemSetup.GetPurchaseCurrent()}/{shopItemSetup.GetPurchaseMax()}";
         
         var _quantity = _shopItemSetup.GetQuantityReceive();

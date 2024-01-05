@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Quest_1
   m_EditorClassIdentifier: 
   task:
-    id: 6a73aac9-1fe3-4346-99ea-31822070ce83
-    isCompleted: 0
-    isLocked: 0
+    <ID>k__BackingField: d8def5b2-93a0-4224-bb2c-c063448a4359
+    <IsCompleted>k__BackingField: 0
+    <IsLocked>k__BackingField: 0
+    <IsReceived>k__BackingField: 0
   title: Quest 01
   description: Collect 25 Goblin's Teeth.
   requirement:
@@ -23,14 +24,17 @@ MonoBehaviour:
     value: 25
   rewards:
   - code: 0
+    rarity: 1
     value: 5
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 1
+    rarity: 1
     value: 5
     isRandom: 0
     valueRandom: {x: 0, y: 0}
   - code: 20
+    rarity: 0
     value: 1122
     isRandom: 0
     valueRandom: {x: 0, y: 0}

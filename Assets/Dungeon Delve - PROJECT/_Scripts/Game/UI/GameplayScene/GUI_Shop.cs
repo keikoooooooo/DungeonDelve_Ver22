@@ -161,11 +161,12 @@ public class GUI_Shop : MonoBehaviour, IGUI
             shopItemBox.SetShopItem(_itemCustom,_shopItemSetup);
             _itemCount++;
         }
+        purchaseBtt.interactable = false;
     }
     private void OnSelectedShopItem(ShopItemBox _shopItemBox)
     {
         _currentShopItemBox = _shopItemBox;
-        purchaseBtt.interactable = _shopItemBox.shopItemSetup.CanBuyItem;
+        purchaseBtt.interactable = _shopItemBox.shopItemSetup.CanBuyItem();
         inforItemPanel.SetActive(true);
         SetAnimSelectedShopItem(_shopItemBox);
         SetInforShopItem(_shopItemBox.shopItemSetup);
@@ -256,8 +257,10 @@ public class GUI_Shop : MonoBehaviour, IGUI
     
     public void HandleItemPurchaseSuccess()
     {
-        purchaseBtt.interactable = _currentShopItemBox.shopItemSetup.CanBuyItem;
         ShowShop();
+            
+        if (PlayFabHandleUserData.Instance)
+            PlayFabHandleUserData.Instance.UpdateData(PlayFabHandleUserData.PF_Key.ShopData_Key);
     }
     public void OnOpenPurchasePanel()
     {

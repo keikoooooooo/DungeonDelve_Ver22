@@ -32,9 +32,9 @@ public class QuestBox : MonoBehaviour, IPooled<QuestBox>
         iconReport.enabled = false;
         
         var _task = _questSetup.GetTask();
-        IsLocked = _task.IsLocked;
-        IsReceived = _task.IsReceived;
-        IsCompleted = _task.IsCompleted;
+        IsLocked = _task.IsLocked();
+        IsReceived = _task.IsReceived();
+        IsCompleted = _task.IsCompleted();
 
         SetReceivedQuestBox(IsReceived && !IsLocked);
     }

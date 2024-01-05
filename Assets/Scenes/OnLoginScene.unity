@@ -7348,9 +7348,6 @@ MonoBehaviour:
   OnLoadUserDataFailureEvent:
     m_PersistentCalls:
       m_Calls: []
-  UserData:
-    _username: 
-    _coin: 0
   PlayerConfig: {fileID: 0}
 --- !u!1 &1672277782
 GameObject:

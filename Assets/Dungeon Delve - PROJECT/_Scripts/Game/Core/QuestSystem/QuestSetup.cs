@@ -3,38 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using DungeonDelve.Project;
 using NaughtyAttributes;
+using Newtonsoft.Json;
 
 namespace DungeonDelve.Project
 {
     [Serializable]
     public class Task
     {
-        [HideInInspector]
-        [SerializeField] private string id;
-        [SerializeField] private bool isCompleted;
-        [SerializeField] private bool isLocked;
-        [SerializeField] private bool isReceived;
         public Task() { }
-            
-        /// <summary>
-        /// Tạo 1 Data để lưu trữ thông tin về Task đang nhận
-        /// </summary>
-        /// <param name="_id"> ID Quest </param>
-        /// <param name="_isCompletedQuest"> Task đã hoàn thành chưa ? </param>
-        public Task(string _id, bool _isCompleted, bool _isLocked, bool _isReceived)
+        public Task(bool _isCompleted, bool _isLocked, bool _isReceived)
         {
-            id = _id;
             isCompleted = _isCompleted;
             isLocked = _isLocked;
             isReceived = _isReceived;
         }
-            
-        public string GetID => id;
-        public bool IsCompleted => isCompleted;
-        public bool IsLocked => isLocked;
-        public bool IsReceived => isReceived;
-            
-        public void SetID(string _value) => id = _value;
+        
+        [SerializeField, JsonProperty] private bool isCompleted;
+        [SerializeField, JsonProperty] private bool isLocked;
+        [SerializeField, JsonProperty] private bool isReceived;
+        
+        public bool IsCompleted() => isCompleted;
+        public bool IsLocked() => isLocked;
+        public bool IsReceived() => isReceived;
         public void SetCompleted(bool _value) => isCompleted = _value;
         public bool SetTaskLocked(bool _value) =>  isLocked = _value;
         public bool SetReceived(bool _value) =>  isReceived = _value;

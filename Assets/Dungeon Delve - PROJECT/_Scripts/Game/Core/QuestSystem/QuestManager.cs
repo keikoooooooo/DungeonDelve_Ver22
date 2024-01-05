@@ -9,23 +9,27 @@ public class QuestManager : Singleton<QuestManager>
 {
     [SerializeField] private MonoBehaviourID behaviourID;
     [field: SerializeField] public InteractiveUI interactiveUI { get; private set; }
-    public static List<QuestSetup> QuestLists { get; } = new();
+    public static List<QuestSetup> QuestLists { get; private set; } = new();
     
     public static int currentQuest { get; private set; } // Số lượng quest đang nhận.
     public static int maxQuest => 3; // Số lượng tối đa quest được nhận/1 ngày. 
-    //
-    private static readonly string _folderSave = "q_save";
-    
     
     private void Start()
     {
-        var _quests = Resources.LoadAll<QuestSetup>("Quest Custom");
-        QuestLists.Clear();
-        foreach (var questSetup in _quests)
+        if (PlayFabHandleUserData.Instance && PlayFabHandleUserData.Instance.IsLogin)
         {
-            QuestLists.Add(Instantiate(questSetup));
+            QuestLists = PlayFabHandleUserData.Instance.Quests;
         }
-
+        else
+        {
+            var _quests = Resources.LoadAll<QuestSetup>("Quest Custom");
+            QuestLists.Clear();
+            foreach (var questSetup in _quests)
+            {
+                QuestLists.Add(Instantiate(questSetup));
+            }
+        }
+        
         currentQuest = 0;
         var _tasks = QuestLists.Select(x => x.GetTask());
         var _lastDay = DateTime.Parse(PlayerPrefs.GetString(behaviourID.GetID, DateTime.MinValue.ToString()));
@@ -49,20 +53,14 @@ public class QuestManager : Singleton<QuestManager>
             _task.SetCompleted(false);
             _task.SetReceived(false);
             _task.SetTaskLocked(false);
-            FileHandle.Save(_task, _folderSave, _task.GetID);
-        }
+        }   
     }
     private static void LoadOldQuest(IEnumerable<Task> _tasks)
     {
         foreach (var _task in _tasks)
         {
-            if (!FileHandle.Load(_folderSave, _task.GetID, out Task _taskSave)) continue;
-            _task.SetCompleted(_taskSave.IsCompleted);
-            _task.SetTaskLocked(_taskSave.IsLocked);
-            _task.SetReceived(_taskSave.IsReceived);
-            
-            if (!_task.IsCompleted && !_task.IsLocked && !_task.IsReceived) continue;
-            currentQuest++;
+            if (_task.IsCompleted() || _task.IsLocked() || _task.IsReceived())
+                currentQuest++;
         }
     }
     private static IEnumerator NoticeCoroutine()
@@ -79,7 +77,6 @@ public class QuestManager : Singleton<QuestManager>
         _task.SetCompleted(false);
         _task.SetTaskLocked(false);
         _task.SetReceived(true);
-        FileHandle.Save(_task, _folderSave, _task.GetID);
     }
     public void OnCompletedQuest(QuestSetup _quest)
     {
@@ -89,8 +86,10 @@ public class QuestManager : Singleton<QuestManager>
         _task.SetCompleted(true);
         _task.SetTaskLocked(false);
         _task.SetReceived(true);
-        FileHandle.Save(_task, _folderSave, _task.GetID);
         AudioManager.PlayOneShot(FMOD_Events.Instance.rewards_01, Vector3.zero);
+        
+        if (PlayFabHandleUserData.Instance) 
+            PlayFabHandleUserData.Instance.UpdateData(PlayFabHandleUserData.PF_Key.QuestData_Key);
     }
     public static void OnCancelQuest(QuestSetup _quest)
     {
@@ -98,7 +97,6 @@ public class QuestManager : Singleton<QuestManager>
         _task.SetCompleted(false);
         _task.SetTaskLocked(true);
         _task.SetReceived(true);
-        FileHandle.Save(_task, _folderSave, _task.GetID);
     }
     private static void SordItemReward(List<ItemReward> _rewards)
     {

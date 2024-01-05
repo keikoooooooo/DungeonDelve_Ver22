@@ -309,9 +309,9 @@ public class GUI_Quest : MonoBehaviour, IGUI
     {
         var _taskRequired = _questBox.questSetup.GetRequirement();
         var _checkComplete = _taskRequired.GetValue() <= _userData.HasItemValue(_taskRequired.GetNameCode());
-        reportBtt.interactable = _checkComplete && !_questBox.questSetup.GetTask().IsCompleted;
+        reportBtt.interactable = _checkComplete && !_questBox.questSetup.GetTask().IsCompleted();
         _questBox.SetReportQuest(reportBtt.interactable);
     }
-    private void SetNoticeText(Task _task) => taskNoticeText.text = _task.IsCompleted ? "You have completed this task." : _task.IsLocked ? "Can't handle this task today." : "";
+    private void SetNoticeText(Task _task) => taskNoticeText.text = _task.IsCompleted() ? "You have completed this task." : _task.IsLocked() ? "Can't handle this task today." : "";
 
 }
