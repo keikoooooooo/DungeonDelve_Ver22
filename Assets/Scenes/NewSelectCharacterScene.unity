@@ -1110,6 +1110,7 @@ MonoBehaviour:
       Data3: -862150472
       Data4: 809890712
     Path: event:/UI/UI_BUTTON_09
+  backgroundAudio: {fileID: 1635001209}
   _playerConfig: {fileID: 0}
 --- !u!1 &1018721861
 GameObject:
@@ -2680,18 +2681,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1977491880}
         m_TargetAssemblyTypeName: Audio, Assembly-CSharp
         m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1635001209}
-        m_TargetAssemblyTypeName: BackgroundAudio, Assembly-CSharp
-        m_MethodName: Stop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

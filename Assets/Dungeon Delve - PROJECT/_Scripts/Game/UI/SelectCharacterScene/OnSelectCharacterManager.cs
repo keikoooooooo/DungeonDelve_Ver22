@@ -23,6 +23,7 @@ public class OnSelectCharacterManager : MonoBehaviour
     [Space] 
     [SerializeField] private GameObject animatedLoadPanel;
     [SerializeField] private EventReference escOnClickSound;
+    [SerializeField] private BackgroundAudio backgroundAudio;
     //
     [SerializeField, ReadOnly] private SO_PlayerConfiguration _playerConfig;
     private Tween colorChar_01Tween;
@@ -134,6 +135,7 @@ public class OnSelectCharacterManager : MonoBehaviour
         
         yield return new WaitForSeconds(Random.Range(0.5f, 1.2f));
        LoadSceneManager.Instance.LoadScene(sceneName);
+       backgroundAudio.Stop();
     }
 
 }

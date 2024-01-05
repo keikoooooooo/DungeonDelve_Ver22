@@ -19,7 +19,7 @@ public class TimelineBOReaper : MonoBehaviour
     [SerializeField] private M_SetEmission setEmission;
     [SerializeField] private EventReference onClickSoundRef;
     
-    [BoxGroup("VOLUME CHANGE"), SerializeField] private AmbienceVolumeChangeTrigger ambienceVolumeChange;
+    [BoxGroup("VOLUME CHANGE"), SerializeField] private DungeonAmbienceVolumeChangeTrigger dungeonAmbienceVolumeChange;
     [BoxGroup("VOLUME CHANGE"), SerializeField] private BackgroundAudio reaperBattleAudio;
     
     private bool _canTrigger;      // có được active BO lên k ?
@@ -42,7 +42,7 @@ public class TimelineBOReaper : MonoBehaviour
         _player = GameManager.Instance.Player;
         _playerHUD =  GameManager.Instance.PlayerHUD;
         _player.OnRevivalTimeEvent += HandlePlayerDie;
-        _cameraFOV = _player.GetComponentInChildren<CameraFOV>();
+        _cameraFOV = _player.cameraFOV;
         reaperBOSS.OnDieEvent.AddListener(HandleBossDie);
 
         _timeline = (TimelineAsset)playableDirector.playableAsset;
@@ -107,7 +107,7 @@ public class TimelineBOReaper : MonoBehaviour
     private void HandleCommon()
     {
         reaperBattleAudio.Stop();
-        ambienceVolumeChange.SetVolume(.3f);
+        dungeonAmbienceVolumeChange.SetVolume(.3f);
         ApplyEmission(15, 0);
     }
 
@@ -156,7 +156,7 @@ public class TimelineBOReaper : MonoBehaviour
         if (!reaperBOSS.gameObject.activeSelf) return;
         
         _canTrigger = false;
-        ambienceVolumeChange.SetVolume(.3f);
+        dungeonAmbienceVolumeChange.SetVolume(.3f);
         reaperBattleAudio.Stop();
         ApplyEmission(15, 0);
         reaperBOSS.gameObject.SetActive(false);
@@ -184,7 +184,7 @@ public class TimelineBOReaper : MonoBehaviour
         {
             playableDirector.Play();
             _canTrigger = false;
-            ambienceVolumeChange.SetVolume(.05f);
+            dungeonAmbienceVolumeChange.SetVolume(.05f);
             reaperBattleAudio.Play();
         }
         else

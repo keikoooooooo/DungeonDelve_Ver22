@@ -5,6 +5,7 @@ public class FMOD_Events : Singleton<FMOD_Events>
 {
     [field: Header("GAME AMBIENCE")]
     [field: SerializeField] public EventReference dungeonAmbience { get; private set; }
+    
     //
     [field: Header("GAME SFX")]
     [field: SerializeField] public EventReference menuOpen { get; private set; }

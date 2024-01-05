@@ -45,6 +45,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroy: 0
+  <login>k__BackingField:
+    Guid:
+      Data1: 786331005
+      Data2: 1325531944
+      Data3: 440951483
+      Data4: 805995105
+    Path: event:/MUSIC/Background_Music_01
+  <selectCharacter>k__BackingField:
+    Guid:
+      Data1: -1673366475
+      Data2: 1099126232
+      Data3: -1025433964
+      Data4: 122594691
+    Path: event:/MUSIC/Background_Music_02
   <dungeonAmbience>k__BackingField:
     Guid:
       Data1: -245987833

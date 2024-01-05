@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
-using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class AudioManager : Singleton<AudioManager>
 {
@@ -21,14 +19,11 @@ public class AudioManager : Singleton<AudioManager>
     public const string PP_MusicVolumeIndex = "MusicVolumeIndex";
     public const string PP_SFXVolumeIndex = "SFXVolumeIndex";
     public const string PP_DialogueVolumeIndex = "DialogueVolumeIndex";
-    //
-    private static List<EventInstance> _eventInstances;
-    private EventInstance _ambienceInstance;
+    
     
     protected override void Awake()
     {
         base.Awake();
-        _eventInstances = new List<EventInstance>();
         masterBus = RuntimeManager.GetBus("bus:/");
         musicBus = RuntimeManager.GetBus("bus:/MUSIC");
         sfxBus = RuntimeManager.GetBus("bus:/SFX");
@@ -37,16 +32,6 @@ public class AudioManager : Singleton<AudioManager>
     private void Start()
     {
         LoadOldVolume();
-        _ambienceInstance = CreateInstance(FMOD_Events.Instance.dungeonAmbience);
-        _ambienceInstance.start();
-    }
-    private void OnDestroy()
-    {
-        foreach (var eventInstance in _eventInstances)
-        {
-            eventInstance.stop(STOP_MODE.IMMEDIATE);
-            eventInstance.release();
-        }
     }
     private void OnApplicationQuit()
     {
@@ -76,13 +61,7 @@ public class AudioManager : Singleton<AudioManager>
     /// <param name="_eventReference"> REF Source cần phát. </param>
     /// <param name="_worldPos"> Vị trí phát trong không gian 3D. </param>
     public static void PlayOneShot(EventReference _eventReference, Vector3 _worldPos) => RuntimeManager.PlayOneShot(_eventReference, _worldPos);
-    public static EventInstance CreateInstance(EventReference _eventReference)
-    {
-        var _instance = RuntimeManager.CreateInstance(_eventReference);
-        _eventInstances.Add(_instance);
-        return _instance;
-    }
-    
+    public static EventInstance CreateInstance(EventReference _eventReference) => RuntimeManager.CreateInstance(_eventReference);
 }
 
 

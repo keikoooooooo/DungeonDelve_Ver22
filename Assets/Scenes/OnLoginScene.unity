@@ -9867,15 +9867,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6724957755442536760, guid: 832d7af2a32c5594aab732713681d413, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6724957755442536760, guid: 832d7af2a32c5594aab732713681d413, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6724957755442536760, guid: 832d7af2a32c5594aab732713681d413, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6724957755442536760, guid: 832d7af2a32c5594aab732713681d413, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9893,6 +9893,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BG Music
       objectReference: {fileID: 0}
+    - target: {fileID: 7463272766193854976, guid: 832d7af2a32c5594aab732713681d413, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9906,8 +9910,8 @@ SceneRoots:
   - {fileID: 780112119}
   - {fileID: 159518841}
   - {fileID: 762144586}
-  - {fileID: 4197827877569935882}
   - {fileID: 618613119}
   - {fileID: 1712986294}
+  - {fileID: 4197827877569935882}
   - {fileID: 2115526994}
   - {fileID: 1614932426}

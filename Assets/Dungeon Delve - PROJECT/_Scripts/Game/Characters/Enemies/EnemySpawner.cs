@@ -105,6 +105,7 @@ public class EnemySpawner : MonoBehaviour
     {
         _currentEnemy--;
         _enemy.OnDieEvent.RemoveListener(HandleEnemyDie);
+        PlayerPrefs.SetInt(PP_SaveCurrentEnemy, _currentEnemy);
         CheckReward();
     }
     private Vector3 GetRandomPoint(Vector3 waypointPosition)
